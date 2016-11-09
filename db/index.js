@@ -1,7 +1,7 @@
 var mysql = require("mysql");
-var config = require('../config.json');
+var config = require('../config').config;
 
-module.exports.getPool = mysql.createPool({
+module.exports.pool = mysql.createPool({
 	connectionLimit : 16,
 	host : config.db.host,
 	port : config.db.port,

@@ -1,7 +1,13 @@
 var express = require('express');
 
 var fs = require('fs');
-var config = JSON.parse(fs.readFileSync('config.json').toString());
+
+module.exports.getCurrentUser = function(req, res, cbk) {
+	cbk(null, {
+		userId : 1,
+		userName : "admin"
+	});
+}
 
 module.exports.initCheckLogin = function(app) {
 	app.use(require('cookie-session')({

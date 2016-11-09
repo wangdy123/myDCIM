@@ -1,12 +1,11 @@
 var express = require('express');
-
-var config = require('./config.json');
-
 var app = express();
 
-var path = require('path');
-app.use(require('serve-favicon')(path.join(__dirname, 'public', 'favicon.ico')));
 
+
+var config = require('./config').config;
+
+app.use(require('serve-favicon')(require('path').join(__dirname, 'public', 'favicon.ico')));
 var bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -21,7 +20,7 @@ app.use(express.static(__dirname + '/public', {
 }));
 
 app.get('/', function(req, res) {
-	res.redirect("/apps/monitor.html");
+	res.redirect("/apps/dashboard.html");
 });
 
 app.use('/apps', require('./apps'));

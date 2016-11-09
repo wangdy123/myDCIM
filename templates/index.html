@@ -45,13 +45,13 @@
                 <div title={{name}} style="padding: 5px;" data-options="selected:{{selected}}">
                     <ul class="menu-nav-item">
                         {{#each childMenus}}
-                        <li><a href="{{url}}">{{name}}</a></li> {{/each}}
+                        <li><a href="/apps/{{url}}">{{name}}</a></li> {{/each}}
                     </ul>
                 </div>
                 {{/each}}
             </div>
         </div>
-        {{{body}}}
+       <div id="full-workspace" region="center" class="pannel"  border="{{border}}" href="{{htmlFileUrl}}"> </div>
     </div>
     <div id="extdialog1" class="easyui-dialog" data-options="closed:true"></div>
     <div id="extdialog2" class="easyui-dialog" data-options="closed:true"></div>

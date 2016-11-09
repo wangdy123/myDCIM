@@ -1,0 +1,189 @@
+html, body {
+ height: 100%;
+ min-height: 100%;
+ width: 100%;
+ margin: 0;
+ padding: 0;
+ overflow: auto;
+ font-size: 0.95em;
+}
+
+a {
+ text-decoration: none;
+ cursor: pointer;
+}
+
+label {
+ font-weight: bold;
+}
+
+#system-name {
+ padding: 10px 20px;
+ margin: 0;
+ display: inline-block;
+}
+
+#full-workspace {
+ margin: 0;
+ padding: 0;
+ overflow-y: auto;
+}
+
+.header-item {
+ font-weight: bold;
+ font-size: 14px;
+ line-height: 20px;
+ padding: 5px 10px;
+ margin: 0;
+ display: inline-block;
+ vertical-align: middle;
+}
+
+#node-nav {
+ width: 250px;
+ margin: 0;
+ padding: 5px;
+ overflow-y: auto;
+}
+
+#main-workspace {
+ margin: 0;
+ padding: 5px;
+ min-width: 400px;
+ overflow-y: auto;
+}
+
+.title-panel {
+ text-align: center;
+ vertical-align: middle;
+ padding:5px;
+ margin: 0;
+ width: 90%;
+}
+
+#operator-panel {
+ position: absolute;
+ width: 128px;
+ right: 5px;
+ top: 5px;
+}
+
+.separater {
+ display: inline-block;
+ color: SteelBlue;
+ width: 1px;
+ height: 16px;
+ margin: 0 5px;
+ border-left: 1px solid SteelBlue;
+}
+
+.edit-object {
+ display: inline-block;
+ background: url("/image/edit.png") 1px 0 no-repeat;
+ width: 18px;
+ height: 16px;
+ padding: 0;
+ margin: 0 2px;
+ cursor: pointer;
+}
+
+.delete-object {
+ display: inline-block;
+ background: url("/image/0_delete.gif") 1px 0 no-repeat;
+ width: 18px;
+ height: 16px;
+ padding: 0;
+ margin: 0 2px;
+ cursor: pointer;
+}
+
+.add-object {
+ display: inline-block;
+ background: url("/image/add.png") 1px 0 no-repeat;
+ width: 18px;
+ height: 16px;
+ padding: 0;
+ margin: 0 2px;
+ cursor: pointer;
+}
+
+.copy-object {
+ display: inline-block;
+ background: url("/image/copy.png") 1px 0 no-repeat;
+ width: 18px;
+ height: 16px;
+ padding: 0;
+ margin: 0 2px;
+ cursor: pointer;
+}
+
+.statusInvalid {
+ background-color: gray;
+}
+
+.alarmLevel0 {
+ background-color: #00FF00;
+}
+
+.alarmLevel1 {
+ background-color: #FF0000;
+}
+
+.alarmLevel2 {
+ background-color: #F500FF;
+}
+
+.alarmLevel3 {
+ background-color: #FFFF00;
+}
+
+.alarmLevel4 {
+ background-color: #00F9FF;
+}
+
+.required-propertiy {
+ color: red;
+}
+
+.formatNumeric {
+ text-align: right;
+}
+
+.readonly-form {
+ background-color: #dfdfdf;
+}
+
+.form-label {
+ margin: 0 5px 0 1em;
+}
+
+.form-table-col {
+ width: 12em;
+}
+
+.form-table-col-mid {
+ width: 10em;
+}
+
+.form-table-col-sm {
+ width: 8em;
+}
+
+.menu-nav-item {
+ padding: 2px;
+ margin: 0;
+}
+
+.menu-nav-item li {
+ color: #5b5b5b;
+ padding: 5px;
+ font-size: 14px;
+ line-height: 20px;
+ margin: 0;
+ list-style-type: none;
+ line-height: 20px;
+}
+
+.menu-nav-item li a {
+ display: block;
+}

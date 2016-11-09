@@ -1,0 +1,82 @@
+<div class="easyui-layout" fit="true">
+    <div id="node-nav" region="west" split="true" title="节点导航">
+        <div style="margin: 0;" class="easyui-panel dialog-toolbar" border="false">
+            <div class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-add'"
+                onclick="WUI.navObjectTree.add()"></div>
+            <div class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-reload'"
+                onclick="WUI.navObjectTree.reloadAll()"></div>
+        </div>
+        <div class="easyui-panel" style="padding: 5px" border="false">
+            <ul id="nav-object-tree" class="easyui-tree"></ul>
+            <div id="nav-tree-menu" class="easyui-menu" style="width: 120px;">
+                <div onclick="WUI.navObjectTree.append()" data-options="iconCls:'icon-add'">Append</div>
+                <div onclick="WUI.navObjectTree.removeit()" data-options="iconCls:'icon-remove'">Remove</div>
+                <div class="menu-sep"></div>
+                <div onclick="WUI.navObjectTree.reload()" data-options="iconCls:'icon-reload'">reload</div>
+            </div>
+        </div>
+    </div>
+    <div id="main-workspace" class="easyui-layout" region="center" title="工作区">
+        <div class="easyui-layout" region="north" border="false" style="height: 48px;">
+            <h2 id="title" class="title-panel" onclick="window.WUI.open()">title</h2>
+        </div>
+        <div class="easyui-layout" region="center" border="false" style="padding: 10px;">
+            <div id="monitor-tabs" class="easyui-tabs" border="true" plain="true" fit="true">
+                <div title="First Tab" style="padding: 10px;">
+                    <div id="monitor-map"></div>
+                </div>
+                <div title="Tab2" data-options="closable:true" style="overflow: auto; padding: 10px;"></div>
+                <div title="Tab3" data-options="iconCls:'icon-reload',closable:true" style="padding: 10px;">tab3</div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+$('#monitor-tabs').tabs({
+	width : $("#monitor-tabs").parent().width(),
+	height : "auto"
+});
+	$(window).resize(function() {
+		$('#monitor-tabs').tabs({
+			width : $("#monitor-tabs").parent().width(),
+			height : "auto"
+		});
+	});
+	$(function() {
+		$('#monitor-tabs').tabs({
+			width : $("#monitor-tabs").parent().width(),
+			height : "auto"
+		});
+	});
+	window.WUI = window.WUI || {};
+	window.WUI.open = function() {
+		$.messager.progress();
+		//$.messager.alert('Warning','The warning message');
+		$.messager.progress('close');
+
+		$('#extdialog1').dialog('open').dialog({
+			title : 'My Dialog',
+			left : $(window).width() - 400,
+			top : $(window).height() - 200,
+			width : 400,
+			height : 200,
+			closed : false,
+			cache : false,
+			href : '/dialog.html',
+			modal : true,
+			buttons : [ {
+				text : 'Save',
+				handler : function() {
+				}
+			}, {
+				text : 'Close',
+				handler : function() {
+				}
+			} ]
+		});
+		//$("#extdialog1").dialog("move",{top:$(document).scrollTop() + ($(window).height()-200) * 0.5,left:$(document).scrollLeft() + ($(window).width()-400) * 0.5});  
+	}
+</script>
+<script type="text/javascript" src="/js/monitor/monitor.js"></script>
+<script type="text/javascript" src="/js/monitor/object-nav-tree.js"></script>
+

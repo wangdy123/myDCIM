@@ -1,0 +1,19 @@
+{
+  "name": "myDCIM",
+  "version": "0.0.0",
+  "description": "wincom DCIM",
+  "main": "index.js",
+  "dependencies": {
+    "express": "~4.14.0",
+    "node-mysql-transaction":"~0.2.1",
+    "mysql": "~2.11.1",
+    "redis": "~0.4.2",
+    "body-parser": "~1.15.2",
+    "cookie-parser": "~1.4.3",
+    "cookie-session":"~2.0.0",
+    "serve-favicon": "~2.3.0",
+    "ejs": "~2.5.2"
+  }, "devDependencies": {
+		  "hbs": "~4.0.1"
+	  }
+}

@@ -7,6 +7,7 @@ $(document).ready(function() {
 });
 
 window.WUI = window.WUI || {};
+
 var subscribes = [];
 window.WUI.subscribe = function(evt, fn) {
 	subscribes.push({
@@ -14,7 +15,6 @@ window.WUI.subscribe = function(evt, fn) {
 		fn : fn
 	});
 };
-
 window.WUI.publishEvent = function(name, event) {
 	for ( var evt in subscribes) {
 		if (name === subscribes[evt].name) {
@@ -22,6 +22,118 @@ window.WUI.publishEvent = function(name, event) {
 		}
 	}
 };
+
+window.WUI.ajax={};
+function doSuccess(success,data,textStatus,jqXHR){
+	if(success){
+		success(data,textStatus);
+	}
+}
+function doError(fail,xhr,textStatus){
+	if(fail){
+		fail(xhr.responseText,xhr.status);
+	}
+}
+window.WUI.ajax.post=function(url,body,success,fail,longtime){
+	if(longtime){
+	$.messager.progress();
+	}
+	$.ajax({
+	    url:url,
+	    type:'POST', // GET
+	    // context:body,
+	    data:JSON.stringify( body ),
+	    contentType: "application/json; charset=utf-8",
+	    timeout:30000,    // 超时时间
+	    dataType:'json',
+	    success:function(data,textStatus,jqXHR){
+	    	if(longtime){
+	    		$.messager.progress('close');
+	    	}
+	    	doSuccess(success,data,textStatus,jqXHR);
+	    },
+	    error:function(xhr,textStatus){
+	    	if(longtime){
+	    		$.messager.progress('close');
+	    	}
+	    	doError(fail,xhr,textStatus);
+	    }
+	});
+};
+window.WUI.ajax.put=function(url,body,success,fail,longtime){
+	if(longtime){
+		$.messager.progress();
+		}
+	$.ajax({
+	    url:url,
+	    type:'PUT', // GET
+	    contentType: "application/json; charset=utf-8",
+	    data:JSON.stringify( body ),
+	    // context:body,
+	    timeout:30000,    // 超时时间
+	    dataType:'json',
+	    success:function(data,textStatus,jqXHR){
+	    	if(longtime){
+	    		$.messager.progress('close');
+	    	}
+	    	doSuccess(success,data,textStatus,jqXHR);
+	    },
+	    error:function(xhr,textStatus){
+	    	if(longtime){
+	    		$.messager.progress('close');
+	    	}
+	    	doError(fail,xhr,textStatus);
+	    }
+	});
+};
+window.WUI.ajax.get=function(url,args,success,fail,longtime){
+	if(longtime){
+		$.messager.progress();
+		}
+	$.ajax({
+	    url:url,
+	    type:'GET', //
+	    data:args,
+	    timeout:30000,    // 超时时间
+	    dataType:'json',
+	    success:function(data,textStatus,jqXHR){
+	    	if(longtime){
+	    		$.messager.progress('close');
+	    	}
+	    	doSuccess(success,data,textStatus,jqXHR);
+	    },
+	    error:function(xhr,textStatus){
+	    	if(longtime){
+	    		$.messager.progress('close');
+	    	}
+	    	doError(fail,xhr,textStatus);
+	    }
+	});
+};
+window.WUI.ajax.remove=function(url,args,success,fail,longtime){
+	if(longtime){
+		$.messager.progress();
+		}
+	$.ajax({
+	    url:url,
+	    type:'DELETE', // GET
+	    timeout:30000,    // 超时时间
+	    data:args,
+	    success:function(data,textStatus,jqXHR){
+	    	if(longtime){
+	    		$.messager.progress('close');
+	    	}
+	    	doSuccess(success,data,textStatus,jqXHR);
+	    },
+	    error:function(xhr,textStatus){
+	    	if(longtime){
+	    		$.messager.progress('close');
+	    	}
+	    	doError(fail,xhr,textStatus);
+	    }
+	});
+};
+
 
 window.WUI.stringTrim = function(str) {
 	if(!str){

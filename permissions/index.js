@@ -1,7 +1,5 @@
 var express = require('express');
 
-var fs = require('fs');
-
 module.exports.getCurrentUser = function(req, res, cbk) {
 	cbk(null, {
 		userId : 1,

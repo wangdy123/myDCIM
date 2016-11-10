@@ -5,7 +5,7 @@ module.exports = [ {
 		id : 11,
 		title : "监控系统",
 		url : "dashboard.html",
-		htmlFileUrl:"/dashboard.html",
+		htmlFileUrl:"/dashboard/dashboard.html",
 		border : false,
 		name : "主页"
 	}, {

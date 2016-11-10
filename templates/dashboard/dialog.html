@@ -1,0 +1,10 @@
+<div class="panel" align="center", fit="true">
+<table>
+    {{#each items}}
+    <tr>
+        <td align="right"><input type="checkbox" class="dashboard-item" {{checked}} value="{{index}}"></td>
+        <td >{{title}}</td>
+    </tr>
+    {{/each}}
+</table>
+</div>

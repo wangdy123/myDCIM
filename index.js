@@ -1,8 +1,6 @@
 var express = require('express');
 var app = express();
 
-
-
 var config = require('./config').config;
 
 app.use(require('serve-favicon')(require('path').join(__dirname, 'public', 'favicon.ico')));

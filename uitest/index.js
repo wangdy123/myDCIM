@@ -1,8 +1,5 @@
-var app = require('./app');
-var dashboard = require('../config').dashboard;
+var express = require('express');
+var app = express();
 
-app.get('/dashboard.html', function(req, res) {
-	res.render('dashboard/dashboard', dashboard);
-});
-
+app.use('', require('./dashboard'));
 module.exports = app;

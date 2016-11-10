@@ -2,12 +2,16 @@ var express = require('express');
 var app = express();
 
 var hbs = require('hbs');
-app.set('views', './templates/apps');
+app.set('views', __dirname + '/templates');
 app.set('view engine', 'html');
 app.engine('.html', hbs.__express);
 
 var db = require('../db');
 var config = require('../config');
+
+app.use(express.static(__dirname + '/public', {
+	maxAge : config.fileMaxAge * 3600 * 24 * 1000
+}));
 
 function getTheme(pool, userId, req, cbk) {
 	cbk("default");

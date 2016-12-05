@@ -8,23 +8,25 @@
 <link rel="stylesheet" type="text/css" href="/easyui/themes/icon.css">
 <script type="text/javascript" src="/easyui/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="/easyui/locale/easyui-lang-zh_CN.js"></script>
-<script type="text/javascript" src="/apps/layout.js"></script>
+<script type="text/javascript" src="/apps/apps.js"></script>
+<script type="text/javascript" src="/js/global.js"></script>
 <link rel="stylesheet" type="text/css" href="/css/style.css" />
 
 </head>
 <body class="easyui-layout">
     <div class="easyui-layout" region="north" border="false">
-        <img class="panel" alt="logo" src="/image/logo1.jpg"></img>
+        <img class="panel" title="logo" src="/image/logo1.jpg"></img>
         <h2 id="system-name" class="panel">DCIM测试平台</h2>
         <div id="user-info-panel" style="float: right; padding: 0 10px 0;">
             <div class="header-item panel">
-                <a>帮助文档</a>
+                <div class="panel">
+                    <span style="font-weight: normal; font-size: 12px;">当前用户：</span><a id="current-user-panel" href="#"
+                        style="color: SteelBlue;">{{userName}}</a> <a id="change-password-btn" href="#"><img
+                        title="修改口令" src="/image/key_16.png"></img></a>
+                </div>
             </div>
             <div class="header-item panel">
-                <div class="panel">{{userName}}</div>
-            </div>
-            <div class="header-item panel">
-                <div class="panel">logout</div>
+                <a id="user-logout-btn" href="#"><img class="panel" title="注销" src="/image/power_16.png"></img></a>
             </div>
             <div class="header-item panel">
                 <div class="easyui-panel" border="false">
@@ -36,6 +38,10 @@
                     {{/each}}
                 </div>
             </div>
+            <div class="header-item panel">
+                <a href="/apps/help.html"><img class="panel" title="帮助文档" src="/image/help_16.png"></img></a>
+            </div>
+
         </div>
     </div>
     <div class="easyui-layout" region="center" border="false">
@@ -51,7 +57,7 @@
                 {{/each}}
             </div>
         </div>
-       <div id="full-workspace" region="center" class="pannel"  border="{{border}}" href="{{htmlFileUrl}}"> </div>
+        <div id="full-workspace" region="center" class="pannel" border="{{border}}" href="{{htmlFileUrl}}"></div>
     </div>
     <div id="extdialog1" class="easyui-dialog" data-options="closed:true"></div>
     <div id="alarm-tooltip" class="easyui-dialog" data-options="closed:true"></div>

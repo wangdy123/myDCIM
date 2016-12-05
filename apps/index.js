@@ -13,8 +13,12 @@ app.use(express.static(__dirname + '/public', {
 	maxAge : config.fileMaxAge * 3600 * 24 * 1000
 }));
 
-function getTheme(pool, userId, req, cbk) {
-	cbk("default");
+function getTheme(user, req, cbk) {
+	if (req.cookies.theme) {
+		cbk(req.cookies.theme);
+	} else {
+		cbk(user.DEFAULT_THEME);
+	}
 };
 function setMenu(body, menus, path) {
 	console.log('path: ' + path);
@@ -35,17 +39,16 @@ function setMenu(body, menus, path) {
 }
 
 app.get('/:path', function(req, res) {
-	require('../permissions').getCurrentUser(req, res, function(error, user) {
+	require('../permissions').getCurrentDetailUser(req, res, function(error, user) {
 		if (error) {
 			response.writeHead(401, {
 				'Content-Type' : 'text/plain'
 			});
 			response.end(JSON.stringify(error));
 		} else {
-			var pool = db.pool;
-			getTheme(pool, user.userId, req, function(theme) {
+			getTheme(user, req, function(theme) {
 				var body = {};
-				body.userName = user.userName;
+				body.userName = user.NAME;
 				body.theme = theme;
 				body.themes = config.themes;
 				setMenu(body, config.menus, req.params.path);

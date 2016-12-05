@@ -2,86 +2,77 @@ $(function() {
 	var accountUrl = "/account/accounts";
 	$node = $('#account-grid');
 
-	$node
-			.datagrid({
-				url : accountUrl,
-				method : "get",
-				singleSelect : true,
-				onLoadError : function(s) {
-					$.messager.alert('失败', "加载失败");
-				},
-				toolbar : [ {
-					iconCls : 'icon-add',
-					handler : function() {
-						accountDialog();
-					}
-				}, '-', {
-					iconCls : 'icon-reload',
-					handler : function() {
-						$node.datagrid("reload");
-					}
-				} ],
-				columns : [ [
-						{
-							field : 'action',
-							title : '操作',
-							width : 100,
-							align : 'center',
-							formatter : function(value, row, index) {
-								var e = '<div class="icon-edit operator-tool" title="修改" onclick="WUI.account.editrow(this)"></div> ';
-								var s = '<div class="separater"></div> ';
-								var d = "";
-								if (row.ENABLE) {
-									d = '<div class="icon-no operator-tool" title="禁用" onclick="WUI.account.disablerow(this)"></div>';
-								} else {
-									if (row.PERSONNEL_ENABLE) {
-										d = '<div class="icon-ok operator-tool" title="启用" onclick="WUI.account.enablerow(this)"></div>';
-									}
-								}
-								return e + s + d;
-							}
-						},
-						{
-							field : 'ID',
-							title : '编码',
-							align : 'right',
-							width : 80
-						},
-						{
-							field : 'NAME',
-							title : '姓名',
-							width : 150
-						},
-						{
-							field : 'ACCOUNT',
-							title : '帐号',
-							width : 150
-						},
-						{
-							field : 'ROLE_NAME',
-							title : '角色',
-							width : 100
-						},
-						{
-							field : 'DEFAULT_THEME',
-							title : '主题',
-							width : 100
-						},
-						{
-							field : 'DEPARTMENT_NAME',
-							title : '所在部门',
-							width : 150
-						},
-						{
-							field : 'ENABLE',
-							title : '是否启用',
-							width : 100,
-							formatter : function(value, row, index) {
-								return '<div class="' + (row.ENABLE ? 'icon-ok' : 'icon-no')
-										+ ' operator-tool"></div> ';
-							}
-						} ] ]
-			});
+	$node.datagrid({
+		url : accountUrl,
+		method : "get",
+		singleSelect : true,
+		onLoadError : function(s) {
+			$.messager.alert('失败', "加载失败");
+		},
+		toolbar : [ {
+			iconCls : 'icon-add',
+			handler : function() {
+				accountDialog();
+			}
+		}, '-', {
+			iconCls : 'icon-reload',
+			handler : function() {
+				$node.datagrid("reload");
+			}
+		} ],
+		columns : [ [ {
+			field : 'action',
+			title : '操作',
+			width : 100,
+			align : 'center',
+			formatter : function(value, row, index) {
+				if (!row.PERSONNEL_ENABLE) {
+					return "";
+				}
+				var e = '<div class="icon-edit operator-tool" title="修改" onclick="WUI.account.editrow(this)"></div> ';
+				var s = '<div class="separater"></div> ';
+				var d = "";
+				if (row.ENABLE) {
+					d = '<div class="icon-no operator-tool" title="禁用" onclick="WUI.account.disablerow(this)"></div>';
+				} else {
+					d = '<div class="icon-ok operator-tool" title="启用" onclick="WUI.account.enablerow(this)"></div>';
+				}
+				return e + s + d;
+			}
+		}, {
+			field : 'ID',
+			title : '编码',
+			align : 'right',
+			width : 80
+		}, {
+			field : 'NAME',
+			title : '姓名',
+			width : 150
+		}, {
+			field : 'ACCOUNT',
+			title : '帐号',
+			width : 150
+		}, {
+			field : 'ROLE_NAME',
+			title : '角色',
+			width : 100
+		}, {
+			field : 'DEFAULT_THEME',
+			title : '主题',
+			width : 100
+		}, {
+			field : 'DEPARTMENT_NAME',
+			title : '所在部门',
+			width : 150
+		}, {
+			field : 'ENABLE',
+			title : '是否启用',
+			width : 100,
+			formatter : function(value, row, index) {
+				return '<div class="' + (row.ENABLE ? 'icon-ok' : 'icon-no') + ' operator-tool"></div> ';
+			}
+		} ] ]
+	});
 
 	function getRowIndex(target) {
 		var tr = $(target).closest('tr.datagrid-row');

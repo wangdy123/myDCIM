@@ -25,7 +25,7 @@ app.use('/uitest', require('./uitest'));
 app.use('/apps', require('./apps'));
 app.use('/monitor', require('./monitor'));
 app.use('/dashboard', require('./dashboard'));
-// app.use('/temp', require('./temp'));
+app.use('/account', require('./account'));
 
 app.use(function(req, res, next) {
 	var err = new Error('Not Found');

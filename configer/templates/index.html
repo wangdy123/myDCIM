@@ -1,0 +1,60 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>{{title}}</title>
+<script type="text/javascript" src="/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="/jquery/jquery.cookie.js"></script>
+<link rel="stylesheet" type="text/css" href="/easyui/themes/{{theme}}/easyui.css">
+<link rel="stylesheet" type="text/css" href="/easyui/themes/icon.css">
+<script type="text/javascript" src="/easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="/easyui/locale/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript" src="/apps/layout.js"></script>
+<link rel="stylesheet" type="text/css" href="/css/style.css" />
+
+</head>
+<body class="easyui-layout">
+    <div class="easyui-layout" region="north" border="false">
+        <img class="panel" alt="logo" src="/image/logo1.jpg"></img>
+        <h2 id="system-name" class="panel">DCIM测试平台</h2>
+        <div id="user-info-panel" style="float: right; padding: 0 10px 0;">
+            <div class="header-item panel">
+                <a>帮助文档</a>
+            </div>
+            <div class="header-item panel">
+                <div class="panel">{{userName}}</div>
+            </div>
+            <div class="header-item panel">
+                <div class="panel">logout</div>
+            </div>
+            <div class="header-item panel">
+                <div class="easyui-panel" border="false">
+                    <label class="easyui-menubutton" data-options="menu:'#theme-panel'">{{theme}}</label>
+                </div>
+                <div id="theme-panel" style="width: 150px;">
+                    {{#each themes}}
+                    <div class="theme-item" value="{{type}}">{{name}}</div>
+                    {{/each}}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="easyui-layout" region="center" border="false">
+        <div region="west" region="west" split="true" title="功能导航" style="width: 150px;">
+            <div id="main-menu" class="easyui-accordion" data-options="fit:true,border:false">
+                {{#each menus}}
+                <div title={{name}} style="padding: 5px;" data-options="selected:{{selected}}">
+                    <ul class="menu-nav-item">
+                        {{#each childMenus}}
+                        <li><a href="/apps/{{url}}">{{name}}</a></li> {{/each}}
+                    </ul>
+                </div>
+                {{/each}}
+            </div>
+        </div>
+       <div id="full-workspace" region="center" class="pannel"  border="{{border}}" href="{{htmlFileUrl}}"> </div>
+    </div>
+    <div id="extdialog1" class="easyui-dialog" data-options="closed:true"></div>
+    <div id="alarm-tooltip" class="easyui-dialog" data-options="closed:true"></div>
+
+</body>
+</html>

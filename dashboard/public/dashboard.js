@@ -4,10 +4,17 @@ $(function() {
 	var itemIdPrefix = "dashboard-item-";
 	$node = $('#dashboard-pannel');
 	var columnCount = 3;
-	$node.panel({
-		width : $node.parent().width(),
-		height : $node.parent().height()
+	$node.panel({	
+		fit:true,
 	});
+	$node.portal({
+		onStateChange : saveItems
+	});
+	
+	$(window).resize(function() {
+		$node.portal('resize');
+	});
+	
 
 	function saveItems() {
 		var userItems = [];
@@ -26,9 +33,6 @@ $(function() {
 		return userItems;
 	}
 
-	$node.portal({
-		onStateChange : saveItems
-	});
 	function isInDashboard(index) {
 		for (var columnIndex = 0; columnIndex < columnCount; columnIndex++) {
 			var panels = $node.portal('getPanels', columnIndex);
@@ -43,7 +47,7 @@ $(function() {
 	
 	$("#arrange-dashboard-bt").click(function() {
 		WUI.ajax.get(itemUrl, {}, function(data, status) {
-			$('#dashboard-dialog').dialog('open').dialog({
+			$('#dashboard-dialog').dialog({
 				title : '桌面整理',
 				left : ($(window).width() - 300) * 0.5,
 				top : ($(window).height() - 400) * 0.5,

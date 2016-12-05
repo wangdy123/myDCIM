@@ -56,7 +56,7 @@ label {
 .title-panel {
  text-align: center;
  vertical-align: middle;
- padding:5px;
+ padding: 5px;
  margin: 0;
  width: 90%;
 }
@@ -77,39 +77,8 @@ label {
  border-left: 1px solid SteelBlue;
 }
 
-.edit-object {
+.operator-tool {
  display: inline-block;
- background: url("/image/edit.png") 1px 0 no-repeat;
- width: 18px;
- height: 16px;
- padding: 0;
- margin: 0 2px;
- cursor: pointer;
-}
-
-.delete-object {
- display: inline-block;
- background: url("/image/0_delete.gif") 1px 0 no-repeat;
- width: 18px;
- height: 16px;
- padding: 0;
- margin: 0 2px;
- cursor: pointer;
-}
-
-.add-object {
- display: inline-block;
- background: url("/image/add.png") 1px 0 no-repeat;
- width: 18px;
- height: 16px;
- padding: 0;
- margin: 0 2px;
- cursor: pointer;
-}
-
-.copy-object {
- display: inline-block;
- background: url("/image/copy.png") 1px 0 no-repeat;
  width: 18px;
  height: 16px;
  padding: 0;
@@ -175,7 +144,6 @@ label {
 }
 
 .menu-nav-item li {
- color: #5b5b5b;
  padding: 5px;
  font-size: 14px;
  line-height: 20px;
@@ -185,5 +153,7 @@ label {
 }
 
 .menu-nav-item li a {
+ color: #5b5b5b;
  display: block;
+ font-weight: bold;
 }

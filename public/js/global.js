@@ -271,7 +271,20 @@ $.extend($.fn.validatebox.defaults.rules, {
         },
         message: '年龄必须是0到120之间的整数'
     },
-
+    password:{
+    	 validator: function (value) {
+    		 if(value.length<8){
+    			 return false;
+    		 }
+    		 var isValid=/[a-z]/.test(value);
+    		 isValid=isValid&&/[0-9]/.test(value);
+    		 isValid=isValid&&/[A-Z]/.test(value);
+    		 isValid=isValid&&/[\x20-\x2F\x3A-\x40\x5B-\x60\x7B-\x7E]/.test(value);
+    		 
+             return isValid;
+         },
+         message: '密码长度大于8位；密码是大小写字母、数字以及特殊字符的混合使用'
+    },
     chinese: {// 验证中文
         validator: function (value) {
             return /^[\Α-\￥]+$/i.test(value);
@@ -296,12 +309,6 @@ $.extend($.fn.validatebox.defaults.rules, {
         },
         message: '用户名不合法（字母开头，允许6-16字节，允许字母数字下划线）'
     },
-    faxno: {// 验证传真
-        validator: function (value) {
-            return /^((\d2,3)|(\d{3}\-))?(0\d2,3|0\d{2,3}-)?[1-9]\d{6,7}(\-\d{1,4})?$/i.test(value);
-        },
-        message: '传真号码不正确'
-    },
     zip: {// 验证邮政编码
         validator: function (value) {
             return /^[1-9]\d{5}$/i.test(value);
@@ -319,28 +326,5 @@ $.extend($.fn.validatebox.defaults.rules, {
             return /^[\Α-\￥]+$/i.test(value) | /^\w+[\w\s]+\w+$/i.test(value);
         },
         message: '请输入姓名'
-    },
-    date: {// 验证姓名，可以是中文或英文
-        validator: function (value) {
-            // 格式yyyy-MM-dd或yyyy-M-d
-            return /^(?:(?!0000)[0-9]{4}([-]?)(?:(?:0?[1-9]|1[0-2])\1(?:0?[1-9]|1[0-9]|2[0-8])|(?:0?[13-9]|1[0-2])\1(?:29|30)|(?:0?[13578]|1[02])\1(?:31))|(?:[0-9]{2}(?:0[48]|[2468][048]|[13579][26])|(?:0[48]|[2468][048]|[13579][26])00)([-]?)0?2\2(?:29))$/i.test(value);
-        },
-        message: '清输入合适的日期格式'
-    },
-    msn: {
-        validator: function (value) {
-            return /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/.test(value);
-        },
-        message: '请输入有效的msn账号(例：abc@hotnail(msn/live).com)'
-    },
-    same: {
-        validator: function (value, param) {
-            if ($("#" + param[0]).val() != "" && value != "") {
-                return $("#" + param[0]).val() == value;
-            } else {
-                return true;
-            }
-        },
-        message: '两次输入的密码不一致！'
     }
 }); 

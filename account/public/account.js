@@ -217,7 +217,7 @@ $(function() {
 					});
 					$('#account-password').validatebox({
 						required : true,
-						validType : 'length[1,32]'
+						validType : 'password'
 					});
 					$('#account-password-confirm').validatebox({
 						required : true,

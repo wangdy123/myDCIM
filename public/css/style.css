@@ -138,6 +138,12 @@ label {
  width: 8em;
 }
 
+.icon-close {
+ background: url('/image/close.png') no-repeat center center;
+}
+.icon-key {
+ background: url('/image/key.png') no-repeat center center;
+}
 .menu-nav-item {
  padding: 2px;
  margin: 0;

@@ -45,6 +45,11 @@ $(function() {
 							width : 80
 						},
 						{
+							field : 'JOB_NUMBER',
+							title : '工号',
+							width : 150
+						},
+						{
 							field : 'NAME',
 							title : '姓名',
 							width : 150
@@ -132,7 +137,7 @@ $(function() {
 			width : 300,
 			closed : false,
 			cache : false,
-			href : '/account/personnel-dialog.html' + (isEdit ? ("?personnelId=" + personnelId) : ""),
+			href : '/account/personnel/personnel-dialog.html' + (isEdit ? ("?personnelId=" + personnelId) : ""),
 			onLoadError : function() {
 				$.messager.alert('失败', "对话框加载失败，请刷新后重试！");
 			},

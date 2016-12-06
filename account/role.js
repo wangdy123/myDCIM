@@ -10,7 +10,7 @@ function isRoleHasRight(rightId, roleRights) {
 	}
 	return false;
 }
-app.get('/role-dialog.html', function(req, res) {
+app.get('/role/role-dialog.html', function(req, res) {
 	if (req.query.roleId) {
 		getRoleById(db.pool, req.query.roleId, function(error, role) {
 			console.log(error);

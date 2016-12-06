@@ -41,10 +41,10 @@ function setMenu(body, menus, path) {
 app.get('/:path', function(req, res) {
 	require('../permissions').getCurrentDetailUser(req, res, function(error, user) {
 		if (error) {
-			response.writeHead(401, {
+			res.writeHead(401, {
 				'Content-Type' : 'text/plain'
 			});
-			response.end(JSON.stringify(error));
+			res.end(JSON.stringify(error));
 		} else {
 			getTheme(user, req, function(theme) {
 				var body = {};

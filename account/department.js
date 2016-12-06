@@ -2,7 +2,7 @@ var app = require('./app');
 
 var db =require('../db');
 
-app.get('/department-dialog.html', function(req, res) {
+app.get('/department/department-dialog.html', function(req, res) {
 	if (req.query.departmentId) {
 		getDepartmentById(db.pool, req.query.departmentId, function(error, department) {
 			console.log(error);

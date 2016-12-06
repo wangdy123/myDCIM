@@ -45,6 +45,10 @@ $(function() {
 			align : 'right',
 			width : 80
 		}, {
+			field : 'JOB_NUMBER',
+			title : '工号',
+			width : 150
+		}, {
 			field : 'NAME',
 			title : '姓名',
 			width : 150
@@ -125,7 +129,7 @@ $(function() {
 			width : 350,
 			closed : false,
 			cache : false,
-			href : '/account/account-dialog.html',
+			href : '/account/account/account-dialog.html',
 			onLoadError : function() {
 				$.messager.alert('失败', "对话框加载失败，请刷新后重试！");
 			},

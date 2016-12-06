@@ -30,28 +30,28 @@ module.exports = [ {
 		id : 31,
 		title : "部门管理",
 		url : "department.html",
-		htmlFileUrl : "/account/department-wokspace.html",
+		htmlFileUrl : "/account/department/department-wokspace.html",
 		border : false,
 		name : "部门管理"
 	}, {
 		id : 34,
 		title : "角色管理",
 		url : "role.html",
-		htmlFileUrl : "/account/role-wokspace.html",
+		htmlFileUrl : "/account/role/role-wokspace.html",
 		border : false,
 		name : "角色管理"
 	}, {
 		id : 32,
 		title : "人员管理",
 		url : "personnel.html",
-		htmlFileUrl : "/account/personnel-wokspace.html",
+		htmlFileUrl : "/account/personnel/personnel-wokspace.html",
 		border : false,
 		name : "人员管理"
 	}, {
 		id : 33,
 		title : "帐号管理",
 		url : "account.html",
-		htmlFileUrl :"/account/account-wokspace.html",
+		htmlFileUrl :"/account/account/account-wokspace.html",
 		border : false,
 		name : "帐号管理"
 	} ]

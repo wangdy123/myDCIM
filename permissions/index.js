@@ -9,7 +9,7 @@ module.exports.getCurrentUser = function(req, res, cbk) {
 }
 
 function getaccountById(pool, accountId, cbk) {
-	var sql = 'select a.ID,p.NAME,a.ACCOUNT,p.E_MAIL,p.TEL,p.ENABLE as PERSONNEL_ENABLE,'
+	var sql = 'select a.ID,p.NAME,p.JOB_NUMBER,a.ACCOUNT,p.E_MAIL,p.TEL,p.ENABLE as PERSONNEL_ENABLE,'
 			+ 'a.ENABLE,a.LOGIN_PASSWORD, a.PASSWORD_TIME,a.DEFAULT_THEME,a.ROLE_ID,r.NAME as ROLE_NAME,'
 			+ 'p.CREATE_TIME,p.DEPARTMENT,d.NAME as DEPARTMENT_NAME '
 			+ 'from portal.ACCOUNT a join portal.PERSONNEL_CFG p on a.ID=p.ID '

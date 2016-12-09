@@ -29,9 +29,9 @@ $(function() {
 			return;
 		}
 		currentObject = object;
-		$("workspace-title").text(currentObject.NAME);
+		$("#workspace-title").text(currentObject.NAME);
 		var toolbar = [];
-		var childTypes = WUI.objectTypes[currentObject.OBJECT_TYPE].childTypes;
+		var childTypes = WUI.regionChildTypes[currentObject.OBJECT_TYPE];
 		for (var index = 0; index < childTypes.length; index++) {
 			(function(type) {
 				toolbar.push({
@@ -52,6 +52,7 @@ $(function() {
 		$node.datagrid({
 			toolbar : toolbar
 		});
+		reload(false);
 	});
 	$node.datagrid({
 		url : regionUrl,

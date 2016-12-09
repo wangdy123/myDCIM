@@ -157,12 +157,22 @@ label {
 .icon-station {
  background: url('/image/station.gif') no-repeat center center;
 }
+.icon-building {
+ background: url('/image/building.gif') no-repeat center center;
+}
+.icon-room {
+ background: url('/image/room.gif') no-repeat center center;
+}
 .icon-floor {
  background: url('/image/floor.gif') no-repeat center center;
 }
 .icon-device {
  background: url('/image/device.gif') no-repeat center center;
 }
+.icon-devModule {
+ background: url('/image/devModule.gif') no-repeat center center;
+}
+
 .menu-nav-item {
  padding: 2px;
  margin: 0;

@@ -10,35 +10,37 @@ window.WUI.objectTypeDef = {
 		ROOM : 6
 	};
 
+window.WUI.regionChildTypes={
+	1:[2],
+	2:[3],
+	3:[]
+};
 window.WUI.objectTypes = {
 		1 : {
 			name : "省中心",
-			iconCls : "icon-csc",
-			childTypes : [ 2 ]
+			iconCls : "icon-csc"
 		},
 		2 : {
 			name : "市区域",
-			iconCls : "icon-lsc",
-			childTypes : [ 3, 4 ]
+			iconCls : "icon-lsc"
 		},
 		3 : {
 			name : "县区域",
-			iconCls : "icon-region",
-			childTypes : [ 4 ]
+			iconCls : "icon-region"
 		},
 		4 : {
 			name : "园区",
-			iconCls : "icon-region",
+			iconCls : "icon-station",
 			childTypes : [ 5, 6 ]
 		},
 		5 : {
 			name : "机楼",
-			iconCls : "icon-region",
+			iconCls : "icon-building",
 			childTypes : [ 6 ]
 		},
 		6 : {
 			name : "机房",
-			iconCls : "icon-region",
+			iconCls : "icon-room",
 			childTypes : [ 7 ]
 		},
 		7 : {
@@ -53,17 +55,17 @@ window.WUI.objectTypes = {
 		},
 		9 : {
 			name : "动环设备",
-			iconCls : "icon-region",
+			iconCls : "icon-device",
 			childTypes : []
 		},
 		10 : {
 			name : "网络设备",
-			iconCls : "icon-region",
+			iconCls : "icon-devModule",
 			childTypes : []
 		},
 		11 : {
 			name : "服务器",
-			iconCls : "icon-region",
+			iconCls : "icon-device",
 			childTypes : []
 		}
 	};

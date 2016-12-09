@@ -23,9 +23,11 @@ app.get('/', function(req, res) {
 
 app.use('/uitest', require('./uitest'));
 app.use('/apps', require('./apps'));
-app.use('/monitor', require('./monitor'));
+app.use('/navigation', require('./navigation'));
 app.use('/dashboard', require('./dashboard'));
 app.use('/account', require('./account'));
+app.use('/configer', require('./configer'));
+app.use('/monitor', require('./monitor'));
 
 app.use(function(req, res, next) {
 	var err = new Error('Not Found');

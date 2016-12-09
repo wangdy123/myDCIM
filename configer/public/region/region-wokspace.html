@@ -1,0 +1,14 @@
+<div class="easyui-layout" fit="true">
+    <div id="node-nav" region="west" split="true" title="区域导航" href="/navigation/region/region-nav.html"></div>
+    <div id="main-workspace" class="easyui-layout" region="center" title="配置区域">
+        <div class="panel" region="north" border="false" style="height: 48px;">
+            <h2 id="workspace-title" fit="true" class=" title-panel">监控中心</h2>
+        </div>
+        <div class="panel" region="center" border="false">
+            <table id="region-datagrid" class="easyui-datagrid" fit="true" border="false" iconCls="icon-man">
+            </table>
+            <div id="region-dialog"></div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="/configer/region/region.js"></script>

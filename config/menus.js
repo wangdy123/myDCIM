@@ -51,8 +51,19 @@ module.exports = [ {
 		id : 33,
 		title : "帐号管理",
 		url : "account.html",
-		htmlFileUrl :"/account/account/account-wokspace.html",
+		htmlFileUrl : "/account/account/account-wokspace.html",
 		border : false,
 		name : "帐号管理"
+	} ]
+}, {
+	id : 4,
+	name : "业务配置",
+	childMenus : [ {
+		id : 41,
+		title : "行政区域配置",
+		url : "region.html",
+		htmlFileUrl : "/configer/region/region-wokspace.html",
+		border : false,
+		name : "行政区域配置"
 	} ]
 } ];

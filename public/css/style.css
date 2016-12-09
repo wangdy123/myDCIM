@@ -48,7 +48,7 @@ label {
 
 #main-workspace {
  margin: 0;
- padding: 5px;
+ padding: 0;
  min-width: 400px;
  overflow-y: auto;
 }
@@ -56,9 +56,8 @@ label {
 .title-panel {
  text-align: center;
  vertical-align: middle;
- padding: 5px;
+ padding: 10px;
  margin: 0;
- width: 90%;
 }
 
 #operator-panel {
@@ -143,6 +142,26 @@ label {
 }
 .icon-key {
  background: url('/image/key.png') no-repeat center center;
+}
+
+.icon-csc {
+ background: url('/image/csc.gif') no-repeat center center;
+}
+
+.icon-lsc {
+ background: url('/image/lsc.gif') no-repeat center center;
+}
+.icon-region {
+ background: url('/image/area.gif') no-repeat center center;
+}
+.icon-station {
+ background: url('/image/station.gif') no-repeat center center;
+}
+.icon-floor {
+ background: url('/image/floor.gif') no-repeat center center;
+}
+.icon-device {
+ background: url('/image/device.gif') no-repeat center center;
 }
 .menu-nav-item {
  padding: 2px;

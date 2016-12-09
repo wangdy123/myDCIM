@@ -1,6 +1,72 @@
 
-window.WUI = window.WUI || {};
 
+window.WUI = window.WUI || {};
+window.WUI.objectTypeDef = {
+		CSC : 1,
+		LSC : 2,
+		REGION : 3,
+		STATION : 4,
+		BUILDDING : 5,
+		ROOM : 6
+	};
+
+window.WUI.objectTypes = {
+		1 : {
+			name : "省中心",
+			iconCls : "icon-csc",
+			childTypes : [ 2 ]
+		},
+		2 : {
+			name : "市区域",
+			iconCls : "icon-lsc",
+			childTypes : [ 3, 4 ]
+		},
+		3 : {
+			name : "县区域",
+			iconCls : "icon-region",
+			childTypes : [ 4 ]
+		},
+		4 : {
+			name : "园区",
+			iconCls : "icon-region",
+			childTypes : [ 5, 6 ]
+		},
+		5 : {
+			name : "机楼",
+			iconCls : "icon-region",
+			childTypes : [ 6 ]
+		},
+		6 : {
+			name : "机房",
+			iconCls : "icon-region",
+			childTypes : [ 7 ]
+		},
+		7 : {
+			name : "机柜列",
+			iconCls : "icon-region",
+			childTypes : [ 8, 9 ]
+		},
+		8 : {
+			name : "机柜",
+			iconCls : "icon-region",
+			childTypes : [ 9, 10, 11 ]
+		},
+		9 : {
+			name : "动环设备",
+			iconCls : "icon-region",
+			childTypes : []
+		},
+		10 : {
+			name : "网络设备",
+			iconCls : "icon-region",
+			childTypes : []
+		},
+		11 : {
+			name : "服务器",
+			iconCls : "icon-region",
+			childTypes : []
+		}
+	};
 var subscribes = [];
 window.WUI.subscribe = function(evt, fn) {
 	subscribes.push({
@@ -8,6 +74,7 @@ window.WUI.subscribe = function(evt, fn) {
 		fn : fn
 	});
 };
+// evt:open_object(object),reload_object(object),current_object(cbk(object))
 window.WUI.publishEvent = function(name, event) {
 	for ( var evt in subscribes) {
 		if (name === subscribes[evt].name) {
@@ -247,7 +314,7 @@ $.extend($.fn.validatebox.defaults.rules, {
     },
     intOrFloat: {// 验证整数或小数
         validator: function (value) {
-            return /^\d+(\.\d+)?$/i.test(value);
+            return /^[+-]?\d+(\.\d+)?$/i.test(value);
         },
         message: '请输入数字，并确保格式正确'
     },

@@ -1,17 +1,17 @@
 var app = require('./app');
 
 app.get('/role.html', function(req, res) {
-	res.render('role-wokspace.html');
+	res.render('role/role-wokspace.html');
 });
 
 app.get('/account.html', function(req, res) {
-	res.render('account-wokspace.html');
+	res.render('account/account-wokspace.html');
 });
 app.get('/department.html', function(req, res) {
-	res.render('department-wokspace.html');
+	res.render('department/department-wokspace.html');
 });
 app.get('/personnel.html', function(req, res) {
-	res.render('personnel-wokspace.html');
+	res.render('personnel/personnel-wokspace.html');
 });
 
 module.exports = app;

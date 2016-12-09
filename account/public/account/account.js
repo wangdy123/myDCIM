@@ -243,8 +243,8 @@ $(function() {
 					isValid = isValid && $('#account-theme').combobox("getValue");
 					isValid = isValid && $('#account-personnel-sel').combobox('getValue');
 					if (!account) {
-						isValid = isValid && $('#account-password').val();
-						isValid = isValid && $('#account-password-confirm').val();
+						isValid = isValid && $('#account-password').validatebox("isValid");
+						isValid = isValid && $('#account-password-confirm').validatebox("isValid");
 						if ($('#account-password').val() !== $('#account-password-confirm').val()) {
 							isValid = false;
 						}

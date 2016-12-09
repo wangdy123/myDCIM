@@ -66,7 +66,7 @@ app.delete('/regions/:id', function(req, res) {
 	var chain = db.transaction(function(chain) {
 		chain.query('delete from config.ADMINISTRATIVE_REGION where ID=?', [ req.params.id ]).on('result', function(result) {
 		posionRelation.deletePosionRelation(chain,req.params.id,function(){
-			posionRelation.deleteObject(chain,region,function(){
+			posionRelation.deleteObject(chain,req.params.id,function(){
 		});
 		});
 		});

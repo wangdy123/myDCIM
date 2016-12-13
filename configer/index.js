@@ -1,8 +1,9 @@
 var app = require('./app');
 
 require('./region')
-//require('./department')
-//require('./personnel')
-//require('./account')
+require('./station')
+require('./building')
+require('./floor')
+require('./room')
 
 module.exports = app;

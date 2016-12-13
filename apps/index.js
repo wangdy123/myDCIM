@@ -29,9 +29,12 @@ function setMenu(body, menus, path) {
 			if (menu.childMenus[j].url === path) {
 				menu.selected = true;
 				body.title = menu.childMenus[j].title;
+				menu.childMenus[j].class="panel-header";
 				body.htmlFileUrl = menu.childMenus[j].htmlFileUrl;
 				console.log('htmlFileUrl: ' + menu.childMenus[j].htmlFileUrl);
 				body.border = false;
+			}else{
+				menu.childMenus[j].class="";
 			}
 		}
 	}

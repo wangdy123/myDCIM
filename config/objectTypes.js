@@ -2,7 +2,7 @@ module.exports.objectTypeDef = {
 	CSC : 1,
 	LSC : 2,
 	REGION : 3,
-	STATION : 4,
+	STATION_BASE : 4,
 	BUILDDING : 5,
 	ROOM : 6
 };
@@ -10,57 +10,46 @@ module.exports.objectTypeDef = {
 module.exports.objectTypes = {
 	1 : {
 		name : "省中心",
-		iconCls : "icon-csc",
-		childTypes : [ 2 ]
+		iconCls : "icon-csc"
 	},
 	2 : {
 		name : "市区域",
-		iconCls : "icon-lsc",
-		childTypes : [ 3, 4 ]
+		iconCls : "icon-lsc"
 	},
 	3 : {
 		name : "县区域",
-		iconCls : "icon-region",
-		childTypes : [ 4 ]
+		iconCls : "icon-region"
 	},
 	4 : {
 		name : "园区",
-		iconCls : "icon-region",
-		childTypes : [ 5, 6 ]
+		iconCls : "icon-station"
 	},
 	5 : {
 		name : "机楼",
-		iconCls : "icon-region",
-		childTypes : [ 6 ]
+		iconCls : "icon-building"
 	},
 	6 : {
 		name : "机房",
-		iconCls : "icon-region",
-		childTypes : [ 7 ]
+		iconCls : "icon-room"
 	},
 	7 : {
 		name : "机柜列",
-		iconCls : "icon-region",
-		childTypes : [ 8, 9 ]
+		iconCls : "icon-region"
 	},
 	8 : {
 		name : "机柜",
-		iconCls : "icon-region",
-		childTypes : [ 9, 10, 11 ]
+		iconCls : "icon-region"
 	},
 	9 : {
 		name : "动环设备",
-		iconCls : "icon-region",
-		childTypes : []
+		iconCls : "icon-device"
 	},
 	10 : {
 		name : "网络设备",
-		iconCls : "icon-region",
-		childTypes : []
+		iconCls : "icon-devModule"
 	},
 	11 : {
 		name : "服务器",
-		iconCls : "icon-region",
-		childTypes : []
+		iconCls : "icon-device"
 	}
 };

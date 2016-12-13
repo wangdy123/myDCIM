@@ -1,13 +1,13 @@
 
-
 window.WUI = window.WUI || {};
 window.WUI.objectTypeDef = {
 		CSC : 1,
 		LSC : 2,
 		REGION : 3,
-		STATION : 4,
+		STATION_BASE : 4,
 		BUILDDING : 5,
-		ROOM : 6
+		FLOOR:6,
+		ROOM : 7
 	};
 
 window.WUI.regionChildTypes={
@@ -15,6 +15,7 @@ window.WUI.regionChildTypes={
 	2:[3],
 	3:[]
 };
+
 window.WUI.objectTypes = {
 		1 : {
 			name : "省中心",
@@ -30,45 +31,54 @@ window.WUI.objectTypes = {
 		},
 		4 : {
 			name : "园区",
-			iconCls : "icon-station",
-			childTypes : [ 5, 6 ]
+			iconCls : "icon-station"
 		},
 		5 : {
 			name : "机楼",
-			iconCls : "icon-building",
-			childTypes : [ 6 ]
+			iconCls : "icon-building"
 		},
 		6 : {
+			name : "楼层",
+			iconCls : "icon-floor"
+		},
+		7: {
 			name : "机房",
-			iconCls : "icon-room",
-			childTypes : [ 7 ]
-		},
-		7 : {
-			name : "机柜列",
-			iconCls : "icon-region",
-			childTypes : [ 8, 9 ]
-		},
-		8 : {
-			name : "机柜",
-			iconCls : "icon-region",
-			childTypes : [ 9, 10, 11 ]
-		},
-		9 : {
-			name : "动环设备",
-			iconCls : "icon-device",
-			childTypes : []
-		},
-		10 : {
-			name : "网络设备",
-			iconCls : "icon-devModule",
-			childTypes : []
+			iconCls : "icon-room"
 		},
 		11 : {
+			name : "机柜列",
+			iconCls : "icon-region"
+		},
+		12 : {
+			name : "机柜",
+			iconCls : "icon-region"
+		},
+		21 : {
+			name : "动环设备",
+			iconCls : "icon-device"
+		},
+		22 : {
+			name : "网络设备",
+			iconCls : "icon-devModule"
+		},
+		23 : {
 			name : "服务器",
-			iconCls : "icon-device",
-			childTypes : []
+			iconCls : "icon-device"
 		}
 	};
+
+window.WUI.stationTypes={
+	1 : "数据中心",
+	2 : "通信机楼",
+	3 : "传输节点",
+	4 : "通信基站"
+};
+window.WUI.roomTypes={
+		1 : "动力机房",
+		2 : "IDC机房",
+		3 : "通信机房"
+	};
+
 var subscribes = [];
 window.WUI.subscribe = function(evt, fn) {
 	subscribes.push({
@@ -191,6 +201,21 @@ window.WUI.ajax.remove=function(url,args,success,fail,longtime){
 	});
 };
 
+window.WUI.makeFloorName=function(floorNum, isUnderground) {
+	var nummber = [ "零", "一", "二", "三", "四", "五", "六", "七", "八", "九", "十" ];
+	var floorName = "";
+	if (floorNum <= 10) {
+		floorName = nummber[floorNum] + "层";
+	} else if ((floorNum % 10) === 0) {
+		floorName = nummber[floorNum / 10] + "十层";
+	} else {
+		floorName = nummber[parseInt(floorNum / 10, 10)] + nummber[floorNum % 10] + "层";
+	}
+	if (isUnderground) {
+		floorName = "负" + floorName;
+	}
+	return floorName;
+};
 
 window.WUI.stringTrim = function(str) {
 	if(!str){
@@ -381,6 +406,12 @@ $.extend($.fn.validatebox.defaults.rules, {
     zip: {// 验证邮政编码
         validator: function (value) {
             return /^[1-9]\d{5}$/i.test(value);
+        },
+        message: '邮政编码格式不正确'
+    },
+    code: {// 验证编码
+        validator: function (value) {
+            return /^[1-9]\d{0,15}$/i.test(value);
         },
         message: '邮政编码格式不正确'
     },

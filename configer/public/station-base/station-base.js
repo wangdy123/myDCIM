@@ -148,6 +148,12 @@ $(document).ready(
 							$('#station-sequence-txt').val(station.SEQUENCE);
 							$('#station-LONGITUDE-txt').val(station.LONGITUDE);
 							$('#station-LATITUDE-txt').val(station.LATITUDE);
+							
+							$('#station-name-txt').validatebox("isValid");
+							$('#station-code-txt').validatebox("isValid");
+							$('#station-sequence-txt').validatebox("isValid");
+							$('#station-LONGITUDE-txt').validatebox("isValid");
+							$('#station-LATITUDE-txt').validatebox("isValid");
 						}
 					},
 					modal : true,
@@ -162,24 +168,6 @@ $(document).ready(
 							isValid = isValid && $('#station-LATITUDE-txt').validatebox("isValid");
 							isValid = isValid && $('#station-sequence-txt').validatebox("isValid");
 							isValid = isValid && $('#station-type-txt').val();
-							var LONGITUDE = parseFloat($('#station-LONGITUDE-txt').val());
-							if (LONGITUDE > 180) {
-								$('#station-LONGITUDE-txt').val(180.0)
-								isValid = false;
-							}
-							if (LONGITUDE < -180) {
-								$('#station-LONGITUDE-txt').val(-180.0)
-								isValid = false;
-							}
-							var LATITUDE = parseFloat($('#station-LATITUDE-txt').val());
-							if (LATITUDE > 90) {
-								$('#station-LATITUDE-txt').val(90.0)
-								isValid = false;
-							}
-							if (LATITUDE < -90) {
-								$('#station-LATITUDE-txt').val(-90.0)
-								isValid = false;
-							}
 							if (!isValid) {
 								return;
 							}
@@ -197,7 +185,6 @@ $(document).ready(
 
 							if (station) {
 								newStation.ID = station.ID;
-								newStation.CODE = station.CODE;
 								WUI.ajax.put(stationUrl, newStation, function() {
 									dialogNode.dialog("close");
 									reload(true);

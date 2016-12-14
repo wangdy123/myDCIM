@@ -325,7 +325,15 @@ $.extend($.fn.validatebox.defaults.rules, {
         validator: function (value, param) {
             return value.length >= param[0];
         },
-        message: '请输入至少（2）个字符.'
+        message: '请输入至少{0}个字符.'
+    }, maxLength: {
+        validator: function (value, param) {
+        	if(value.length > param[1]){
+        		$(param[0]).val(value.substring(0,param[1]));
+        	}
+            return value.length <= param[1];
+        },
+        message: '请输入最多{1}个字符.'
     },
     length: { validator: function (value, param) {
         var len = $.trim(value).length;
@@ -340,30 +348,68 @@ $.extend($.fn.validatebox.defaults.rules, {
         message: '手机号码格式不正确'
     },
     intOrFloat: {// 验证整数或小数
-        validator: function (value) {
-            return /^[+-]?\d+(\.\d+)?$/i.test(value);
+        validator: function (value,param) {
+        	return /^[+-]?\d+(\.\d+)?$/i.test(value);
         },
         message: '请输入数字，并确保格式正确'
     },
-    currency: {// 验证货币
-        validator: function (value) {
-            return /^\d+(\.\d+)?$/i.test(value);
+    limitFloat:{
+        validator: function (value,param) {
+        	if(!/^[+-]?\d+(\.\d+)?$/i.test(value)){
+        		return false;
+        	}
+        	value = parseFloat(value);
+        	if(param.length>=2){
+        		if(value<param[1]){
+        			$(param[0]).val(param[1]);
+        		}
+        	}
+        	if(param.length>=3){
+        		if(value>param[2]){
+        			$(param[0]).val(param[2]);
+        		}
+        	}
+            return true;
         },
-        message: '货币格式不正确'
+        message: '请输入介于{1}和{2}间的数字，并确保格式正确'
     },
     integer: {// 验证整数 可正负数
-        validator: function (value) {
-            // return /^[+]?[1-9]+\d*$/i.test(value);
-
-            return /^([+]?[0-9])|([-]?[0-9])+\d*$/i.test(value);
+        validator: function (value,param) {
+        	if(!/^([+]?[0-9])|([-]?[0-9])+\d*$/i.test(value)){
+        		return false;
+        	}
+            value = parseInt(value,10);
+        		if(value<param[1]){
+        			$(param[0]).val(param[1]);
+        		}
+        	
+        		if(value>param[2]){
+        			$(param[0]).val(param[2]);
+        		}
+        	
+            return true;
         },
         message: '请输入整数'
     },
-    age: {// 验证年龄
-        validator: function (value) {
-            return /^(?:[1-9][0-9]?|1[01][0-9]|120)$/i.test(value);
+    positiveInteger: {// 验证正整数
+        validator: function (value,param) {
+        	if(!/^[0-9]\d*$/i.test(value)){
+        		return false;
+        	}
+            value = parseInt(value,10);
+        	if(param.length>=2){
+        		if(value<param[1]){
+        			$(param[0]).val(param[1]);
+        		}
+        	}
+        	if(param.length>=3){
+        		if(value>param[2]){
+        			$(param[0]).val(param[2]);
+        		}
+        	}
+            return true;
         },
-        message: '年龄必须是0到120之间的整数'
+        message: '请输入正整数'
     },
     password:{
     	 validator: function (value) {
@@ -379,24 +425,6 @@ $.extend($.fn.validatebox.defaults.rules, {
          },
          message: '密码长度大于8位；密码是大小写字母、数字以及特殊字符的混合使用'
     },
-    chinese: {// 验证中文
-        validator: function (value) {
-            return /^[\Α-\￥]+$/i.test(value);
-        },
-        message: '请输入中文'
-    },
-    english: {// 验证英语
-        validator: function (value) {
-            return /^[A-Za-z]+$/i.test(value);
-        },
-        message: '请输入英文'
-    },
-    unnormal: {// 验证是否包含空格和非法字符
-        validator: function (value) {
-            return /.+/i.test(value);
-        },
-        message: '输入值不能为空和包含其他非法字符'
-    },
     username: {// 验证用户名
         validator: function (value) {
             return /^[a-zA-Z][a-zA-Z0-9_]{5,15}$/i.test(value);
@@ -410,21 +438,22 @@ $.extend($.fn.validatebox.defaults.rules, {
         message: '邮政编码格式不正确'
     },
     code: {// 验证编码
-        validator: function (value) {
-            return /^[1-9]\d{0,15}$/i.test(value);
+        validator: function (value,param) {
+        	if(!/^\d*$/i.test(value)){
+        		return false;
+        	}
+        	if(value.length > param[1]){
+        		$(param[0]).val(value.substring(0,param[1]));
+        	}
+            return value.length===param[1];
         },
-        message: '邮政编码格式不正确'
+        
+        message: '输入长度为{1}的数字'
     },
     ip: {// 验证IP地址
         validator: function (value) {
             return /d+.d+.d+.d+/i.test(value);
         },
         message: 'IP地址格式不正确'
-    },
-    name: {// 验证姓名，可以是中文或英文
-        validator: function (value) {
-            return /^[\Α-\￥]+$/i.test(value) | /^\w+[\w\s]+\w+$/i.test(value);
-        },
-        message: '请输入姓名'
     }
 }); 

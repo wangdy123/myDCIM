@@ -151,6 +151,7 @@ $(function() {
 					var isValid = $('#personnel-name-txt').val();
 					isValid = isValid && $("#personnel-email-txt").validatebox("isValid");
 					isValid = isValid && $("#personnel-tel-txt").validatebox("isValid");
+					isValid = isValid && $("#personnel-number-txt").validatebox("isValid");
 					isValid = isValid && $('#personnel-department').val();
 					if (!isValid) {
 						return;
@@ -159,6 +160,7 @@ $(function() {
 					var personnel = {
 						NAME : $('#personnel-name-txt').val(),
 						E_MAIL : $('#personnel-email-txt').val(),
+						JOB_NUMBER : $('#personnel-number-txt').val(),
 						TEL : $('#personnel-tel-txt').val(),
 						DEPARTMENT : $('#personnel-department').val()
 					};

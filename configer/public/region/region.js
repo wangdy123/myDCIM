@@ -95,7 +95,7 @@ $(document).ready(
 							width : 150
 						}, {
 							field : 'LATITUDE',
-							title : '维度(度)',
+							title : '纬度(度)',
 							width : 150
 						} ] ]
 			});
@@ -139,6 +139,11 @@ $(document).ready(
 							$('#region-ABBREVIATION-txt').val(region.ABBREVIATION);
 							$('#region-LONGITUDE-txt').val(region.LONGITUDE);
 							$('#region-LATITUDE-txt').val(region.LATITUDE);
+							$('#region-name-txt').validatebox("isValid");
+							$('#region-zip-code-txt').validatebox("isValid");
+							$('#region-ABBREVIATION-txt').validatebox("isValid");
+							$('#region-LONGITUDE-txt').validatebox("isValid");
+							$('#region-LATITUDE-txt').validatebox("isValid");
 						}
 					},
 					modal : true,
@@ -153,24 +158,6 @@ $(document).ready(
 							isValid = isValid && $('#region-ABBREVIATION-txt').validatebox("isValid");
 							isValid = isValid && $('#region-LONGITUDE-txt').validatebox("isValid");
 							isValid = isValid && $('#region-LATITUDE-txt').validatebox("isValid");
-							var LONGITUDE = parseFloat($('#region-LONGITUDE-txt').val());
-							if (LONGITUDE > 180) {
-								$('#region-LONGITUDE-txt').val(180.0)
-								isValid = false;
-							}
-							if (LONGITUDE < -180) {
-								$('#region-LONGITUDE-txt').val(-180.0)
-								isValid = false;
-							}
-							var LATITUDE = parseFloat($('#region-LATITUDE-txt').val());
-							if (LATITUDE > 90) {
-								$('#region-LATITUDE-txt').val(90.0)
-								isValid = false;
-							}
-							if (LATITUDE < -90) {
-								$('#region-LATITUDE-txt').val(-90.0)
-								isValid = false;
-							}
 							if (!isValid) {
 								return;
 							}

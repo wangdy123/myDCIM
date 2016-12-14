@@ -5,7 +5,7 @@ module.exports = [ {
 		id : 11,
 		title : "主页",
 		url : "monitor-dashboard.html",
-		htmlFileUrl : "/dashboard-dashboard.html",
+		htmlFileUrl : "/dashboard/dashboard.html",
 		border : false,
 		name : "主页"
 	}, {
@@ -65,28 +65,28 @@ module.exports = [ {
 		htmlFileUrl : "/configer/region/region-wokspace.html",
 		border : false,
 		name : "行政区域配置"
-	},{
+	}, {
 		id : 42,
 		title : "园区配置",
 		url : "config-station_base.html",
 		htmlFileUrl : "/configer/station-base/station-base-wokspace.html",
 		border : false,
 		name : "园区配置"
-	},{
+	}, {
 		id : 43,
 		title : "机楼配置",
 		url : "config-building.html",
 		htmlFileUrl : "/configer/building/building-wokspace.html",
 		border : false,
 		name : "机楼配置"
-	},{
+	}, {
 		id : 44,
 		title : "楼层配置",
 		url : "config-floor.html",
 		htmlFileUrl : "/configer/floor/floor-wokspace.html",
 		border : false,
 		name : "楼层配置"
-	},{
+	}, {
 		id : 45,
 		title : "机房配置",
 		url : "config-room.html",
@@ -94,61 +94,121 @@ module.exports = [ {
 		border : false,
 		name : "机房配置"
 	} ]
-} , {
+}, {
 	id : 5,
-	name : "动环设施配置",
+	name : "动环设施管理",
 	childMenus : [ {
 		id : 51,
-		title : "环境设施配置",
-		url : "config-environment.html",
-		htmlFileUrl : "/configer/environment/environment-wokspace.html",
+		title : "环境设施管理",
+		url : "PE-environment.html",
+		htmlFileUrl : "/PE/environment/wokspace.html",
 		border : false,
-		name : "环境设施配置"
-	},{
+		name : "环境设施管理"
+	}, {
 		id : 52,
-		title : "动力设施配置",
-		url : "config-power.html",
-		htmlFileUrl : "/configer/power/power-wokspace.html",
+		title : "动力设施管理",
+		url : "PE-power.html",
+		htmlFileUrl : "/PE/power/wokspace.html",
 		border : false,
-		name : "动力设施配置"
-	},{
+		name : "动力设施管理"
+	}, {
 		id : 53,
-		title : "安防设施配置",
-		url : "config-safety.html",
-		htmlFileUrl : "/configer/safety/safety-wokspace.html",
+		title : "安防设施管理",
+		url : "PE-safety.html",
+		htmlFileUrl : "/PE/safety/wokspace.html",
 		border : false,
-		name : "安防设施配置"
-	}]
-} , {
+		name : "安防设施管理"
+	}, {
+		id : 54,
+		title : "门禁设备管理",
+		url : "PE-door.html",
+		htmlFileUrl : "/PE/door/wokspace.html",
+		border : false,
+		name : "门禁设备管理"
+	}, {
+		id : 55,
+		title : "视频设备管理",
+		url : "PE-vedio.html",
+		htmlFileUrl : "/PE/vedio/wokspace.html",
+		border : false,
+		name : "视频设备管理"
+	} ]
+}, {
 	id : 6,
-	name : "IT配置",
+	name : "IT设备管理",
 	childMenus : [ {
+		id : 65,
+		title : "机架列管理",
+		url : "itdevice-cabinet-column.html",
+		htmlFileUrl : "/itdevice/cabinet-column/wokspace.html",
+		border : false,
+		name : "机架列管理"
+	}, {
+		id : 66,
+		title : "机架管理",
+		url : "itdevice-cabinet.html",
+		htmlFileUrl : "/itdevice/cabinet/wokspace.html",
+		border : false,
+		name : "机架管理"
+	}, {
 		id : 61,
-		title : "服务器配置",
-		url : "config-server.html",
+		title : "服务器管理",
+		url : "itdevice-server.html",
 		htmlFileUrl : "/configer/server/server-wokspace.html",
 		border : false,
-		name : "服务器配置"
-	},{
+		name : "服务器管理"
+	}, {
 		id : 62,
-		title : "交换机配置",
+		title : "交换机管理",
 		url : "config-switch.html",
 		htmlFileUrl : "/configer/switch/switch-wokspace.html",
 		border : false,
-		name : "交换机配置"
-	},{
+		name : "交换机管理"
+	}, {
 		id : 63,
-		title : "路由器配置",
+		title : "路由器管理",
 		url : "config-route.html",
 		htmlFileUrl : "/configer/route/route-wokspace.html",
 		border : false,
-		name : "路由器配置"
-	},{
+		name : "路由器管理"
+	}, {
 		id : 64,
-		title : "终端设备配置",
+		title : "终端设备管理",
 		url : "config-terminal-equipment.html",
 		htmlFileUrl : "/configer/terminal/terminal-equipment-wokspace.html",
 		border : false,
-		name : "终端设备配置"
+		name : "终端设备管理"
+	}, {
+		id : 67,
+		title : "机架机位申请",
+		url : "itdevice-cabinet-unit.html",
+		htmlFileUrl : "/itdevice/cabinet-unit/wokspace.html",
+		border : false,
+		name : "机架机位申请"
+	} ]
+}, {
+	id : 7,
+	name : "资产管理",
+	childMenus : [ {
+		id : 71,
+		title : "器材管理",
+		url : "assets-equipment.html",
+		htmlFileUrl : "/assets/equipment/equipment-wokspace.html",
+		border : false,
+		name : "器材管理"
+	}, {
+		id : 72,
+		title : "配件管理",
+		url : "assets-accessories.html",
+		htmlFileUrl : "/assets/accessories/accessories-wokspace.html",
+		border : false,
+		name : "配件管理"
+	}, {
+		id : 73,
+		title : "资产报表",
+		url : "assets-Accessories.html",
+		htmlFileUrl : "/assets/report/report-wokspace.html",
+		border : false,
+		name : "资产报表"
 	} ]
 } ];

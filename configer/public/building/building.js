@@ -128,6 +128,10 @@ $(document).ready(
 							$('#building-code-txt').val(building.CODE);
 							$('#building-ground-txt').val(building.FLOOR_GROUND);
 							$('#building-underground-txt').val(building.FLOOR_UNDERGROUND);
+							$('#building-name-txt').validatebox("isValid");
+							$('#building-code-txt').validatebox("isValid");
+							$('#building-ground-txt').validatebox("isValid");
+							$('#building-underground-txt').validatebox("isValid");
 						}
 					},
 					modal : true,

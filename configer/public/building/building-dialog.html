@@ -8,17 +8,17 @@
         <tr>
             <td align="right">编码:</td>
             <td><input id="building-code-txt" class="easyui-validatebox" type="text" style="width: 100%"
-                data-options="required:true,validType:'code'" ></td>
+                data-options="required:true,validType:'code[\'#building-code-txt\',2]'"></td>
         </tr>
         <tr>
             <td align="right">地上层数:</td>
             <td><input id="building-ground-txt" class="easyui-validatebox" type="text" style="width: 100%"
-                data-options="required:true,validType:'code'" value="1"></td>
+                data-options="required:true,validType:'positiveInteger[\'#building-ground-txt\',1,89]'" value="1"></td>
         </tr>
-                <tr>
+        <tr>
             <td align="right">地下层数:</td>
             <td><input id="building-underground-txt" class="easyui-validatebox" type="text" style="width: 100%"
-                data-options="required:true,validType:'intOrFloat'" value="0"></td>
+                data-options="required:true,validType:'positiveInteger[\'#building-underground-txt\',0,9]'" value="0"></td>
         </tr>
     </table>
 </div>

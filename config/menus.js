@@ -6,13 +6,19 @@ module.exports = [ {
 		title : "主页",
 		url : "monitor-dashboard.html",
 		htmlFileUrl : "/dashboard/dashboard.html",
+		scripts : [],
+		links : [],
 		border : false,
 		name : "主页"
 	}, {
 		id : 12,
 		title : "监控系统",
 		url : "monitor-monitor.html",
-		htmlFileUrl : "/monitor.html",
+		htmlFileUrl : "/monitor/monitor.html",
+		scripts : [ {
+			type : "text/javascript",
+			src : "http://api.map.baidu.com/api?v=2.0&ak=ViOy1lFYqsLHS3nyhwYtLPTTifS24qcY"
+		} ],
 		border : false,
 		name : "监控系统"
 	}, {

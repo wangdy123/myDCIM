@@ -10,6 +10,7 @@ $(function() {
 			onClick : function(node) {
 				WUI.publishEvent('open_object', node.attributes.data);
 			},
+
 			loadFilter : function(datas, parent) {
 				var objects = [];
 				for (var i = 0; i < datas.length; i++) {
@@ -49,6 +50,7 @@ $(function() {
 			var node = $treeNode.tree('find', object.ID);
 			if (node) {
 				$treeNode.tree('select', node.target);
+				$treeNode.tree('expand', node.target);
 			}
 		});
 		WUI.subscribe('current_object', function(cbk) {

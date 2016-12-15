@@ -33,6 +33,8 @@ function setMenu(body, menus, path) {
 				body.htmlFileUrl = menu.childMenus[j].htmlFileUrl;
 				console.log('htmlFileUrl: ' + menu.childMenus[j].htmlFileUrl);
 				body.border = false;
+				body.scripts=menu.childMenus[j].scripts;
+				body.links=menu.childMenus[j].links;
 			}else{
 				menu.childMenus[j].class="";
 			}

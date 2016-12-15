@@ -11,7 +11,12 @@
 <script type="text/javascript" src="/apps/apps.js"></script>
 <script type="text/javascript" src="/js/global.js"></script>
 <link rel="stylesheet" type="text/css" href="/css/style.css" />
-
+{{#each scripts}}
+    <script type="{{type}}" src="{{src}}"></script>
+{{/each}}
+{{#each links}}
+    <script type="{{type}}" href="{{src}}"></script>
+{{/each}}
 </head>
 <body class="easyui-layout">
     <div class="easyui-layout" region="north" border="false">

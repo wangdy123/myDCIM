@@ -1,26 +1,20 @@
-$(document).ready(function() {
-/*	$('#monitor-tabs').tabs({
-		width : $("#monitor-tabs").parent().width(),
-		height : "auto"
-	});
-	$(window).resize(function() {
-		$('#monitor-tabs').tabs({
-			width : $("#monitor-tabs").parent().width(),
-			height : "auto"
+$(document).ready(
+		function() {
+			WUI.subscribe('open_object', function(event) {
+				if (!event.object) {
+					return;
+				}
+				$("#workspace-title").text(event.object.NAME);
+
+				var tab = $('#monitor-tabs').tabs('getSelected');
+				var index = $('#monitor-tabs').tabs('getTabIndex', tab);
+
+				if (event.publisher === "map" && event.object.OBJECT_TYPE === WUI.objectTypeDef.STATION_BASE
+						&& index === 0) {
+					$('#monitor-tabs').tabs('select', 1);
+				}
+				if (event.object.OBJECT_TYPE > WUI.objectTypeDef.STATION_BASE && index === 0) {
+					$('#monitor-tabs').tabs('select', 1);
+				}
+			});
 		});
-		$('#main-workspace').layout({
-			width : $('#main-workspace').parent().width(),
-			height : $('#main-workspace').parent().height()
-		});
-	});
-	$(function() {
-		$('#monitor-tabs').tabs({
-			width : $("#monitor-tabs").parent().width(),
-			height : "auto"
-		});
-		$('#main-workspace').layout({
-			width : $('#main-workspace').parent().width(),
-			height : $('#main-workspace').parent().height()
-		});
-	});*/
-});

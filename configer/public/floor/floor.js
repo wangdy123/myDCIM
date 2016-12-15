@@ -27,7 +27,8 @@ $(document).ready(
 					});
 				}
 			}
-			WUI.subscribe('open_object', function(object) {
+			WUI.subscribe('open_object', function(event) {
+				object = event.object;
 				if (currentObject && currentObject.ID === object.ID) {
 					return;
 				}

@@ -1,5 +1,6 @@
 $(function() {
 	window.WUI = window.WUI || {};
+	var publisherName = "navigation";
 	window.WUI.createNavTree = function($treeNode, showTypes, leafType, url) {
 		$treeNode.tree({
 			url : url ? url : '/navigation/treeNode',
@@ -8,7 +9,10 @@ $(function() {
 			dnd : true,
 			animate : true,
 			onClick : function(node) {
-				WUI.publishEvent('open_object', node.attributes.data);
+				WUI.publishEvent('open_object', {
+					publisher : publisherName,
+					object : node.attributes.data
+				});
 			},
 
 			loadFilter : function(datas, parent) {
@@ -45,18 +49,26 @@ $(function() {
 				$treeNode.tree('reload', node.target);
 			}
 		};
-		WUI.subscribe('reload_object', reload);
-		WUI.subscribe('open_object', function(object) {
-			var node = $treeNode.tree('find', object.ID);
+		WUI.subscribe('reload_object', function() {
+			if (event.publisher === publisherName) {
+				return;
+			}
+			reload();
+		});
+		WUI.subscribe('open_object', function(event) {
+			if (event.publisher === publisherName) {
+				return;
+			}
+			var node = $treeNode.tree('find', event.object.ID);
 			if (node) {
 				$treeNode.tree('select', node.target);
 				$treeNode.tree('expand', node.target);
 			}
 		});
-		WUI.subscribe('current_object', function(cbk) {
+		WUI.subscribe('current_object', function(event) {
 			var node = $treeNode.tree('getSelected');
 			if (node) {
-				cbk(node.attributes.data);
+				event.cbk(node.attributes.data);
 			}
 		});
 	}

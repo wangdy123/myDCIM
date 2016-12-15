@@ -25,7 +25,8 @@ $(document).ready(
 					});
 				}
 			}
-			WUI.subscribe('open_object', function(object) {
+			WUI.subscribe('open_object', function(event) {
+				object = event.object;
 				if (currentObject && currentObject.ID === object.ID) {
 					return;
 				}
@@ -165,9 +166,9 @@ $(document).ready(
 
 							var newroom = {
 								NAME : $('#room-name-txt').val(),
-								ROOM_TYPE : parseInt($('#room-type-txt').val(),10),
+								ROOM_TYPE : parseInt($('#room-type-txt').val(), 10),
 								CODE : $('#room-code-txt').val(),
-								SEQUENCE : parseInt($('#room-sequence-txt').val(),10),
+								SEQUENCE : parseInt($('#room-sequence-txt').val(), 10),
 								OBJECT_TYPE : WUI.objectTypeDef.ROOM,
 								PARENT_ID : parentId
 							};

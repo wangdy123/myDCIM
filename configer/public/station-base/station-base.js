@@ -25,7 +25,8 @@ $(document).ready(
 					});
 				}
 			}
-			WUI.subscribe('open_object', function(object) {
+			WUI.subscribe('open_object', function(event) {
+				object = event.object;
 				if (currentObject && currentObject.ID === object.ID) {
 					return;
 				}
@@ -148,7 +149,7 @@ $(document).ready(
 							$('#station-sequence-txt').val(station.SEQUENCE);
 							$('#station-LONGITUDE-txt').val(station.LONGITUDE);
 							$('#station-LATITUDE-txt').val(station.LATITUDE);
-							
+
 							$('#station-name-txt').validatebox("isValid");
 							$('#station-code-txt').validatebox("isValid");
 							$('#station-sequence-txt').validatebox("isValid");

@@ -23,11 +23,50 @@ module.exports = [ {
 		name : "监控系统"
 	}, {
 		id : 13,
-		title : "告警",
-		url : "monitor-alarm.html",
-		htmlFileUrl : "/alarm.html",
+		title : "活动告警",
+		url : "monitor-active-alarm.html",
+		htmlFileUrl : "/alarm/active-alarm.html",
 		border : true,
-		name : "告警"
+		name : "活动告警"
+	},{
+		id : 14,
+		title : "历史告警",
+		url : "monitor-history-alarm.html",
+		htmlFileUrl : "/alarm/history-alarm.html",
+		border : true,
+		name : "历史告警"
+	} ]
+},{
+	id : 2,
+	name : "门禁管理",
+	childMenus : [ {
+		id : 21,
+		title : "门禁监控",
+		url : "door-monitor.html",
+		htmlFileUrl : "/door/monitor.html",
+		border : false,
+		name : "门禁监控"
+	}, {
+		id : 22,
+		title : "门卡管理",
+		url : "door-kard.html",
+		htmlFileUrl : "/door/kard.html",
+		border : false,
+		name : "门卡管理"
+	}, {
+		id : 23,
+		title : "门卡授权",
+		url : "door-card-auth.html",
+		htmlFileUrl : "/door/card-auth.html",
+		border : false,
+		name : "门卡授权"
+	},{
+		id : 24,
+		title : "开门记录统计",
+		url : "door-record.html",
+		htmlFileUrl : "/door/record.html",
+		border : true,
+		name : "开门记录统计"
 	} ]
 }, {
 	id : 3,

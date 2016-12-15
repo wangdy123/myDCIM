@@ -1,4 +1,5 @@
 $(document).ready(function() {
+	var publisherName = "map";
 	var objectLocationUrl = "/monitor/objectLocations";
 	var map = new BMap.Map("map-container");
 	var currentObject = null;
@@ -71,14 +72,18 @@ $(document).ready(function() {
 		}
 	}
 
+	// 获取当前点，如果为区域则显示区域内子区域及站点
+	// 如果为站点则高亮显示站点信息（显示大图标及基本信息）
 	function openObject(object, needPublish, callback) {
-		// 获取当前点，如果为区域则显示区域内子区域及站点
-		// 如果为站点则高亮显示站点信息（显示大图标及基本信息）
-
 		if (needPublish) {
-			window.WUI.publishEvent("open_object", object);
+			window.WUI.publishEvent("open_object", {
+				publisher : publisherName,
+				object : object
+			});
 		}
-
+		if (object && object.OBJECT_TYPE && !mapMakerPros[object.OBJECT_TYPE]) {
+			return;
+		}
 		var objectId = object ? ("/" + object.ID) : "";
 		window.WUI.ajax.get(objectLocationUrl + objectId, {}, function(objectLocation) {
 			if (!objectLocation.LONGITUDE || !objectLocation.LATITUDE) {
@@ -100,6 +105,8 @@ $(document).ready(function() {
 			}
 		});
 	}
-	WUI.subscribe('open_object', openObject);
+	WUI.subscribe('open_object', function(event) {
+		openObject(event.object);
+	});
 	openObject();
 });

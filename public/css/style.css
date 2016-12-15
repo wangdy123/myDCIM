@@ -173,6 +173,18 @@ label {
  background: url('/image/devModule.gif') no-repeat center center;
 }
 
+.icon-screen {
+ background: url('/image/Panel_16.png') no-repeat center center;
+}
+
+.icon-detail {
+ background: url('/image/detailed_view_16.png') no-repeat center center;
+}
+
+.icon-map {
+ background: url('/image/map_16.png') no-repeat center center;
+}
+
 .menu-nav-item {
  padding: 2px;
  margin: 0;

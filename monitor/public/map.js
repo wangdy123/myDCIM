@@ -27,6 +27,7 @@ $(document).ready(function() {
 	map.addControl(new BMap.NavigationControl());
 	map.addControl(new BMap.ScaleControl());
 	map.enableScrollWheelZoom();
+	$.
 	map.setMinZoom(8);
 
 	function getObjectContent(objectLocation) {

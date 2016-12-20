@@ -1,14 +1,16 @@
-<div class="easyui-layout" fit="true">
+<div id="full-workspace" class="easyui-layout" fit="true">
     <div id="node-nav" region="west" split="true" title="业务导航" href="/navigation/floor/floor-nav.html"></div>
-    <div id="main-workspace" class="easyui-layout" region="center" title="实时信息">
-        <div class="panel" region="north" border="false" style="height: 48px;">
-            <h2 id="workspace-title" fit="true" class=" title-panel">中心系统</h2>
-        </div>
-        <div class="panel" region="center" border="false">
-            <div id="monitor-tabs" class="easyui-tabs" border="false" plain="true" fit="true">
-                <div title="地图导航" index="0" iconCls="icon-map" href="/monitor/map.html"></div>
-                <div title="组态" index="1" iconCls="icon-screen" href="/monitor/screen/screen.html"></div>
-                <div title="详细信息" index="2" iconCls="icon-detail" href="/monitor/detail/detail.html"></div>
+    <div id="main-workspace" class="easyui-panel" region="center" title="实时信息">
+        <div class="easyui-layout" fit="true">
+            <div class="panel" region="north" border="false" style="height: 48px;">
+                <h2 id="workspace-title" fit="true" class=" title-panel">中心系统</h2>
+            </div>
+            <div class="panel" region="center" border="false">
+                <div id="monitor-tabs" class="easyui-tabs" data-options=" border:true,plain:true,fit:true" style="padding:5px;">
+                    <div title="地图导航" index="0" iconCls="icon-map" href="/monitor/map.html"></div>
+                    <div title="组态" index="1" iconCls="icon-screen" href="/monitor/screen/screen.html"></div>
+                    <div title="详细信息" index="2" iconCls="icon-detail" href="/monitor/detail/detail.html"></div>
+                </div>
             </div>
         </div>
     </div>

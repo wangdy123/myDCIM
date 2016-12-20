@@ -12,14 +12,13 @@
 <script type="text/javascript" src="/js/global.js"></script>
 <link rel="stylesheet" type="text/css" href="/css/style.css" />
 {{#each scripts}}
-    <script type="{{type}}" src="{{src}}"></script>
-{{/each}}
-{{#each links}}
-    <script type="{{type}}" href="{{src}}"></script>
+<script type="{{type}}" src="{{src}}"></script>
+{{/each}} {{#each links}}
+<script type="{{type}}" href="{{src}}"></script>
 {{/each}}
 </head>
 <body class="easyui-layout">
-    <div class="easyui-layout" region="north" border="false">
+    <div class="easyui-panel" region="north" border="false">
         <img class="panel" title="logo" src="/image/logo1.jpg"></img>
         <h2 id="system-name" class="panel">DCIM测试平台</h2>
         <div id="user-info-panel" style="float: right; padding: 0 10px 0;">
@@ -49,22 +48,25 @@
 
         </div>
     </div>
-    <div class="easyui-layout" region="center" border="false">
-        <div region="west" region="west" split="true" title="功能导航" style="width: 150px;">
-            <div id="main-menu" class="easyui-accordion" data-options="fit:true,border:false">
-                {{#each menus}}
-                <div title={{name}} style="padding: 5px;" data-options="selected:{{selected}}">
-                    <ul class="menu-nav-item">
-                        {{#each childMenus}}
-                        <li class="{{class}}"><a href="/apps/{{url}}" >{{name}}</a></li> {{/each}}
-                    </ul>
+    <div class="easyui-panel" region="center" border="false">
+        <div class="easyui-layout" border="false" fit="true">
+            <div region="west" region="west" split="true" title="功能导航" style="width: 150px;">
+                <div id="main-menu" class="easyui-accordion" data-options="fit:true,border:false">
+                    {{#each menus}}
+                    <div title={{name}} style="padding: 5px;" data-options="selected:{{selected}}">
+                        <ul class="menu-nav-item">
+                            {{#each childMenus}}
+                            <li class="{{class}}"><a href="/apps/{{url}}">{{name}}</a></li> {{/each}}
+                        </ul>
+                    </div>
+                    {{/each}}
                 </div>
-                {{/each}}
             </div>
+            <div region="center" class="easyui-panel" border="{{border}}" href="{{htmlFileUrl}}"></div>
         </div>
-        <div id="full-workspace" region="center" class="pannel" border="{{border}}" href="{{htmlFileUrl}}"></div>
     </div>
     <div id="extdialog1" class="easyui-dialog" data-options="closed:true"></div>
     <div id="alarm-tooltip" class="easyui-dialog" data-options="closed:true"></div>
+
 </body>
 </html>

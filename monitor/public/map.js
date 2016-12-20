@@ -22,12 +22,11 @@ $(document).ready(function() {
 		}
 	};
 	var makers = {};
-
+	
 	map.centerAndZoom(new BMap.Point(113.30735, 23.146984), 14);// 8、11
 	map.addControl(new BMap.NavigationControl());
 	map.addControl(new BMap.ScaleControl());
 	map.enableScrollWheelZoom();
-	$.
 	map.setMinZoom(8);
 
 	function getObjectContent(objectLocation) {

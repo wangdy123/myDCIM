@@ -1,0 +1,26 @@
+<div class="easyui-layout" border="false" fit="true">
+    <div id="node-nav" region="west" split="true" title="业务导航">
+        <div class="easyui-layout" border="false" fit="true">
+            <div region="north" class="easyui-panel" border="false" href="/navigation/room/room-nav.html"
+                style="height: 80%;"></div>
+            <div region="center" class="easyui-panel" border="false" style="height: 20%;" title="机房门禁"></div>
+        </div>
+    </div>
+    <div id="main-workspace" region="center" title="门禁监控">
+        <div class="easyui-layout" border="false" fit="true">
+            <div class="panel" region="north" border="false" style="height: 48px;">
+                <h2 id="workspace-title" fit="true" class=" title-panel">请选择门禁</h2>
+            </div>
+            <div class="easyui-panel" region="center" border="false" href="/door/door-page.html"></div>
+        </div>
+    </div>
+</div>
+<script>
+	WUI.subscribe('open_object', function(event) {
+		object = event.object;
+		//if (object.OBJECT_TYPE !== WUI.objectTypeDef.DOOR) {
+		//	return;
+		//}
+		$("#workspace-title").text(object.NAME);
+	});
+</script>

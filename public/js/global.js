@@ -7,7 +7,8 @@ window.WUI.objectTypeDef = {
 		STATION_BASE : 4,
 		BUILDDING : 5,
 		FLOOR:6,
-		ROOM : 7
+		ROOM : 7,
+		DOOR : 100
 	};
 
 window.WUI.regionChildTypes={
@@ -86,7 +87,7 @@ window.WUI.subscribe = function(evt, fn) {
 		fn : fn
 	});
 };
-// evt:open_object(object),reload_object(object),current_object(cbk(object))
+// evt:open_object(event),reload_object(event),current_object(cbk(object))
 window.WUI.publishEvent = function(name, event) {
 	for ( var evt in subscribes) {
 		if (name === subscribes[evt].name) {

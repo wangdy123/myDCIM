@@ -28,6 +28,8 @@ app.use('/dashboard', require('./dashboard'));
 app.use('/account', require('./account'));
 app.use('/configer', require('./configer'));
 app.use('/monitor', require('./monitor'));
+app.use('/alarm', require('./alarm'));
+app.use('/door', require('./door'));
 
 app.use(function(req, res, next) {
 	var err = new Error('Not Found');

@@ -1,0 +1,15 @@
+<div class="easyui-layout" fit="true">
+    <div id="node-nav" region="west" split="true" title="机房导航" href="/navigation/room/room-nav.html"></div>
+    <div id="main-workspace" class="easyui-layout" region="center" title="配置门禁">
+        <div class="panel" region="north" border="false" style="height: 48px;">
+            <h2 id="workspace-title" fit="true" class=" title-panel">请选择机房</h2>
+        </div>
+        <div class="panel" region="center" border="false">
+            <table id="door-datagrid" class="easyui-datagrid" fit="true" border="false" iconCls="icon-device">
+            </table>
+            <div id="door-dialog"></div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="/door/configer.js"></script>
+

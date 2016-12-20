@@ -18,9 +18,6 @@ $(document).ready(
 					$node.datagrid("reload", {
 						parentId : currentObject.ID
 					});
-					if (publish) {
-						WUI.publishEvent('reload_object', currentObject);
-					}
 				} else {
 					$node.datagrid({
 						"data" : []

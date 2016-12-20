@@ -43,25 +43,32 @@ module.exports = [ {
 		id : 21,
 		title : "门禁监控",
 		url : "door-monitor.html",
-		htmlFileUrl : "/door/monitor.html",
+		htmlFileUrl : "/door/monitor-workspace.html",
 		border : false,
 		name : "门禁监控"
-	}, {
+	},{
 		id : 22,
+		title : "门禁配置",
+		url : "door-configer.html",
+		htmlFileUrl : "/door/configer.html",
+		border : false,
+		name : "门禁配置"
+	}, {
+		id : 23,
 		title : "门卡管理",
-		url : "door-kard.html",
-		htmlFileUrl : "/door/kard.html",
+		url : "door-card.html",
+		htmlFileUrl : "/door/card.html",
 		border : false,
 		name : "门卡管理"
 	}, {
-		id : 23,
+		id : 24,
 		title : "门卡授权",
 		url : "door-card-auth.html",
 		htmlFileUrl : "/door/card-auth.html",
 		border : false,
 		name : "门卡授权"
 	},{
-		id : 24,
+		id : 25,
 		title : "开门记录统计",
 		url : "door-record.html",
 		htmlFileUrl : "/door/record.html",

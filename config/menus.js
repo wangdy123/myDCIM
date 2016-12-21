@@ -5,7 +5,7 @@ module.exports = [ {
 		id : 11,
 		title : "主页",
 		url : "monitor-dashboard.html",
-		htmlFileUrl : "/dashboard/dashboard.html",
+		htmlFileUrl : "/resources/dashboard/dashboard.html",
 		scripts : [],
 		links : [],
 		border : false,

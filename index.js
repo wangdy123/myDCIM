@@ -18,18 +18,18 @@ app.use(express.static(__dirname + '/public', {
 }));
 
 app.get('/', function(req, res) {
-	res.redirect("/apps/dashboard.html");
+	res.redirect("/apps/monitor-dashboard.html");
 });
 
 app.use('/uitest', require('./uitest'));
 app.use('/apps', require('./apps'));
-app.use('/navigation', require('./navigation'));
-app.use('/dashboard', require('./dashboard'));
-app.use('/account', require('./account'));
-app.use('/configer', require('./configer'));
-app.use('/monitor', require('./monitor'));
-app.use('/alarm', require('./alarm'));
-app.use('/door', require('./door'));
+app.use('/resources/navigation', require('./navigation'));
+app.use('/resources/dashboard', require('./dashboard'));
+app.use('/resources/account', require('./account'));
+app.use('/resources/configer', require('./configer'));
+app.use('/resources/monitor', require('./monitor'));
+app.use('/resources/alarm', require('./alarm'));
+app.use('/resources/door', require('./door'));
 
 app.use(function(req, res, next) {
 	var err = new Error('Not Found');

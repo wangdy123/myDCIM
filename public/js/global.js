@@ -16,7 +16,7 @@ window.WUI.regionChildTypes={
 	2:[3],
 	3:[]
 };
-
+window.WUI.urlPath="/resources";
 window.WUI.objectTypes = {
 		1 : {
 			name : "省中心",

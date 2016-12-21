@@ -2,21 +2,6 @@ var app = require('./app');
 
 var db =require('../db');
 
-app.get('/department/department-dialog.html', function(req, res) {
-	if (req.query.departmentId) {
-		getDepartmentById(db.pool, req.query.departmentId, function(error, department) {
-			console.log(error);
-			if (error) {
-				console.log(error);
-				res.status(501).send(error);
-			} else {
-				res.render('department-dialog', department);
-			}
-		});
-	} else {
-		res.render('department-dialog', {});
-	}
-});
 
 function getDepartmentById(pool, departmentId, cbk) {
 	var sql = 'select ID,NAME,DESCRIPTION from portal.DEPARTMENT where ID=?';

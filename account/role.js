@@ -2,41 +2,6 @@ var app = require('./app');
 var accountRights = require('../config').accountRights;
 var db =require('../db');
 
-function isRoleHasRight(rightId, roleRights) {
-	for (var i = 0; i < roleRights.length; i++) {
-		if (rightId === roleRights[i].id) {
-			return true;
-		}
-	}
-	return false;
-}
-app.get('/role/role-dialog.html', function(req, res) {
-	if (req.query.roleId) {
-		getRoleById(db.pool, req.query.roleId, function(error, role) {
-			console.log(error);
-			if (error) {
-				console.log(error);
-				res.status(501).send(error);
-			} else {
-				var rights = [];
-				for (var i = 0; i < accountRights.length; i++) {
-					right = accountRights[i];
-					right.checked = isRoleHasRight(right.id, role.rights) ? "checked" : "";
-					rights.push(right);
-				}
-				
-				role.rights = rights;
-				res.render('role-dialog', role);
-			}
-		});
-	} else {
-		var role = {
-			rights : accountRights
-		};
-		res.render('role-dialog', role);
-	}
-});
-
 app.get('/rights', function(req, res) {
 	res.send(accountRights);
 });

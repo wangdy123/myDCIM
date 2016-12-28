@@ -1,15 +1,9 @@
 $(document).ready(
 		function() {
-			var buildingUrl = WUI.urlPath+"/configer/buildings";
+			var buildingUrl = WUI.urlPath + "/configer/buildings";
 			var $node = $('#building-datagrid');
 			var currentObject = null;
-			function getRowIndex(target) {
-				var tr = $(target).closest('tr.datagrid-row');
-				return parseInt(tr.attr('datagrid-row-index'));
-			}
-			function getRowData(target) {
-				return $node.datagrid("getRows")[getRowIndex(target)];
-			}
+			WUI.building = {};
 
 			function reload(publish) {
 				if (currentObject) {
@@ -22,76 +16,92 @@ $(document).ready(
 					});
 				}
 			}
-			WUI.subscribe('open_object', function(event) {
-				object = event.object;
-				if (currentObject && currentObject.ID === object.ID) {
-					return;
-				}
-				if (object.OBJECT_TYPE !== WUI.objectTypeDef.STATION_BASE) {
-					return;
-				}
-				currentObject = object;
-				$("#workspace-title").text(currentObject.NAME);
+			window.WUI.publishEvent('current_object', {
+				publisher : 'configer',
+				cbk : function(object) {
+					if (currentObject && currentObject.ID === object.ID) {
+						return;
+					}
 
-				$node.datagrid({
-					toolbar : [ {
-						iconCls : WUI.objectTypes[window.WUI.objectTypeDef.BUILDDING].iconCls,
-						handler : function() {
-							buildingDialog(null, currentObject.ID);
-						}
-					}, '-', {
-						iconCls : 'icon-reload',
-						handler : function() {
-							reload(true);
-						}
-					} ]
-				});
+					currentObject = object;
 
-				reload(false);
-			});
-			$node.datagrid({
-				url : buildingUrl,
-				method : "get",
-				singleSelect : true,
-				onLoadError : function(s) {
-					$.messager.alert('失败', "加载失败");
-				},
-				columns : [ [
-						{
-							field : 'action',
-							title : '操作',
-							width : 100,
-							align : 'center',
-							formatter : function(value, row, index) {
-								var e = '<div class="icon-edit operator-tool" title="修改" '
-										+ ' onclick="WUI.building.editrow(this)"></div> ';
-								var s = '<div class="separater"></div> ';
-								var d = '<div class="icon-remove operator-tool" title="删除" '
-										+ ' onclick="WUI.building.deleterow(this)"></div>';
-								return e + s + d;
+					$node.datagrid({
+						toolbar : [ {
+							iconCls : 'icon-add',
+							handler : function() {
+								buildingDialog(null, currentObject.ID);
 							}
-						}, {
-							field : 'CODE',
-							title : '编码',
-							align : 'right',
-							width : 80
-						}, {
-							field : 'NAME',
-							title : '名称',
-							width : 150
-						}, {
-							field : 'FLOOR_GROUND',
-							title : '地上层数',
-							width : 150
-						}, {
-							field : 'FLOOR_UNDERGROUND',
-							title : '地下层数',
-							width : 150
-						} ] ]
+						}, '-', {
+							iconCls : 'icon-reload',
+							handler : function() {
+								reload(true);
+							}
+						} ]
+					});
+
+					$node.datagrid({
+						url : buildingUrl,
+						method : "get",
+						singleSelect : true,
+						onLoadError : function(s) {
+							$.messager.alert('失败', "加载失败");
+						},
+						queryParams : {
+							parentId : currentObject.ID
+						},
+						toolbar : [ {
+							iconCls : 'icon-add',
+							handler : function() {
+								buildingDialog(null, currentObject.ID);
+							}
+						}, '-', {
+							iconCls : 'icon-reload',
+							handler : function() {
+								reload(true);
+							}
+						} ],
+						columns : [ [
+								{
+									field : 'action',
+									title : '操作',
+									width : 100,
+									align : 'center',
+									formatter : function(value, row, index) {
+										var e = '<div class="icon-edit operator-tool" title="修改" '
+												+ ' onclick="WUI.building.editrow(this)"></div> ';
+										var s = '<div class="separater"></div> ';
+										var d = '<div class="icon-remove operator-tool" title="删除" '
+												+ ' onclick="WUI.building.deleterow(this)"></div>';
+										return e + s + d;
+									}
+								}, {
+									field : 'CODE',
+									title : '编码',
+									align : 'right',
+									width : 80
+								}, {
+									field : 'NAME',
+									title : '名称',
+									width : 150
+								}, {
+									field : 'FLOOR_GROUND',
+									title : '地上层数',
+									width : 150
+								}, {
+									field : 'FLOOR_UNDERGROUND',
+									title : '地下层数',
+									width : 150
+								} ] ]
+					});
+				}
 			});
-			WUI.building = {};
+			function getRowIndex(target) {
+				var tr = $(target).closest('tr.datagrid-row');
+				return parseInt(tr.attr('datagrid-row-index'));
+			}
+
 			WUI.building.editrow = function(target) {
-				var building = getRowData(target);
+				var building = $node.datagrid("getRows")[getRowIndex(target)];
 				buildingDialog(building, building.PARENT_ID);
 			}
 			WUI.building.deleterow = function(target) {
@@ -108,7 +118,7 @@ $(document).ready(
 			}
 
 			function buildingDialog(building, parentId) {
-				$('#building-dialog').dialog({
+				$('#configer-dialog').dialog({
 					iconCls : building ? "icon-edit" : "icon-add",
 					title : (building ? "修改" : "添加") + "机楼",
 					left : ($(window).width() - 300) * 0.5,
@@ -116,7 +126,7 @@ $(document).ready(
 					width : 350,
 					closed : false,
 					cache : false,
-					href : '/configer/building/building-dialog.html',
+					href : '/configer/object/building/building-dialog.html',
 					onLoadError : function() {
 						$.messager.alert('失败', "对话框加载失败，请刷新后重试！");
 					},
@@ -134,7 +144,7 @@ $(document).ready(
 					},
 					modal : true,
 					onClose : function() {
-						$("#building-dialog").empty();
+						$("#configer-dialog").empty();
 					},
 					buttons : [ {
 						text : '保存',
@@ -160,14 +170,14 @@ $(document).ready(
 							if (building) {
 								newbuilding.ID = building.ID;
 								WUI.ajax.put(buildingUrl, newbuilding, function() {
-									$('#building-dialog').dialog("close");
+									$('#configer-dialog').dialog("close");
 									reload(true);
 								}, function() {
 									$.messager.alert('失败', "修改机楼失败！");
 								});
 							} else {
 								WUI.ajax.post(buildingUrl, newbuilding, function() {
-									$('#building-dialog').dialog("close");
+									$('#configer-dialog').dialog("close");
 									reload(true);
 								}, function() {
 									$.messager.alert('失败', "添加机楼失败！");
@@ -178,7 +188,7 @@ $(document).ready(
 					}, {
 						text : '取消',
 						handler : function() {
-							$('#building-dialog').dialog("close");
+							$('#configer-dialog').dialog("close");
 						}
 					} ]
 				});

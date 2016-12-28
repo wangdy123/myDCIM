@@ -8,63 +8,84 @@ window.WUI.objectTypeDef = {
 		BUILDDING : 5,
 		FLOOR:6,
 		ROOM : 7,
-		DOOR : 100
+		CABINNET_COLUMN : 11,
+		CABINNET : 12,
+		ENV_DEVICE : 21,
+		POWER_DEVICE : 22,
+		SAFETY_DEVICE : 23,
+		IT_DEVICE:24
 	};
 
-window.WUI.regionChildTypes={
-	1:[2],
-	2:[3],
-	3:[]
-};
 window.WUI.urlPath="/resources";
 window.WUI.objectTypes = {
 		1 : {
 			name : "省中心",
-			iconCls : "icon-csc"
+			iconCls : "icon-csc",
+			childTypes:[2]
 		},
 		2 : {
 			name : "市区域",
-			iconCls : "icon-lsc"
+			iconCls : "icon-lsc",
+			childTypes:[3,4],
+			configerPage:"/configer/object/lsc/wokspace.html"
 		},
 		3 : {
 			name : "县区域",
-			iconCls : "icon-region"
+			iconCls : "icon-region",
+			childTypes:[4],
+			configerPage:"/configer/object/region/wokspace.html"
 		},
 		4 : {
 			name : "园区",
-			iconCls : "icon-station"
+			iconCls : "icon-station",
+			childTypes:[5,7],
+			configerPage:"/configer/object/station-base/wokspace.html"
 		},
 		5 : {
 			name : "机楼",
-			iconCls : "icon-building"
+			iconCls : "icon-building",
+			childTypes:[6,7],
+			configerPage:"/configer/object/building/building-wokspace.html"
 		},
 		6 : {
 			name : "楼层",
-			iconCls : "icon-floor"
+			iconCls : "icon-floor",
+			childTypes:[7],
+		configerPage:"/configer/object/floor/floor-wokspace.html"
 		},
 		7: {
 			name : "机房",
-			iconCls : "icon-room"
+			iconCls : "icon-room",
+			childTypes:[11,21,22,23],
+			configerPage:"/configer/object/room/room-wokspace.html"
 		},
 		11 : {
 			name : "机柜列",
-			iconCls : "icon-region"
+			iconCls : "icon-cabinet-column",
+			childTypes:[12],
+			configerPage:"/configer/object/cabinet-column/wokspace.html"
 		},
 		12 : {
 			name : "机柜",
-			iconCls : "icon-region"
+			iconCls : "icon-region",
+			childTypes:[24],
+			configerPage:"/configer/object/cabinet/wokspace.html"
 		},
 		21 : {
-			name : "动环设备",
+			name : "环境设备",
 			iconCls : "icon-device"
 		},
 		22 : {
-			name : "网络设备",
-			iconCls : "icon-devModule"
+			name : "动力设备",
+			iconCls : "icon-device"
 		},
 		23 : {
-			name : "服务器",
+			name : "安防设备",
 			iconCls : "icon-device"
+		},
+		24 : {
+			name : "IT设备",
+			iconCls : "icon-devModule"
 		}
 	};
 
@@ -250,15 +271,28 @@ window.WUI.date_reformat = function(datestr) {
 	var y = date.getFullYear();
 	var m = date.getMonth() + 1;
 	var d = date.getDate();
-	var h = date.getHours();
-	var min = date.getMinutes();
-	var s = date.getSeconds();
-	return y + '-' + (m < 10 ? ('0' + m) : m) + '-' + (d < 10 ? ('0' + d) : d) + ' ' + (h < 10 ? ('0' + h) : h)
-			+ ':' + (min < 10 ? ('0' + h) : min) + ':' + (s < 10 ? ('0' + s) : s);
+	return y + '-' + (m < 10 ? ('0' + m) : m) + '-' + (d < 10 ? ('0' + d) : d);
 };
 
 window.WUI.date_format = function(date) {
 	if (!date) {
+		return "";
+	}
+	var y = date.getFullYear();
+	var m = date.getMonth() + 1;
+	var d = date.getDate();
+	return y + '-' + (m < 10 ? ('0' + m) : m) + '-' + (d < 10 ? ('0' + d) : d);
+};
+
+window.WUI.time_reformat = function(timestr) {
+	if (!timestr) {
+		return "";
+	}
+
+	var date=new Date();
+	try {
+		date= new Date(Date.parse(timestr));
+	} catch (e) {
 		return "";
 	}
 	var y = date.getFullYear();
@@ -271,15 +305,38 @@ window.WUI.date_format = function(date) {
 			+ ':' + (min < 10 ? ('0' + h) : min) + ':' + (s < 10 ? ('0' + s) : s);
 };
 
+window.WUI.time_format = function(time) {
+	if (!time) {
+		return "";
+	}
+	var y = time.getFullYear();
+	var m = time.getMonth() + 1;
+	var d = time.getDate();
+	var h = time.getHours();
+	var min = time.getMinutes();
+	var s = time.getSeconds();
+	return y + '-' + (m < 10 ? ('0' + m) : m) + '-' + (d < 10 ? ('0' + d) : d) + ' ' + (h < 10 ? ('0' + h) : h)
+			+ ':' + (min < 10 ? ('0' + h) : min) + ':' + (s < 10 ? ('0' + s) : s);
+};
 window.WUI.date_parse = function(datestr) {
 	if (!datestr) {
-		return Date();
+		return new Date();
 	}
 	try {
-		return Date(Date.parse(datestr));
+		var d= new Date(Date.parse(datestr));
+		return d;
 	} catch (e) {
-		return Date();
+		return new Date();
 	}
+};
+
+window.WUI.timeAddSecond = function(time,timeDiffSecond) {
+	var objTime=new Date();
+	try {
+		objTime= new Date(Date.parse(time));
+	} catch (e) {
+	}
+	return new Date(objTime.getTime() +timeDiffSecond* 24* 3600 * 1000);
 };
 
 window.WUI.timediffFormat = function(timeDiffSecond) {

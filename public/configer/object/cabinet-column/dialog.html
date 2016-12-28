@@ -1,0 +1,30 @@
+<div class="panel" fit="true">
+    <table align="center">
+        <tr>
+            <td align="right">名称:</td>
+            <td><input id="row-name-txt" class="easyui-validatebox" type="text" style="width: 100%"
+                data-options="required:true"></td>
+        </tr>
+        <tr>
+            <td align="right">编码:</td>
+            <td><input id="row-code-txt" class="easyui-validatebox" type="text" style="width: 100%"
+                data-options="required:true,validType:'code[\'#row-code-txt\',2]'"></td>
+        </tr>
+        <tr>
+            <td align="right">序号:</td>
+            <td><input id="row-sequence-txt" class="easyui-validatebox" type="text" style="width: 100%"
+                data-options="required:true,validType:'positiveInteger[\'#row-sequence-txt\',0,100]'" value="1"></td>
+        </tr>
+        <tr>
+            <td align="right">机柜数:</td>
+            <td><input id="row-count-txt" class="easyui-validatebox" type="text" style="width: 100%"
+                data-options="required:true,validType:'positiveInteger[\'#row-count-txt\',0,100]'" value="10"></td>
+        </tr>
+        <tr>
+            <td align="right">机柜深度:</td>
+            <td><input id="row-depth-txt" class="easyui-validatebox" type="text" style="width: 100%"
+                data-options="required:true,validType:'limitFloat[\'#row-depth-txt\',0,2]'" value="1.2"></td>
+            <td>米</td>
+        </tr>
+    </table>
+</div>

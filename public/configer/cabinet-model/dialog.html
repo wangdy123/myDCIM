@@ -1,0 +1,40 @@
+<div class="panel" fit="true">
+    <table align="center">
+        <tr>
+            <td align="right">编码:</td>
+            <td><input id="model-code-txt" class="easyui-validatebox" type="text" style="width: 100%"
+                data-options="required:true,validType:'code[\'#model-code-txt\',2]'"></td>
+        </tr>
+        <tr>
+            <td align="right">型号名:</td>
+            <td><input id="model-name-txt" class="easyui-validatebox" type="text" style="width: 100%"
+                required="true"></td>
+        </tr>
+        <tr>
+            <td align="right">简称:</td>
+            <td><input id="model-abbreviation-txt" class="easyui-validatebox" type="text" style="width: 100%"></td>
+        </tr>
+        <tr>
+            <td align="right">总U数:</td>
+            <td><input id="model-U-count-txt" class="easyui-validatebox" type="text" style="width: 100%"
+                data-options="required:true,validType:'positiveInteger[\'#model-U-count-txt\',0,50]'" value="42"></td>
+        </tr>
+        <tr>
+            <td align="right">U1位置:</td>
+            <td><select id="model-U-position-txt" style="width: 100%"><option value="0">底部</option>
+                    <option value="1">顶部</option></select></td>
+        </tr>
+        <tr>
+            <td align="right">机柜深度:</td>
+            <td><input id="model-depth-txt" class="easyui-validatebox" type="text" style="width: 100%"
+                data-options="required:true,validType:'limitFloat[\'#model-depth-txt\',0,2]'" value="1.2"></td>
+            <td>米</td>
+        </tr>
+        <tr>
+            <td align="right">使用年限:</td>
+            <td><input id="model-max-year-txt" class="easyui-validatebox" type="text" style="width: 100%"
+                data-options="required:true,validType:'positiveInteger[\'#model-max-year-txt\',0,100]'" value="20"></td>
+            <td>年</td>
+        </tr>
+    </table>
+</div>

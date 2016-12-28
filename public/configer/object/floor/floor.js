@@ -1,18 +1,11 @@
 $(document).ready(
 		function() {
-			var floorUrl = WUI.urlPath+"/configer/floors";
-			var buildingUrl = WUI.urlPath+"/configer/buildings";
-
+			var floorUrl = WUI.urlPath + "/configer/floors";
+			var buildingUrl = WUI.urlPath + "/configer/buildings";
 			var $node = $('#floor-datagrid');
-			var currentObject = null;
-			function getRowIndex(target) {
-				var tr = $(target).closest('tr.datagrid-row');
-				return parseInt(tr.attr('datagrid-row-index'));
-			}
-			function getRowData(target) {
-				return $node.datagrid("getRows")[getRowIndex(target)];
-			}
 
+			var currentObject = null;
+			WUI.floor = WUI.floor || {};
 			function reload(publish) {
 				if (currentObject) {
 					$node.datagrid("reload", {
@@ -24,73 +17,77 @@ $(document).ready(
 					});
 				}
 			}
-			WUI.subscribe('open_object', function(event) {
-				object = event.object;
-				if (currentObject && currentObject.ID === object.ID) {
-					return;
-				}
-				if (object.OBJECT_TYPE !== WUI.objectTypeDef.BUILDDING) {
-					return;
-				}
-				currentObject = object;
-				$("#workspace-title").text(currentObject.NAME);
+			window.WUI.publishEvent('current_object', {
+				publisher : 'configer',
+				cbk : function(object) {
+					if (currentObject && currentObject.ID === object.ID) {
+						return;
+					}
+					currentObject = object;
 
-				$node.datagrid({
-					toolbar : [ {
-						iconCls : WUI.objectTypes[window.WUI.objectTypeDef.FLOOR].iconCls,
-						handler : function() {
-							floorDialog(null, currentObject.ID);
-						}
-					}, '-', {
-						iconCls : 'icon-reload',
-						handler : function() {
-							reload(true);
-						}
-					} ]
-				});
+					$node.datagrid({
+						url : floorUrl,
+						method : "get",
+						singleSelect : true,
+						onLoadError : function(s) {
+							$.messager.alert('失败', "加载失败");
+						},
+						queryParams : {
+							parentId : currentObject.ID
+						},
+						toolbar : [ {
+							iconCls : 'icon-add',
+							handler : function() {
+								floorDialog(null, currentObject.ID);
+							}
+						}, '-', {
+							iconCls : 'icon-reload',
+							handler : function() {
+								reload(true);
+							}
+						} ],
+						columns : [ [
+								{
+									field : 'action',
+									title : '操作',
+									width : 100,
+									align : 'center',
+									formatter : function(value, row, index) {
+										var e = '<div class="icon-edit operator-tool" title="修改" '
+												+ ' onclick="WUI.floor.editrow(this)"></div> ';
+										var s = '<div class="separater"></div> ';
+										var d = '<div class="icon-remove operator-tool" title="删除" '
+												+ ' onclick="WUI.floor.deleterow(this)"></div>';
+										return e + s + d;
+									}
+								}, {
+									field : 'CODE',
+									title : '编码',
+									align : 'right',
+									width : 80
+								}, {
+									field : 'NAME',
+									title : '名称',
+									width : 150
+								}, {
+									field : 'IS_ROOFTOP',
+									title : '是否天台',
+									width : 150,
+									formatter : function(value, row, index) {
+										return row.IS_ROOFTOP ? "是" : "否";
+									}
+								} ] ]
+					});
+				}
+			});
 
-				reload(false);
-			});
-			$node.datagrid({
-				url : floorUrl,
-				method : "get",
-				singleSelect : true,
-				onLoadError : function(s) {
-					$.messager.alert('失败', "加载失败");
-				},
-				columns : [ [
-						{
-							field : 'action',
-							title : '操作',
-							width : 100,
-							align : 'center',
-							formatter : function(value, row, index) {
-								var e = '<div class="icon-edit operator-tool" title="修改" '
-										+ ' onclick="WUI.floor.editrow(this)"></div> ';
-								var s = '<div class="separater"></div> ';
-								var d = '<div class="icon-remove operator-tool" title="删除" '
-										+ ' onclick="WUI.floor.deleterow(this)"></div>';
-								return e + s + d;
-							}
-						}, {
-							field : 'CODE',
-							title : '编码',
-							align : 'right',
-							width : 80
-						}, {
-							field : 'NAME',
-							title : '名称',
-							width : 150
-						}, {
-							field : 'IS_ROOFTOP',
-							title : '是否天台',
-							width : 150,
-							formatter : function(value, row, index) {
-								return row.IS_ROOFTOP ? "是" : "否";
-							}
-						} ] ]
-			});
-			WUI.floor = {};
+			function getRowIndex(target) {
+				var tr = $(target).closest('tr.datagrid-row');
+				return parseInt(tr.attr('datagrid-row-index'));
+			}
+			function getRowData(target) {
+				return $node.datagrid("getRows")[getRowIndex(target)];
+			}
 			WUI.floor.editrow = function(target) {
 				var floor = getRowData(target);
 				floorDialog(floor, floor.PARENT_ID);
@@ -118,7 +115,7 @@ $(document).ready(
 						width : 350,
 						closed : false,
 						cache : false,
-						href : '/configer/floor/floor-dialog.html',
+						href : '/configer/object/floor/floor-dialog.html',
 						onLoadError : function() {
 							$.messager.alert('失败', "对话框加载失败，请刷新后重试！");
 						},
@@ -138,7 +135,7 @@ $(document).ready(
 						},
 						modal : true,
 						onClose : function() {
-							$("#floor-dialog").empty();
+							$("#configer-dialog").empty();
 						},
 						buttons : [ {
 							text : '保存',
@@ -159,14 +156,14 @@ $(document).ready(
 								if (floor) {
 									newfloor.ID = floor.ID;
 									WUI.ajax.put(floorUrl, newfloor, function() {
-										$('#floor-dialog').dialog("close");
+										$('#configer-dialog').dialog("close");
 										reload(true);
 									}, function() {
 										$.messager.alert('失败', "修改楼层失败！");
 									});
 								} else {
 									WUI.ajax.post(floorUrl, newfloor, function() {
-										$('#floor-dialog').dialog("close");
+										$('#configer-dialog').dialog("close");
 										reload(true);
 									}, function() {
 										$.messager.alert('失败', "添加楼层失败！");
@@ -177,11 +174,11 @@ $(document).ready(
 						}, {
 							text : '取消',
 							handler : function() {
-								$('#floor-dialog').dialog("close");
+								$('#configer-dialog').dialog("close");
 							}
 						} ]
 					};
-					$('#floor-dialog').dialog(cfg);
+					$('#configer-dialog').dialog(cfg);
 				}, function() {
 					$.messager.alert('失败', "获取机楼失败！");
 				});

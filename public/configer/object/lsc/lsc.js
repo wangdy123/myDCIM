@@ -1,15 +1,10 @@
 $(document).ready(
 		function() {
-			var regionUrl = WUI.urlPath+"/configer/regions";
-			var $node = $('#region-datagrid');
+			var regionUrl = WUI.urlPath + "/configer/regions";
+			var $node = $('#lsc-datagrid');
 			var currentObject = null;
-			function getRowIndex(target) {
-				var tr = $(target).closest('tr.datagrid-row');
-				return parseInt(tr.attr('datagrid-row-index'));
-			}
-			function getRowData(target) {
-				return $node.datagrid("getRows")[getRowIndex(target)];
-			}
+
+			WUI.lsc = WUI.lsc || {};
 
 			function reload(publish) {
 				if (currentObject) {
@@ -22,87 +17,86 @@ $(document).ready(
 					});
 				}
 			}
-			WUI.subscribe('open_object', function(event) {
-				object = event.object;
-				if (currentObject && currentObject.ID === object.ID) {
-					return;
-				}
-				currentObject = object;
-				$("#workspace-title").text(currentObject.NAME);
-				var toolbar = [];
-				var childTypes = WUI.regionChildTypes[currentObject.OBJECT_TYPE];
-				for (var index = 0; index < childTypes.length; index++) {
-					(function(type) {
-						toolbar.push({
-							iconCls : WUI.objectTypes[type].iconCls,
-							handler : function() {
-								regionDialog(null, currentObject.ID, type);
-							}
-						});
-					})(childTypes[index]);
-				}
-				toolbar.push('-');
-				toolbar.push({
-					iconCls : 'icon-reload',
-					handler : function() {
-						reload(true);
+
+			window.WUI.publishEvent('current_object', {
+				publisher : 'configer',
+				cbk : function(object) {
+					if (currentObject && currentObject.ID === object.ID) {
+						return;
 					}
-				});
-				$node.datagrid({
-					toolbar : toolbar
-				});
-				reload(false);
-			});
-			$node.datagrid({
-				url : regionUrl,
-				method : "get",
-				singleSelect : true,
-				onLoadError : function(s) {
-					$.messager.alert('失败', "加载失败");
-				},
-				columns : [ [
-						{
-							field : 'action',
-							title : '操作',
-							width : 100,
-							align : 'center',
-							formatter : function(value, row, index) {
-								var e = '<div class="icon-edit operator-tool" title="修改" '
-										+ ' onclick="WUI.region.editrow(this)"></div> ';
-								var s = '<div class="separater"></div> ';
-								var d = '<div class="icon-remove operator-tool" title="删除" '
-										+ ' onclick="WUI.region.deleterow(this)"></div>';
-								return e + s + d;
+					currentObject = object;
+					$node.datagrid({
+						url : regionUrl,
+						queryParams : {
+							parentId : currentObject.ID
+						},
+						fit : true,
+						border : false,
+						method : "get",
+						singleSelect : true,
+						onLoadError : function(s) {
+							$.messager.alert('失败', "加载失败");
+						},
+						toolbar : [ {
+							iconCls : 'icon-add',
+							handler : function() {
+								regionDialog(null, currentObject.ID, WUI.objectTypeDef.LSC);
 							}
-						}, {
-							field : 'ZIP_CODE',
-							title : '行政编码',
-							align : 'right',
-							width : 80
-						}, {
-							field : 'NAME',
-							title : '名称',
-							width : 150
-						}, {
-							field : 'ABBREVIATION',
-							title : '简称',
-							width : 150
-						}, {
-							field : 'LONGITUDE',
-							title : '经度(度)',
-							width : 150
-						}, {
-							field : 'LATITUDE',
-							title : '纬度(度)',
-							width : 150
-						} ] ]
+						}, '-', {
+							iconCls : 'icon-reload',
+							handler : function() {
+								reload(true);
+							}
+						} ],
+						columns : [ [
+								{
+									field : 'action',
+									title : '操作',
+									width : 100,
+									align : 'center',
+									formatter : function(value, row, index) {
+										var e = '<div class="icon-edit operator-tool" title="修改" '
+												+ ' onclick="WUI.lsc.editrow(this)"></div> ';
+										var s = '<div class="separater"></div> ';
+										var d = '<div class="icon-remove operator-tool" title="删除" '
+												+ ' onclick="WUI.lsc.deleterow(this)"></div>';
+										return e + s + d;
+									}
+								}, {
+									field : 'ZIP_CODE',
+									title : '行政编码',
+									align : 'right',
+									width : 80
+								}, {
+									field : 'NAME',
+									title : '名称',
+									width : 150
+								}, {
+									field : 'ABBREVIATION',
+									title : '简称',
+									width : 150
+								}, {
+									field : 'LONGITUDE',
+									title : '经度(度)',
+									width : 150
+								}, {
+									field : 'LATITUDE',
+									title : '纬度(度)',
+									width : 150
+								} ] ]
+					});
+				}
 			});
-			WUI.region = {};
-			WUI.region.editrow = function(target) {
-				var region = getRowData(target);
+			function getRowIndex(target) {
+				var tr = $(target).closest('tr.datagrid-row');
+				return parseInt(tr.attr('datagrid-row-index'));
+			}
+
+			WUI.lsc.editrow = function(target) {
+				var region = $node.datagrid("getRows")[getRowIndex(target)];
 				regionDialog(region, region.PARENT_ID, region.OBJECT_TYPE);
 			}
-			WUI.region.deleterow = function(target) {
+			WUI.lsc.deleterow = function(target) {
 				var region = $node.datagrid("getRows")[getRowIndex(target)];
 				$.messager.confirm('确认',
 						'确定要删除' + WUI.objectTypes[region.OBJECT_TYPE].name + '【' + region.NAME + '】吗?', function(r) {
@@ -115,10 +109,9 @@ $(document).ready(
 							}
 						});
 			}
-
 			function regionDialog(region, parentId, objectType) {
 				var regionTypeName = WUI.objectTypes[objectType].name;
-				$('#region-dialog').dialog({
+				$('#configer-dialog').dialog({
 					iconCls : region ? "icon-edit" : "icon-add",
 					title : (region ? "修改" : "添加") + regionTypeName,
 					left : ($(window).width() - 300) * 0.5,
@@ -126,7 +119,7 @@ $(document).ready(
 					width : 350,
 					closed : false,
 					cache : false,
-					href : '/configer/region/region-dialog.html',
+					href : '/configer/object/lsc/lsc-dialog.html',
 					onLoadError : function() {
 						$.messager.alert('失败', "对话框加载失败，请刷新后重试！");
 					},
@@ -146,7 +139,7 @@ $(document).ready(
 					},
 					modal : true,
 					onClose : function() {
-						$("#region-dialog").empty();
+						$("#configer-dialog").empty();
 					},
 					buttons : [ {
 						text : '保存',
@@ -173,14 +166,14 @@ $(document).ready(
 							if (region) {
 								newRegion.ID = region.ID;
 								WUI.ajax.put(regionUrl, newRegion, function() {
-									$('#region-dialog').dialog("close");
+									$('#configer-dialog').dialog("close");
 									reload(true);
 								}, function() {
 									$.messager.alert('失败', "修改" + regionTypeName + "失败！");
 								});
 							} else {
 								WUI.ajax.post(regionUrl, newRegion, function() {
-									$('#region-dialog').dialog("close");
+									$('#configer-dialog').dialog("close");
 									reload(true);
 								}, function() {
 									$.messager.alert('失败', "添加" + regionTypeName + "失败！");
@@ -190,7 +183,7 @@ $(document).ready(
 					}, {
 						text : '取消',
 						handler : function() {
-							$('#region-dialog').dialog("close");
+							$('#configer-dialog').dialog("close");
 						}
 					} ]
 				});

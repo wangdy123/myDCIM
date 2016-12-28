@@ -1,15 +1,9 @@
 $(document).ready(
 		function() {
-			var stationUrl = WUI.urlPath+"/configer/stations";
+			var stationUrl = WUI.urlPath + "/configer/stations";
 			$node = $('#station-base-datagrid');
 			var currentObject = null;
-			function getRowIndex(target) {
-				var tr = $(target).closest('tr.datagrid-row');
-				return parseInt(tr.attr('datagrid-row-index'));
-			}
-			function getRowData(target) {
-				return $node.datagrid("getRows")[getRowIndex(target)];
-			}
+			WUI.station = WUI.station || {};
 
 			function reload(publish) {
 				if (currentObject) {
@@ -22,90 +16,92 @@ $(document).ready(
 					});
 				}
 			}
-			WUI.subscribe('open_object', function(event) {
-				object = event.object;
-				if (currentObject && currentObject.ID === object.ID) {
-					return;
-				}
-				currentObject = object;
-				$("#workspace-title").text(currentObject.NAME);
-				var toolbar = [];
-				var base_parentTypes = [ WUI.objectTypeDef.LSC, WUI.objectTypeDef.REGION ];
-				if (base_parentTypes.indexOf(currentObject.OBJECT_TYPE) >= 0) {
-					toolbar.push({
-						iconCls : WUI.objectTypes[WUI.objectTypeDef.STATION_BASE].iconCls,
-						handler : function() {
-							stationDialog(null, currentObject.ID);
-						}
-					});
-					toolbar.push('-');
-				}
-				toolbar.push({
-					iconCls : 'icon-reload',
-					handler : function() {
-						reload(true);
+			window.WUI.publishEvent('current_object', {
+				publisher : 'configer',
+				cbk : function(object) {
+					if (currentObject && currentObject.ID === object.ID) {
+						return;
 					}
-				});
-				$node.datagrid({
-					toolbar : toolbar
-				});
-				reload(false);
-			});
-			$node.datagrid({
-				url : stationUrl,
-				method : "get",
-				singleSelect : true,
-				onLoadError : function(s) {
-					$.messager.alert('失败', "加载失败");
-				},
-				columns : [ [
-						{
-							field : 'action',
-							title : '操作',
-							width : 100,
-							align : 'center',
-							formatter : function(value, row, index) {
-								var e = '<div class="icon-edit operator-tool" title="修改" '
-										+ ' onclick="WUI.station.editrow(this)"></div> ';
-								var s = '<div class="separater"></div> ';
-								var d = '<div class="icon-remove operator-tool" title="删除" '
-										+ ' onclick="WUI.station.deleterow(this)"></div>';
-								return e + s + d;
+					currentObject = object;
+
+					$node.datagrid({
+						url : stationUrl,
+						method : "get",
+						singleSelect : true,
+						queryParams : {
+							parentId : currentObject.ID
+						},
+						toolbar : [ {
+							iconCls : 'icon-add',
+							handler : function() {
+								stationDialog(null, currentObject.ID, WUI.objectTypeDef.STATION_BASE);
 							}
-						}, {
-							field : 'CODE',
-							title : '编码',
-							align : 'right',
-							width : 80
-						}, {
-							field : 'NAME',
-							title : '名称',
-							width : 150
-						}, {
-							field : 'STATION_TYPE',
-							title : '园区类型',
-							width : 150,
-							formatter : function(value, row, index) {
-								return WUI.stationTypes[row.STATION_TYPE];
+						}, '-', {
+							iconCls : 'icon-reload',
+							handler : function() {
+								reload(true);
 							}
-						}, {
-							field : 'SEQUENCE',
-							title : '序号',
-							width : 150
-						}, {
-							field : 'LONGITUDE',
-							title : '经度(度)',
-							width : 150
-						}, {
-							field : 'LATITUDE',
-							title : '纬度(度)',
-							width : 150
-						} ] ]
+						} ],
+						onLoadError : function(s) {
+							$.messager.alert('失败', "加载失败");
+						},
+						columns : [ [
+								{
+									field : 'action',
+									title : '操作',
+									width : 100,
+									align : 'center',
+									formatter : function(value, row, index) {
+										var e = '<div class="icon-edit operator-tool" title="修改" '
+												+ ' onclick="WUI.station.editrow(this)"></div> ';
+										var s = '<div class="separater"></div> ';
+										var d = '<div class="icon-remove operator-tool" title="删除" '
+												+ ' onclick="WUI.station.deleterow(this)"></div>';
+										return e + s + d;
+									}
+								}, {
+									field : 'CODE',
+									title : '编码',
+									align : 'right',
+									width : 80
+								}, {
+									field : 'NAME',
+									title : '名称',
+									width : 150
+								}, {
+									field : 'STATION_TYPE',
+									title : '园区类型',
+									width : 150,
+									formatter : function(value, row, index) {
+										return WUI.stationTypes[row.STATION_TYPE];
+									}
+								}, {
+									field : 'SEQUENCE',
+									title : '序号',
+									width : 150
+								}, {
+									field : 'LONGITUDE',
+									title : '经度(度)',
+									width : 150
+								}, {
+									field : 'LATITUDE',
+									title : '纬度(度)',
+									width : 150
+								} ] ]
+					});
+				}
 			});
-			WUI.station = {};
+
+			function getRowIndex(target) {
+				var tr = $(target).closest('tr.datagrid-row');
+				return parseInt(tr.attr('datagrid-row-index'));
+			}
+			function getRowData(target) {
+				return $node.datagrid("getRows")[getRowIndex(target)];
+			}
 			WUI.station.editrow = function(target) {
 				var station = getRowData(target);
-				stationDialog(station, station.PARENT_ID);
+				stationDialog(station, station.PARENT_ID, station.OBJECT_TYPE);
 			}
 			WUI.station.deleterow = function(target) {
 				var station = $node.datagrid("getRows")[getRowIndex(target)];
@@ -120,17 +116,18 @@ $(document).ready(
 				});
 			}
 
-			function stationDialog(station, parentId) {
-				var dialogNode = $('#station-base-dialog');
+			function stationDialog(station, parentId, objectType) {
+				var dialogNode = $('#configer-dialog');
+				var typeName = WUI.objectTypes[objectType].name;
 				dialogNode.dialog({
 					iconCls : station ? "icon-edit" : "icon-add",
-					title : (station ? "修改" : "添加") + "园区",
+					title : (station ? "修改" : "添加") + typeName,
 					left : ($(window).width() - 300) * 0.5,
 					top : ($(window).height() - 300) * 0.5,
 					width : 350,
 					closed : false,
 					cache : false,
-					href : '/configer/station-base/station-base-dialog.html',
+					href : '/configer/object/station-base/station-base-dialog.html',
 					onLoadError : function() {
 						$.messager.alert('失败', "对话框加载失败，请刷新后重试！");
 					},
@@ -187,14 +184,14 @@ $(document).ready(
 									dialogNode.dialog("close");
 									reload(true);
 								}, function() {
-									$.messager.alert('失败', "修改园区失败！");
+									$.messager.alert('失败', "修改" + typeName + "失败！");
 								});
 							} else {
 								WUI.ajax.post(stationUrl, newStation, function() {
 									dialogNode.dialog("close");
 									reload(true);
 								}, function() {
-									$.messager.alert('失败', "添加园区失败！");
+									$.messager.alert('失败', "添加" + typeName + "失败！");
 								});
 							}
 						}

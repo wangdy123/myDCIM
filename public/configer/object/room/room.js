@@ -1,15 +1,9 @@
 $(document).ready(
 		function() {
-			var roomUrl = WUI.urlPath+"/configer/rooms";
+			var roomUrl = WUI.urlPath + "/configer/rooms";
 			var $node = $('#room-datagrid');
 			var currentObject = null;
-			function getRowIndex(target) {
-				var tr = $(target).closest('tr.datagrid-row');
-				return parseInt(tr.attr('datagrid-row-index'));
-			}
-			function getRowData(target) {
-				return $node.datagrid("getRows")[getRowIndex(target)];
-			}
+			WUI.room = WUI.room || {};
 
 			function reload(publish) {
 				if (currentObject) {
@@ -22,84 +16,81 @@ $(document).ready(
 					});
 				}
 			}
-			WUI.subscribe('open_object', function(event) {
-				object = event.object;
-				if (currentObject && currentObject.ID === object.ID) {
-					return;
-				}
-				var base_parentTypes = [ WUI.objectTypeDef.STATION_BASE, WUI.objectTypeDef.BUILDDING,
-						WUI.objectTypeDef.FLOOR ];
-				if (base_parentTypes.indexOf(object.OBJECT_TYPE) < 0) {
-					return;
-				}
-				currentObject = object;
-				$("#workspace-title").text(currentObject.NAME);
-				var toolbar = [];
-				if (base_parentTypes.indexOf(currentObject.OBJECT_TYPE) >= 0) {
-					toolbar.push({
-						iconCls : WUI.objectTypes[WUI.objectTypeDef.ROOM].iconCls,
-						handler : function() {
-							roomDialog(null, currentObject.ID);
-						}
-					});
-					toolbar.push('-');
-				}
-				toolbar.push({
-					iconCls : 'icon-reload',
-					handler : function() {
-						reload(true);
+			window.WUI.publishEvent('current_object', {
+				publisher : 'configer',
+				cbk : function(object) {
+					if (currentObject && currentObject.ID === object.ID) {
+						return;
 					}
-				});
-				$node.datagrid({
-					toolbar : toolbar
-				});
+					currentObject = object;
 
-				reload(false);
-			});
-			$node.datagrid({
-				url : roomUrl,
-				method : "get",
-				singleSelect : true,
-				onLoadError : function(s) {
-					$.messager.alert('失败', "加载失败");
-				},
-				columns : [ [
-						{
-							field : 'action',
-							title : '操作',
-							width : 100,
-							align : 'center',
-							formatter : function(value, row, index) {
-								var e = '<div class="icon-edit operator-tool" title="修改" '
-										+ ' onclick="WUI.room.editrow(this)"></div> ';
-								var s = '<div class="separater"></div> ';
-								var d = '<div class="icon-remove operator-tool" title="删除" '
-										+ ' onclick="WUI.room.deleterow(this)"></div>';
-								return e + s + d;
+					$node.datagrid({
+						url : roomUrl,
+						method : "get",
+						singleSelect : true,
+						onLoadError : function(s) {
+							$.messager.alert('失败', "加载失败");
+						},
+						queryParams : {
+							parentId : currentObject.ID
+						},
+						toolbar : [ {
+							iconCls : 'icon-add',
+							handler : function() {
+								regionDialog(null, currentObject.ID);
 							}
-						}, {
-							field : 'CODE',
-							title : '编码',
-							align : 'right',
-							width : 80
-						}, {
-							field : 'NAME',
-							title : '名称',
-							width : 150
-						}, {
-							field : 'ROOM_TYPE',
-							title : '机房类型',
-							width : 150,
-							formatter : function(value, row, index) {
-								return WUI.roomTypes[row.ROOM_TYPE];
+						}, '-', {
+							iconCls : 'icon-reload',
+							handler : function() {
+								reload(true);
 							}
-						}, {
-							field : 'SEQUENCE',
-							title : '序号',
-							width : 150
-						} ] ]
+						} ],
+						columns : [ [
+								{
+									field : 'action',
+									title : '操作',
+									width : 100,
+									align : 'center',
+									formatter : function(value, row, index) {
+										var e = '<div class="icon-edit operator-tool" title="修改" '
+												+ ' onclick="WUI.room.editrow(this)"></div> ';
+										var s = '<div class="separater"></div> ';
+										var d = '<div class="icon-remove operator-tool" title="删除" '
+												+ ' onclick="WUI.room.deleterow(this)"></div>';
+										return e + s + d;
+									}
+								}, {
+									field : 'CODE',
+									title : '编码',
+									align : 'right',
+									width : 80
+								}, {
+									field : 'NAME',
+									title : '名称',
+									width : 150
+								}, {
+									field : 'ROOM_TYPE',
+									title : '机房类型',
+									width : 150,
+									formatter : function(value, row, index) {
+										return WUI.roomTypes[row.ROOM_TYPE];
+									}
+								}, {
+									field : 'SEQUENCE',
+									title : '序号',
+									width : 150
+								} ] ]
+					});
+				}
 			});
-			WUI.room = {};
+
+			function getRowIndex(target) {
+				var tr = $(target).closest('tr.datagrid-row');
+				return parseInt(tr.attr('datagrid-row-index'));
+			}
+			function getRowData(target) {
+				return $node.datagrid("getRows")[getRowIndex(target)];
+			}
 			WUI.room.editrow = function(target) {
 				var room = getRowData(target);
 				roomDialog(room, room.PARENT_ID);
@@ -126,7 +117,7 @@ $(document).ready(
 					width : 350,
 					closed : false,
 					cache : false,
-					href : '/configer/room/room-dialog.html',
+					href : '/configer/object/room/room-dialog.html',
 					onLoadError : function() {
 						$.messager.alert('失败', "对话框加载失败，请刷新后重试！");
 					},
@@ -147,7 +138,7 @@ $(document).ready(
 					},
 					modal : true,
 					onClose : function() {
-						$("#room-dialog").empty();
+						$("#configer-dialog").empty();
 					},
 					buttons : [ {
 						text : '保存',
@@ -173,14 +164,14 @@ $(document).ready(
 							if (room) {
 								newroom.ID = room.ID;
 								WUI.ajax.put(roomUrl, newroom, function() {
-									$('#room-dialog').dialog("close");
+									$('#configer-dialog').dialog("close");
 									reload(true);
 								}, function() {
 									$.messager.alert('失败', "修改机房失败！");
 								});
 							} else {
 								WUI.ajax.post(roomUrl, newroom, function() {
-									$('#room-dialog').dialog("close");
+									$('#configer-dialog').dialog("close");
 									reload(true);
 								}, function() {
 									$.messager.alert('失败', "添加机房失败！");
@@ -191,10 +182,10 @@ $(document).ready(
 					}, {
 						text : '取消',
 						handler : function() {
-							$('#room-dialog').dialog("close");
+							$('#configer-dialog').dialog("close");
 						}
 					} ]
 				};
-				$('#room-dialog').dialog(cfg);
+				$('#configer-dialog').dialog(cfg);
 			}
 		});

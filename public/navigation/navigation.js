@@ -9,7 +9,7 @@ $(function() {
 			lines : true,
 			dnd : true,
 			animate : true,
-			onClick : function(node) {
+			onSelect : function(node) {
 				WUI.publishEvent('open_object', {
 					publisher : publisherName,
 					object : node.attributes.data
@@ -20,7 +20,7 @@ $(function() {
 				var objects = [];
 				for (var i = 0; i < datas.length; i++) {
 					var data = datas[i];
-					if (showTypes.indexOf(datas[i].OBJECT_TYPE) < 0) {
+					if (showTypes && showTypes.indexOf(datas[i].OBJECT_TYPE) < 0) {
 						continue;
 					}
 					objects.push({

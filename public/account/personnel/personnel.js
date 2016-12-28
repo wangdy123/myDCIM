@@ -180,7 +180,7 @@ $(function() {
 									return;
 								}
 
-								var personnel = {
+								var newPersonnel = {
 									NAME : $('#personnel-name-txt').val(),
 									E_MAIL : $('#personnel-email-txt').val(),
 									JOB_NUMBER : $('#personnel-number-txt').val(),
@@ -190,14 +190,14 @@ $(function() {
 
 								if (personnel) {
 									var ID = $('#personnel-id-txt').val();
-									WUI.ajax.put(personnelUrl + "/" + ID, personnel, function() {
+									WUI.ajax.put(personnelUrl + "/" + ID, newPersonnel, function() {
 										$node.datagrid("reload");
 										$('#personnel-dialog').dialog("close");
 									}, function() {
 										$.messager.alert('失败', "修改人员失败！");
 									});
 								} else {
-									WUI.ajax.post(personnelUrl, personnel, function() {
+									WUI.ajax.post(personnelUrl, newPersonnel, function() {
 										$node.datagrid("reload");
 										$('#personnel-dialog').dialog("close");
 									}, function() {

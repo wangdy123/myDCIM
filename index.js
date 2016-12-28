@@ -1,6 +1,11 @@
 var express = require('express');
 var app = express();
 
+var hbs = require('hbs');
+app.set('views', 'templates');
+app.set('view engine', 'html');
+app.engine('.html', hbs.__express);
+
 var config = require('./config').config;
 
 app.use(require('serve-favicon')(require('path').join(__dirname, 'public', 'favicon.ico')));
@@ -20,6 +25,8 @@ app.use(express.static(__dirname + '/public', {
 app.get('/', function(req, res) {
 	res.redirect("/apps/monitor-dashboard.html");
 });
+
+app.get('/static.js',require('./static') );
 
 app.use('/uitest', require('./uitest'));
 app.use('/apps', require('./apps'));

@@ -6,3 +6,5 @@ module.exports.accountRights = require('./accountRights');
 module.exports.dashboard = require('./dashboard');
 module.exports.objectTypeDef = require('./objectTypes').objectTypeDef;
 module.exports.objectTypes = require('./objectTypes').objectTypes;
+module.exports.stationTypes = require('./stationTypes');
+module.exports.roomTypes = require('./roomTypes');

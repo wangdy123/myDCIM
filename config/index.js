@@ -1,5 +1,5 @@
 module.exports = {};
-module.exports.config = require('./config.json');
+module.exports.config = require('./config');
 module.exports.themes = require('./themes');
 module.exports.menus = require('./menus');
 module.exports.accountRights = require('./accountRights');

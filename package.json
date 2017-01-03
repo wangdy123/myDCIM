@@ -12,7 +12,8 @@
     "cookie-parser": "~1.4.3",
     "cookie-session":"~2.0.0",
     "serve-favicon": "~2.3.0",
-    "ejs": "~2.5.2"
+    "ejs": "~2.5.2",
+    "canvas":"~1.6.2"
   }, "devDependencies": {
 		  "hbs": "~4.0.1"
 	  }

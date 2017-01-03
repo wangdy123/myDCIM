@@ -1,6 +1,7 @@
 var app = require('./app');
 
 var db = require('../db');
+var config = require('../config')
 
 var baseSql = "select p.ID,a.NAME,p.OBJECT_TYPE,p.PARENT_ID,a.LONGITUDE,a.LATITUDE from "
 		+ "(select ID,NAME,LONGITUDE,LATITUDE FROM ADMINISTRATIVE_REGION UNION "
@@ -72,11 +73,11 @@ app.get('/objectLocations/:id', function(req, res) {
 
 app.put('/objectLocations/:id', function(req, res) {
 	var location = req.body;
-	if (location.OBJECT_TYPE > require('../config').objectTypeDef.STATION_BASE) {
+	if (location.OBJECT_TYPE > config.objectTypeDef.STATION_BASE) {
 		res.status(400).send(error);
 	}
 	var chain = db.transaction(function(chain) {
-		if (location.OBJECT_TYPE <= require('../config').objectTypeDef.REGION) {
+		if (location.OBJECT_TYPE <= config.objectTypeDef.REGION) {
 			var sql = 'update config.ADMINISTRATIVE_REGION set LONGITUDE=?,LATITUDE=? where ID=?';
 			chain.query(sql, [ location.LONGITUDE, location.LATITUDE, req.params.id ]);
 
@@ -91,4 +92,23 @@ app.put('/objectLocations/:id', function(req, res) {
 		console.log(error);
 		res.status(501).send(error);
 	});
+});
+
+app.get('/map-icon/:fileName.png', function(req, res) {
+	var mapIcon=config.config.mapIcon;
+	var Canvas = require('canvas');
+	var canvas = new Canvas(80, 25);
+	var ctx = canvas.getContext('2d');
+	var img = new Canvas.Image();
+	img.src = mapIcon.image;
+	ctx.drawImage(img, 0, 0);
+	ctx.addFont(mapIcon.font);
+	ctx.font = 'bold 13px ' + mapIcon.font.family;
+	ctx.fillStyle = mapIcon.fillStyle;
+	ctx.fillText(req.params.fileName, 25, 15);
+
+	var buf = canvas.toDataURL();
+	var base64Data = buf.replace(/^data:image\/\w+;base64,/, "");
+	var dataBuffer = new Buffer(base64Data, 'base64');
+	res.send(dataBuffer);
 });

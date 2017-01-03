@@ -120,7 +120,12 @@ $(document).ready(function() {
 		if (!objectLocation.LONGITUDE || !objectLocation.LATITUDE) {
 			return;
 		}
-		var marker = new BMap.Marker(new BMap.Point(objectLocation.LONGITUDE, objectLocation.LATITUDE));
+		 var myIcon = new BMap.Icon("/resources/monitor/map-icon/"+objectLocation.NAME+".png", new BMap.Size(80, 25), { 
+			 anchor: new BMap.Size(15, 25),
+			 infoWindowAnchor:new BMap.Size(25, 5)
+		 });
+		var marker = new BMap.Marker(new BMap.Point(objectLocation.LONGITUDE, objectLocation.LATITUDE), {icon: myIcon});
+
 		map.addOverlay(marker);
 		objectLocation.count = 0;
 		var infoWindow = new BMap.InfoWindow(getObjectContent(objectLocation));

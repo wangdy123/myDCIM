@@ -8,3 +8,5 @@ module.exports.objectTypeDef = require('./objectTypes').objectTypeDef;
 module.exports.objectTypes = require('./objectTypes').objectTypes;
 module.exports.stationTypes = require('./stationTypes');
 module.exports.roomTypes = require('./roomTypes');
+module.exports.powerTypes = require('./powerTypes');
+module.exports.deviceTypes = require('./deviceTypes');

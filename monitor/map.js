@@ -19,7 +19,7 @@ app.get('/objectLocations', function(req, res) {
 
 	var pool = db.pool;
 	var sql = baseSql + ' where p.PARENT_ID=0 or p.PARENT_ID is NULL';
-	pool.query(sql,  function(error, objects, fields) {
+	pool.query(sql, function(error, objects, fields) {
 		if (error) {
 			console.log(error);
 			res.status(501).send(error);
@@ -67,5 +67,28 @@ app.get('/objectLocations/:id', function(req, res) {
 				});
 			}
 		}
+	});
+});
+
+app.put('/objectLocations/:id', function(req, res) {
+	var location = req.body;
+	if (location.OBJECT_TYPE > require('../config').objectTypeDef.STATION_BASE) {
+		res.status(400).send(error);
+	}
+	var chain = db.transaction(function(chain) {
+		if (location.OBJECT_TYPE <= require('../config').objectTypeDef.REGION) {
+			var sql = 'update config.ADMINISTRATIVE_REGION set LONGITUDE=?,LATITUDE=? where ID=?';
+			chain.query(sql, [ location.LONGITUDE, location.LATITUDE, req.params.id ]);
+
+		} else {
+			var sql = 'update config.STATION_BASE set LONGITUDE=?,LATITUDE=? where ID=?';
+			chain.query(sql, [ location.LONGITUDE, location.LATITUDE, req.params.id ]);
+		}
+
+	}, function() {
+		res.status(204).end();
+	}, function(error) {
+		console.log(error);
+		res.status(501).send(error);
 	});
 });

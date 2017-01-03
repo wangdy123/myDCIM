@@ -1,0 +1,34 @@
+<div class="panel" fit="true">
+    <table align="center">
+        <tr>
+            <td align="right">编码:</td>
+            <td><input id="power-sequence-txt" class="easyui-validatebox" type="text" style="width: 100%"
+                data-options="required:true,validType:'positiveInteger[\'#power-sequence-txt\',0,10]'" value="1"></td>
+        </tr>
+        <tr>
+            <td align="right">标签:</td>
+            <td><input id="power-label-txt" class="easyui-validatebox" type="text" style="width: 100%"
+                required="true"></td>
+        </tr>
+        <tr>
+            <td align="right">插座数:</td>
+            <td><input id="power-port-count-txt" class="easyui-validatebox" type="text" style="width: 100%"
+                data-options="required:true,validType:'positiveInteger[\'#power-port-count-txt\',0,50]'" value="10"></td>
+        </tr>
+        <tr>
+            <td align="right">额定功率:</td>
+            <td><input id="power-max-load-txt" class="easyui-validatebox" type="text" style="width: 100%"
+                data-options="required:true,validType:'limitFloat[\'#power-max-load-txt\',0,64]'" value="6"></td>
+            <td>kw</td>
+        </tr>
+        <tr>
+            <td align="right">供电设备:</td>
+            <td><input id="power-support-device-txt" class="easyui-combotreegrid" style="width: 100%"></td>
+        </tr>
+        <tr>
+            <td align="right">供电类型:</td>
+            <td><select id="power-type-txt" style="width: 100%"></select></td>
+        </tr>
+
+    </table>
+</div>

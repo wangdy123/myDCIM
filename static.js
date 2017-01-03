@@ -8,5 +8,7 @@ module.exports=function(req, res) {
 	str=str+'window.WUI.themes='+ JSON.stringify(config.themes)+';';
 	str=str+'window.WUI.stationTypes='+ JSON.stringify(config.stationTypes)+';';
 	str=str+'window.WUI.roomTypes='+ JSON.stringify(config.roomTypes)+';';
+	str=str+'window.WUI.powerTypes='+ JSON.stringify(config.powerTypes)+';';
+	str=str+'window.WUI.deviceTypes='+ JSON.stringify(config.deviceTypes)+';';
 	res.send(str);
 }

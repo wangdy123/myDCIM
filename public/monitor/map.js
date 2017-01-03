@@ -1,6 +1,7 @@
 $(document).ready(function() {
 	var publisherName = "map";
-	var objectLocationUrl = WUI.urlPath+"/monitor/objectLocations";
+	var objectLocationUrl = WUI.urlPath + "/monitor/objectLocations";
+	var treeNodeUrl = WUI.urlPath + '/navigation/treeNode';
 	var map = new BMap.Map("map-container");
 	var currentObject = null;
 	var mapMakerPros = {
@@ -22,13 +23,93 @@ $(document).ready(function() {
 		}
 	};
 	var makers = {};
-	
+
 	map.centerAndZoom(new BMap.Point(113.30735, 23.146984), 14);// 8、11
 	map.addControl(new BMap.NavigationControl());
 	map.addControl(new BMap.ScaleControl());
 	map.enableScrollWheelZoom();
+	map.enableKeyboard();
+	map.enablePinchToZoom();
 	map.setMinZoom(8);
 
+	function markObject(param) {
+		function markerObject(objectLocation) {
+			objectLocation.LONGITUDE = param.point.lng;
+			objectLocation.LATITUDE = param.point.lat;
+			WUI.ajax.put(objectLocationUrl + "/" + objectLocation.ID, objectLocation, function() {
+				addMarker(objectLocation);
+			}, function() {
+				$.messager.alert('失败', "标记节点位置失败！");
+			});
+			console.log(objectLocation);
+		}
+		$('#map-object-select-dialog').dialog({
+			title : "选择要标记的对象",
+			left : ($(window).width() - 300) * 0.5,
+			top : ($(window).height() - 300) * 0.5,
+			width : 350,
+			closed : false,
+			cache : false,
+			href : '/monitor/object-select-dialog.html',
+			onLoadError : function() {
+				$.messager.alert('失败', "对话框加载失败，请刷新后重试！");
+			},
+			onLoad : function() {
+				$("#object-select-tree").tree({
+					url : treeNodeUrl,
+					method : 'get',
+					lines : true,
+					dnd : true,
+					animate : true,
+					onDblClick : function(node) {
+						$('#map-object-select-dialog').dialog("close");
+						markerObject(node.attributes.data);
+					},
+					loadFilter : function(datas, parent) {
+						var objects = [];
+						for (var i = 0; i < datas.length; i++) {
+							objects.push({
+								id : datas[i].ID,
+								text : datas[i].NAME,
+								state : (datas[i].OBJECT_TYPE < WUI.objectTypeDef.STATION_BASE) ? "closed" : "open",
+								iconCls : WUI.objectTypes[datas[i].OBJECT_TYPE].iconCls,
+								attributes : {
+									data : datas[i]
+								}
+							});
+						}
+						return objects;
+					},
+					onLoadSuccess : function(node, data) {
+						$("#object-select-tree").tree("expandAll");
+					}
+				});
+			},
+			modal : true,
+			onClose : function() {
+				$("#map-object-select-dialog").empty();
+			},
+			buttons : [ {
+				text : '确定',
+				handler : function() {
+					var node = $("#object-select-tree").tree("getSelected");
+					if (node) {
+						$('#map-object-select-dialog').dialog("close");
+						markerObject(node.attributes.data);
+					}
+				}
+			}, {
+				text : '取消',
+				handler : function() {
+					$('#map-object-select-dialog').dialog("close");
+				}
+			} ]
+		});
+		console.log(param);
+	}
+	map.addEventListener('rightclick', markObject);
+	//map.addEventListener('longpress', markObject);
+	
 	function getObjectContent(objectLocation) {
 		var content = "<b>" + objectLocation.NAME + "</b><br>";
 		content += "<span><strong>类型：</strong>" + mapMakerPros[objectLocation.OBJECT_TYPE].name + "</span><br>";

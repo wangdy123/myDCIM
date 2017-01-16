@@ -5,7 +5,7 @@ module.exports = [ {
 		id : 11,
 		title : "主页",
 		url : "monitor-dashboard.html",
-		htmlFileUrl : "/resources/dashboard/dashboard.html",
+		htmlFileUrl : "../dashboard/dashboard.html",
 		scripts : [],
 		links : [],
 		border : false,
@@ -14,7 +14,7 @@ module.exports = [ {
 		id : 12,
 		title : "监控系统",
 		url : "monitor-monitor.html",
-		htmlFileUrl : "/monitor/monitor.html",
+		htmlFileUrl : "../monitor/monitor.html",
 		scripts : [ {
 			type : "text/javascript",
 			src : "http://api.map.baidu.com/api?v=2.0&ak=ViOy1lFYqsLHS3nyhwYtLPTTifS24qcY"
@@ -25,16 +25,23 @@ module.exports = [ {
 		id : 13,
 		title : "活动告警",
 		url : "monitor-active-alarm.html",
-		htmlFileUrl : "/alarm/active-alarm.html",
+		htmlFileUrl : "../alarm/active-alarm.html",
 		border : true,
 		name : "活动告警"
 	}, {
 		id : 14,
 		title : "历史告警",
 		url : "monitor-history-alarm.html",
-		htmlFileUrl : "/alarm/history-alarm.html",
+		htmlFileUrl : "../alarm/history-alarm.html",
 		border : true,
 		name : "历史告警"
+	}, {
+		id : 15,
+		title : "温度场图",
+		url : "monitor-heatmap.html",
+		htmlFileUrl : "../heatmap/heatmap.html",
+		border : true,
+		name : "温度场图"
 	} ]
 }, {
 	id : 2,
@@ -43,35 +50,35 @@ module.exports = [ {
 		id : 21,
 		title : "门禁监控",
 		url : "door-monitor.html",
-		htmlFileUrl : "/door/monitor-workspace.html",
+		htmlFileUrl : "../door/monitor-workspace.html",
 		border : false,
 		name : "门禁监控"
 	}, {
 		id : 22,
 		title : "门禁配置",
 		url : "door-configer.html",
-		htmlFileUrl : "/door/configer.html",
+		htmlFileUrl : "../door/configer.html",
 		border : false,
 		name : "门禁配置"
 	}, {
 		id : 23,
 		title : "门卡管理",
 		url : "door-card.html",
-		htmlFileUrl : "/door/card.html",
+		htmlFileUrl : "../door/card.html",
 		border : false,
 		name : "门卡管理"
 	}, {
 		id : 24,
 		title : "门卡授权",
 		url : "door-card-auth.html",
-		htmlFileUrl : "/door/card-auth.html",
+		htmlFileUrl : "../door/card-auth.html",
 		border : false,
 		name : "门卡授权"
 	}, {
 		id : 25,
 		title : "开门记录统计",
 		url : "door-record.html",
-		htmlFileUrl : "/door/record.html",
+		htmlFileUrl : "../door/record.html",
 		border : true,
 		name : "开门记录统计"
 	} ]
@@ -82,28 +89,28 @@ module.exports = [ {
 		id : 31,
 		title : "部门管理",
 		url : "department-config.html",
-		htmlFileUrl : "/account/department/department-wokspace.html",
+		htmlFileUrl : "../account/department/department-wokspace.html",
 		border : false,
 		name : "部门管理"
 	}, {
 		id : 34,
 		title : "角色管理",
 		url : "role-config.html",
-		htmlFileUrl : "/account/role/role-wokspace.html",
+		htmlFileUrl : "../account/role/role-wokspace.html",
 		border : false,
 		name : "角色管理"
 	}, {
 		id : 32,
 		title : "人员管理",
 		url : "personnel-config.html",
-		htmlFileUrl : "/account/personnel/personnel-wokspace.html",
+		htmlFileUrl : "../account/personnel/personnel-wokspace.html",
 		border : false,
 		name : "人员管理"
 	}, {
 		id : 33,
 		title : "帐号管理",
 		url : "account-config.html",
-		htmlFileUrl : "/account/account/account-wokspace.html",
+		htmlFileUrl : "../account/account/account-wokspace.html",
 		border : false,
 		name : "帐号管理"
 	} ]
@@ -114,42 +121,42 @@ module.exports = [ {
 		id : 41,
 		title : "业务配置",
 		url : "configer.html",
-		htmlFileUrl : "/configer/object/wokspace.html",
+		htmlFileUrl : "../configer/object/wokspace.html",
 		border : false,
 		name : "业务配置"
 	}, {
 		id : 41,
 		title : "机柜电源插座管理",
 		url : "config-power-panel.html",
-		htmlFileUrl : "/configer/power-panel/wokspace.html",
+		htmlFileUrl : "../configer/power-panel/wokspace.html",
 		border : false,
 		name : "机柜电源插座管理"
 	}, {
 		id : 42,
 		title : "机柜网口管理",
 		url : "config-net-panel.html",
-		htmlFileUrl : "/configer/net-panel/wokspace.html",
+		htmlFileUrl : "../configer/net-panel/wokspace.html",
 		border : false,
 		name : "机柜网口管理"
 	}, {
 		id : 43,
 		title : "机柜型号管理",
 		url : "config-cabinet-model.html",
-		htmlFileUrl : "/configer/cabinet-model/wokspace.html",
+		htmlFileUrl : "../configer/cabinet-model/wokspace.html",
 		border : false,
 		name : "机柜型号管理"
 	}, {
 		id : 44,
 		title : "设备厂家管理",
 		url : "config-vender.html",
-		htmlFileUrl : "/configer/vender/wokspace.html",
+		htmlFileUrl : "../configer/vender/wokspace.html",
 		border : false,
 		name : "设备厂家管理"
 	}, {
 		id : 45,
 		title : "设备型号管理",
 		url : "config-model.html",
-		htmlFileUrl : "/configer/model/wokspace.html",
+		htmlFileUrl : "../configer/model/wokspace.html",
 		border : false,
 		name : "设备型号管理"
 	} ]
@@ -160,35 +167,35 @@ module.exports = [ {
 		id : 51,
 		title : "环境设施管理",
 		url : "PE-environment.html",
-		htmlFileUrl : "/PE/environment/wokspace.html",
+		htmlFileUrl : "../PE/environment/wokspace.html",
 		border : false,
 		name : "环境设施管理"
 	}, {
 		id : 52,
 		title : "动力设施管理",
 		url : "PE-power.html",
-		htmlFileUrl : "/PE/power/wokspace.html",
+		htmlFileUrl : "../PE/power/wokspace.html",
 		border : false,
 		name : "动力设施管理"
 	}, {
 		id : 53,
 		title : "安防设施管理",
 		url : "PE-safety.html",
-		htmlFileUrl : "/PE/safety/wokspace.html",
+		htmlFileUrl : "../PE/safety/wokspace.html",
 		border : false,
 		name : "安防设施管理"
 	}, {
 		id : 54,
 		title : "门禁设备管理",
 		url : "PE-door.html",
-		htmlFileUrl : "/PE/door/wokspace.html",
+		htmlFileUrl : "../PE/door/wokspace.html",
 		border : false,
 		name : "门禁设备管理"
 	}, {
 		id : 55,
 		title : "视频设备管理",
 		url : "PE-vedio.html",
-		htmlFileUrl : "/PE/vedio/wokspace.html",
+		htmlFileUrl : "../PE/vedio/wokspace.html",
 		border : false,
 		name : "视频设备管理"
 	} ]
@@ -199,49 +206,49 @@ module.exports = [ {
 		id : 65,
 		title : "机架列管理",
 		url : "itdevice-cabinet-column.html",
-		htmlFileUrl : "/configer/cabinet-column/wokspace.html",
+		htmlFileUrl : "../configer/cabinet-column/wokspace.html",
 		border : false,
 		name : "机架列管理"
 	}, {
 		id : 66,
 		title : "机架管理",
 		url : "itdevice-cabinet.html",
-		htmlFileUrl : "/configer/cabinet/wokspace.html",
+		htmlFileUrl : "../configer/cabinet/wokspace.html",
 		border : false,
 		name : "机架管理"
 	}, {
 		id : 61,
 		title : "服务器管理",
 		url : "itdevice-server.html",
-		htmlFileUrl : "/configer/server/server-wokspace.html",
+		htmlFileUrl : "../configer/server/server-wokspace.html",
 		border : false,
 		name : "服务器管理"
 	}, {
 		id : 62,
 		title : "交换机管理",
 		url : "itdevice-switch.html",
-		htmlFileUrl : "/configer/switch/switch-wokspace.html",
+		htmlFileUrl : "../configer/switch/switch-wokspace.html",
 		border : false,
 		name : "交换机管理"
 	}, {
 		id : 63,
 		title : "路由器管理",
 		url : "config-route.html",
-		htmlFileUrl : "/configer/route/route-wokspace.html",
+		htmlFileUrl : "../configer/route/route-wokspace.html",
 		border : false,
 		name : "路由器管理"
 	}, {
 		id : 64,
 		title : "终端设备管理",
 		url : "config-terminal-equipment.html",
-		htmlFileUrl : "/configer/terminal/terminal-equipment-wokspace.html",
+		htmlFileUrl : "../configer/terminal/terminal-equipment-wokspace.html",
 		border : false,
 		name : "终端设备管理"
 	}, {
 		id : 67,
 		title : "机架机位申请",
 		url : "itdevice-cabinet-unit.html",
-		htmlFileUrl : "/itdevice/cabinet-unit/wokspace.html",
+		htmlFileUrl : "../itdevice/cabinet-unit/wokspace.html",
 		border : false,
 		name : "机架机位申请"
 	} ]
@@ -252,21 +259,21 @@ module.exports = [ {
 		id : 71,
 		title : "器材管理",
 		url : "assets-equipment.html",
-		htmlFileUrl : "/assets/equipment/equipment-wokspace.html",
+		htmlFileUrl : "../assets/equipment/equipment-wokspace.html",
 		border : false,
 		name : "器材管理"
 	}, {
 		id : 72,
 		title : "配件管理",
 		url : "assets-accessories.html",
-		htmlFileUrl : "/assets/accessories/accessories-wokspace.html",
+		htmlFileUrl : "../assets/accessories/accessories-wokspace.html",
 		border : false,
 		name : "配件管理"
 	}, {
 		id : 73,
 		title : "资产报表",
 		url : "assets-Accessories.html",
-		htmlFileUrl : "/assets/report/report-wokspace.html",
+		htmlFileUrl : "../assets/report/report-wokspace.html",
 		border : false,
 		name : "资产报表"
 	} ]

@@ -24,49 +24,49 @@ module.exports.objectTypes = {
 		name : "市区域",
 		iconCls : "icon-lsc",
 		childTypes : [ 3, 4 ],
-		configerPage : "/configer/object/lsc/wokspace.html"
+		configerPage : "../configer/object/lsc/wokspace.html"
 	},
 	3 : {
 		name : "县区域",
 		iconCls : "icon-region",
 		childTypes : [ 4 ],
-		configerPage : "/configer/object/region/wokspace.html"
+		configerPage : "../configer/object/region/wokspace.html"
 	},
 	4 : {
 		name : "园区",
 		iconCls : "icon-station",
 		childTypes : [ 5, 7 ],
-		configerPage : "/configer/object/station-base/wokspace.html"
+		configerPage : "../configer/object/station-base/wokspace.html"
 	},
 	5 : {
 		name : "机楼",
 		iconCls : "icon-building",
 		childTypes : [ 6, 7 ],
-		configerPage : "/configer/object/building/building-wokspace.html"
+		configerPage : "../configer/object/building/building-wokspace.html"
 	},
 	6 : {
 		name : "楼层",
 		iconCls : "icon-floor",
 		childTypes : [ 7 ],
-		configerPage : "/configer/object/floor/floor-wokspace.html"
+		configerPage : "../configer/object/floor/floor-wokspace.html"
 	},
 	7 : {
 		name : "机房",
 		iconCls : "icon-room",
 		childTypes : [ 11, 21, 22, 23 ],
-		configerPage : "/configer/object/room/room-wokspace.html"
+		configerPage : "../configer/object/room/room-wokspace.html"
 	},
 	11 : {
 		name : "机柜列",
 		iconCls : "icon-cabinet-column",
 		childTypes : [ 12 ],
-		configerPage : "/configer/object/cabinet-column/wokspace.html"
+		configerPage : "../configer/object/cabinet-column/wokspace.html"
 	},
 	12 : {
 		name : "机柜",
 		iconCls : "icon-region",
 		childTypes : [ 24 ],
-		configerPage : "/configer/object/cabinet/wokspace.html"
+		configerPage : "../configer/object/cabinet/wokspace.html"
 	},
 	21 : {
 		name : "环境设备",

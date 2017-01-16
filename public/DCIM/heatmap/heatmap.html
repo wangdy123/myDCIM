@@ -1,0 +1,13 @@
+<div id="full-workspace" class="easyui-layout" fit="true">
+    <div id="node-nav" region="west" split="true" title="业务导航" href="../navigation/room/room-nav.html"></div>
+    <div id="main-workspace" class="easyui-panel" region="center" title="实时信息">
+        <div class="easyui-layout" fit="true">
+            <div class="panel" region="north" border="false" style="height: 48px;">
+                <h2 id="workspace-title" fit="true" class=" title-panel">中心系统</h2>
+            </div>
+            <div id="heatmapContainer" class="panel" region="center" border="false" style="width:1000px;height:500px;"></div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="../heatmap/heatmap.min.js"></script>
+<script type="text/javascript" src="../heatmap/monitor.js"></script>

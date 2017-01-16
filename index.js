@@ -16,27 +16,28 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(require('cookie-parser')());
 
-require('./permissions').initCheckLogin(app);
-
 app.use(express.static(__dirname + '/public', {
 	maxAge : config.fileMaxAge * 3600 * 24 * 1000
 }));
 
 app.get('/', function(req, res) {
-	res.redirect("/apps/monitor-dashboard.html");
+	res.redirect("/DCIM/apps/monitor-dashboard.html");
 });
 
-app.get('/static.js',require('./static') );
+app.get('/static.js', require('./static'));
 
-app.use('/uitest', require('./uitest'));
-app.use('/apps', require('./apps'));
-app.use('/resources/navigation', require('./navigation'));
-app.use('/resources/dashboard', require('./dashboard'));
-app.use('/resources/account', require('./account'));
-app.use('/resources/configer', require('./configer'));
-app.use('/resources/monitor', require('./monitor'));
-app.use('/resources/alarm', require('./alarm'));
-app.use('/resources/door', require('./door'));
+require('./permissions').initCheckLogin(app);
+
+app.use('/DCIM/uitest', require('./uitest'));
+
+var fs = require('fs');
+var dirList = fs.readdirSync("modules");
+dirList.forEach(function(item) {
+	var path = './modules/' + item;
+	if (fs.statSync(path).isDirectory()) {
+		app.use('/DCIM/' + item, require(path));
+	}
+});
 
 app.use(function(req, res, next) {
 	var err = new Error('Not Found');

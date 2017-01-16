@@ -1,0 +1,74 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>{{title}}</title>
+<script type="text/javascript" src="/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="/jquery/jquery.cookie.js"></script>
+<link rel="stylesheet" type="text/css" href="/easyui/themes/{{theme}}/easyui.css">
+<link rel="stylesheet" type="text/css" href="/easyui/themes/icon.css">
+<script type="text/javascript" src="/easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="/easyui/locale/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript" src="apps.js"></script>
+<script type="text/javascript" src="/js/global.js"></script>
+<script type="text/javascript" src="/static.js"></script>
+
+<link rel="stylesheet" type="text/css" href="/css/style.css" />
+{{#each scripts}}
+<script type="{{type}}" src="{{src}}"></script>
+{{/each}} {{#each links}}
+<script type="{{type}}" href="{{src}}"></script>
+{{/each}}
+</head>
+<body class="easyui-layout">
+    <div class="easyui-panel" region="north" border="false">
+        <img class="panel" title="logo" src="/image/logo1.jpg"></img>
+        <h2 id="system-name" class="panel">DCIM测试平台</h2>
+        <div style="float: right; padding: 0 10px 0;">
+            <div class="header-item panel">
+                <div class="panel">
+                    <span style="font-weight: normal; font-size: 12px;">当前用户：</span><a id="current-user-panel" href="#"
+                        style="color: SteelBlue;">{{userName}}</a> <a id="change-password-btn" href="#"><img
+                        title="修改口令" src="/image/key_16.png"></img></a>
+                </div>
+            </div>
+            <div class="header-item panel">
+                <a id="user-logout-btn" href="#"><img class="panel" title="注销" src="/image/power_16.png"></img></a>
+            </div>
+            <div class="header-item panel">
+                <div class="easyui-panel" border="false">
+                    <label class="easyui-menubutton" data-options="menu:'#theme-panel'">{{theme}}</label>
+                </div>
+                <div id="theme-panel" style="width: 150px;">
+                    {{#each themes}}
+                    <div class="theme-item" value="{{type}}">{{name}}</div>
+                    {{/each}}
+                </div>
+            </div>
+            <div class="header-item panel">
+                <a href="/apps/help.html"><img class="panel" title="帮助文档" src="/image/help_16.png"></img></a>
+            </div>
+
+        </div>
+    </div>
+    <div class="easyui-panel" region="center" border="false">
+        <div class="easyui-layout" border="false" fit="true">
+            <div region="west" region="west" split="true" title="功能导航" style="width: 10%;">
+                <div id="main-menu" class="easyui-accordion" data-options="fit:true,border:false">
+                    {{#each menus}}
+                    <div title={{name}} style="padding: 5px;" data-options="selected:{{selected}}">
+                        <ul class="menu-nav-item">
+                            {{#each childMenus}}
+                            <li class="{{class}}"><a href="{{url}}">{{name}}</a></li> {{/each}}
+                        </ul>
+                    </div>
+                    {{/each}}
+                </div>
+            </div>
+            <div region="center" class="easyui-panel" border="{{border}}" href="{{htmlFileUrl}}"></div>
+        </div>
+    </div>
+    <div id="extdialog1" class="easyui-dialog" data-options="closed:true"></div>
+    <div id="alarm-tooltip" class="easyui-dialog" data-options="closed:true"></div>
+
+</body>
+</html>

@@ -28,7 +28,7 @@ app.get('/static.js', require('./static'));
 
 require('./permissions').initCheckLogin(app);
 
-app.use('/DCIM/uitest', require('./uitest'));
+app.use('/DCIM', require('./uitest'));
 
 var fs = require('fs');
 var dirList = fs.readdirSync("modules");

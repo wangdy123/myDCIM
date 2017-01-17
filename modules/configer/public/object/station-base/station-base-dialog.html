@@ -16,18 +16,18 @@
         </tr>
         <tr>
             <td align="right">序号:</td>
-            <td><input id="station-sequence-txt" class="easyui-validatebox" type="text" style="width: 100%"
-                data-options="validType:'positiveInteger[\'#room-sequence-txt\',0,99999]'"></td>
+            <td><input id="station-sequence-txt" class="easyui-numberbox" type="text" style="width: 100%"
+                data-options="required:true,min:1,max:99999,precision:0" value="1"></td>
         </tr>
         <tr>
             <td align="right">经度:</td>
-            <td><input id="station-LONGITUDE-txt" class="easyui-validatebox" type="text" style="width: 100%"
-                data-options="validType:'limitFloat[\'#region-LONGITUDE-txt\',-180.0,180.0]'"></td><td>度</td>
+            <td><input id="station-LONGITUDE-txt" class="easyui-numberbox" type="text" style="width: 100%"
+               data-options="required:true,min:-180,max:180,precision:8"></td><td>度(-180~180)</td>
         </tr>
         <tr>
             <td align="right">纬度:</td>
-            <td><input id="station-LATITUDE-txt" class="easyui-validatebox" type="text" style="width: 100%"
-                data-options="validType:'limitFloat[\'#region-LATITUDE-txt\',-90.0,90.0]'"></td><td>度</td>
+            <td><input id="station-LATITUDE-txt" class="easyui-numberbox" type="text" style="width: 100%"
+               data-options="required:true,min:-90,max:90,precision:8"></td><td>度(-90~90)</td>
         </tr>
     </table>
 </div>

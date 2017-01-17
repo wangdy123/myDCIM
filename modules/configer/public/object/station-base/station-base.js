@@ -124,7 +124,7 @@ $(document).ready(
 					title : (station ? "修改" : "添加") + typeName,
 					left : ($(window).width() - 300) * 0.5,
 					top : ($(window).height() - 300) * 0.5,
-					width : 350,
+					width : 450,
 					closed : false,
 					cache : false,
 					href : '../configer/object/station-base/station-base-dialog.html',
@@ -140,15 +140,12 @@ $(document).ready(
 							$('#station-name-txt').val(station.NAME);
 							$('#station-code-txt').val(station.CODE);
 							$('#station-type-txt').val(station.STATION_TYPE);
-							$('#station-sequence-txt').val(station.SEQUENCE);
-							$('#station-LONGITUDE-txt').val(station.LONGITUDE);
-							$('#station-LATITUDE-txt').val(station.LATITUDE);
+							$('#station-sequence-txt').numberbox("setValue",station.SEQUENCE);
+							$('#station-LONGITUDE-txt').numberbox("setValue",station.LONGITUDE);
+							$('#station-LATITUDE-txt').numberbox("setValue",station.LATITUDE);
 
 							$('#station-name-txt').validatebox("isValid");
 							$('#station-code-txt').validatebox("isValid");
-							$('#station-sequence-txt').validatebox("isValid");
-							$('#station-LONGITUDE-txt').validatebox("isValid");
-							$('#station-LATITUDE-txt').validatebox("isValid");
 						}
 					},
 					modal : true,
@@ -159,9 +156,9 @@ $(document).ready(
 						text : '保存',
 						handler : function() {
 							var isValid = $('#station-name-txt').validatebox("isValid");
-							isValid = isValid && $('#station-LONGITUDE-txt').validatebox("isValid");
-							isValid = isValid && $('#station-LATITUDE-txt').validatebox("isValid");
-							isValid = isValid && $('#station-sequence-txt').validatebox("isValid");
+							isValid = isValid && $('#station-LONGITUDE-txt').val();
+							isValid = isValid && $('#station-LATITUDE-txt').val();
+							isValid = isValid && $('#station-sequence-txt').val();
 							isValid = isValid && $('#station-type-txt').val();
 							if (!isValid) {
 								return;

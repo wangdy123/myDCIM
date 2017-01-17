@@ -306,70 +306,6 @@ $.extend($.fn.validatebox.defaults.rules, {
         },
         message: '手机号码格式不正确'
     },
-    intOrFloat: {// 验证整数或小数
-        validator: function (value,param) {
-        	return /^[+-]?\d+(\.\d+)?$/i.test(value);
-        },
-        message: '请输入数字，并确保格式正确'
-    },
-    limitFloat:{
-        validator: function (value,param) {
-        	if(!/^[+-]?\d+(\.\d+)?$/i.test(value)){
-        		return false;
-        	}
-        	value = parseFloat(value);
-        	if(param.length>=2){
-        		if(value<param[1]){
-        			$(param[0]).val(param[1]);
-        		}
-        	}
-        	if(param.length>=3){
-        		if(value>param[2]){
-        			$(param[0]).val(param[2]);
-        		}
-        	}
-            return true;
-        },
-        message: '请输入介于{1}和{2}间的数字，并确保格式正确'
-    },
-    integer: {// 验证整数 可正负数
-        validator: function (value,param) {
-        	if(!/^([+]?[0-9])|([-]?[0-9])+\d*$/i.test(value)){
-        		return false;
-        	}
-            value = parseInt(value,10);
-        		if(value<param[1]){
-        			$(param[0]).val(param[1]);
-        		}
-        	
-        		if(value>param[2]){
-        			$(param[0]).val(param[2]);
-        		}
-        	
-            return true;
-        },
-        message: '请输入整数'
-    },
-    positiveInteger: {// 验证正整数
-        validator: function (value,param) {
-        	if(!/^[0-9]\d*$/i.test(value)){
-        		return false;
-        	}
-            value = parseInt(value,10);
-        	if(param.length>=2){
-        		if(value<param[1]){
-        			$(param[0]).val(param[1]);
-        		}
-        	}
-        	if(param.length>=3){
-        		if(value>param[2]){
-        			$(param[0]).val(param[2]);
-        		}
-        	}
-            return true;
-        },
-        message: '请输入正整数'
-    },
     password:{
     	 validator: function (value) {
     		 if(value.length<8){
@@ -398,11 +334,11 @@ $.extend($.fn.validatebox.defaults.rules, {
     },
     code: {// 验证编码
         validator: function (value,param) {
-        	if(!/^\d*$/i.test(value)){
-        		return false;
-        	}
         	if(value.length > param[1]){
         		$(param[0]).val(value.substring(0,param[1]));
+        	}
+        	if(!/^\d*$/i.test(value)){
+        		return false;
         	}
             return value.length===param[1];
         },

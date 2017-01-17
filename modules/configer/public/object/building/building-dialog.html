@@ -12,13 +12,13 @@
         </tr>
         <tr>
             <td align="right">地上层数:</td>
-            <td><input id="building-ground-txt" class="easyui-validatebox" type="text" style="width: 100%"
-                data-options="required:true,validType:'positiveInteger[\'#building-ground-txt\',1,89]'" value="1"></td>
+            <td><input id="building-ground-txt" class="easyui-numberbox" type="text" style="width: 100%"
+                data-options="required:true,min:1,max:89,precision:0" value="1"></td>
         </tr>
         <tr>
             <td align="right">地下层数:</td>
-            <td><input id="building-underground-txt" class="easyui-validatebox" type="text" style="width: 100%"
-                data-options="required:true,validType:'positiveInteger[\'#building-underground-txt\',0,9]'" value="0"></td>
+            <td><input id="building-underground-txt" class="easyui-numberbox" type="text" style="width: 100%"
+                data-options="required:true,min:0,max:9,precision:0" value="0"></td>
         </tr>
     </table>
 </div>

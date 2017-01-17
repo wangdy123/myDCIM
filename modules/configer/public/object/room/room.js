@@ -130,10 +130,9 @@ $(document).ready(
 							$('#room-name-txt').val(room.NAME);
 							$('#room-code-txt').val(room.CODE);
 							$('#room-type-txt').val(room.ROOM_TYPE);
-							$('#room-sequence-txt').val(room.SEQUENCE);
+							$('#room-sequence-txt').datebox('setValue', room.SEQUENCE);
 							$('#room-name-txt').validatebox("isValid");
 							$('#room-code-txt').validatebox("isValid");
-							$('#room-sequence-txt').validatebox("isValid");
 						}
 					},
 					modal : true,
@@ -146,7 +145,7 @@ $(document).ready(
 							var isValid = $('#room-name-txt').validatebox("isValid");
 							isValid = isValid && $('#room-code-txt').val();
 							isValid = isValid && $('#room-type-txt').val();
-							isValid = isValid && $('#room-sequence-txt').validatebox("isValid");
+							isValid = isValid && $('#room-sequence-txt').val();
 
 							if (!isValid) {
 								return;

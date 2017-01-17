@@ -116,7 +116,7 @@ $(document).ready(
 					title : (region ? "修改" : "添加") + regionTypeName,
 					left : ($(window).width() - 300) * 0.5,
 					top : ($(window).height() - 300) * 0.5,
-					width : 350,
+					width : 450,
 					closed : false,
 					cache : false,
 					href : '../configer/object/lsc/lsc-dialog.html',
@@ -128,13 +128,11 @@ $(document).ready(
 							$('#region-name-txt').val(region.NAME);
 							$('#region-zip-code-txt').val(region.ZIP_CODE);
 							$('#region-ABBREVIATION-txt').val(region.ABBREVIATION);
-							$('#region-LONGITUDE-txt').val(region.LONGITUDE);
-							$('#region-LATITUDE-txt').val(region.LATITUDE);
+							$('#region-LONGITUDE-txt').numberbox("setValue",region.LONGITUDE);
+							$('#region-LATITUDE-txt').numberbox("setValue",region.LATITUDE);
 							$('#region-name-txt').validatebox("isValid");
 							$('#region-zip-code-txt').validatebox("isValid");
 							$('#region-ABBREVIATION-txt').validatebox("isValid");
-							$('#region-LONGITUDE-txt').validatebox("isValid");
-							$('#region-LATITUDE-txt').validatebox("isValid");
 						}
 					},
 					modal : true,
@@ -147,8 +145,8 @@ $(document).ready(
 							var isValid = $('#region-name-txt').validatebox("isValid");
 							isValid = isValid && $('#region-zip-code-txt').validatebox("isValid");
 							isValid = isValid && $('#region-ABBREVIATION-txt').validatebox("isValid");
-							isValid = isValid && $('#region-LONGITUDE-txt').validatebox("isValid");
-							isValid = isValid && $('#region-LATITUDE-txt').validatebox("isValid");
+							isValid = isValid && $('#region-LONGITUDE-txt').val();
+							isValid = isValid && $('#region-LATITUDE-txt').val();
 							if (!isValid) {
 								return;
 							}

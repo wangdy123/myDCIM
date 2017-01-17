@@ -109,17 +109,14 @@ $(function() {
 					$('#model-code-txt').val(cabinetModel.CODE);
 					$('#model-name-txt').val(cabinetModel.NAME);
 					$('#model-abbreviation-txt').val(cabinetModel.ABBREVIATION);
-					$('#model-U-count-txt').val(cabinetModel.U_COUNT);
+					$('#model-U-count-txt').numberbox("setValue", cabinetModel.U_COUNT);
 					$('#model-U-position-txt').val(cabinetModel.U1_POSITION);
-					$('#model-depth-txt').val(cabinetModel.DEPTH);
-					$('#model-max-year-txt').val(cabinetModel.MAX_USE_YEAR);
+					$('#model-depth-txt').numberbox("setValue", cabinetModel.DEPTH);
+					$('#model-max-year-txt').numberbox("setValue", cabinetModel.MAX_USE_YEAR);
 
 					$('#model-code-txt').validatebox("isValid");
 					$('#model-name-txt').validatebox("isValid");
 					$('#model-abbreviation-txt').validatebox("isValid");
-					$('#model-U-count-txt').validatebox("isValid");
-					$('#model-depth-txt').validatebox("isValid");
-					$('#model-max-year-txt').validatebox("isValid");
 				}
 			},
 			modal : true,
@@ -132,9 +129,9 @@ $(function() {
 					var isValid = $("#model-name-txt").validatebox("isValid");
 					isValid = isValid && $("#model-code-txt").validatebox("isValid");
 					isValid = isValid && $("#model-abbreviation-txt").validatebox("isValid");
-					isValid = isValid && $("#model-U-count-txt").validatebox("isValid");
-					isValid = isValid && $("#model-depth-txt").validatebox("isValid");
-					isValid = isValid && $("#model-max-year-txt").validatebox("isValid");
+					isValid = isValid && $("#model-U-count-txt").val();
+					isValid = isValid && $("#model-depth-txt").val();
+					isValid = isValid && $("#model-max-year-txt").val();
 					if (!isValid) {
 						return;
 					}

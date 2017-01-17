@@ -2,8 +2,8 @@
     <table align="center">
         <tr>
             <td align="right">编码:</td>
-            <td><input id="net-sequence-txt" class="easyui-validatebox" type="text" style="width: 100%"
-                data-options="required:true,validType:'positiveInteger[\'#net-sequence-txt\',0,10]'" value="1"></td>
+            <td><input id="net-sequence-txt" class="easyui-numberbox" type="text" style="width: 100%"
+                data-options="required:true,min:1,max:10,precision:0" value="1"></td>
         </tr>
         <tr>
             <td align="right">标签:</td>
@@ -12,8 +12,8 @@
         </tr>
         <tr>
             <td align="right">网口数:</td>
-            <td><input id="net-port-count-txt" class="easyui-validatebox" type="text" style="width: 100%"
-                data-options="required:true,validType:'positiveInteger[\'#net-port-count-txt\',0,64]'" value="32"></td>
+            <td><input id="net-port-count-txt" class="easyui-numberbox" type="text" style="width: 100%"
+               data-options="required:true,min:1,max:64,precision:0" value="32"></td>
         </tr>
     </table>
 </div>

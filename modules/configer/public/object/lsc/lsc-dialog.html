@@ -16,13 +16,13 @@
         </tr>
         <tr>
             <td align="right">经度:</td>
-            <td><input id="region-LONGITUDE-txt" class="easyui-validatebox" type="text" style="width: 100%"
-                data-options="validType:'limitFloat[\'#region-LONGITUDE-txt\',-180.0,180.0]'"></td><td>度</td>
+            <td><input id="region-LONGITUDE-txt" class="easyui-numberbox" type="text" style="width: 100%"
+                data-options="required:true,min:-180,max:180,precision:8"></td><td>度(-180~180)</td>
         </tr>
         <tr>
             <td align="right">纬度:</td>
-            <td><input id="region-LATITUDE-txt" class="easyui-validatebox" type="text" style="width: 100%"
-                data-options="validType:'limitFloat[\'#region-LATITUDE-txt\',-90.0,90.0]'"></td><td>度</td>
+            <td><input id="region-LATITUDE-txt" class="easyui-numberbox" type="text" style="width: 100%"
+               data-options="required:true,min:-90,max:90,precision:8"></td><td>度(-90~90)</td>
         </tr>
     </table>
 </div>

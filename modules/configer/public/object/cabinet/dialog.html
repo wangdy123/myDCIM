@@ -11,8 +11,8 @@
         </tr>
         <tr>
             <td align="right">序号:</td>
-            <td><input id="cabinet-sequence-txt" class="easyui-validatebox" type="text" style="width: 100%"
-                data-options="required:true,validType:'positiveInteger[\'#cabinet-sequence-txt\',0,100]'" value="1"></td>
+            <td><input id="cabinet-sequence-txt" class="easyui-numberbox" type="text" style="width: 100%"
+                data-options="required:true,min:1,max:100,precision:0"  value="1"></td>
             <td></td>
             <td align="right">型号:</td>
             <td><select id="cabinet-model-txt" style="width: 100%"></select></td>
@@ -21,13 +21,13 @@
             <td align="right">投产日期:</td>
             <td><input id="start-use-date" type="text" class="easyui-datebox" required="required"></td>
             <td></td>
-            <td align="right">可用期限:</td>
+            <td align="right">预计报废日期:</td>
             <td><input id="expect-end-date" type="text" class="easyui-datebox" required="required"></td>
         </tr>
         <tr>
             <td align="right">机柜深度:</td>
-            <td><input id="cabinet-depth-txt" class="easyui-validatebox" type="text" style="width: 100%"
-                data-options="required:true,validType:'limitFloat[\'#cabinet-depth-txt\',0,2]'" value="1.2"></td>
+            <td><input id="cabinet-depth-txt" class="easyui-numberbox" type="text" style="width: 100%"
+                data-options="required:true,min:1,max:2,precision:3"  value="1.2"></td>
             <td>米</td>
         </tr>
     </table>

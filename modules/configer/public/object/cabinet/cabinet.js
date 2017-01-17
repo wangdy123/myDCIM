@@ -282,15 +282,13 @@ $(document).ready(
 						if (cabinet) {
 							$('#cabinet-name-txt').val(cabinet.NAME);
 							$('#cabinet-code-txt').val(cabinet.CODE);
-							$('#cabinet-sequence-txt').val(cabinet.SEQUENCE);
+							$('#cabinet-sequence-txt').numberbox("setValue",cabinet.SEQUENCE);
 							$('#cabinet-model-txt').val(cabinet.CABINET_MODEL);
-							$('#cabinet-depth-txt').val(cabinet.CABINET_DEPTH);
+							$('#cabinet-depth-txt').numberbox("setValue",cabinet.CABINET_DEPTH);
 							$('#start-use-date').datebox('setValue', cabinet.START_USE_DATE);
 							$('#expect-end-date').datebox('setValue', cabinet.EXPECT_END_DATE);
 							$('#cabinet-name-txt').validatebox("isValid");
 							$('#cabinet-code-txt').validatebox("isValid");
-							$('#cabinet-sequence-txt').validatebox("isValid");
-							$('#cabinet-depth-txt').validatebox("isValid");
 						}
 					},
 					modal : true,
@@ -302,9 +300,9 @@ $(document).ready(
 						handler : function() {
 							var isValid = $('#cabinet-name-txt').validatebox("isValid");
 							isValid = isValid && $('#cabinet-code-txt').validatebox("isValid");
-							isValid = isValid && $('#cabinet-sequence-txt').validatebox("isValid");
+							isValid = isValid && $('#cabinet-sequence-txt').val();
 							isValid = isValid && $('#cabinet-model-txt').val();
-							isValid = isValid && $('#cabinet-depth-txt').validatebox("isValid");
+							isValid = isValid && $('#cabinet-depth-txt').val();
 							isValid = isValid && $('#start-use-date').datebox('getValue');
 							isValid = isValid && $('#expect-end-date').datebox('getValue');
 							if (!isValid) {

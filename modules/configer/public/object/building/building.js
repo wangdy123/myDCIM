@@ -134,12 +134,10 @@ $(document).ready(
 						if (building) {
 							$('#building-name-txt').val(building.NAME);
 							$('#building-code-txt').val(building.CODE);
-							$('#building-ground-txt').val(building.FLOOR_GROUND);
-							$('#building-underground-txt').val(building.FLOOR_UNDERGROUND);
+							$('#building-ground-txt').numberbox("setValue", building.FLOOR_GROUND);
+							$('#building-underground-txt').numberbox("setValue", building.FLOOR_UNDERGROUND);
 							$('#building-name-txt').validatebox("isValid");
 							$('#building-code-txt').validatebox("isValid");
-							$('#building-ground-txt').validatebox("isValid");
-							$('#building-underground-txt').validatebox("isValid");
 						}
 					},
 					modal : true,
@@ -151,8 +149,8 @@ $(document).ready(
 						handler : function() {
 							var isValid = $('#building-name-txt').validatebox("isValid");
 							isValid = isValid && $('#building-code-txt').validatebox("isValid");
-							isValid = isValid && $('#building-ground-txt').validatebox("isValid");
-							isValid = isValid && $('#building-underground-txt').validatebox("isValid");
+							isValid = isValid && $('#building-ground-txt').val();
+							isValid = isValid && $('#building-underground-txt').val();
 
 							if (!isValid) {
 								return;

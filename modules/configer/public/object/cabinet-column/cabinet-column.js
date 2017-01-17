@@ -131,9 +131,6 @@ $(document).ready(
 							$('#row-depth-txt').val(cabinetColumn.CABINET_DEPTH);
 							$('#row-name-txt').validatebox("isValid");
 							$('#row-code-txt').validatebox("isValid");
-							$('#row-sequence-txt').validatebox("isValid");
-							$('#row-count-txt').validatebox("isValid");
-							$('#row-depth-txt').validatebox("isValid");
 						}
 					},
 					modal : true,
@@ -145,9 +142,9 @@ $(document).ready(
 						handler : function() {
 							var isValid = $('#row-name-txt').validatebox("isValid");
 							isValid = isValid && $('#row-code-txt').validatebox("isValid");
-							isValid = isValid && $('#row-sequence-txt').validatebox("isValid");
-							isValid = isValid && $('#row-count-txt').validatebox("isValid");
-							isValid = isValid && $('#row-depth-txt').validatebox("isValid");
+							isValid = isValid && $('#row-sequence-txt').val();
+							isValid = isValid && $('#row-count-txt').val();
+							isValid = isValid && $('#row-depth-txt').val();
 							if (!isValid) {
 								return;
 							}

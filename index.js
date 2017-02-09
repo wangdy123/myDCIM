@@ -16,17 +16,39 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(require('cookie-parser')());
 
+app.use(require('cookie-session')({
+	secret : 'ooosdosgfsdgff'
+}));
+
 app.use(express.static(__dirname + '/public', {
 	maxAge : config.fileMaxAge * 3600 * 24 * 1000
 }));
 
-app.get('/', function(req, res) {
-	res.redirect("/DCIM/apps/monitor-dashboard.html");
-});
 
 app.get('/static.js', require('./static'));
 
-require('./permissions').initCheckLogin(app);
+require('./permissions').initLogin(app,"/DCIM");
+
+app.get('/', function(req, res) {
+	res.redirect("/DCIM/apps/monitor-dashboard.html");
+});
+app.use('/DCIM/apps', require("./apps"));
+
+//require('./permissions').initCheckLogin(app);
+
+
+/**
+ * upload test
+ */
+var multer  = require('multer')
+var upload = multer({ dest: 'uploads/' })
+app.post('/node',upload.single('avatar'), function(req, res) {
+	var obj = req.body;
+	console.log(obj);
+	console.log(req.file);
+	res.status(201).end();
+});
+//* /
 
 app.use('/DCIM', require('./uitest'));
 

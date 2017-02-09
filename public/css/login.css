@@ -1,0 +1,43 @@
+html,body {
+	height: 100%;
+	min-height: 100%;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+}
+
+.login_label {
+	text-justify:inter-word;
+	text-align: justify;
+	width: 4em;
+}
+
+#user-panel {
+	margin: 0;
+	padding: 3em 2em;
+}
+
+#page-header {
+	margin: 0;
+	padding: 0 10px;
+	background-color: #2647A0; /* #218AC2 #2647A0 #2D1152 #947DB2; */
+	color: #FFFFFF !important;
+	display: block;
+	height: 3em;
+	line-height: 3em;
+	text-align: left;
+	vertical-align: middle;
+}
+
+#page-footer {
+	margin: 0;
+	padding: 0 10px;
+	background-color: #2647A0;
+	color: #FFFFFF !important;
+	display: block;
+	clear: both;
+	height: 2em;
+	line-height: 2em;
+	text-align: left;
+	vertical-align: middle;
+}

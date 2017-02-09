@@ -18,6 +18,11 @@ window.WUI.publishEvent = function(name, event) {
 	}
 };
 
+window.WUI.onLoadError=function(){
+	if(xhr.status===401){
+		$.messager.alert('失败', "无操作权限，请联系系统管理员确认用户权限！");
+	}
+}
 window.WUI.ajax={};
 function doSuccess(success,data,textStatus,jqXHR){
 	if(success){
@@ -25,6 +30,10 @@ function doSuccess(success,data,textStatus,jqXHR){
 	}
 }
 function doError(fail,xhr,textStatus){
+	if(xhr.status===401){
+		$.messager.alert('失败', "无操作权限，请联系系统管理员确认用户权限！");
+		return;
+	}
 	if(fail){
 		fail(xhr.responseText,xhr.status);
 	}

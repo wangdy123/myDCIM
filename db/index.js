@@ -43,9 +43,9 @@ var client = redis.createClient({
 	port : config.redis.port
 });
 
-client.on("connect", function() {
-	client.auth(config.redis.user);
-});
+//client.on("connect", function() {
+//	client.auth(config.redis.user);
+//});
 
 client.on("error", function(err) {
 	console.log("Error: " + err);

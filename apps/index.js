@@ -18,8 +18,8 @@ function getTheme(user, req, cbk) {
 		cbk(user.DEFAULT_THEME);
 	}
 };
+
 function setMenu(body, menus, path) {
-	console.log('path: ' + path);
 	for (var i = 0; i < menus.length; i++) {
 		var menu = menus[i];
 		menu.selected = false;
@@ -29,7 +29,6 @@ function setMenu(body, menus, path) {
 				body.title = menu.childMenus[j].title;
 				menu.childMenus[j].class = "panel-header";
 				body.htmlFileUrl = menu.childMenus[j].htmlFileUrl;
-				console.log('htmlFileUrl: ' + menu.childMenus[j].htmlFileUrl);
 				body.border = false;
 				body.scripts = menu.childMenus[j].scripts;
 				body.links = menu.childMenus[j].links;
@@ -42,17 +41,11 @@ function setMenu(body, menus, path) {
 }
 
 app.use(function(req, res, next) {
-	console.log("app index");
-	if (!req.cookies.ssid) {
-		console.log("no ssid");
-		res.render('login', {});
-	}
 	require('../permissions').getCurrentUser(req, res, function(error, user) {
 		if (error) {
 			console.log(error);
 			res.render('login', {});
 		} else {
-			console.log("app next");
 			next();
 		}
 	});

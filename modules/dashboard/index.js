@@ -66,7 +66,7 @@ function getCurrentUserItems(req, res, cbk) {
 app.get('/userItems', function(req, res) {
 	getCurrentUserItems(req, res, function(error, userItems) {
 		if (error) {
-			response.writeHead(400, {
+			res.writeHead(400, {
 				'Content-Type' : 'text/plain'
 			});
 			response.end(JSON.stringify(error));

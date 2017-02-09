@@ -3,7 +3,22 @@ var db = require('../db');
 var cache = require('./ssid_cache');
 
 module.exports.getCurrentUser = function(req, res, cbk) {
-	cache.get(req.cookies.ssid, cbk);
+	if (res.locals.user) {
+		cbk(null, res.locals.user);
+		return;
+	}
+	if (!req.cookies.ssid) {
+		cbk("no ssid");
+	} else {
+		cache.get(req.cookies.ssid, function(err, user) {
+			if (err) {
+				cbk(err);
+			} else {
+				res.locals.user = user;
+				cbk(null, user);
+			}
+		});
+	}
 }
 
 module.exports.getaccountById = function(pool, accountId, cbk) {
@@ -26,23 +41,18 @@ module.exports.getaccountById = function(pool, accountId, cbk) {
 }
 
 module.exports.getCurrentDetailUser = function(req, res, cbk) {
-	cache.get(req.cookies.ssid, function(err, result) {
+	module.exports.getCurrentUser(req, res, function(err, u) {
 		if (err) {
 			cbk(err);
 		} else {
-			module.exports.getaccountById(db.pool, result.ID, cbk);
+			module.exports.getaccountById(db.pool, u.ID, cbk);
 		}
 	});
 }
 
 module.exports.initCheckLogin = function(app) {
 	app.use(function(req, res, next) {
-		console.log(req.method + " " + req.url);
-		console.log('cookies: ' + JSON.stringify(req.cookies));
-		if (!req.cookies.ssid) {
-			res.status(401).send("not login");
-		}
-		cache.get(req.cookies.ssid, function(err, result) {
+		module.exports.getCurrentUser(req, res, function(err, result) {
 			if (err) {
 				res.status(401).send(JSON.stringify(err));
 			} else {
@@ -58,21 +68,22 @@ module.exports.initLogin = function(app, path) {
 				+ 'join portal.PERSONNEL_CFG p on a.ID=p.ID '
 				+ 'where a.ACCOUNT=? and a.LOGIN_PASSWORD=? and a.ENABLE=1';
 		db.pool.query(sql, [ req.body.username, req.body.password ], function(error, accounts, fields) {
+			var referer=req.headers.referer?req.headers.referer:"/";
 			if (error) {
 				console.log(error);
-				res.redirect("/");
+				res.redirect(referer);
 			} else {
 				if (accounts.length < 1) {
 					console.log("not found in db");
-					res.redirect("/");
+					res.redirect(referer);
 				} else {
 					var ssid = require('node-uuid').v1();
 					cache.set(ssid, accounts[0], function(err, result) {
 						if (err) {
-							res.redirect("/");
+							res.redirect(referer);
 						} else {
 							res.cookie('ssid', ssid);
-							res.redirect(req.referer ? req.referer : "/");
+							res.redirect(referer);
 						}
 					});
 				}
@@ -83,7 +94,7 @@ module.exports.initLogin = function(app, path) {
 	app.get(path + '/logout', function(req, res) {
 		cache.remove(req.cookies.ssid, function(err, result) {
 			res.clearCookie('ssid');
-			res.redirect(req.referer);
+			res.redirect(req.headers.referer?req.headers.referer:"/");
 		});
 	});
 };

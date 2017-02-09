@@ -68,7 +68,7 @@ app.use(function(req, res, next) {
 	next(err);
 });
 
-app.use(function(err, req, res, next) {
+app.use(function(err, req, res) {
 	var resBody = {
 		status : err.status || 500,
 		message : err.message

@@ -127,7 +127,7 @@ $(document).ready(
 					width : 450,
 					closed : false,
 					cache : false,
-					href : '../configer/object/station-base/station-base-dialog.html',
+					href : WUI.getConfigerDialogPath(WUI.objectTypes[objectType].namespace),
 					onLoadError : function() {
 						$.messager.alert('失败', "对话框加载失败，请刷新后重试！");
 					},
@@ -140,9 +140,9 @@ $(document).ready(
 							$('#station-name-txt').val(station.NAME);
 							$('#station-code-txt').val(station.CODE);
 							$('#station-type-txt').val(station.STATION_TYPE);
-							$('#station-sequence-txt').numberbox("setValue",station.SEQUENCE);
-							$('#station-LONGITUDE-txt').numberbox("setValue",station.LONGITUDE);
-							$('#station-LATITUDE-txt').numberbox("setValue",station.LATITUDE);
+							$('#station-sequence-txt').numberbox("setValue", station.SEQUENCE);
+							$('#station-LONGITUDE-txt').numberbox("setValue", station.LONGITUDE);
+							$('#station-LATITUDE-txt').numberbox("setValue", station.LATITUDE);
 
 							$('#station-name-txt').validatebox("isValid");
 							$('#station-code-txt').validatebox("isValid");

@@ -133,7 +133,7 @@ $(function() {
 			width : 350,
 			closed : false,
 			cache : false,
-			href : '../account/account/account-dialog.html',
+			href : 'account/account/account-dialog.html',
 			onLoadError : function() {
 				$.messager.alert('失败', "对话框加载失败，请刷新后重试！");
 			},

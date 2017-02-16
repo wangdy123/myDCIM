@@ -119,7 +119,7 @@ $(document).ready(
 					width : 450,
 					closed : false,
 					cache : false,
-					href : '../configer/object/region/region-dialog.html',
+					href : WUI.getConfigerDialogPath(WUI.objectTypes[objectType].namespace),
 					onLoadError : function() {
 						$.messager.alert('失败', "对话框加载失败，请刷新后重试！");
 					},

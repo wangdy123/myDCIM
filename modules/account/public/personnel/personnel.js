@@ -140,7 +140,7 @@ $(function() {
 						width : 300,
 						closed : false,
 						cache : false,
-						href : '../account/personnel/personnel-dialog.html',
+						href : 'account/personnel/personnel-dialog.html',
 						onLoadError : function() {
 							$.messager.alert('失败', "对话框加载失败，请刷新后重试！");
 						},

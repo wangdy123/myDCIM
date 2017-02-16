@@ -8,16 +8,15 @@
 <link rel="stylesheet" type="text/css" href="/easyui/themes/icon.css">
 <script type="text/javascript" src="/easyui/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="/easyui/locale/easyui-lang-zh_CN.js"></script>
-<link rel="stylesheet" type="text/css" href="/css/style.css" />
+<link rel="stylesheet" type="text/css" href="css/style.css" />
 <title>登录DCIM系统</title>
 </head>
 <body>
-    <div class="easyui-panel" border="false" data-options="footer:'#page-footer',header:'#page-header',fit:true"
-        style="padding: 5px 0 5px; ">
+    <div class="easyui-panel" border="false" data-options="footer:'#page-footer',header:'#page-header',fit:true">
         <div style="text-align: center; position: absolute; top:35%;left:35%; ">
             <div style="display: inline-block;" >
                 <div>
-                    <img class="panel" title="logo" src="/image/logo1.jpg"></img>
+                    <img class="panel" title="logo" src="image/logo1.jpg"></img>
                 </div>
                 <h3>DCIM测试平台</h3>
                 <ul>
@@ -29,7 +28,7 @@
             </div>
             <div style="display: inline-block;" >
                 <h3 class="login-page-title">登录DCIM系统</h3>
-                <form method="POST" action="/DCIM/login">
+                <form method="POST" action="login">
                     <table>
                         <tr>
                             <td class="login_label">帐号:</td>
@@ -47,9 +46,9 @@
             </div>
         </div>
     </div>
-    <div id="page-header">
-        <img class="panel" title="logo" src="/image/logo1.jpg"></img>
+    <div id="page-header" style="border-style:none;">
+        <img class="panel" title="logo" src="image/logo1.jpg"></img>
         <h2 id="system-name" class="panel">DCIM测试平台</h2>
     </div>
-    <div id="page-footer">广东盈嘉科技发展股份有限公司</div>
+    <div id="page-footer" style="border-style:none;">广东盈嘉科技发展股份有限公司</div>
 </body>

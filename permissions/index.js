@@ -62,13 +62,13 @@ module.exports.initCheckLogin = function(app) {
 	});
 };
 
-module.exports.initLogin = function(app, path) {
-	app.post(path + '/login', function(req, res) {
+module.exports.initLogin = function(app) {
+	app.post('/login', function(req, res) {
 		var sql = 'select a.ID,p.NAME,a.ACCOUNT,a.ROLE_ID from portal.ACCOUNT a '
 				+ 'join portal.PERSONNEL_CFG p on a.ID=p.ID '
 				+ 'where a.ACCOUNT=? and a.LOGIN_PASSWORD=? and a.ENABLE=1';
 		db.pool.query(sql, [ req.body.username, req.body.password ], function(error, accounts, fields) {
-			var referer=req.headers.referer?req.headers.referer:"/";
+			var referer = req.headers.referer ? req.headers.referer : "/";
 			if (error) {
 				console.log(error);
 				res.redirect(referer);
@@ -91,10 +91,10 @@ module.exports.initLogin = function(app, path) {
 		});
 	});
 
-	app.get(path + '/logout', function(req, res) {
+	app.get('/logout', function(req, res) {
 		cache.remove(req.cookies.ssid, function(err, result) {
 			res.clearCookie('ssid');
-			res.redirect(req.headers.referer?req.headers.referer:"/");
+			res.redirect(req.headers.referer ? req.headers.referer : "/");
 		});
 	});
 };

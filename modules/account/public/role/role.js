@@ -99,7 +99,7 @@ $(function() {
 						width : 600,
 						closed : false,
 						cache : false,
-						href : '../account/role/role-dialog.html',
+						href : 'account/role/role-dialog.html',
 						onLoadError : function() {
 							$.messager.alert('失败', "对话框加载失败，请刷新后重试！");
 						},

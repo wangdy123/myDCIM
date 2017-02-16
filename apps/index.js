@@ -28,7 +28,7 @@ function setMenu(body, menus, path) {
 				menu.selected = true;
 				body.title = menu.childMenus[j].title;
 				menu.childMenus[j].class = "panel-header";
-				body.htmlFileUrl = menu.childMenus[j].htmlFileUrl;
+				body.url = menu.childMenus[j].url;
 				body.border = false;
 				body.scripts = menu.childMenus[j].scripts;
 				body.links = menu.childMenus[j].links;
@@ -51,7 +51,7 @@ app.use(function(req, res, next) {
 	});
 });
 
-app.get('/:path', function(req, res) {
+app.get('/index.html', function(req, res) {
 	require('../permissions').getCurrentDetailUser(req, res, function(error, user) {
 		if (error) {
 			console.log(error);
@@ -61,8 +61,7 @@ app.get('/:path', function(req, res) {
 				var body = {};
 				body.userName = user.NAME;
 				body.theme = theme;
-				body.themes = config.themes;
-				setMenu(body, config.menus, req.params.path);
+				setMenu(body, config.menus, req.query.page);
 				res.render('index', body);
 			});
 		}

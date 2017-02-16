@@ -136,60 +136,60 @@ label {
 }
 
 .icon-close {
- background: url('/image/close.png') no-repeat center center;
+ background: url('../image/close.png') no-repeat center center;
 }
 .icon-key {
- background: url('/image/key.png') no-repeat center center;
+ background: url('../image/key.png') no-repeat center center;
 }
 
 .icon-csc {
- background: url('/image/csc.gif') no-repeat center center;
+ background: url('../image/csc.gif') no-repeat center center;
 }
 
 .icon-lsc {
- background: url('/image/lsc.gif') no-repeat center center;
+ background: url('../image/lsc.gif') no-repeat center center;
 }
 .icon-region {
- background: url('/image/area.gif') no-repeat center center;
+ background: url('../image/area.gif') no-repeat center center;
 }
 .icon-station {
- background: url('/image/station.gif') no-repeat center center;
+ background: url('../image/station.gif') no-repeat center center;
 }
 .icon-building {
- background: url('/image/building.gif') no-repeat center center;
+ background: url('../image/building.gif') no-repeat center center;
 }
 .icon-room {
- background: url('/image/room.gif') no-repeat center center;
+ background: url('../image/room.gif') no-repeat center center;
 }
 .icon-floor {
- background: url('/image/floor.gif') no-repeat center center;
+ background: url('../image/floor.gif') no-repeat center center;
 }
 .icon-cabinet-model{
- background: url('/image/device.gif') no-repeat center center;
+ background: url('../image/device.gif') no-repeat center center;
 }
 .icon-cabinet-column{
- background: url('/image/device.gif') no-repeat center center;
+ background: url('../image/device.gif') no-repeat center center;
 }
 .icon-cabinet{
- background: url('/image/device.gif') no-repeat center center;
+ background: url('../image/device.gif') no-repeat center center;
 }
 .icon-device {
- background: url('/image/device.gif') no-repeat center center;
+ background: url('../image/device.gif') no-repeat center center;
 }
 .icon-devModule {
- background: url('/image/devModule.gif') no-repeat center center;
+ background: url('../image/devModule.gif') no-repeat center center;
 }
 
 .icon-screen {
- background: url('/image/Panel_16.png') no-repeat center center;
+ background: url('../image/Panel_16.png') no-repeat center center;
 }
 
 .icon-detail {
- background: url('/image/detailed_view_16.png') no-repeat center center;
+ background: url('../image/detailed_view_16.png') no-repeat center center;
 }
 
 .icon-map {
- background: url('/image/map_16.png') no-repeat center center;
+ background: url('../image/map_16.png') no-repeat center center;
 }
 
 .menu-nav-item {

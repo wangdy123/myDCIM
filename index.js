@@ -27,12 +27,19 @@ app.use(express.static(__dirname + '/public', {
 
 app.get('/static.js', require('./static'));
 
-require('./permissions').initLogin(app,"/DCIM");
+app.use(function(req, res, next) {
+	console.log(req.url);
+	next();
+});
+
+
+require('./permissions').initLogin(app,"");
 
 app.get('/', function(req, res) {
-	res.redirect("/DCIM/apps/monitor-dashboard.html");
+	res.redirect("index.html?page=dashboard/dashboard.html");
 });
-app.use('/DCIM/apps', require("./apps"));
+
+app.use('', require("./apps"));
 
 //require('./permissions').initCheckLogin(app);
 
@@ -50,14 +57,15 @@ app.post('/node',upload.single('avatar'), function(req, res) {
 });
 //* /
 
-app.use('/DCIM', require('./uitest'));
+app.use('', require('./uitest'));
 
 var fs = require('fs');
 var dirList = fs.readdirSync("modules");
 dirList.forEach(function(item) {
 	var path = './modules/' + item;
 	if (fs.statSync(path).isDirectory()) {
-		app.use('/DCIM/' + item, require(path));
+		app.use("/"+item, require(path));
+		console.log(item);
 	}
 });
 

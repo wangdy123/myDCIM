@@ -118,7 +118,7 @@ $(document).ready(
 					width : 350,
 					closed : false,
 					cache : false,
-					href : '../configer/object/cabinet-column/dialog.html',
+					href : WUI.getConfigerDialogPath(WUI.objectTypes[WUI.objectTypeDef.CABINNET_COLUMN].namespace),
 					onLoadError : function() {
 						$.messager.alert('失败', "对话框加载失败，请刷新后重试！");
 					},

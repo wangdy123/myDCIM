@@ -1,22 +1,27 @@
 var redis = require("../db").redis;
 
 module.exports.set = function(ssid, user, callback) {
-	redis.hmset('ssId', ssid, JSON.stringify(user), function(err, result) {
+	var key = 'ssId:' + ssid;
+	redis.set(key, JSON.stringify(user), function(err, result) {
 		if (err) {
 			callback(err);
 		} else {
+			redis.expire(key, 300);
 			callback();
 		}
 	});
 };
 
 module.exports.get = function(ssid, callback) {
-	redis.hmget('ssId', ssid, function(err, result) {
+	var key = 'ssId:' + ssid;
+	redis.get(key, function(err, result) {
 		if (err) {
+			console.log(err);
 			callback(err);
 		} else {
-			if (result && result.length > 0 && result[0]) {
-				callback(null, JSON.parse(result[0]));
+			if (result) {
+				callback(null, JSON.parse(result));
+				redis.expire(key, 300);
 			} else {
 				console.log(result);
 				callback("not login");
@@ -26,7 +31,8 @@ module.exports.get = function(ssid, callback) {
 };
 
 module.exports.remove = function(ssid, callback) {
-	redis.hdel('ssId', ssid, function(err, result) {
+	var key = 'ssId:' + ssid;
+	redis.del(key, function(err, result) {
 		if (err) {
 			callback(err);
 		} else {

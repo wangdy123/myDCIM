@@ -117,7 +117,7 @@ $(document).ready(
 					width : 350,
 					closed : false,
 					cache : false,
-					href : '../configer/object/room/room-dialog.html',
+					href : WUI.getConfigerDialogPath(WUI.objectTypes[WUI.objectTypeDef.ROOM].namespace),
 					onLoadError : function() {
 						$.messager.alert('失败', "对话框加载失败，请刷新后重试！");
 					},
@@ -130,7 +130,7 @@ $(document).ready(
 							$('#room-name-txt').val(room.NAME);
 							$('#room-code-txt').val(room.CODE);
 							$('#room-type-txt').val(room.ROOM_TYPE);
-							$('#room-sequence-txt').datebox('setValue', room.SEQUENCE);
+							$('#room-sequence-txt').numberbox('setValue', room.SEQUENCE);
 							$('#room-name-txt').validatebox("isValid");
 							$('#room-code-txt').validatebox("isValid");
 						}
@@ -145,7 +145,7 @@ $(document).ready(
 							var isValid = $('#room-name-txt').validatebox("isValid");
 							isValid = isValid && $('#room-code-txt').val();
 							isValid = isValid && $('#room-type-txt').val();
-							isValid = isValid && $('#room-sequence-txt').val();
+							isValid = isValid && $('#room-sequence-txt').numberbox("fix");
 
 							if (!isValid) {
 								return;

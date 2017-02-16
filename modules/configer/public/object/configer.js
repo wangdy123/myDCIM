@@ -7,7 +7,10 @@ $(document).ready(function() {
 	WUI.subscribe('open_object', function(event) {
 		openObject(event.object);
 	});
-
+	
+	WUI.getConfigerDialogPath=function(namespace){
+		return "configer/object/"+namespace+"/dialog.html";
+	};
 	function openObject(object) {
 		if (currentObject && currentObject.ID === object.ID) {
 			return;
@@ -27,7 +30,7 @@ $(document).ready(function() {
 					title : childTypeCfg.name,
 					index : i,
 					iconCls : childTypeCfg.iconCls,
-					href : childTypeCfg.configerPage
+					href : "configer/object/"+childTypeCfg.namespace+"/wokspace.html"
 				});
 			})(childTypes[i]);
 		}

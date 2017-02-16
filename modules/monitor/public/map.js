@@ -51,7 +51,7 @@ $(document).ready(function() {
 			width : 350,
 			closed : false,
 			cache : false,
-			href : '/monitor/object-select-dialog.html',
+			href : 'monitor/object-select-dialog.html',
 			onLoadError : function() {
 				$.messager.alert('失败', "对话框加载失败，请刷新后重试！");
 			},

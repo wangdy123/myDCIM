@@ -59,7 +59,7 @@ function getCurrentUserItems(req, res, cbk) {
 		if (error) {
 			cbk(error);
 		} else {
-			getUserItemById(user.userId, cbk);
+			getUserItemById(user.ID, cbk);
 		}
 	});
 }
@@ -88,8 +88,44 @@ app.get('/userItems', function(req, res) {
 	});
 });
 
+function deleteItems(chain, ACCOUNT_ID, cbk) {
+	chain.query('DELETE FROM portal.DASHBOARD WHERE ACCOUNT_ID=?', [ ACCOUNT_ID ]).on('result', function(result) {
+		cbk();
+	});
+}
+
+function insertItem(chain, ACCOUNT_ID, items, index, cbk) {
+	if (index >= items.length) {
+		return;
+	}
+	var sql = 'INSERT INTO portal.DASHBOARD(ACCOUNT_ID,ITEM_ID,COLUMN_INDEX)values(?,?,?)';
+	chain.query(sql, [ ACCOUNT_ID, items[index].index, items[index].columnIndex ]).on('result', function(result) {
+		index++;
+		cbk(chain, ACCOUNT_ID, items, index, cbk);
+	});
+}
 app.post('/userItems', function(req, res) {
-	console.log("body: " + req.body);
-	res.send(req.body);
+	var items = req.body.items;
+	try {
+		permissions.getCurrentUser(req, res, function(error, user) {
+			if (error) {
+				res.status(501).send(error);
+			} else {
+				var chain = db.transaction(function(chain) {
+					deleteItems(chain, user.ID, function() {
+						insertItem(chain, user.ID, items, 0, insertItem);
+					});
+				}, function() {
+					res.status(201).end();
+				}, function(error) {
+					console.log(error);
+					res.status(501).send(error);
+				});
+			}
+		});
+	} catch (err) {
+		console.log(err);
+		res.status(501).send(error);
+	}
 });
 module.exports = app;

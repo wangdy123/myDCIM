@@ -1,0 +1,31 @@
+<div style="padding: 5px;">
+    <canvas id="line-canvas" style="-moz-user-select: none; -webkit-user-select: none; -ms-user-select: none;"></canvas>
+</div>
+<script src="/Chart.js/Chart.bundle.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		var ctx = document.getElementById("line-canvas").getContext("2d");
+		var config = {
+			type : 'line',
+			data:{
+			labels : [ "January", "February", "March", "April", "May", "June", "July" ],
+			datasets : [ {
+				label:"服务器1",
+				borderColor : "red",
+				strokeColor : "rgba(220,220,220,1)",
+				pointColor : "rgba(220,220,220,1)",
+				pointStyle : "circle",
+				data : [ 65, 59, 90, 81, 56, 55, 40 ]
+			}, {
+				label:"服务器2",
+				fillColor : "rgba(151,187,205,0.5)",
+				strokeColor : "green",
+				pointColor : "blue",
+				pointStrokeColor : "#fff",
+				data : [ 28, 48, 40, 19, 96, 27, 100 ]
+			} ]
+			}
+		};
+		window.myLine = new Chart(ctx, config);
+	});
+</script>

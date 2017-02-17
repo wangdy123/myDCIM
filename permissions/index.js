@@ -71,20 +71,24 @@ module.exports.initLogin = function(app) {
 			var referer = req.headers.referer ? req.headers.referer : "/";
 			if (error) {
 				console.log(error);
-				res.redirect(referer);
+				res.status(200).send({
+					result : false,
+					message : "登录出错，请重试！"
+				});
 			} else {
 				if (accounts.length < 1) {
 					console.log("not found in db");
-					res.redirect(referer);
+					res.status(200).send({
+						result : false,
+						message : "用户帐号或密码不正确"
+					});
 				} else {
 					var ssid = require('node-uuid').v1();
 					cache.set(ssid, accounts[0], function(err, result) {
-						if (err) {
-							res.redirect(referer);
-						} else {
-							res.cookie('ssid', ssid);
-							res.redirect(referer);
-						}
+						res.cookie('ssid', ssid);
+						res.status(200).send({
+							result : true
+						});
 					});
 				}
 			}

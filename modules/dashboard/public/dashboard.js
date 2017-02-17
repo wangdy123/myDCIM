@@ -1,6 +1,6 @@
 $(function() {
-	var itemUrl = WUI.urlPath+"dashboard/items";
-	var userItemUrl = WUI.urlPath+"dashboard/userItems";
+	var itemUrl = WUI.urlPath+"/dashboard/items";
+	var userItemUrl = WUI.urlPath+"/dashboard/userItems";
 	var itemIdPrefix = "dashboard-item-";
 	$node = $('#dashboard-pannel');
 	var columnCount = 3;
@@ -54,7 +54,7 @@ $(function() {
 				width : 300,
 				closed : false,
 				cache : false,
-				href : WUI.urlPath+'dashboard/dialog.html',
+				href : 'dashboard/dialog.html',
 				modal : true,
 				onClose : function() {
 					$("#dashboard-dialog").empty();

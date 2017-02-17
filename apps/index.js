@@ -40,6 +40,33 @@ function setMenu(body, menus, path) {
 	body.menus = menus;
 }
 
+var db = require('../db');
+app.put('/setPassword', function(req, res) {
+	var password = req.body;
+	require('../permissions').getCurrentUser(req, res, function(error, user) {
+		if (error) {
+			res.status(401).send(error);
+		} else {
+			var chain = db.transaction(function(chain) {
+				var selectSql = 'select LOGIN_PASSWORD from  portal.ACCOUNT where ID=?';
+				chain.query(selectSql, [ user.ID ]).on('result', function(result) {
+					if (result && result.LOGIN_PASSWORD !== password.OLD_PASSWORD) {
+						res.status(400).send("口令错误");
+					} else {
+						var sql = 'update portal.ACCOUNT set LOGIN_PASSWORD=?,PASSWORD_TIME=sysdate() where ID=?';
+						chain.query(sql, [ password.NEW_PASSWORD, user.ID ]);
+					}
+				});
+			}, function() {
+				res.status(204).end();
+			}, function(error) {
+				console.log(error);
+				res.status(501).send(error);
+			});
+		}
+	});
+});
+
 app.use(function(req, res, next) {
 	require('../permissions').getCurrentUser(req, res, function(error, user) {
 		if (error) {
@@ -61,7 +88,8 @@ app.get('/index.html', function(req, res) {
 				var body = {};
 				body.userName = user.NAME;
 				body.theme = theme;
-				setMenu(body, config.menus, req.query.page);
+				var page = req.query.page ? req.query.page : "dashboard/dashboard.html";
+				setMenu(body, config.menus, page);
 				res.render('index', body);
 			});
 		}

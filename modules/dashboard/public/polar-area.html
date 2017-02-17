@@ -1,0 +1,41 @@
+<div style="padding: 5px;">
+    <canvas id="polar-canvas" style="-moz-user-select: none; -webkit-user-select: none; -ms-user-select: none;"></canvas>
+</div>
+<script src="/Chart.js/Chart.bundle.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		var ctx = document.getElementById("polar-canvas").getContext("2d");
+		var config = {
+				type: 'polarArea',
+			data : {
+				datasets : [ {
+					data : [ 28, 48, 40, 19, 96 ],
+					backgroundColor : [ "#F7464A", "#46BFBD", "#FDB45C", "#949FB1", "#4D5360", ],
+					label : 'My dataset' // for legend
+				} ],
+				labels : [ "Red", "Green", "Yellow", "Grey", "Dark Grey" ]
+			},
+			options : {
+				responsive : true,
+				legend : {
+					position : 'top',
+				},
+				title : {
+					display : true,
+					text : 'Chart.js Polar Area Chart'
+				},
+				scale : {
+					ticks : {
+						beginAtZero : true
+					},
+					reverse : false
+				},
+				animation : {
+					animateRotate : false,
+					animateScale : true
+				}
+			}
+		};
+		window.myLine = new Chart(ctx, config);
+	});
+</script>

@@ -15,7 +15,9 @@
     "ejs": "~2.5.2",
     "canvas": "~1.6.2",
     "multer": "~1.2.1",
-    "node-uuid":"~1.4.7"
+    "node-uuid":"~1.4.7",
+    "cassandra-driver":"~3.2.0",
+    "nodemailer":"2.6.0"
   },
   "devDependencies": {
     "hbs": "~4.0.1"

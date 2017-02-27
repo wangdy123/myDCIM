@@ -38,30 +38,23 @@ module.exports.transaction = function(transactionOpt, commitCbk, rollbackCbk) {
 
 var redis = require("redis");
 
+module.exports.createRedisConnect = function() {
+	return redis.createClient({
+		host : config.redis.host,
+		port : config.redis.port,
+		connect_timeout : 1
+	});
+}
 
-var client = redis.createClient({
-	host : config.redis.host,
-	port : config.redis.port
-});
+var client = module.exports.createRedisConnect();
 
-//client.on("connect", function() {
-//	client.auth(config.redis.user);
-//});
+// client.on("connect", function() {
+// client.auth(config.redis.user);
+// });
 
 client.on("error", function(err) {
 	console.log("Error: " + err);
 	process.exit();
 });
 
-
-//var client = require('redis-connection-pool')('myRedisPool', {
-//    host: config.redis.host,
-//    port: config.redis.port,
-//    max_clients: 30, // defalut 
-//    perform_checks: false, // checks for needed push/pop functionality 
-//    database: 0, // database number to use 
-////    options: {
-////      auth_pass: 'password'
-////    } //options for createClient of node-redis, optional 
-//  });
 module.exports.redis = client;

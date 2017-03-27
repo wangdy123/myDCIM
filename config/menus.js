@@ -13,7 +13,7 @@ module.exports = [ {
 		url : "monitor/monitor.html",
 		scripts : [ {
 			type : "text/javascript",
-			src : "http://api.map.baidu.com/api?v=2.0&ak=ViOy1lFYqsLHS3nyhwYtLPTTifS24qcY"
+			src : "mapfiles/mapapi.js"//"http://api.map.baidu.com/api?v=2.0&ak=ViOy1lFYqsLHS3nyhwYtLPTTifS24qcY"
 		} ],
 		border : false,
 		name : "监控系统"

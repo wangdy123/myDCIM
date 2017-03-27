@@ -1,0 +1,31 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>{{title}}</title>
+<script type="text/javascript" src="/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="/jquery/jquery.cookie.js"></script>
+<link rel="stylesheet" type="text/css" href="/easyui/themes/default/easyui.css">
+<link rel="stylesheet" type="text/css" href="/easyui/themes/icon.css">
+<script type="text/javascript" src="/easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="/easyui/locale/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript" src="apps.js"></script>
+<script type="text/javascript" src="js/global.js"></script>
+<script type="text/javascript" src="static.js"></script>
+<script type="text/javascript" src="mapfiles/mapapi.js"></script>
+<script type="text/javascript" src="monitor/gmap.js"></script>
+
+<link rel="stylesheet" type="text/css" href="css/style.css" />
+
+</head>
+<body>
+    <div id="map-container" class="easyui-panel" border="false" fit="true"></div>
+    <div id="map-object-select-dialog" data-options="closed: true,modal:true,width : 350,height: 400">
+        <div align="center" class="easyui-panel" fit="true" style="padding: 5px;">
+            <div>
+                <label>选择节点</label>
+            </div>
+            <ul id="object-select-tree" class="easyui-tree"></ul>
+        </div>
+    </div>
+</body>
+</html>

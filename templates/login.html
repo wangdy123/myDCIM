@@ -8,43 +8,33 @@
 <link rel="stylesheet" type="text/css" href="/easyui/themes/icon.css">
 <script type="text/javascript" src="/easyui/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="/easyui/locale/easyui-lang-zh_CN.js"></script>
-<link rel="stylesheet" type="text/css" href="css/style.css" />
+<link rel="stylesheet" type="text/css" href="css/login.css" />
 <title>登录DCIM系统</title>
 </head>
 <body>
-    <div class="easyui-panel" border="false" data-options="footer:'#page-footer',header:'#page-header',fit:true">
-        <div style="text-align: center; position: absolute; top: 35%; left: 35%;">
-            <div style="display: inline-block;">
-                <div>
-                    <img class="panel" title="logo" src="image/logo1.jpg"></img>
+    <div class="container-login">
+        <div class="login-pic">
+            <div>
+                <img class="panel" title="logo" src="image/logo1.jpg"></img>
+            </div>
+            <form id="login-form" method="POST">
+                <table style="float: left;">
+                    <tr>
+                        <td>帐号:</td>
+                        <td><input type="text" name="username" value="" /></td>
+                    </tr>
+                    <tr>
+                        <td>密码:</td>
+                        <td><input type="password" name="password" value="" /></td>
+                    </tr>
+                </table>
+                <div style="float: left; padding: 10px 0; vertical-align: middle; ">
+                    <input id="login-button" type="submit" name="login" value="登录" />
                 </div>
-                <h3>DCIM测试平台</h3>
-                <ul>
-                    <li>note1</li>
-                    <li>note2</li>
-                    <li>note3</li>
-                    <li>note4</li>
-                </ul>
-            </div>
-            <div style="display: inline-block;">
-                <h3 class="login-page-title">登录DCIM系统</h3>
-                <form id="login-form" method="POST">
-                    <table>
-                        <tr>
-                            <td class="login_label">帐号:</td>
-                            <td><input type="text" name="username" value="" /></td>
-                        </tr>
-                        <tr>
-                            <td class="login_label">密码:</td>
-                            <td><input type="password" name="password" value="" /></td>
-                        </tr>
-                        <tr>
-                            <td class="login_label" id="error-info"></td>
-                        </tr>
-                    </table>
-                    <input type="submit" name="login" value="登录" />
-                </form>
-            </div>
+                <div style="float: left; width: 100px; padding: 10px;">
+                    <label id="error-info"></label>
+                </div>
+            </form>
         </div>
     </div>
     <script type="text/javascript">
@@ -64,9 +54,4 @@
 						}
 					});
 				</script>
-    <div id="page-header" style="border-style: none;">
-        <img class="panel" title="logo" src="image/logo1.jpg"></img>
-        <h2 id="system-name" class="panel">DCIM测试平台</h2>
-    </div>
-    <div id="page-footer" style="border-style: none;">广东盈嘉科技发展股份有限公司</div>
 </body>

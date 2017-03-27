@@ -1,43 +1,53 @@
-html,body {
-	height: 100%;
-	min-height: 100%;
-	margin: 0;
-	padding: 0;
-	overflow: hidden;
+@charset "UTF-8";
+body,td,th {
+	font-size: 12px;
 }
-
-.login_label {
-	text-justify:inter-word;
-	text-align: justify;
-	width: 4em;
+body{
+	margin-left: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	overflow:hidden;
+	background: url(../image/background.jpg);
 }
+.container-login{
+width:1024px;
+margin:0px auto;
+padding:0px;
+overflow:hidden;
 
-#user-panel {
-	margin: 0;
-	padding: 3em 2em;
 }
-
-#page-header {
-	margin: 0;
-	padding: 0 10px;
-	background-color: #2647A0; /* #218AC2 #2647A0 #2D1152 #947DB2; */
-	color: #FFFFFF !important;
-	display: block;
-	height: 3em;
-	line-height: 3em;
-	text-align: left;
-	vertical-align: middle;
+.login-pic{
+position:absolute;
+top:40%;
+left:45%;
+margin:-150px 0 0 -200px;
+width:520px;
+height:300px;
+border:1px solid #008800;
+padding:0px;
+overflow:hidden;
+background:url(../image/loginface.png) no-repeat !important;
 }
-
-#page-footer {
-	margin: 0;
-	padding: 0 10px;
-	background-color: #2647A0;
-	color: #FFFFFF !important;
-	display: block;
-	clear: both;
-	height: 2em;
-	line-height: 2em;
-	text-align: left;
-	vertical-align: middle;
+#login-form{
+width:450px;
+float:right;
+margin:150px auto auto 50px;
+padding:0px;
+overflow:hidden;
+position:absolute;
+}
+ #login-button{
+ text-align: center;
+ height:48px;
+ 
+ }
+ .formTitle{
+  height: 24px;
+ }
+ 
+#user-password{
+    background-color : #FFFFFF;
+    background-image :url("../image/text-bg.gif") !important;
+    border-color : #B5B8C8 !important;
 }

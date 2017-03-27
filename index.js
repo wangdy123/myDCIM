@@ -41,7 +41,7 @@ app.get('/', function(req, res) {
 
 app.use('', require("./apps"));
 
-//require('./permissions').initCheckLogin(app);
+require('./permissions').initCheckLogin(app);
 
 
 /**
@@ -57,7 +57,7 @@ app.post('/node',upload.single('avatar'), function(req, res) {
 });
 //* /
 
-app.use('', require('./uitest'));
+//app.use('/uitest', require('./uitest'));
 
 var fs = require('fs');
 var dirList = fs.readdirSync("modules");

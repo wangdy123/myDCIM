@@ -1,6 +1,6 @@
 
 window.WUI = window.WUI || {};
-window.WUI.urlPath="/DCIM";
+window.WUI.urlPath="";
 
 var subscribes = [];
 window.WUI.subscribe = function(evt, fn) {

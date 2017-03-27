@@ -86,9 +86,7 @@ module.exports.initLogin = function(app) {
 					var ssid = require('node-uuid').v1();
 					cache.set(ssid, accounts[0], function(err, result) {
 						res.cookie('ssid', ssid);
-						res.status(200).send({
-							result : true
-						});
+						res.redirect(req.headers.referer ? req.headers.referer : "/");
 					});
 				}
 			}

@@ -1,11 +1,34 @@
 var express = require('express');
-var app = express();
+var hbs = require('hbs');
+var test_conf = require(require('path').join(__dirname, 'conf.json'));
 
-app.use('/dashboard', require('./dashboard'));
-app.use('/account', require('./account'));
-app.use('/navigation', require('./navigation'));
-app.use('/configer', require('./configer'));
-app.use('/monitor', require('./monitor'));
-app.use('/apps', require('./apps'));
+var app = express();
+var templatePaths = [ './uitest/templates' ];
+for (var i = 0; i < test_conf.length; i++) {
+	if (test_conf[i].publicPath) {
+		templatePaths.push(test_conf[i].publicPath);
+	}
+}
+
+app.set('views', templatePaths);
+app.set('view engine', 'html');
+app.engine('.html', hbs.__express);
+app.use(express.static(__dirname + '/public'));
+
+for (var i = 0; i < test_conf.length; i++) {
+	var test = test_conf[i];
+	console.log(test);
+	app.get("/"+test.url, function(req, res) {
+		res.render(test.target,test);
+	});
+}
+
+app.get('/uitests', function(req, res) {
+	res.send(test_conf);
+});
+
+app.get('/ui-test-home.html', function(req, res) {
+	res.render('ui-test-home');
+});
 
 module.exports = app;

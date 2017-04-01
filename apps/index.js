@@ -1,12 +1,14 @@
 var express = require('express');
 var app = express();
+var config = require('dcim-config');
+var db = require('dcim-db');
+var permissions = require('dcim-permissions');
 
 var hbs = require('hbs');
 app.set('views', [ __dirname + '/templates', __dirname + '/../templates' ]);
 app.set('view engine', 'html');
 app.engine('.html', hbs.__express);
 
-var config = require('../config');
 app.use(express.static(__dirname + '/public', {
 	maxAge : config.config.fileMaxAge * 3600 * 24 * 1000
 }));
@@ -40,10 +42,9 @@ function setMenu(body, menus, path) {
 	body.menus = menus;
 }
 
-var db = require('../db');
 app.put('/setPassword', function(req, res) {
 	var password = req.body;
-	require('../permissions').getCurrentUser(req, res, function(error, user) {
+	permissions.getCurrentUser(req, res, function(error, user) {
 		if (error) {
 			res.status(401).send(error);
 		} else {
@@ -68,7 +69,7 @@ app.put('/setPassword', function(req, res) {
 });
 
 app.use(function(req, res, next) {
-	require('../permissions').getCurrentUser(req, res, function(error, user) {
+	permissions.getCurrentUser(req, res, function(error, user) {
 		if (error) {
 			console.log(error);
 			res.render('login', {});
@@ -79,7 +80,7 @@ app.use(function(req, res, next) {
 });
 
 app.get('/index.html', function(req, res) {
-	require('../permissions').getCurrentDetailUser(req, res, function(error, user) {
+	permissions.getCurrentDetailUser(req, res, function(error, user) {
 		if (error) {
 			console.log(error);
 			res.render('login', {});

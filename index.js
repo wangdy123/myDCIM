@@ -1,4 +1,6 @@
+require('dcim-logger');
 var express = require('express');
+
 var app = express();
 
 var hbs = require('hbs');
@@ -6,7 +8,7 @@ app.set('views', 'templates');
 app.set('view engine', 'html');
 app.engine('.html', hbs.__express);
 
-var config = require('./config').config;
+var config = require('dcim-config').config;
 
 app.use(require('serve-favicon')(require('path').join(__dirname, 'public', 'favicon.ico')));
 var bodyParser = require('body-parser');
@@ -16,14 +18,9 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(require('cookie-parser')());
 
-app.use(require('cookie-session')({
-	secret : 'ooosdosgfsdgff'
-}));
-
 app.use(express.static(__dirname + '/public', {
 	maxAge : config.fileMaxAge * 3600 * 24 * 1000
 }));
-
 
 app.get('/static.js', require('./static'));
 
@@ -32,8 +29,7 @@ app.use(function(req, res, next) {
 	next();
 });
 
-
-require('./permissions').initLogin(app,"");
+require('dcim-permissions').initLogin(app, "");
 
 app.get('/', function(req, res) {
 	res.redirect("index.html?page=dashboard/dashboard.html");
@@ -41,33 +37,17 @@ app.get('/', function(req, res) {
 
 app.use('', require("./apps"));
 
-require('./permissions').initCheckLogin(app);
+require('dcim-permissions').initCheckLogin(app);
 
 
-/**
- * upload test
- */
-var multer  = require('multer')
-var upload = multer({ dest: 'uploads/' })
-app.post('/node',upload.single('avatar'), function(req, res) {
-	var obj = req.body;
-	console.log(obj);
-	console.log(req.file);
-	res.status(201).end();
-});
-//* /
+app.use('', require('./uitest'));
 
-//app.use('/uitest', require('./uitest'));
-
-var fs = require('fs');
-var dirList = fs.readdirSync("modules");
-dirList.forEach(function(item) {
-	var path = './modules/' + item;
-	if (fs.statSync(path).isDirectory()) {
-		app.use("/"+item, require(path));
-		console.log(item);
-	}
-});
+for ( var module in config.modules) {
+	var path = require('path').join(__dirname, "modules", module);
+	var url=config.modules[module];
+	app.use(url, require(path));
+	console.log(url);
+}
 
 app.use(function(req, res, next) {
 	var err = new Error('Not Found');

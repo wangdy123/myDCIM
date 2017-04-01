@@ -1,0 +1,15 @@
+{
+	"CSC" : 1,
+	"LSC" : 2,
+	"REGION" : 3,
+	"STATION_BASE" : 4,
+	"BUILDDING" : 5,
+	"FLOOR" : 6,
+	"ROOM" : 7,
+	"CABINNET_COLUMN" : 11,
+	"CABINNET" : 12,
+	"ENV_DEVICE" : 21,
+	"POWER_DEVICE" : 22,
+	"SAFETY_DEVICE" : 23,
+	"IT_DEVICE" : 24
+}

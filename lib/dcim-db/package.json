@@ -1,0 +1,15 @@
+{
+  "name": "dcim-db",
+  "version": "0.0.1",
+  "description": "wincom DCIM db",
+  "main": "./index.js",
+  "dependencies": {
+	  "node-mysql-transaction": "~0.2.1",
+	  "mysql": "~2.11.1"
+  },
+  "repository": {
+  },
+  "author": {
+	    "name":"wang sx"
+	  }
+}

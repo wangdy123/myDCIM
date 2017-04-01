@@ -94,8 +94,16 @@ app.put('/objectLocations/:id', function(req, res) {
 	});
 });
 
+var mapIcon = {
+	font : {
+		name : require('path').join(__dirname, "fonts", "simsun.ttc"),
+		family : "simsun"
+	},
+	image : require('path').join(__dirname, "images", "back1.png"),
+	fillStyle : "red"
+};
+
 app.get('/map-icon/:fileName.png', function(req, res) {
-	var mapIcon=config.config.mapIcon;
 	var Canvas = require('canvas');
 	var canvas = new Canvas(80, 25);
 	var ctx = canvas.getContext('2d');

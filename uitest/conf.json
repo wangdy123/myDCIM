@@ -1,0 +1,8 @@
+[{
+	"url":"account-role.html",
+	"target":"role/role-wokspace.html",
+	"publicPath":"./modules/account/public",
+	"name":"角色配置"
+}
+ 
+ ]

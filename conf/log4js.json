@@ -1,0 +1,27 @@
+    {  
+        "appenders": [{  
+            "type": "console"  
+        }, {
+            "type": "file",
+            "filename": "./log/info.log",
+            "maxLogSize": 20480,
+            "backups": 3,
+            "category": ["normal","console"],
+            "level" : "DEBUG"
+          }, {
+              "type": "file",
+              "filename": "./log/error.log",
+              "maxLogSize": 20480,
+              "backups": 10,
+              "category": "logErr",
+              "level" : "ERROR"
+            }, {
+            "type": "file",
+            "filename": "./log/access.log",
+            "maxLogSize": 20480,
+            "backups": 3,
+            "category": "access",
+            "level" : "DEBUG"
+          }],  
+        "replaceConsole": true  
+    }  

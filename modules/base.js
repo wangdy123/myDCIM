@@ -1,4 +1,4 @@
-module.exports.config = require('../config');
-module.exports.db = require('../db');
-module.exports.permissions = require('../permissions');
-module.exports.util = require('../util');
+module.exports.config = require('dcim-config');
+module.exports.db = require('dcim-db');
+module.exports.permissions = require('dcim-permissions');
+module.exports.util = require('dcim-util');

@@ -17,19 +17,19 @@
             <div>
                 <img class="panel" title="logo" src="image/logo1.jpg"></img>
             </div>
-            <form id="login-form" method="POST">
+            <form id="login-form">
                 <table style="float: left;">
                     <tr>
                         <td>帐号:</td>
-                        <td><input type="text" name="username" value="" /></td>
+                        <td><input id="username" type="text" name="username" value="" /></td>
                     </tr>
                     <tr>
                         <td>密码:</td>
-                        <td><input type="password" name="password" value="" /></td>
+                        <td><input id="password" type="password" name="password" value="" /></td>
                     </tr>
                 </table>
-                <div style="float: left; padding: 10px 0; vertical-align: middle; ">
-                    <input id="login-button" type="submit" name="login" value="登录" />
+                <div style="float: left; padding: 10px 0; vertical-align: middle;">
+                    <input id="login-button" type="button" name="login" onclick="doLogin()" value="登录" />
                 </div>
                 <div style="float: left; width: 100px; padding: 10px;">
                     <label id="error-info"></label>
@@ -38,20 +38,25 @@
         </div>
     </div>
     <script type="text/javascript">
-					$('#login-form').form('submit', {
-						url : "login",
-						onSubmit : function() {
-							return true;
-						},
-						success : function(data) {
-							data = JSON.parse(data);
-							if (data.result) {
-								location.reload();
-							} else {
-								$("#error-info").text(data.message);
-							}
-							console.log(data);
-						}
-					});
+					function doLogin() {
+						var loginInfo = {
+							username : $('#username').val(),
+							password : $('#password').val()
+						};
+						console.log(window.location);
+						$.ajax({
+						    url:"http://"+location.hostname+":8080/login",
+						    type:'POST',
+						    data:loginInfo,
+						    contentType: "application/x-www-form-urlencoded",
+						    timeout:30000,    // 超时时间
+						    success:function(data,textStatus,jqXHR){
+						    	location.reload();
+						    },
+						    error:function(xhr,textStatus){
+						    	$("#error-info").text(xhr.responseText);
+						    }
+						});
+					}
 				</script>
 </body>

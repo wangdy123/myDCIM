@@ -8,14 +8,20 @@
 <link rel="stylesheet" type="text/css" href="/easyui/themes/icon.css">
 <script type="text/javascript" src="/easyui/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="/easyui/locale/easyui-lang-zh_CN.js"></script>
-<link rel="stylesheet" type="text/css" href="/css/style.css" />
-<script type="text/javascript" src="../apps/apps.js"></script>
-<script type="text/javascript" src="/js/global.js"></script>
-<script type="text/javascript" src="/static.js"></script>
-<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=ViOy1lFYqsLHS3nyhwYtLPTTifS24qcY"></script>
-
+<link rel="stylesheet" type="text/css" href="css/style.css" />
+<script type="text/javascript" src="util.js"></script>
+<script type="text/javascript" src="static.js"></script>
+{{#each scripts}}
+<script type="{{type}}" src="{{src}}"></script>
+{{/each}} {{#each links}}
+<script type="{{type}}" href="{{src}}"></script>
+{{/each}}
 </head>
 <body class="easyui-layout">
-    <div id="full-workspace" region="center" class="pannel" border="false">{{{body}}}</div>
+    <div style="width: 10%;" data-options="region:'west',split:true,title:'测试桩子'">
+        <div><a href="ui-test-home.html">测试主页</a> </div>
+        <div id="stuff-panel" data-options="href:'{{stuff-url}}"></div>
+    </div>
+    <div id="full-workspace" region="center" class="pannel" border="false" fit="true">{{{body}}}</div>
 </body>
 </html>

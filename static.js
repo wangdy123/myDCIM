@@ -1,4 +1,4 @@
-var config = require('./config')
+var config = require('dcim-config')
 
 module.exports=function(req, res) {
 	var str='window.WUI = window.WUI || {};';

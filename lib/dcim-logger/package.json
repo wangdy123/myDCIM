@@ -1,0 +1,14 @@
+{
+  "name": "dcim-logger",
+  "version": "0.0.1",
+  "description": "wincom DCIM logger",
+  "main": "./logger.js",
+  "dependencies": {
+	  "log4js": "~1.1.1"
+  },
+  "repository": {
+  },
+  "author": {
+	    "name":"wang sx"
+	  }
+}

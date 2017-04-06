@@ -5,7 +5,7 @@ var db = require('dcim-db');
 var permissions = require('dcim-permissions');
 
 var hbs = require('hbs');
-app.set('views', [ __dirname + '/templates', __dirname + '/../templates' ]);
+app.set('views', [ __dirname + '/templates', './templates' ]);
 app.set('view engine', 'html');
 app.engine('.html', hbs.__express);
 
@@ -61,8 +61,8 @@ app.put('/setPassword', function(req, res) {
 			}, function() {
 				res.status(204).end();
 			}, function(error) {
-				console.log(error);
-				res.status(501).send(error);
+				logger.error(error);
+				res.status(500).send(error);
 			});
 		}
 	});
@@ -71,7 +71,7 @@ app.put('/setPassword', function(req, res) {
 app.use(function(req, res, next) {
 	permissions.getCurrentUser(req, res, function(error, user) {
 		if (error) {
-			console.log(error);
+			logger.error(error);
 			res.render('login', {});
 		} else {
 			next();
@@ -82,7 +82,7 @@ app.use(function(req, res, next) {
 app.get('/index.html', function(req, res) {
 	permissions.getCurrentDetailUser(req, res, function(error, user) {
 		if (error) {
-			console.log(error);
+			logger.error(error);
 			res.render('login', {});
 		} else {
 			getTheme(user, req, function(theme) {

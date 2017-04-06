@@ -6,8 +6,8 @@ app.get('/cabinetModels', function(req, res) {
 	var sql = 'select ID,NAME,CODE,ABBREVIATION,U_COUNT,U1_POSITION,DEPTH,MAX_USE_YEAR from config.CABINET_MODEL';
 	db.pool.query(sql, function(error, objects, fields) {
 		if (error) {
-			console.log(error);
-			res.status(501).send(error);
+			logger.error(error);
+			res.status(500).send(error);
 		} else {
 			res.send(objects);
 		}
@@ -23,13 +23,13 @@ app.post('/cabinetModels', function(req, res) {
 	}, function() {
 		res.status(201).end();
 	}, function(error) {
-		console.log(error);
-		res.status(501).send(error);
+		logger.error(error);
+		res.status(500).send(error);
 	});
 	}
 	catch(err){
-		console.log(err);
-		res.status(501).send(error);
+		logger.error(err);
+		res.status(500).send(error);
 	}
 });
 
@@ -43,8 +43,8 @@ app.put('/cabinetModels/:id', function(req, res) {
 			}, function() {
 				res.status(204).end();
 			}, function(error) {
-				console.log(error);
-				res.status(501).send(error);
+				logger.error(error);
+				res.status(500).send(error);
 			});
 });
 
@@ -54,8 +54,8 @@ app.delete('/cabinetModels/:id', function(req, res) {
 	}, function() {
 		res.status(200).end();
 	}, function(error) {
-		console.log(error);
-		res.status(501).send(error);
+		logger.error(error);
+		res.status(500).send(error);
 	});
 });
 

@@ -63,8 +63,8 @@ function requestAllHandler(req, res) {
 	var sql = 'select r.ID,r.NAME,r.DESCRIPTION,rr.RIGHT_ID from portal.ROLE r join portal.ROLE_RIGHT rr on r.ID=rr.ROLE_ID';
 	db.pool.query(sql, function(error, roles, fields) {
 		if (error) {
-			console.log(error);
-			res.status(501).send(error);
+			logger.error(error);
+			res.status(500).send(error);
 		} else {
 			res.send(pivotRoleRight(roles));
 		}
@@ -76,8 +76,8 @@ app.get('/roles', requestAllHandler);
 app.get('/roles/:roleId', function(req, res) {
 	getRoleById(db.pool, req.params.roleId, function(error, role) {
 		if (error) {
-			console.log(error);
-			res.status(501).send(error);
+			logger.error(error);
+			res.status(500).send(error);
 		} else {
 			res.send(role);
 		}
@@ -103,8 +103,8 @@ var createRoleHandler = function(req, res) {
 	}, function() {
 		res.status(201).end();
 	}, function(error) {
-		console.log(error);
-		res.status(501).send(error);
+		logger.error(error);
+		res.status(500).send(error);
 	});
 };
 app.post('/roles', createRoleHandler);
@@ -129,8 +129,8 @@ app.put('/roles/:roleId', function(req, res) {
 			}, function() {
 				res.status(204).end();
 			}, function(error) {
-				console.log(error);
-				res.status(501).send(error);
+				logger.error(error);
+				res.status(500).send(error);
 			});
 });
 
@@ -140,8 +140,8 @@ app.delete('/roles/:roleId', function(req, res) {
 	}, function() {
 		res.status(200).end();
 	}, function(error) {
-		console.log(error);
-		res.status(501).send(error);
+		logger.error(error);
+		res.status(500).send(error);
 	});
 });
 

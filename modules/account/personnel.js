@@ -7,8 +7,8 @@ app.get('/personnel/personnel-dialog.html', function(req, res) {
 		var sql = 'select ID,NAME,DESCRIPTION from portal.DEPARTMENT';
 		db.pool.query(sql, function(error, departments, fields) {
 			if (error) {
-				console.log(error);
-				res.status(501).send(error);
+				logger.error(error);
+				res.status(500).send(error);
 			} else {
 				personnel.departments = departments;
 				res.render('personnel-dialog', personnel);
@@ -17,10 +17,9 @@ app.get('/personnel/personnel-dialog.html', function(req, res) {
 	}
 	if (req.query.personnelId) {
 		getPersonnelById(db.pool, req.query.personnelId, function(error, personnel) {
-			console.log(error);
 			if (error) {
-				console.log(error);
-				res.status(501).send(error);
+				logger.error(error);
+				res.status(500).send(error);
 			} else {
 				renderDialog(personnel);
 			}
@@ -51,8 +50,8 @@ app.get('/personnels', function(req, res) {
 			+ 'from portal.PERSONNEL_CFG p join portal.DEPARTMENT d on p.DEPARTMENT=d.ID';
 	db.pool.query(sql, function(error, personnels, fields) {
 		if (error) {
-			console.log(error);
-			res.status(501).send(error);
+			logger.error(error);
+			res.status(500).send(error);
 		} else {
 			res.send(personnels);
 		}
@@ -62,8 +61,8 @@ app.get('/personnels', function(req, res) {
 app.get('/personnels/:personnelId', function(req, res) {
 	getPersonnelById(db.pool, req.params.personnelId, function(error, personnel) {
 		if (error) {
-			console.log(error);
-			res.status(501).send(error);
+			logger.error(error);
+			res.status(500).send(error);
 		} else {
 			res.send(personnel);
 		}
@@ -79,8 +78,8 @@ app.post('/personnels', function(req, res) {
 	}, function() {
 		res.status(201).end();
 	}, function(error) {
-		console.log(error);
-		res.status(501).send(error);
+		logger.error(error);
+		res.status(500).send(error);
 	});
 });
 
@@ -97,8 +96,8 @@ app.put('/personnels/enable/:personnelId', function(req, res) {
 	}, function() {
 		res.status(204).end();
 	}, function(error) {
-		console.log(error);
-		res.status(501).send(error);
+		logger.error(error);
+		res.status(500).send(error);
 	});
 });
 
@@ -111,8 +110,8 @@ app.put('/personnels/:personnelId', function(req, res) {
 	}, function() {
 		res.status(204).end();
 	}, function(error) {
-		console.log(error);
-		res.status(501).send(error);
+		logger.error(error);
+		res.status(500).send(error);
 	});
 });
 

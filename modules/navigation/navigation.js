@@ -7,8 +7,8 @@ app.get('/treeNode', function(req, res) {
 				+ 'join config.OBJECT o on p.ID=o.ID where p.PARENT_ID=?';
 		db.pool.query(sql, [ req.query.id ], function(error, objects, fields) {
 			if (error) {
-				console.log(error);
-				res.status(501).send(error);
+				logger.error(error);
+				res.status(500).send(error);
 			} else {
 				res.send(objects);
 			}
@@ -18,8 +18,8 @@ app.get('/treeNode', function(req, res) {
 				+ 'join config.OBJECT o on p.ID=o.ID where p.PARENT_ID=0 or p.PARENT_ID is null';
 		db.pool.query(sql, function(error, objects, fields) {
 			if (error) {
-				console.log(error);
-				res.status(501).send(error);
+				logger.error(error);
+				res.status(500).send(error);
 			} else {
 				res.send(objects);
 			}

@@ -25,7 +25,7 @@ app.use(express.static(__dirname + '/public', {
 app.get('/static.js', require('./static'));
 
 app.use(function(req, res, next) {
-	console.log(req.url);
+	logger.accessLog(req.url);
 	next();
 });
 
@@ -39,20 +39,19 @@ app.use('', require("./apps"));
 
 require('dcim-permissions').initCheckLogin(app);
 
-
 app.use('', require('./uitest'));
 
 for ( var module in config.modules) {
 	var path = require('path').join(__dirname, "modules", module);
-	var url=config.modules[module];
+	var url = config.modules[module];
 	app.use(url, require(path));
-	console.log(url);
+	logger.debug(url);
 }
 
 app.use(function(req, res, next) {
 	var err = new Error('Not Found');
 	err.status = 404;
-	console.warn("not found: " + req.url);
+	logger.warn("not found: " + req.url);
 	next(err);
 });
 
@@ -65,9 +64,9 @@ app.use(function(err, req, res) {
 	res.status(err.status || 500);
 	err.stack = err.stack || "";
 	var meta = new Date() + ' ' + req.url + '\n';
-	console.log(meta + err.stack + '\n');
+	logger.error(meta + err.stack + '\n');
 	res.send(resBody);
 });
 
 app.listen(config.httpPort);
-console.log('Express server listening on port ' + config.httpPort);
+logger.log('Express server listening on port ' + config.httpPort);

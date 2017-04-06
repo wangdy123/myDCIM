@@ -11,8 +11,8 @@ app.get('/regions', function(req, res) {
 		+'left join config.POSITION_RELATION p on a.ID=p.ID where p.PARENT_ID=?';
 	db.pool.query(sql,[parentId], function(error, departments, fields) {
 		if (error) {
-			console.log(error);
-			res.status(501).send(error);
+			logger.error(error);
+			res.status(500).send(error);
 		} else {
 			res.send(departments);
 		}
@@ -26,7 +26,7 @@ app.post('/regions', function(req, res) {
 		posionRelation.createObject(chain,region,function(id){
 			region.ID=id;
 			posionRelation.insertPosionRelation(chain,region,function(){
-				console.log(region);
+				logger.error(region);
 				var sql='INSERT INTO config.ADMINISTRATIVE_REGION(ID,NAME,ABBREVIATION,ZIP_CODE,LONGITUDE,LATITUDE)values(?,?,?,?,?,?)';
 				chain.query(sql, [ region.ID,region.NAME, region.ABBREVIATION,region.ZIP_CODE,region.LONGITUDE,region.LATITUDE ]);
 			});	
@@ -34,13 +34,13 @@ app.post('/regions', function(req, res) {
 	}, function() {
 		res.status(201).end();
 	}, function(error) {
-		console.log(error);
-		res.status(501).send(error);
+		logger.error(error);
+		res.status(500).send(error);
 	});
 	}
 	catch(err){
-		console.log(err);
-		res.status(501).send(error);
+		logger.error(err);
+		res.status(500).send(error);
 	}
 });
 
@@ -57,8 +57,8 @@ app.put('/regions', function(req, res) {
 			}, function() {
 				res.status(204).end();
 			}, function(error) {
-				console.log(error);
-				res.status(501).send(error);
+				logger.error(error);
+				res.status(500).send(error);
 			});
 });
 
@@ -73,8 +73,8 @@ app.delete('/regions/:id', function(req, res) {
 	}, function() {
 		res.status(200).end();
 	}, function(error) {
-		console.log(error);
-		res.status(501).send(error);
+		logger.error(error);
+		res.status(500).send(error);
 	});
 });
 

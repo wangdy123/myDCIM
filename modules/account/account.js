@@ -32,8 +32,8 @@ app.get('/personnelsNotAccount', function(req, res) {
 			+ 'and p.ID not in (select ID from portal.ACCOUNT)';
 	db.pool.query(sql, [ req.query.departmentId ], function(error, personnels, fields) {
 		if (error) {
-			console.log(error);
-			res.status(501).send(error);
+			logger.error(error);
+			res.status(500).send(error);
 		} else {
 			res.send(personnels);
 		}
@@ -47,8 +47,8 @@ app.get('/accounts', function(req, res) {
 			+ 'join portal.ROLE r on a.ROLE_ID=r.ID ' + 'join portal.DEPARTMENT d on p.DEPARTMENT=d.ID';
 	db.pool.query(sql, function(error, accounts, fields) {
 		if (error) {
-			console.log(error);
-			res.status(501).send(error);
+			logger.error(error);
+			res.status(500).send(error);
 		} else {
 			res.send(accounts);
 		}
@@ -58,8 +58,8 @@ app.get('/accounts', function(req, res) {
 app.get('/accounts/:accountId', function(req, res) {
 	getaccountById(db.pool, req.params.accountId, function(error, role) {
 		if (error) {
-			console.log(error);
-			res.status(501).send(error);
+			logger.error(error);
+			res.status(500).send(error);
 		} else {
 			res.send(role);
 		}
@@ -76,8 +76,8 @@ app.post('/accounts', function(req, res) {
 	}, function() {
 		res.status(201).end();
 	}, function(error) {
-		console.log(error);
-		res.status(501).send(error);
+		logger.error(error);
+		res.status(500).send(error);
 	});
 });
 
@@ -89,8 +89,8 @@ app.put('/accounts', function(req, res) {
 	}, function() {
 		res.status(204).end();
 	}, function(error) {
-		console.log(error);
-		res.status(501).send(error);
+		logger.error(error);
+		res.status(500).send(error);
 	});
 });
 app.put('/accounts/enable/:accountId', function(req, res) {
@@ -101,8 +101,8 @@ app.put('/accounts/enable/:accountId', function(req, res) {
 	}, function() {
 		res.status(204).end();
 	}, function(error) {
-		console.log(error);
-		res.status(501).send(error);
+		logger.error(error);
+		res.status(500).send(error);
 	});
 });
 

@@ -9,8 +9,8 @@ app.get('/cabinetColumns', function(req, res) {
 		+'left join config.POSITION_RELATION p on b.ID=p.ID where p.PARENT_ID=?';
 	db.pool.query(sql,[parentId], function(error, objects, fields) {
 		if (error) {
-			console.log(error);
-			res.status(501).send(error);
+			logger.error(error);
+			res.status(500).send(error);
 		} else {
 			res.send(objects);
 		}
@@ -31,13 +31,13 @@ app.post('/cabinetColumns', function(req, res) {
 	}, function() {
 		res.status(201).end();
 	}, function(error) {
-		console.log(error);
-		res.status(501).send(error);
+		logger.error(error);
+		res.status(500).send(error);
 	});
 	}
 	catch(err){
-		console.log(err);
-		res.status(501).send(error);
+		logger.error(err);
+		res.status(500).send(error);
 	}
 });
 
@@ -54,8 +54,8 @@ app.put('/cabinetColumns', function(req, res) {
 			}, function() {
 				res.status(204).end();
 			}, function(error) {
-				console.log(error);
-				res.status(501).send(error);
+				logger.error(error);
+				res.status(500).send(error);
 			});
 });
 
@@ -70,8 +70,8 @@ app.delete('/cabinetColumns/:id', function(req, res) {
 	}, function() {
 		res.status(200).end();
 	}, function(error) {
-		console.log(error);
-		res.status(501).send(error);
+		logger.error(error);
+		res.status(500).send(error);
 	});
 });
 

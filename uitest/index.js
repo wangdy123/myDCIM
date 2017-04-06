@@ -17,7 +17,7 @@ app.use(express.static(__dirname + '/public'));
 
 for (var i = 0; i < test_conf.length; i++) {
 	var test = test_conf[i];
-	console.log(test);
+	logger.log(test);
 	app.get("/"+test.url, function(req, res) {
 		res.render(test.target,test);
 	});

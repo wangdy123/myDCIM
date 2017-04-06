@@ -8,8 +8,8 @@ app.get('/doors', function(req, res) {
 		+'left join config.POSITION_RELATION p on d.ID=p.ID where p.PARENT_ID=?';
 	db.pool.query(sql,[parentId], function(error, doors, fields) {
 		if (error) {
-			console.log(error);
-			res.status(501).send(error);
+			logger.error(error);
+			res.status(500).send(error);
 		} else {
 			res.send(doors);
 		}
@@ -30,13 +30,13 @@ app.post('/doors', function(req, res) {
 	}, function() {
 		res.status(201).end();
 	}, function(error) {
-		console.log(error);
-		res.status(501).send(error);
+		logger.error(error);
+		res.status(500).send(error);
 	});
 	}
 	catch(err){
-		console.log(err);
-		res.status(501).send(error);
+		logger.error(err);
+		res.status(500).send(error);
 	}
 });
 
@@ -53,8 +53,8 @@ app.put('/doors', function(req, res) {
 			}, function() {
 				res.status(204).end();
 			}, function(error) {
-				console.log(error);
-				res.status(501).send(error);
+				logger.error(error);
+				res.status(500).send(error);
 			});
 });
 
@@ -69,8 +69,8 @@ app.delete('/doors/:id', function(req, res) {
 	}, function() {
 		res.status(200).end();
 	}, function(error) {
-		console.log(error);
-		res.status(501).send(error);
+		logger.error(error);
+		res.status(500).send(error);
 	});
 });
 

@@ -11,8 +11,8 @@ app.get('/buildings', function(req, res) {
 		+'left join config.POSITION_RELATION p on b.ID=p.ID where p.PARENT_ID=?';
 	db.pool.query(sql,[parentId], function(error, buildings, fields) {
 		if (error) {
-			console.log(error);
-			res.status(501).send(error);
+			logger.error(error);
+			res.status(500).send(error);
 		} else {
 			res.send(buildings);
 		}
@@ -24,8 +24,8 @@ app.get('/buildings/:id', function(req, res) {
 		+'left join config.POSITION_RELATION p on b.ID=p.ID where p.ID=?';
 	db.pool.query(sql,[req.params.id], function(error, buildings, fields) {
 		if (error) {
-			console.log(error);
-			res.status(501).send(error);
+			logger.error(error);
+			res.status(500).send(error);
 		} else {
 			if(buildings.length>0){
 				res.send(buildings[0]);				
@@ -42,7 +42,6 @@ app.post('/buildings', function(req, res) {
 		posionRelation.createObject(chain,building,function(id){
 			building.ID=id;
 			posionRelation.insertPosionRelation(chain,building,function(){
-				console.log(building);
 				var sql='INSERT INTO config.BUILDING(ID,NAME,CODE,FLOOR_GROUND,FLOOR_UNDERGROUND)values(?,?,?,?,?)';
 				chain.query(sql, [ building.ID,building.NAME,building.CODE,building.FLOOR_GROUND,building.FLOOR_UNDERGROUND]);
 			});	
@@ -50,13 +49,13 @@ app.post('/buildings', function(req, res) {
 	}, function() {
 		res.status(201).end();
 	}, function(error) {
-		console.log(error);
-		res.status(501).send(error);
+		logger.error(error);
+		res.status(500).send(error);
 	});
 	}
 	catch(err){
-		console.log(err);
-		res.status(501).send(error);
+		logger.error(err);
+		res.status(500).send(error);
 	}
 });
 
@@ -73,8 +72,8 @@ app.put('/buildings', function(req, res) {
 			}, function() {
 				res.status(204).end();
 			}, function(error) {
-				console.log(error);
-				res.status(501).send(error);
+				logger.error(error);
+				res.status(500).send(error);
 			});
 });
 
@@ -89,8 +88,8 @@ app.delete('/buildings/:id', function(req, res) {
 	}, function() {
 		res.status(200).end();
 	}, function(error) {
-		console.log(error);
-		res.status(501).send(error);
+		logger.error(error);
+		res.status(500).send(error);
 	});
 });
 

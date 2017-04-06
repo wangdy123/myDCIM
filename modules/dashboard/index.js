@@ -109,7 +109,7 @@ app.post('/userItems', function(req, res) {
 	try {
 		permissions.getCurrentUser(req, res, function(error, user) {
 			if (error) {
-				res.status(501).send(error);
+				res.status(500).send(error);
 			} else {
 				var chain = db.transaction(function(chain) {
 					deleteItems(chain, user.ID, function() {
@@ -118,14 +118,14 @@ app.post('/userItems', function(req, res) {
 				}, function() {
 					res.status(201).end();
 				}, function(error) {
-					console.log(error);
-					res.status(501).send(error);
+					logger.error(error);
+					res.status(500).send(error);
 				});
 			}
 		});
 	} catch (err) {
-		console.log(err);
-		res.status(501).send(error);
+		logger.error(err);
+		res.status(500).send(error);
 	}
 });
 module.exports = app;

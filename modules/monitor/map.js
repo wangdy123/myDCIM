@@ -22,18 +22,18 @@ app.get('/objectLocations', function(req, res) {
 	var sql = baseSql + ' where p.PARENT_ID=0 or p.PARENT_ID is NULL';
 	pool.query(sql, function(error, objects, fields) {
 		if (error) {
-			console.log(error);
-			res.status(501).send(error);
+			logger.error(error);
+			res.status(500).send(error);
 		} else {
 			if (objects.length <= 0) {
-				console.log("not found");
+				logger.error("not found");
 				res.status(404).send("not found");
 			} else {
 				object = objects[0];
 				getChildLocations(pool, object.ID, function(error, childLocations) {
 					if (error) {
-						console.log(error);
-						res.status(501).send(error);
+						logger.error(error);
+						res.status(500).send(error);
 					} else {
 						object.childLocations = childLocations;
 						res.send(object);
@@ -49,18 +49,18 @@ app.get('/objectLocations/:id', function(req, res) {
 	var sql = baseSql + ' where p.ID=?';
 	pool.query(sql, [ req.params.id ], function(error, objects, fields) {
 		if (error) {
-			console.log(error);
-			res.status(501).send(error);
+			logger.error(error);
+			res.status(500).send(error);
 		} else {
 			if (objects.length <= 0) {
-				console.log("not found");
+				logger.error("not found");
 				res.status(404).send("not found");
 			} else {
 				object = objects[0];
 				getChildLocations(pool, object.ID, function(error, childLocations) {
 					if (error) {
-						console.log(error);
-						res.status(501).send(error);
+						logger.error(error);
+						res.status(500).send(error);
 					} else {
 						object.childLocations = childLocations;
 						res.send(object);
@@ -89,8 +89,8 @@ app.put('/objectLocations/:id', function(req, res) {
 	}, function() {
 		res.status(204).end();
 	}, function(error) {
-		console.log(error);
-		res.status(501).send(error);
+		logger.error(error);
+		res.status(500).send(error);
 	});
 });
 

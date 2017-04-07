@@ -1,4 +1,16 @@
 [ {
 	"id" : 1,
-	"name" : "告警确认"
+	"name" : "告警确认",
+	"method" : [ {
+		"url" : "alarm/alarmAck",
+		"method" : [ "put" ]
+	} ]
+}, {
+	"id" : 2,
+	"name" : "主页",
+	"menus" : [ 11 ],
+	"method" : [ {
+		"url" : "alarm/alarmAck",
+		"method" : [ "put" ]
+	} ]
 } ]

@@ -24,8 +24,15 @@ app.use(express.static(__dirname + '/public', {
 
 app.get('/static.js', require('./static'));
 
+function getClientIp(req) {
+    return req.headers['x-forwarded-for'] ||
+    req.connection.remoteAddress ||
+    req.socket.remoteAddress ||
+    req.connection.socket.remoteAddress;
+};
+
 app.use(function(req, res, next) {
-	logger.accessLog(req.url);
+	logger.accessLog(getClientIp(req)+" "+req.url);
 	next();
 });
 

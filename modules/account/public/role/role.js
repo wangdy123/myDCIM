@@ -1,6 +1,6 @@
 $(function() {
-	var roleUrl = WUI.urlPath+"/account/roles";
-	var rightUrl = WUI.urlPath+"/account/rights";
+	var roleUrl = WUI.urlPath + "/account/roles";
+	var rightUrl = WUI.urlPath + "/account/rights";
 	$node = $('#role-grid');
 
 	$node.datagrid({
@@ -119,7 +119,8 @@ $(function() {
 								var right = accountRights[i];
 								var item = '<div style="display: inline-block; min-width: 150px;">'
 										+ '<input type="checkbox" class="role-right-item" '
-										+ (isRoleRight(right) ? "checked" : "") + '>' + right.name + '</div>';
+										+ (isRoleRight(right) ? "checked" : "") + 'value="' + right.id + '">'
+										+ right.name + '</div>';
 								$('#rights-td').append(item);
 							}
 							if (role) {
@@ -141,7 +142,7 @@ $(function() {
 								if (!$('#role-name-txt').validatebox("isValid")) {
 									return;
 								}
-								var role = {
+								var newRole = {
 									NAME : $('#role-name-txt').val(),
 									DESCRIPTION : $('#role-description-txt').val(),
 									rights : []
@@ -149,20 +150,22 @@ $(function() {
 
 								var rightItems = $(".role-right-item");
 								for (var i = 0; i < rightItems.length; i++) {
-									role.rights.push({
-										id : $(rightItems[i]).prop('checked') ? true : false
-									});
+									if ($(rightItems[i]).prop('checked')) {
+										newRole.rights.push({
+											id : parseInt($(rightItems[i]).val(), 10)
+										});
+									}
 								}
 								if (role) {
 									var ID = $('#role-id-txt').val();
-									WUI.ajax.put(roleUrl + "/" + ID, role, function() {
+									WUI.ajax.put(roleUrl + "/" + ID, newRole, function() {
 										$node.datagrid("reload");
 										$('#role-dialog').dialog("close");
 									}, function() {
 										$.messager.alert('失败', "修改角色失败！");
 									});
 								} else {
-									WUI.ajax.post(roleUrl, role, function() {
+									WUI.ajax.post(roleUrl, newRole, function() {
 										$node.datagrid("reload");
 										$('#role-dialog').dialog("close");
 									}, function() {

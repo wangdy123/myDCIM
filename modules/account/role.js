@@ -44,7 +44,7 @@ function pivotRoleRight(roles) {
 }
 
 function getRoleById(pool, roleId, cbk) {
-	var sql = 'select r.ID,r.NAME,r.DESCRIPTION,rr.RIGHT_ID from portal.ROLE r join portal.ROLE_RIGHT rr on r.ID=rr.ROLE_ID where r.ID=?';
+	var sql = 'select r.ID,r.NAME,r.DESCRIPTION,rr.RIGHT_ID from portal.ROLE r left join portal.ROLE_RIGHT rr on r.ID=rr.ROLE_ID where r.ID=?';
 	pool.query(sql, [ roleId ], function(error, roles, fields) {
 		if (error) {
 			cbk(error);
@@ -60,7 +60,7 @@ function getRoleById(pool, roleId, cbk) {
 }
 
 function requestAllHandler(req, res) {
-	var sql = 'select r.ID,r.NAME,r.DESCRIPTION,rr.RIGHT_ID from portal.ROLE r join portal.ROLE_RIGHT rr on r.ID=rr.ROLE_ID';
+	var sql = 'select r.ID,r.NAME,r.DESCRIPTION,rr.RIGHT_ID from portal.ROLE r left join portal.ROLE_RIGHT rr on r.ID=rr.ROLE_ID';
 	db.pool.query(sql, function(error, roles, fields) {
 		if (error) {
 			logger.error(error);
@@ -84,64 +84,89 @@ app.get('/roles/:roleId', function(req, res) {
 	});
 });
 
-function insertRole(role, chain) {
-	chain.query('INSERT INTO portal.ROLE(NAME,DESCRIPTION)values(?,?)', [ role.NAME, role.DESCRIPTION ]).on(
-			'result',
-			function(result) {
-				var ID=result.insertId;
-					for (var i = 0; i < role.rights.length; i++) {
-						chain.query('INSERT INTO portal.ROLE_RIGHT(ROLE_ID,RIGHT_ID)values(?,?)', [ ID,
-								role.rights[i].id ]);
-					}
-
+function createRoleRightTask(connection,right){
+	return function(roleId,callback){
+		var sql='INSERT INTO portal.ROLE_RIGHT(ROLE_ID,RIGHT_ID)values(?,?)';
+		connection.query(sql, [ roleId,right.id ], function(err, result) {
+			callback(err,roleId);
 			});
+	};
 }
-var createRoleHandler = function(req, res) {
-	var role = req.body;
-	var chain = db.transaction(function(chain) {
-		insertRole(role, chain);
-	}, function() {
-		res.status(201).end();
-	}, function(error) {
-		logger.error(error);
-		res.status(500).send(error);
+
+function createRoleRightTasks(connection,tasks,rights){
+	for (var i = 0; i < rights.length; i++) {
+		tasks.push(createRoleRightTask(connection,rights[i]));
+	}
+	tasks.push(function(roleId,callback){
+		callback();
 	});
-};
-app.post('/roles', createRoleHandler);
+}
+app.post('/roles', function(req, res) {
+	var role = req.body;
+	db.doTransaction(function(connection) {
+		var tasks= [ function(callback) {
+			var sql ='INSERT INTO portal.ROLE(NAME,DESCRIPTION)values(?,?)';
+			connection.query(sql, [ role.NAME, role.DESCRIPTION ], function(err, result) {
+				if(err){
+				callback(err);
+				}else{
+					callback(null,result.insertId);
+				}
+			});
+		} ];
+		createRoleRightTasks(connection,tasks,role.rights);
+		return tasks;
+	}, function(error, result) {
+		if (error) {
+			logger.error(error);
+			res.status(500).send(error);
+		} else {
+			res.status(201).end();
+		}
+	});
+});
 
 app.put('/roles/:roleId', function(req, res) {
 	var role = req.body;
-	var rights=role.rights;
-	var chain = db.transaction(
-			function(chain) {
-				chain.query('update portal.ROLE set NAME=?,DESCRIPTION=? where ID=?', [role.NAME,role.DESCRIPTION,req.params.roleId]).on(
-						'result',
-						function(result) {
-							chain.query('delete from portal.ROLE_RIGHT where ROLE_ID=?', [ req.params.roleId ]).on(
-									'result',
-									function(result) {
-										for (var i = 0; i < rights.length; i++) {
-											chain.query('INSERT INTO portal.ROLE_RIGHT(ROLE_ID,RIGHT_ID)values(?,?)', [
-													req.params.roleId, rights[i].id ]);
-										}
-									});
-						});
-			}, function() {
-				res.status(204).end();
-			}, function(error) {
-				logger.error(error);
-				res.status(500).send(error);
+	db.doTransaction(function(connection) {
+		var tasks= [ function(callback) {
+			var sql = 'update portal.ROLE set NAME=?,DESCRIPTION=? where ID=?';
+			connection.query(sql, [role.NAME,role.DESCRIPTION,req.params.roleId], function(err, result) {
+				callback(err);
 			});
+		} ,function(callback) {
+			var sql ='delete from portal.ROLE_RIGHT where ROLE_ID=?';
+			connection.query(sql, [req.params.roleId], function(err, result) {
+				callback(err,req.params.roleId);
+			});
+		}];
+		createRoleRightTasks(connection,tasks,role.rights);
+		return tasks;
+	}, function(error, result) {
+		if (error) {
+			logger.error(error);
+			res.status(500).send(error);
+		} else {
+			res.status(204).end();
+		}
+	});
 });
 
 app.delete('/roles/:roleId', function(req, res) {
-	var chain = db.transaction(function(chain) {
-		chain.query('delete from portal.ROLE where ID=?', [ req.params.roleId ]);
-	}, function() {
-		res.status(200).end();
-	}, function(error) {
-		logger.error(error);
-		res.status(500).send(error);
+	db.doTransaction(function(connection) {
+		return [ function(callback) {
+			var sql = 'delete from portal.ROLE where ID=?';
+			connection.query(sql, [ req.params.roleId ], function(err, result) {
+				callback(err);
+			});
+		} ];
+	}, function(error, result) {
+		if (error) {
+			logger.error(error);
+			res.status(500).send(error);
+		} else {
+			res.status(200).end();
+		}
 	});
 });
 

@@ -3,6 +3,7 @@ var app = express();
 var config = require('dcim-config');
 var db = require('dcim-db');
 var permissions = require('dcim-permissions');
+var util = require("dcim-util");
 
 var hbs = require('hbs');
 app.set('views', [ __dirname + '/templates', './templates' ]);
@@ -25,13 +26,14 @@ function setMenu(body, menus, path) {
 	for (var i = 0; i < menus.length; i++) {
 		var menu = menus[i];
 		menu.selected = false;
+		body.url = path;
+		body.border = false;
 		for (var j = 0; j < menu.childMenus.length; j++) {
 			if (menu.childMenus[j].url === path) {
 				menu.selected = true;
 				body.title = menu.childMenus[j].title;
 				menu.childMenus[j].class = "panel-header";
-				body.url = menu.childMenus[j].url;
-				body.border = false;
+				body.border = menu.childMenus[j].border;
 				body.scripts = menu.childMenus[j].scripts;
 				body.links = menu.childMenus[j].links;
 			} else {
@@ -47,24 +49,50 @@ app.put('/setPassword', function(req, res) {
 	permissions.getCurrentUser(req, res, function(error, user) {
 		if (error) {
 			res.status(401).send(error);
-		} else {
-			var chain = db.transaction(function(chain) {
-				var selectSql = 'select LOGIN_PASSWORD from  portal.ACCOUNT where ID=?';
-				chain.query(selectSql, [ user.ID ]).on('result', function(result) {
-					if (result && result.LOGIN_PASSWORD !== password.OLD_PASSWORD) {
-						res.status(400).send("口令错误");
-					} else {
+			return;
+		}
+		db.doTransaction(function(connection) {
+			return [
+					function(callback) {
+						var selectSql = 'select LOGIN_PASSWORD from  portal.ACCOUNT where ID=?';
+						connection.query(selectSql, [ user.ID ], function(err, result) {
+							if (err) {
+								callback(err);
+								return;
+							}
+							if (result.length < 1
+									|| result[0].LOGIN_PASSWORD !== util.transToSha1(password.OLD_PASSWORD)) {
+								callback("口令错误");
+							} else {
+								callback();
+							}
+						});
+					},
+					function(callback) {
 						var sql = 'update portal.ACCOUNT set LOGIN_PASSWORD=?,PASSWORD_TIME=sysdate() where ID=?';
-						chain.query(sql, [ password.NEW_PASSWORD, user.ID ]);
-					}
-				});
-			}, function() {
-				res.status(204).end();
-			}, function(error) {
+						connection.query(sql, [ util.transToSha1(password.NEW_PASSWORD), user.ID ], function(err,
+								result) {
+							callback(err);
+						});
+					},
+					function(callback) {
+						var sql = 'insert into portal.ACCOUNT_PASSWORD_LOG(ACCOUNT_ID,CHANGE_TIME,'
+								+ 'NEW_PASSWORD,OLD_PASSWORD)values(?,sysdate(),?,?)';
+						var oldPassword = util.transToSha1(password.OLD_PASSWORD);
+						var newPassword = util.transToSha1(password.NEW_PASSWORD);
+						var params = [ user.ID, oldPassword, newPassword ];
+						connection.query(sql, params, function(err, result) {
+							callback(err);
+						});
+					} ];
+		}, function(error, result) {
+			if (error) {
 				logger.error(error);
 				res.status(500).send(error);
-			});
-		}
+			} else {
+				res.status(204).end();
+			}
+		});
 	});
 });
 

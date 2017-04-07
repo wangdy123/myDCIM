@@ -1,6 +1,5 @@
 var app = require('./app');
-
-var db =require('../base').db;
+var db = require('dcim-db');
 
 
 function getDepartmentById(pool, departmentId, cbk) {
@@ -43,37 +42,57 @@ app.get('/departments/:departmentId', function(req, res) {
 
 app.post('/departments', function(req, res) {
 	var department = req.body;
-	var chain = db.transaction(function(chain) {
-		chain.query('INSERT INTO portal.DEPARTMENT(NAME,DESCRIPTION)values(?,?)', [ department.NAME, department.DESCRIPTION ]);
-	}, function() {
-		res.status(201).end();
-	}, function(error) {
-		logger.error(error);
-		res.status(500).send(error);
+	db.doTransaction(function(connection) {
+		return [ function(callback) {
+			var sql = 'INSERT INTO portal.DEPARTMENT(NAME,DESCRIPTION)values(?,?)';
+			connection.query(sql, [ department.NAME, department.DESCRIPTION ], function(err, result) {
+				callback(err);
+			});
+		} ];
+	}, function(error, result) {
+		if (error) {
+			logger.error(error);
+			res.status(500).send(error);
+		} else {
+			res.status(201).end();
+		}
 	});
 });
 
 app.put('/departments/:departmentId', function(req, res) {
 	var department = req.body;
-	var chain = db.transaction(
-			function(chain) {
-				chain.query('update portal.DEPARTMENT set NAME=?,DESCRIPTION=? where ID=?', [department.NAME,department.DESCRIPTION,req.params.departmentId]);
-			}, function() {
-				res.status(204).end();
-			}, function(error) {
-				logger.error(error);
-				res.status(500).send(error);
+	db.doTransaction(function(connection) {
+		return [ function(callback) {
+			var sql = 'update portal.DEPARTMENT set NAME=?,DESCRIPTION=? where ID=?';
+			connection.query(sql, [department.NAME,department.DESCRIPTION,req.params.departmentId], function(err, result) {
+				callback(err);
 			});
+		} ];
+	}, function(error, result) {
+		if (error) {
+			logger.error(error);
+			res.status(500).send(error);
+		} else {
+			res.status(204).end();
+		}
+	});
 });
 
 app.delete('/departments/:departmentId', function(req, res) {
-	var chain = db.transaction(function(chain) {
-		chain.query('delete from portal.DEPARTMENT where ID=?', [ req.params.departmentId ]);
-	}, function() {
-		res.status(200).end();
-	}, function(error) {
-		logger.error(error);
-		res.status(500).send(error);
+	db.doTransaction(function(connection) {
+		return [ function(callback) {
+			var sql = 'delete from portal.DEPARTMENT where ID=?';
+			connection.query(sql, [ req.params.departmentId ], function(err, result) {
+				callback(err);
+			});
+		} ];
+	}, function(error, result) {
+		if (error) {
+			logger.error(error);
+			res.status(500).send(error);
+		} else {
+			res.status(200).end();
+		}
 	});
 });
 

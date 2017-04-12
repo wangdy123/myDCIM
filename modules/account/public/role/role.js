@@ -3,6 +3,14 @@ $(function() {
 	var rightUrl = WUI.urlPath + "/account/rights";
 	$node = $('#role-grid');
 
+	function getRightNameById(rightId) {
+		for (var i = 0; i < WUI.accountRights.rights.length; i++) {
+			if (WUI.accountRights.rights[i].id === rightId) {
+				return WUI.accountRights.rights[i].name;
+			}
+		}
+		return "";
+	}
 	$node.datagrid({
 		url : roleUrl,
 		method : "get",
@@ -48,20 +56,17 @@ $(function() {
 		}, {
 			field : 'rights',
 			title : '权限',
-			// width : 300,
+			resizable : true,
 			formatter : function(value, row, index) {
 				if (row.rights) {
 					var rights = [];
 					for (var i = 0; i < row.rights.length; i++) {
-						rights.push(row.rights[i].name);
+						rights.push(getRightNameById(row.rights[i]));
 					}
-					return rights.join(',');
+					return rights.join('，');
 				} else {
 					return value;
 				}
-			},
-			styler : function(value, row, index) {
-				return 'padding:0 10px;';
 			}
 		} ] ]
 	});
@@ -115,8 +120,8 @@ $(function() {
 								}
 								return false;
 							}
-							for (var i = 0; i < accountRights.length; i++) {
-								var right = accountRights[i];
+							for (var i = 0; i < accountRights.rights.length; i++) {
+								var right = accountRights.rights[i];
 								var item = '<div style="display: inline-block; min-width: 150px;">'
 										+ '<input type="checkbox" class="role-right-item" '
 										+ (isRoleRight(right) ? "checked" : "") + 'value="' + right.id + '">'

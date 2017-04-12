@@ -8,7 +8,6 @@ app.get('/themes', function(req, res) {
 	res.send(config.themes);
 });
 
-
 app.get('/personnelsNotAccount', function(req, res) {
 	var sql = 'select p.ID,p.NAME,p.JOB_NUMBER,p.E_MAIL,p.TEL,p.ENABLE,p.CREATE_TIME,p.DEPARTMENT,'
 			+ 'd.NAME as DEPARTMENT_NAME from portal.PERSONNEL_CFG p '
@@ -25,17 +24,34 @@ app.get('/personnelsNotAccount', function(req, res) {
 });
 
 app.get('/accounts', function(req, res) {
-	var sql = 'select a.ID,p.NAME,p.JOB_NUMBER,a.ACCOUNT,p.E_MAIL,p.TEL,p.ENABLE as PERSONNEL_ENABLE,'
-			+ 'a.ENABLE,a.DEFAULT_THEME,a.ROLE_ID,r.NAME as ROLE_NAME,p.CREATE_TIME,p.DEPARTMENT,'
-			+ 'd.NAME as DEPARTMENT_NAME from portal.ACCOUNT a join portal.PERSONNEL_CFG p on a.ID=p.ID '
-			+ 'join portal.ROLE r on a.ROLE_ID=r.ID ' + 'join portal.DEPARTMENT d on p.DEPARTMENT=d.ID';
+	var sql = 'select a.ID,p.NAME,p.JOB_NUMBER,a.ACCOUNT,a.IS_GOD,p.E_MAIL,p.TEL,p.ENABLE as PERSONNEL_ENABLE,'
+			+ 'a.ENABLE,a.PASSWORD_TIME,a.DEFAULT_THEME,p.CREATE_TIME,p.DEPARTMENT,d.NAME as DEPARTMENT_NAME '
+			+ 'from portal.ACCOUNT a join portal.PERSONNEL_CFG p on a.ID=p.ID '
+			+ 'join portal.DEPARTMENT d on p.DEPARTMENT=d.ID';
 	db.pool.query(sql, function(error, accounts, fields) {
 		if (error) {
 			logger.error(error);
 			res.status(500).send(error);
-		} else {
-			res.send(accounts);
+			return;
 		}
+		var sql = 'select a.ACCOUNT_ID,r.ID as ROLE_ID,r.NAME from portal.ROLE r join portal.ACCOUNT_ROLE a on a.ROLE_ID=r.ID ';
+		db.pool.query(sql, function(err, roles) {
+			if (err) {
+				logger.error(error);
+				res.status(500).send(error);
+				return;
+			}
+
+			for (var i = 0; i < accounts.length; i++) {
+				accounts[i].roles = [];
+				for (var j = 0; j < roles.length; j++) {
+					if (roles[j].ACCOUNT_ID === accounts[i].ID) {
+						accounts[i].roles.push(roles[j]);
+					}
+				}
+			}
+			res.send(accounts);
+		});
 	});
 });
 
@@ -50,17 +66,35 @@ app.get('/accounts/:accountId', function(req, res) {
 	});
 });
 
+function createAcountRoleTask(connection, ACCOUNT_ID, accountRole) {
+	return function(callback) {
+		var sql = 'INSERT INTO portal.ACCOUNT_ROLE(ACCOUNT_ID,ROLE_ID)values(?,?)';
+		connection.query(sql, [ ACCOUNT_ID, accountRole.ROLE_ID ], function(err, result) {
+			callback(err);
+		});
+	};
+}
+
+function createAcountRoleTasks(connection, tasks, ACCOUNT_ID, accountRoles) {
+	for (var i = 0; i < accountRoles.length; i++) {
+		tasks.push(createAcountRoleTask(connection, ACCOUNT_ID, accountRoles[i]));
+	}
+}
+
 app.post('/accounts', function(req, res) {
 	var account = req.body;
 	db.doTransaction(function(connection) {
-		return [ function(callback) {
-			var sql = 'INSERT INTO portal.ACCOUNT(ID,ACCOUNT,ROLE_ID,DEFAULT_THEME,'
-					+ 'LOGIN_PASSWORD,PASSWORD_TIME,ENABLE)values(?,?,?,?,?,sysdate(),1)';
+		var tasks = [ function(callback) {
+			var sql = 'INSERT INTO portal.ACCOUNT(ID,ACCOUNT,IS_GOD,DEFAULT_THEME,'
+					+ 'LOGIN_PASSWORD,PASSWORD_TIME,ENABLE)values(?,?,0,?,?,sysdate(),1)';
 			connection.query(sql, [ account.ID, account.ACCOUNT, account.ROLE_ID, account.DEFAULT_THEME,
 					account.LOGIN_PASSWORD ], function(err, result) {
 				callback(err);
 			});
 		} ];
+
+		createAcountRoleTasks(connection, tasks, account.ID, account.roles);
+		return tasks;
 	}, function(error, result) {
 		if (error) {
 			logger.error(error);
@@ -74,12 +108,19 @@ app.post('/accounts', function(req, res) {
 app.put('/accounts', function(req, res) {
 	var account = req.body;
 	db.doTransaction(function(connection) {
-		return [ function(callback) {
-			var sql = 'update portal.ACCOUNT set ROLE_ID=?,DEFAULT_THEME=? where ID=?';
-			connection.query(sql, [ account.ROLE_ID, account.DEFAULT_THEME, account.ID ], function(err, result) {
+		var tasks = [ function(callback) {
+			var sql = 'update portal.ACCOUNT set DEFAULT_THEME=? where ID=?';
+			connection.query(sql, [ account.DEFAULT_THEME, account.ID ], function(err, result) {
+				callback(err);
+			});
+		}, function(callback) {
+			var sql = 'delete from portal.ACCOUNT_ROLE where ACCOUNT_ID=?';
+			connection.query(sql, [ account.ID ], function(err, result) {
 				callback(err);
 			});
 		} ];
+		createAcountRoleTasks(connection, tasks, account.ID, account.roles);
+		return tasks;
 	}, function(error, result) {
 		if (error) {
 			logger.error(error);

@@ -1,16 +1,21 @@
-[ {
+{
+	"baseMenus":[11,15,31,32,33,34],
+	"baseFunctions":[{"regexp" : "/dashboard/*",
+		"methods" : [ "get","put","post" ]}],
+	"rights":[ {
 	"id" : 1,
 	"name" : "告警确认",
-	"method" : [ {
-		"url" : "alarm/alarmAck",
-		"method" : [ "put" ]
+	"functions" : [ {
+		"regexp" : "alarm/alarmAck",
+		"methods" : [ "put" ]
 	} ]
 }, {
 	"id" : 2,
 	"name" : "主页",
 	"menus" : [ 11 ],
-	"method" : [ {
-		"url" : "alarm/alarmAck",
-		"method" : [ "put" ]
+	"functions" : [ {
+		"regexp" : "alarm/alarmAck",
+		"methods" : [ "put" ]
 	} ]
 } ]
+}

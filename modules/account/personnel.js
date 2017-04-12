@@ -17,21 +17,18 @@ function getPersonnelById(pool, personnelId, cbk) {
 	});
 }
 
-app
-		.get(
-				'/personnels',
-				function(req, res) {
-					var sql = 'select p.ID,p.NAME,p.JOB_NUMBER,p.E_MAIL,p.TEL,p.ENABLE,p.CREATE_TIME,p.DEPARTMENT,d.NAME as DEPARTMENT_NAME '
-							+ 'from portal.PERSONNEL_CFG p join portal.DEPARTMENT d on p.DEPARTMENT=d.ID';
-					db.pool.query(sql, function(error, personnels, fields) {
-						if (error) {
-							logger.error(error);
-							res.status(500).send(error);
-						} else {
-							res.send(personnels);
-						}
-					});
-				});
+app.get('/personnels', function(req, res) {
+	var sql = 'select p.ID,p.NAME,p.JOB_NUMBER,p.E_MAIL,p.TEL,p.ENABLE,p.CREATE_TIME,p.DEPARTMENT,'
+			+ 'd.NAME as DEPARTMENT_NAME from portal.PERSONNEL_CFG p join portal.DEPARTMENT d on p.DEPARTMENT=d.ID';
+	db.pool.query(sql, function(error, personnels, fields) {
+		if (error) {
+			logger.error(error);
+			res.status(500).send(error);
+		} else {
+			res.send(personnels);
+		}
+	});
+});
 
 app.get('/personnels/:personnelId', function(req, res) {
 	getPersonnelById(db.pool, req.params.personnelId, function(error, personnel) {
@@ -68,12 +65,21 @@ app.post('/personnels', function(req, res) {
 app.put('/personnels/enable/:personnelId', function(req, res) {
 	var personnel = req.body;
 	db.doTransaction(function(connection) {
-		return [ function(callback) {
+		var tasks = [ function(callback) {
 			var sql = 'update portal.PERSONNEL_CFG set ENABLE=? where ID=?';
 			connection.query(sql, [ personnel.ENABLE, req.params.personnelId ], function(err, result) {
 				callback(err);
 			});
 		} ];
+		if (!personnel.ENABLE) {
+			tasks.push(function(callback) {
+				var sql = 'update portal.ACCOUNT set ENABLE=? where ID=?';
+				connection.query(sql, [ personnel.ENABLE, req.params.personnelId ], function(err, result) {
+					callback(err);
+				});
+			});
+		}
+		return tasks;
 	}, function(error, result) {
 		if (error) {
 			logger.error(error);

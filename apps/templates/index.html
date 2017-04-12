@@ -1,7 +1,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>{{title}}</title>
+<title>{{systemName}}-{{title}}</title>
 <script type="text/javascript" src="/jquery/jquery.min.js"></script>
 <script type="text/javascript" src="/jquery/jquery.cookie.js"></script>
 <link rel="stylesheet" type="text/css" href="/easyui/themes/{{theme}}/easyui.css">
@@ -11,8 +11,8 @@
 <script type="text/javascript" src="apps.js"></script>
 <script type="text/javascript" src="/util.js"></script>
 <script type="text/javascript" src="static.js"></script>
-<script type="text/javascript" src = "tw/libs/t.js"></script>
-<script type="text/javascript" src = "tw/libs/twaver.js"></script>
+<script type="text/javascript" src="tw/libs/t.js"></script>
+<script type="text/javascript" src="tw/libs/twaver.js"></script>
 
 <link rel="stylesheet" type="text/css" href="css/style.css" />
 {{#each scripts}}
@@ -41,8 +41,8 @@
     </div>
 
     <div id="page-header" style="border-style: none;">
-        <img class="panel" title="logo" src="image/logo1.jpg"></img>
-        <h2 id="system-name" class="panel">DCIM测试平台</h2>
+        <img class="panel" title="logo" src="{{logo}}"></img>
+        <h2 id="system-name" class="panel">{{systemName}}</h2>
         <div style="float: right; right: 5px; padding: 0 10px 0;">
             <div class="header-item panel">
                 <div class="panel">
@@ -60,8 +60,8 @@
         </div>
     </div>
     <div id="page-footer" style="border-style: none; vertical-align: middle; text-align: center; padding: 5px;">
-        <div style="position: absolute; left: 5px; display: inline-block;">广东盈嘉科技工程发展股份有限公司</div>
-        <div style="display: inline-block;">copyright:wincom</div>
+        <div style="position: absolute; left: 5px; display: inline-block;">{{company}}</div>
+        <div style="display: inline-block;">{{copyRightText}}</div>
         <a style="position: absolute; right: 5px; display: inline-block;" href="#"> <label>告警计数:</label><label
             id="realtime-status">0</label>
         </a>

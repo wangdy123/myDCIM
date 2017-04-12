@@ -14,36 +14,6 @@ app.use(express.static(__dirname + '/public', {
 	maxAge : config.config.fileMaxAge * 3600 * 24 * 1000
 }));
 
-function getTheme(user, req, cbk) {
-	if (req.cookies.theme) {
-		cbk(req.cookies.theme);
-	} else {
-		cbk(user.DEFAULT_THEME);
-	}
-};
-
-function setMenu(body, menus, path) {
-	for (var i = 0; i < menus.length; i++) {
-		var menu = menus[i];
-		menu.selected = false;
-		body.url = path;
-		body.border = false;
-		for (var j = 0; j < menu.childMenus.length; j++) {
-			if (menu.childMenus[j].url === path) {
-				menu.selected = true;
-				body.title = menu.childMenus[j].title;
-				menu.childMenus[j].class = "panel-header";
-				body.border = menu.childMenus[j].border;
-				body.scripts = menu.childMenus[j].scripts;
-				body.links = menu.childMenus[j].links;
-			} else {
-				menu.childMenus[j].class = "";
-			}
-		}
-	}
-	body.menus = menus;
-}
-
 app.put('/setPassword', function(req, res) {
 	var password = req.body;
 	permissions.getCurrentUser(req, res, function(error, user) {
@@ -107,21 +77,73 @@ app.use(function(req, res, next) {
 	});
 });
 
+function getTheme(user, req, cbk) {
+	if (req.cookies.theme) {
+		cbk(req.cookies.theme);
+	} else {
+		cbk(user.DEFAULT_THEME);
+	}
+};
+
+function checkAuth(account, menuId) {
+	if (account.IS_GOD) {
+		return true;
+	}
+	if (!account.right) {
+		account.right = {};
+	}
+	return account.right.menus.indexOf(menuId) >= 0;
+}
+function setMenu(body, account, menus, path) {
+	var mainMenus = [];
+	for (var i = 0; i < menus.length; i++) {
+		var menu = util.deepClone(menus[i]);
+		menu.selected = false;
+		body.url = path;
+		body.border = false;
+		var childMenus = [];
+		for (var j = 0; j < menu.childMenus.length; j++) {
+			var childMenu = menu.childMenus[j];
+			if (checkAuth(account, childMenu.id)) {
+				if (childMenu.url === path) {
+					menu.selected = true;
+					body.title = childMenu.title;
+					childMenu.class = "panel-header";
+					body.border = childMenu.border;
+					body.scripts = childMenu.scripts;
+					body.links = childMenu.links;
+				} else {
+					childMenu.class = "";
+				}
+				childMenus.push(childMenu);
+			}
+		}
+		menu.childMenus = childMenus;
+		if (childMenus.length > 0) {
+			mainMenus.push(menu);
+		}
+	}
+	body.menus = mainMenus;
+}
 app.get('/index.html', function(req, res) {
-	permissions.getCurrentDetailUser(req, res, function(error, user) {
+	permissions.getCurrentUser(req, res, function(error, account) {
 		if (error) {
 			logger.error(error);
 			res.render('login', {});
-		} else {
-			getTheme(user, req, function(theme) {
-				var body = {};
-				body.userName = user.NAME;
-				body.theme = theme;
-				var page = req.query.page ? req.query.page : "dashboard/dashboard.html";
-				setMenu(body, config.menus, page);
-				res.render('index', body);
-			});
+			return;
 		}
+		getTheme(account, req, function(theme) {
+			var body = {};
+			body.userName = account.NAME;
+			body.systemName = config.config.systemName;
+			body.copyRightText = config.config.copyRightText;
+			body.company = config.config.company;
+			body.logo = config.config.logo;
+			body.theme = theme;
+			var page = req.query.page ? req.query.page : "dashboard/dashboard.html";
+			setMenu(body, account, config.menus, page);
+			res.render('index', body);
+		});
 	});
 });
 

@@ -22,5 +22,9 @@
 		"navigation":"/navigation",
 		"dashboard":"/dashboard"
 	},
+	"systemName":"DCIM测试平台",
+	"copyRightText":"copyright:wincom",
+	"company":"广东盈嘉科技工程发展股份有限公司",
+	"logo":"image/logo1.jpg",
 	"confs":["themes","accountRights","menus","dashboard","objectTypeDef","objectTypes","stationTypes","roomTypes","powerTypes","deviceTypes"]
 }

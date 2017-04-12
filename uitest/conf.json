@@ -3,6 +3,11 @@
 	"target":"role/role-wokspace.html",
 	"publicPath":"./modules/account/public",
 	"name":"角色配置"
+},{
+	"url":"account.html",
+	"target":"account/account-wokspace.html",
+	"publicPath":"./modules/account/public",
+	"name":"帐号配置"
 }
  
  ]

@@ -52,7 +52,6 @@ for ( var module in config.modules) {
 	var path = require('path').join(__dirname, "modules", module);
 	var url = config.modules[module];
 	app.use(url, require(path));
-	logger.debug(url);
 }
 
 app.use(function(req, res, next) {

@@ -1,19 +1,11 @@
 var app = require('./app');
-var accountRights = require('../base').config.accountRights;
-var db =require('../base').db;
+var accountRights = require('dcim-config').accountRights;
+var db = require('dcim-db');
 
 app.get('/rights', function(req, res) {
 	res.send(accountRights);
 });
 
-function getRightName(rightId) {
-	for (var i = 0; i < accountRights.length; i++) {
-		if (rightId === accountRights[i].id) {
-			return accountRights[i].name;
-		}
-	}
-	return "";
-}
 function findRole(roleId, roles) {
 	for (var i = 0; i < roles.length; i++) {
 		if (roleId === roles[i].ID) {
@@ -35,10 +27,7 @@ function pivotRoleRight(roles) {
 			};
 			results.push(role);
 		}
-		role.rights.push({
-			id : roles[i].RIGHT_ID,
-			name : getRightName(roles[i].RIGHT_ID)
-		});
+		role.rights.push(roles[i].RIGHT_ID);
 	}
 	return results;
 }

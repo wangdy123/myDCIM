@@ -1,4 +1,16 @@
 $(document).ready(function() {
+    $('#qrcode-panel').tooltip({
+        content: '<div id="qrcode" ></div>',
+        onShow: function(){
+        	$('#qrcode').empty();
+        	$('#qrcode').qrcode({ 
+        	    render: "table", 
+        	    width:100,
+        	    height:100,
+        	    text: window.location.href
+        	});
+        }
+    });
 	var passwordUrl = "setPassword";
 	$("#change-password-btn").click(function() {
 		$('#change-password-dialog').dialog({
@@ -11,10 +23,10 @@ $(document).ready(function() {
 			cache : false,
 			href : 'paaasord-dialog.html',
 			onLoad : function() {
-			/*	$('#account-password').validatebox({
+				$('#account-password').validatebox({
 					required : true,
 					validType : 'password'
-				});*/
+				});
 				$('#account-password-confirm').validatebox({
 					required : true,
 					validType : "equalTo['#account-password']",

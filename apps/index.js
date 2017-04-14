@@ -85,7 +85,7 @@ function getTheme(user, req, cbk) {
 	}
 };
 
-function checkAuth(account, menuId) {
+function checkRight(account, menuId) {
 	if (account.IS_GOD) {
 		return true;
 	}
@@ -94,7 +94,7 @@ function checkAuth(account, menuId) {
 	}
 	return account.right.menus.indexOf(menuId) >= 0;
 }
-function setMenu(body, account, menus, path) {
+function setMenu(body, account, menus, path, req) {
 	var mainMenus = [];
 	for (var i = 0; i < menus.length; i++) {
 		var menu = util.deepClone(menus[i]);
@@ -104,13 +104,26 @@ function setMenu(body, account, menus, path) {
 		var childMenus = [];
 		for (var j = 0; j < menu.childMenus.length; j++) {
 			var childMenu = menu.childMenus[j];
-			if (checkAuth(account, childMenu.id)) {
+			if (checkRight(account, childMenu.id)) {
 				if (childMenu.url === path) {
 					menu.selected = true;
 					body.title = childMenu.title;
 					childMenu.class = "panel-header";
 					body.border = childMenu.border;
-					body.scripts = childMenu.scripts;
+					body.scripts = childMenu.scripts ? util.deepClone(childMenu.scripts) : [];
+					if (req.cookies.enableMap) {
+						body.scripts.push({
+							src : "mapfiles/mapapi.js"
+						});
+					}
+					if (req.cookies.enable3D) {
+						body.scripts.push({
+							src : "tw/libs/t.js"
+						});
+						body.scripts.push({
+							src : "tw/libs/twaver.js"
+						});
+					}
 					body.links = childMenu.links;
 				} else {
 					childMenu.class = "";
@@ -141,7 +154,7 @@ app.get('/index.html', function(req, res) {
 			body.logo = config.config.logo;
 			body.theme = theme;
 			var page = req.query.page ? req.query.page : "dashboard/dashboard.html";
-			setMenu(body, account, config.menus, page);
+			setMenu(body, account, config.menus, page, req);
 			res.render('index', body);
 		});
 	});

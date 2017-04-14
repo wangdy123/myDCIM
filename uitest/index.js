@@ -27,7 +27,7 @@ app.get('/uitests', function(req, res) {
 	res.send(test_conf);
 });
 
-app.get('/ui-test-home.html', function(req, res) {
+app.get('/uitest.html', function(req, res) {
 	res.render('ui-test-home');
 });
 

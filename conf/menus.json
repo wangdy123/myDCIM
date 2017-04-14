@@ -11,16 +11,6 @@
 		"id" : 12,
 		"title" : "监控系统",
 		"url" : "monitor/monitor.html",
-		"scripts" : [ {
-			"type" : "text/javascript",
-			"src" : "mapfiles/mapapi.js"
-		},{
-			"type" : "text/javascript",
-			"src" : "tw/libs/t.js"
-		},{
-			"type" : "text/javascript",
-			"src" : "tw/libs/twaver.js"
-		} ],
 		"border" : false,
 		"name" : "监控系统"
 	}, {

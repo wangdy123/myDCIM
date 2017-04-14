@@ -11,14 +11,13 @@
 <script type="text/javascript" src="apps.js"></script>
 <script type="text/javascript" src="/util.js"></script>
 <script type="text/javascript" src="static.js"></script>
-<script type="text/javascript" src="tw/libs/t.js"></script>
-<script type="text/javascript" src="tw/libs/twaver.js"></script>
+<script type="text/javascript" src="/jquery.qrcode.min.js"></script>
 
 <link rel="stylesheet" type="text/css" href="css/style.css" />
 {{#each scripts}}
-<script type="{{type}}" src="{{src}}"></script>
+<script type="text/javascript" src="{{src}}"></script>
 {{/each}} {{#each links}}
-<script type="{{type}}" href="{{src}}"></script>
+<link rel="stylesheet" type="text/css" href="{{src}}"></link>
 {{/each}}
 </head>
 <body>
@@ -44,6 +43,9 @@
         <img class="panel" title="logo" src="{{logo}}"></img>
         <h2 id="system-name" class="panel">{{systemName}}</h2>
         <div style="float: right; right: 5px; padding: 0 10px 0;">
+            <div class="header-item panel">
+                <a href="#" id="qrcode-panel"><img class="panel" src="image/qrcode.png"></img></a>
+            </div>
             <div class="header-item panel">
                 <div class="panel">
                     <span style="font-weight: normal; font-size: 12px;">当前用户：</span><a id="current-user-panel" href="#"

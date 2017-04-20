@@ -11,6 +11,8 @@ module.exports = function(req, res) {
 	str = str + 'window.WUI.roomTypes=' + JSON.stringify(config.roomTypes) + ';';
 	str = str + 'window.WUI.powerTypes=' + JSON.stringify(config.powerTypes) + ';';
 	str = str + 'window.WUI.deviceTypes=' + JSON.stringify(config.deviceTypes) + ';';
+	str = str + 'window.WUI.regionTypes=' + JSON.stringify(config.regionTypes) + ';';
+	str = str + 'window.WUI.root_object_id=' + config.config.root_object_id + ';';
 	permissions.getCurrentUser(req, res, function(err, account) {
 		if (err) {
 			res.send(str);

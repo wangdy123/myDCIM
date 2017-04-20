@@ -1,7 +1,13 @@
 
 window.WUI = window.WUI || {};
-window.WUI.urlPath="";
 
+window.WUI.getDatagridRowIndex=function(target){
+	var tr = $(target).closest('tr.datagrid-row');
+	return parseInt(tr.attr('datagrid-row-index'));
+}
+window.WUI.getDatagridRow=function($datagrid,target){
+	return $datagrid.datagrid("getRows")[WUI.getDatagridRowIndex(target)];
+}
 var subscribes = [];
 window.WUI.subscribe = function(evt, fn) {
 	subscribes.push({

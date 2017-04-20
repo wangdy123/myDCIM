@@ -1,20 +1,19 @@
 $(function() {
-	var itemUrl = WUI.urlPath+"/dashboard/items";
-	var userItemUrl = WUI.urlPath+"/dashboard/userItems";
+	var itemUrl = "dashboard/items";
+	var userItemUrl = "dashboard/userItems";
 	var itemIdPrefix = "dashboard-item-";
 	$node = $('#dashboard-pannel');
 	var columnCount = 3;
-	$node.panel({	
-		fit:true,
+	$node.panel({
+		fit : true,
 	});
 	$node.portal({
 		onStateChange : saveItems
 	});
-	
+
 	$(window).resize(function() {
 		$node.portal('resize');
 	});
-	
 
 	function saveItems() {
 		var userItems = [];
@@ -30,6 +29,7 @@ $(function() {
 		WUI.ajax.post(userItemUrl, {
 			items : userItems
 		});
+		reload();
 		return userItems;
 	}
 
@@ -44,7 +44,7 @@ $(function() {
 		}
 		return false;
 	}
-	
+
 	$("#arrange-dashboard-bt").click(function() {
 		WUI.ajax.get(itemUrl, {}, function(data, status) {
 			$('#dashboard-dialog').dialog({
@@ -67,7 +67,7 @@ $(function() {
 								var panels = $node.portal('getPanels', columnIndex);
 								for (var i = 0; i < panels.length; i++) {
 									if (panels[i].attr('id') === (itemIdPrefix + index)) {
-										$node.portal('remove',panels[i]);
+										$node.portal('remove', panels[i]);
 										$(evt.target).removeAttr("checked");
 										saveItems();
 										return;
@@ -76,7 +76,7 @@ $(function() {
 							}
 						} else {
 							var items = data.items;
-							$(evt.target).attr("checked","checked");
+							$(evt.target).attr("checked", "checked");
 							for (var i = 0; i < items.length; i++) {
 								if (index === items[i].index) {
 									var columnIndex = items[i].columnIndex;
@@ -105,17 +105,24 @@ $(function() {
 			columnIndex : columnIndex
 		});
 	}
-	WUI.ajax.get(userItemUrl, {}, function(data, status) {
-		columnCount = data.columnCount;
-		for (var i = 0; i < data.items.length; i++) {
-			if (data.items[i].columnIndex >= columnCount) {
-				data.items[i].columnIndex = columnCount - 1;
-			}
-			addPanel(data.items[i], data.items[i].columnIndex);
-		}
-		$node.portal('resize');
-	}, function(status) {
-		alert("\n状态: " + status);
-	});
 
+	function reload() {
+		var panels = $node.portal('getPanels');
+		for (var index = 0; index < panels.length; index++) {
+			$node.portal('remove', panels[index]);
+		}
+		WUI.ajax.get(userItemUrl, {}, function(data, status) {
+			columnCount = data.columnCount;
+			for (var i = 0; i < data.items.length; i++) {
+				if (data.items[i].columnIndex >= columnCount) {
+					data.items[i].columnIndex = columnCount - 1;
+				}
+				addPanel(data.items[i], data.items[i].columnIndex);
+			}
+			$node.portal('resize');
+		}, function(status) {
+			alert("\n状态: " + status);
+		});
+	}
+	reload();
 });

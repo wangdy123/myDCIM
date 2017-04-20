@@ -1,6 +1,6 @@
 $(function() {
-	var personnelUrl = WUI.urlPath+"/account/personnels";
-	var departmentUrl = WUI.urlPath+"/account/departments";
+	var personnelUrl = "account/personnels";
+	var departmentUrl = "account/departments";
 	$node = $('#personnel-grid');
 
 	$node

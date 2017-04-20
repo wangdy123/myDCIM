@@ -1,0 +1,17 @@
+{
+	"1" : {
+		"name" : "省中心",
+		"iconCls" : "icon-csc",
+		"childTypes" : [ 2 ]
+	},
+"2" : {
+	"name" : "市中心",
+	"iconCls" : "icon-lsc",
+	"childTypes" : [ 3 ]
+},
+"3" : {
+	"name" : "区县",
+	"iconCls" : "icon-region",
+	"childTypes" : [  ]
+}
+}

@@ -1,6 +1,6 @@
 $(function() {
-	var roleUrl = WUI.urlPath + "/account/roles";
-	var rightUrl = WUI.urlPath + "/account/rights";
+	var roleUrl = "account/roles";
+	var rightUrl ="account/rights";
 	$node = $('#role-grid');
 
 	function getRightNameById(rightId) {

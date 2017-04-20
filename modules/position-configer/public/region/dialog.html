@@ -1,0 +1,28 @@
+<div class="panel" fit="true">
+    <table align="center">
+        <tr>
+            <td align="right">名称:</td>
+            <td><input id="region-name-txt" class="easyui-validatebox" type="text" style="width: 100%"
+                data-options="required:true"></td>
+        </tr>
+        <tr>
+            <td align="right">行政编码:</td>
+            <td><input id="region-zip-code-txt" class="easyui-validatebox" type="text" style="width: 100%"
+                data-options="required:true,validType:'zip'"></td>
+        </tr>
+        <tr>
+            <td align="right">简称:</td>
+            <td><input id="region-ABBREVIATION-txt" class="easyui-validatebox" type="text" style="width: 100%"></td>
+        </tr>
+        <tr>
+            <td align="right">经度:</td>
+            <td><input id="region-LONGITUDE-txt" class="easyui-numberbox easyui-validatebox" type="text" style="width: 100%"
+               data-options="required:true,min:-180,max:180,precision:8"></td><td>度(-180~180)</td>
+        </tr>
+        <tr>
+            <td align="right">纬度:</td>
+            <td><input id="region-LATITUDE-txt" class="easyui-numberbox easyui-validatebox" type="text" style="width: 100%"
+                data-options="required:true,min:-90,max:90,precision:8"></td><td>度(-90~90)</td>
+        </tr>
+    </table>
+</div>

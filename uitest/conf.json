@@ -13,4 +13,9 @@
 	"target" : "monitor.html",
 	"publicPath" : "./modules/monitor/public",
 	"name" : "实时监控"
+}, {
+	"url" : "position-configer.html",
+	"target" : "wokspace.html",
+	"publicPath" : "./modules/position-configer/public",
+	"name" : "按位置配置节点"
 } ]

@@ -1,5 +1,5 @@
 $(function() {
-	var departmentUrl = WUI.urlPath+"/account/departments";
+	var departmentUrl = "account/departments";
 	$node = $('#department-grid');
 
 	$node.datagrid({

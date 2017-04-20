@@ -1,7 +1,8 @@
 var app = require('./app');
-var dashboard = require('../base').config.dashboard;
-var permissions = require('../base').permissions;
-var db = require('../base').db;
+var dashboard = require('dcim-config').dashboard;
+var db = require('dcim-db');
+var util = require("dcim-util");
+var permissions = require('dcim-permissions');
 
 app.get('/dashboard.html', function(req, res) {
 	res.render('dashboard', dashboard);

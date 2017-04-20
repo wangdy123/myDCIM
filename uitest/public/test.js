@@ -1,5 +1,5 @@
 $(function() {
-	var testUrl = WUI.urlPath + "/uitests";
+	var testUrl = "uitests";
 	$node = $('#test-grid');
 
 	$node.datagrid({

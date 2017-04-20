@@ -12,7 +12,15 @@
 		"title" : "监控系统",
 		"url" : "monitor/monitor.html",
 		"border" : false,
-		"name" : "监控系统"
+		"name" : "监控系统",
+		"scripts3D" : [ {
+			"src" : "tw/libs/t.js"
+		}, {
+			"src" : "tw/libs/twaver.js"
+		} ],
+		"scriptsMap" : [ {
+			"src" : "mapfiles/mapapi.js"
+		} ]
 	}, {
 		"id" : 13,
 		"title" : "活动告警",
@@ -100,7 +108,7 @@
 	"childMenus" : [ {
 		"id" : 41,
 		"title" : "业务配置",
-		"url" : "configer/object/wokspace.html",
+		"url" : "position-configer/wokspace.html",
 		"border" : false,
 		"name" : "业务配置"
 	}, {

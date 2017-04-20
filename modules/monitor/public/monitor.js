@@ -6,7 +6,7 @@ $(document).ready(
 				if ($.cookie('enableMap')) {
 					$('#monitor-tabs').tabs('add', {
 						title : '地图导航',
-						href : "monitor/map.html",
+						href : "monitor/map/map.html",
 						iconCls : "icon-map",
 						index : 0,
 						selected : false

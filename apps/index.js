@@ -111,18 +111,11 @@ function setMenu(body, account, menus, path, req) {
 					childMenu.class = "panel-header";
 					body.border = childMenu.border;
 					body.scripts = childMenu.scripts ? util.deepClone(childMenu.scripts) : [];
-					if (req.cookies.enableMap) {
-						body.scripts.push({
-							src : "mapfiles/mapapi.js"
-						});
+					if (req.cookies.enableMap && childMenu.scriptsMap) {
+						body.scripts = body.scripts.concat(childMenu.scriptsMap);
 					}
-					if (req.cookies.enable3D) {
-						body.scripts.push({
-							src : "tw/libs/t.js"
-						});
-						body.scripts.push({
-							src : "tw/libs/twaver.js"
-						});
+					if (req.cookies.enable3D && childMenu.scripts3D) {
+						body.scripts = body.scripts.concat(childMenu.scripts3D);
 					}
 					body.links = childMenu.links;
 				} else {

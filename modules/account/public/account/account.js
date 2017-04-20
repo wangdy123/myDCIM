@@ -1,9 +1,9 @@
 $(function() {
-	var accountUrl = WUI.urlPath + "/account/accounts";
-	var departmentUrl = WUI.urlPath + "/account/departments";
-	var personnelsNotAccountUrl = WUI.urlPath + "/account/personnelsNotAccount";
-	var roleUrl = WUI.urlPath + "/account/roles";
-	var themesUrl = WUI.urlPath + "/account/themes";
+	var accountUrl ="account/accounts";
+	var departmentUrl = "account/departments";
+	var personnelsNotAccountUrl = "account/personnelsNotAccount";
+	var roleUrl = "account/roles";
+	var themesUrl = "account/themes";
 	$node = $('#account-grid');
 
 	$node.datagrid({

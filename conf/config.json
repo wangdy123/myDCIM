@@ -2,6 +2,13 @@
 	"root_object_id":1,
 	"fileMaxAge" : 30,
 	"httpPort" : 8080,
+	"map":{
+		"defaultZoom":10,
+		"minZoom":8,
+		"maxZoom":16,
+		"LATITUDE":23.146984,
+		"LONGITUDE":113.30735
+	},
 	"db" : {
 		"host" : "localhost",
 		"port" : 3306,

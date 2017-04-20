@@ -13,6 +13,7 @@ module.exports = function(req, res) {
 	str = str + 'window.WUI.deviceTypes=' + JSON.stringify(config.deviceTypes) + ';';
 	str = str + 'window.WUI.regionTypes=' + JSON.stringify(config.regionTypes) + ';';
 	str = str + 'window.WUI.root_object_id=' + config.config.root_object_id + ';';
+	str = str + 'window.WUI.mapCfg=' + JSON.stringify(config.config.map) + ';';
 	permissions.getCurrentUser(req, res, function(err, account) {
 		if (err) {
 			res.send(str);

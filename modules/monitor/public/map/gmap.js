@@ -14,7 +14,7 @@ $(function() {
 		if (objectLocation.OBJECT_TYPE === WUI.objectTypeDef.STATION_BASE) {
 			return {
 				name : "园区",
-				zoom : 13
+				zoom : 15
 			};
 		}
 		var mapMakerPros = {
@@ -24,7 +24,7 @@ $(function() {
 			},
 			2 : {
 				name : "市区域",
-				zoom : 10
+				zoom : 11
 			},
 			3 : {
 				name : "县区域",
@@ -37,8 +37,8 @@ $(function() {
 	}
 	var makers = {};
 	var map = new google.maps.Map(document.getElementById("map-container"), {
-		zoom : 10, // 初始化地图缩放级别。
-		center : new google.maps.LatLng(23.146984, 113.30735), // 初始化地图中心坐标。
+		zoom : WUI.mapCfg.defaultZoom, // 初始化地图缩放级别。
+		center : new google.maps.LatLng(WUI.mapCfg.LATITUDE, WUI.mapCfg.LONGITUDE), // 初始化地图中心坐标。
 		panControl : true, // 平移控件的初始启用/停用状态
 		zoomControl : true, // 缩放控件的初始启用/停用状态。
 		mapTypeControl : false, // 地图类型控件的初始启用/停用状态。
@@ -51,8 +51,8 @@ $(function() {
 	});// 创建一个地图
 	map.mapTypes.set('localMap', {
 		tileSize : new google.maps.Size(256, 256),
-		maxZoom : 14,
-		minZoom : 10,
+		maxZoom : WUI.mapCfg.maxZoom,
+		minZoom : WUI.mapCfg.minZoom,
 		name : "本地地图",
 		alt : "显示本地地图数据",
 		getTile : function(coord, zoom, ownerDocument) {

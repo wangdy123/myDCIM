@@ -14,6 +14,14 @@ app.use(express.static(__dirname + '/public', {
 	maxAge : config.config.fileMaxAge * 3600 * 24 * 1000
 }));
 
+app.use(function(req, res, next) {
+	if(req.url.match("/roadmap/*")){
+		res.redirect("/image/blank_map.png");
+	}else{
+		next();
+	}
+});
+
 app.put('/setPassword', function(req, res) {
 	var password = req.body;
 	permissions.getCurrentUser(req, res, function(error, user) {

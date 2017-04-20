@@ -47,7 +47,7 @@ app.get('/objectLocations', function(req, res) {
 
 app.get('/objectLocations/:id', function(req, res) {
 	var pool = db.pool;
-	var sql = baseSql + ' where p.ID=?';
+	var sql = baseSql + ' where a.ID=?';
 	pool.query(sql, [ req.params.id ], function(error, objects, fields) {
 		if (error) {
 			logger.error(error);

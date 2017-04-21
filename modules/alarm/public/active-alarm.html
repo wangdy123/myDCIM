@@ -13,3 +13,24 @@
     生成派工单<br />
 </div>
 
+<script type="text/javascript">
+
+var ws = new WebSocket('ws://'+location.hostname+':8000/alarm/alarm-ws');  
+ws.onmessage=function(e){  
+  console.log('_message');  
+  console.log(e.data);  
+};  
+ws.onerror=function(err){  
+  console.log('_error');  
+  console.log(err);  
+};  
+ws.onopen=function(){  
+  console.log('_connect')  
+  ws.send('data');  
+};  
+ws.onclose=function(){  
+  console.log('_close');  
+};  
+
+
+</script>

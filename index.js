@@ -25,14 +25,12 @@ app.use(express.static(__dirname + '/public', {
 app.get('/static.js', require('./static'));
 
 function getClientIp(req) {
-    return req.headers['x-forwarded-for'] ||
-    req.connection.remoteAddress ||
-    req.socket.remoteAddress ||
-    req.connection.socket.remoteAddress;
+	return req.headers['x-forwarded-for'] || req.connection.remoteAddress || req.socket.remoteAddress
+			|| req.connection.socket.remoteAddress;
 };
 
 app.use(function(req, res, next) {
-	logger.accessLog(getClientIp(req)+" "+req.url);
+	logger.accessLog(getClientIp(req) + " " + req.url);
 	next();
 });
 
@@ -45,6 +43,8 @@ app.get('/', function(req, res) {
 app.use('', require("./apps"));
 
 require('dcim-permissions').initCheckLogin(app);
+
+require('./wbsocket-server').initWs(app);
 
 app.use('', require('./uitest'));
 
@@ -74,5 +74,21 @@ app.use(function(err, req, res) {
 	res.send(resBody);
 });
 
-app.listen(config.httpPort);
-logger.log('Express server listening on port ' + config.httpPort);
+if (config.secure) {
+	var https = require('https');
+	var fs = require('fs');
+	var privateKey = fs.readFileSync('ca/private.pem', 'utf8');
+	var certificate = fs.readFileSync('ca/file.crt', 'utf8');
+	var credentials = {
+		key : privateKey,
+		cert : certificate
+	};
+	var httpsServer = https.createServer(credentials, app);
+
+	httpsServer.listen(config.httpPort, function() {
+		console.log('HTTPS Server is running on: https://localhost:%s', config.httpPort);
+	});
+} else {
+	app.listen(config.httpPort);
+	logger.log('Express server listening on port ' + config.httpPort);
+}

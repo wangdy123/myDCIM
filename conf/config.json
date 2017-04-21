@@ -2,6 +2,7 @@
 	"root_object_id":1,
 	"fileMaxAge" : 30,
 	"httpPort" : 8080,
+	"secure":false,
 	"map":{
 		"defaultZoom":10,
 		"minZoom":8,

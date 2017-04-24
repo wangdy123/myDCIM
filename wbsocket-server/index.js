@@ -6,7 +6,7 @@ module.exports.initWs = function(app) {
 			console.log(msg);
 			ws.send('echo:' + msg);
 		});
-		require('dcim-mq').subscribe('alarm-message', function(topic, msg) {
+		require('dcim-redis').subscribe('alarm-message', function(topic, msg) {
 			ws.send(msg);
 		});
 	});

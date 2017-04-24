@@ -326,12 +326,20 @@ $.extend($.fn.validatebox.defaults.rules, {
     		 if(value.length<8){
     			 return false;
     		 }
-    		 var isValid=/[a-z]/.test(value);
-    		 isValid=isValid&&/[0-9]/.test(value);
-    		 isValid=isValid&&/[A-Z]/.test(value);
-    		 isValid=isValid&&/[\x20-\x2F\x3A-\x40\x5B-\x60\x7B-\x7E]/.test(value);
-    		 
-             return isValid;
+    		 var count=0;
+    		 if(/[a-z]/.test(value)){
+    			 count++;
+    		 }
+    		 if(/[0-9]/.test(value)){
+    			 count++;
+    		 }
+    		 if(/[A-Z]/.test(value)){
+    			 count++;
+    		 }
+    		 if(/[\x20-\x2F\x3A-\x40\x5B-\x60\x7B-\x7E]/.test(value)){
+    			 count++;
+    		 }
+             return count>=2;
          },
          message: '密码长度大于8位；密码是大小写字母、数字以及特殊字符的混合使用'
     },

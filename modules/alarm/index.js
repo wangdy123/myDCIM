@@ -11,7 +11,7 @@ app.ws('/alarm-ws', function(ws, req) {
 		console.log(msg);
 		ws.send('echo:' + msg);
 	});
-	require('dcim-mq').subscribe('alarm-message', function(topic, msg) {
+	require('dcim-redis').subscribe('alarm-message', function(topic, msg) {
 		ws.send(msg);
 	});
 });

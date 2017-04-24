@@ -1,7 +1,7 @@
 {
-  "name": "dcim-mq",
+  "name": "dcim-redis",
   "version": "0.0.1",
-  "description": "wincom DCIM redis-mq",
+  "description": "wincom DCIM dcim-redis",
   "main": "./index.js",
   "dependencies": {
 	  "redis": "~0.4.2",

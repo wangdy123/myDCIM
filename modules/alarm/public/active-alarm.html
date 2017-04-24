@@ -1,36 +1,31 @@
 <div class="easyui-panel" fit="true">
     告警的过滤条件:包括站点、设备、信号量等;<br /> 界面通过过滤条件查询告警；<br /> 界面收到告警推送信息后根据过滤条件判断是否显示；<br /> 界面定期重新从数据库刷新告警；<br />
-    重新选择过滤条件后重新从数据库刷新告警;<br /> 活动告警框不显示未确认的已结束告警。<br />
-    告警确认；<br />
-    主次要告警分析；<br />
-    工程告警分析；<br />
-    手动设置工程状态（机楼、机房、设备）；<br />
-    告警语音；<br />
-    告警短信通知；<br />
-    告警强制结束；<br />
-    告警设备遥测量显示。<br />
-    导出活动告警。
-    生成派工单<br />
+    重新选择过滤条件后重新从数据库刷新告警;<br /> 活动告警框不显示未确认的已结束告警。<br /> 告警确认；<br /> 主次要告警分析；<br /> 工程告警分析；<br />
+    手动设置工程状态（机楼、机房、设备）；<br /> 告警语音；<br /> 告警短信通知；<br /> 告警强制结束；<br /> 告警设备遥测量显示。<br /> 导出活动告警。 生成派工单<br />
 </div>
 
 <script type="text/javascript">
+	$(function() {
+		if (WUI.alarmWs_init) {
+			return;
+		}
+		WUI.alarmWs_init = true;
+		var ws = new WebSocket('ws://' + location.host + '/alarm/alarm-ws');
+		ws.onmessage = function(e) {
+			console.log(e.data);
+			//ws.send('data');
+		};
+		ws.onerror = function(err) {
+			console.log('_error');
+			console.log(err);
+		};
+		ws.onopen = function() {
+			console.log('_connect')
+			ws.send('data');
+		};
+		ws.onclose = function() {
+			console.log('_close');
+		};
 
-var ws = new WebSocket('ws://'+location.hostname+':8000/alarm/alarm-ws');  
-ws.onmessage=function(e){  
-  console.log('_message');  
-  console.log(e.data);  
-};  
-ws.onerror=function(err){  
-  console.log('_error');  
-  console.log(err);  
-};  
-ws.onopen=function(){  
-  console.log('_connect')  
-  ws.send('data');  
-};  
-ws.onclose=function(){  
-  console.log('_close');  
-};  
-
-
+	});
 </script>

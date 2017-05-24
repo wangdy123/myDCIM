@@ -3,10 +3,15 @@
     <div id="main-workspace" class="easyui-panel" region="center" title="实时信息">
         <div class="easyui-layout" fit="true">
             <div class="panel" region="north" border="false" style="height: 48px;">
+                <div style="position: absolute; left: 20px; top: 20px;">
+                    <img id="return-btn" src="image/return.png" style="padding: 5px;" class="operator-tool"></img><img
+                        id="fullscreem-btn" src="image/fullscreen.png" style="padding: 5px;" class="operator-tool"></img>
+                </div>
                 <h2 id="workspace-title" fit="true" class=" title-panel">中心系统</h2>
             </div>
             <div class="panel" region="center" border="false">
-                <div id="monitor-tabs" class="easyui-tabs" data-options=" border:true,plain:true,fit:true" style="padding:5px;">
+                <div id="monitor-tabs" class="easyui-tabs" data-options=" border:true,plain:true,fit:true"
+                    style="padding: 5px;">
                     <div title="详细信息" index="2" iconCls="icon-detail" href="monitor/detail/detail.html"></div>
                 </div>
             </div>

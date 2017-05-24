@@ -19,4 +19,10 @@
 }, {
 	"name" : "metro-green",
 	"type" : "metro-green"
+}, {
+	"name" : "ui-sunny",
+	"type" : "ui-sunny"
+}, {
+	"name" : "ui-dark-hive",
+	"type" : "ui-dark-hive"
 } ]

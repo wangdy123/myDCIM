@@ -17,7 +17,9 @@
 			"src" : "tw/libs/t.js"
 		}, {
 			"src" : "tw/libs/twaver.js"
-		} ],
+		} , {
+			"src" : "tw/libs/twaver-make.js"
+		}],
 		"scriptsMap" : [ {
 			"src" : "mapfiles/mapapi.js"
 		} ]

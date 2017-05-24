@@ -64,7 +64,6 @@ $(function() {
 					$treeNode.tree("expand", $treeNode.tree("getRoot").target);
 				} else {
 					if (node.attributes.data.OBJECT_TYPE === WUI.objectTypeDef.REGION) {
-						console.log(node.target);
 						$treeNode.tree("expand", node.target);
 					}
 				}

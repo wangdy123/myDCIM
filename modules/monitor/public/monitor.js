@@ -1,5 +1,6 @@
 $(document).ready(
 		function() {
+			var objectNodeUrl = 'navigation/objectNodes/';
 			WUI.monitor = WUI.monitor ? WUI.monitor : {};
 			if (!WUI.monitor.inited) {
 				WUI.monitor.inited = true;
@@ -39,6 +40,27 @@ $(document).ready(
 					if (event.object.OBJECT_TYPE > WUI.objectTypeDef.STATION_BASE && index === 0) {
 						$('#monitor-tabs').tabs('select', 1);
 					}
+				}
+			});
+			$("#return-btn").click(function() {
+				WUI.publishEvent('request_current_object', {
+					publisher : "monitor_panel",
+					cbk : function(object) {
+						window.WUI.ajax.get(objectNodeUrl + object.PARENT_ID, {}, function(parentObject) {
+							WUI.publishEvent('open_object', {
+								publisher : "monitor_panel",
+								object : parentObject
+							});
+						});
+					}
+				});
+			});
+			$("#fullscreem-btn").click(function() {
+				var target = $("#main-workspace")[0];
+				if (target.outerHeigth == screen.heigth && target.outerWidth == screen.width) {
+					WUI.exitFullscreen(target);
+				} else {
+					WUI.fullscreen(target);
 				}
 			});
 		});

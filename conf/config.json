@@ -29,7 +29,8 @@
 		"door":"/door",
 		"monitor":"/monitor",
 		"dashboard":"/dashboard",
-		"navigation":"/navigation"
+		"navigation":"/navigation",
+		"screen-edit":"/screen-edit"
 	},
 	"systemName":"DCIM测试平台",
 	"copyRightText":"copyright:wincom",

@@ -15,9 +15,9 @@ app.use(express.static(__dirname + '/public', {
 }));
 
 app.use(function(req, res, next) {
-	if(req.url.match("/roadmap/*")){
+	if (req.url.match("/roadmap/*")) {
 		res.redirect("/image/blank_map.png");
-	}else{
+	} else {
 		next();
 	}
 });
@@ -71,17 +71,6 @@ app.put('/setPassword', function(req, res) {
 				res.status(204).end();
 			}
 		});
-	});
-});
-
-app.use(function(req, res, next) {
-	permissions.getCurrentUser(req, res, function(error, user) {
-		if (error) {
-			logger.error(error);
-			res.render('login', {});
-		} else {
-			next();
-		}
 	});
 });
 

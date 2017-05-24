@@ -4,10 +4,10 @@ var objectDao = require('dcim-object-dao')
 
 var express = require('express');
 var app = express();
-var config = require('dcim-config').config;
+var config = require('dcim-config');
 
 app.use(express.static(__dirname + '/public', {
-	maxAge : config.fileMaxAge * 3600 * 24 * 1000
+	maxAge : config.config.fileMaxAge * 3600 * 24 * 1000
 }));
 
 module.exports = app;
@@ -27,7 +27,7 @@ app.get('/objectNodes', function(req, res) {
 	} else {
 		var sql = 'select o.ID,o.OBJECT_TYPE,o.NAME,p.PARENT_ID from config.OBJECT o '
 				+ 'left join config.POSITION_RELATION p on p.ID=o.ID where o.ID=?';
-		db.pool.query(sql, [ config.root_object_id ], function(error, objects, fields) {
+		db.pool.query(sql, [ config.config.root_object_id ], function(error, objects, fields) {
 			if (error) {
 				logger.error(error);
 				res.status(500).send(error);
@@ -50,7 +50,10 @@ app.get('/objectNodes/:id', function(req, res) {
 			res.status(500).send("not found:" + req.params.id);
 			return;
 		}
+
+		console.log(config.objectTypes[objects[0].OBJECT_TYPE]);
 		var namespace = config.objectTypes[objects[0].OBJECT_TYPE].namespace;
+		
 		objectDao[namespace].getById(db.pool, req.params.id, function(error, result) {
 			if (error) {
 				logger.error(error);

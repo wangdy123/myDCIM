@@ -26,6 +26,10 @@ window.WUI.publishEvent = function(name, event) {
 
 window.WUI.onLoadError=function(){
 	if(xhr.status===401){
+		$.messager.alert('失败', "登录已超时，请重新登录！");
+		location.reload();
+	}
+	if(xhr.status===405){
 		$.messager.alert('失败', "无操作权限，请联系系统管理员确认用户权限！");
 	}
 }
@@ -37,6 +41,11 @@ function doSuccess(success,data,textStatus,jqXHR){
 }
 function doError(fail,xhr,textStatus){
 	if(xhr.status===401){
+		$.messager.alert('失败', "登录已超时，请重新登录！");
+		location.reload();
+		return;
+	}
+	if(xhr.status===405){
 		$.messager.alert('失败', "无操作权限，请联系系统管理员确认用户权限！");
 		return;
 	}
@@ -375,3 +384,30 @@ $.extend($.fn.validatebox.defaults.rules, {
         message: 'IP地址格式不正确'
     }
 }); 
+
+window.WUI.fullscreen=function(elem){  
+    elem=elem?elem:document.body;  
+    if(elem.webkitRequestFullScreen){  
+        elem.webkitRequestFullScreen();     
+    }else if(elem.mozRequestFullScreen){  
+        elem.mozRequestFullScreen();  
+    }else if(elem.requestFullScreen){  
+        elem.requestFullscreen();  
+    }else{  
+        // 浏览器不支持全屏API或已被禁用
+    }  
+};  
+window.WUI.exitFullscreen=function(elem){  
+    elem=elem?elem:document.body;  
+    if(elem.webkitCancelFullScreen){  
+        elem.webkitCancelFullScreen();      
+    }else if(elem.mozCancelFullScreen){  
+        elem.mozCancelFullScreen();  
+    }else if(elem.cancelFullScreen){  
+        elem.cancelFullScreen();  
+    }else if(elem.exitFullscreen){  
+        elem.exitFullscreen();  
+    }else{  
+        // 浏览器不支持全屏API或已被禁用
+    }  
+} ; 

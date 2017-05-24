@@ -12,7 +12,26 @@
 	"url" : "monitor.html",
 	"target" : "monitor.html",
 	"publicPath" : "./modules/monitor/public",
-	"name" : "实时监控"
+	"name" : "实时监控",
+	"scripts":[ {
+		"src" : "tw/libs/t.js"
+	}, {
+		"src" : "tw/libs/twaver.js"
+	}, {
+		"src" : "tw/libs/twaver-make.js"
+	}]
+}, {
+	"url" : "screen-test.html",
+	"target" : "screen/screen.html",
+	"publicPath" : "./modules/monitor/public",
+	"name" : "组态测试",
+	"scripts":[ {
+		"src" : "tw/libs/t.js"
+	}, {
+		"src" : "tw/libs/twaver.js"
+	}, {
+		"src" : "tw/libs/twaver-make.js"
+	}]
 }, {
 	"url" : "position-configer.html",
 	"target" : "wokspace.html",
@@ -23,4 +42,20 @@
 	"target" : "active-alarm.html",
 	"publicPath" : "./modules/alarm/public",
 	"name" : "活动告警"
-} ]
+} , {
+	"url" : "screen-edit.html",
+	"target" : "screen.html",
+	"publicPath" : "./modules/screen-edit/public",
+	"name" : "组态配置",
+	"scripts":[ {
+			"src" : "tw/libs/t.js"
+		}, {
+			"src" : "tw/libs/twaver.js"
+		}, {
+			"src" : "tw/libs/twaver-make.js"
+		}, {
+			"src" : "tw/libs/twaver-doodle.js"
+		}, {
+			"src" : "tw/libs/jquery-ui-1.10.4.custom.min.js"
+		}]
+}]

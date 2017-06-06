@@ -1,0 +1,83 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>{{systemName}}-{{title}}</title>
+<link rel="stylesheet" type="text/css" href="/easyui/themes/{{theme}}/easyui.css">
+<link rel="stylesheet" type="text/css" href="/easyui/themes/icon.css">
+<link rel="stylesheet" type="text/css" href="/easyui/themes/mobile.css">
+<script type="text/javascript" src="/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="/jquery/jquery.cookie.js"></script>
+<script type="text/javascript" src="/easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="/easyui/jquery.easyui.mobile.js"></script>
+<script type="text/javascript" src="/easyui/locale/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript" src="apps.js"></script>
+<script type="text/javascript" src="/util.js"></script>
+<script type="text/javascript" src="static.js"></script>
+<script type="text/javascript" src="/jquery.qrcode.min.js"></script>
+<link rel="stylesheet" type="text/css" href="css/style.css" />
+{{#each scripts}}
+<script type="text/javascript" src="{{src}}"></script>
+{{/each}} {{#each links}}
+<link rel="stylesheet" type="text/css" href="{{src}}"></link>
+{{/each}}
+</head>
+<body>
+    <div class="easyui-navpanel">
+        <header>
+            <div class="m-toolbar">
+                <div class="m-title">{{systemName}}</div>
+                <div class="m-left">
+                    <img class="panel" title="logo" src="{{logo}}"></img>
+                </div>
+                <div class="m-right">
+                    <div class="header-item panel">
+                        <a href="#" id="qrcode-panel"><img class="panel" src="image/qrcode.png"></img></a>
+                    </div>
+                    <div class="header-item panel">
+                        <div class="panel">
+                            <span style="font-weight: normal; font-size: 12px;">当前用户：</span><a id="current-user-panel"
+                                href="#" style="color: SteelBlue;">{{userName}}</a> <a id="change-password-btn" href="#"><img
+                                title="修改口令" src="image/key_16.png"></img></a>
+                        </div>
+                    </div>
+                    <div class="header-item panel">
+                        <a id="user-logout-btn" href="logout"><img class="panel" title="注销" src="image/power_16.png"></img></a>
+                    </div>
+                    <div class="header-item panel">
+                        <a href="index.html?page=help/help.html"><img class="panel" title="帮助文档"
+                            src="image/help_16.png"></img></a>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <footer style="padding: 2px 3px">
+        <div class="m-toolbar">
+            <div class="m-title">{{copyRightText}}</div>
+            <div class="m-left">{{company}}</div>
+            <div class="m-right">
+                <label>告警计数:</label><label id="realtime-status">0</label>
+            </div>
+            </div>
+        </footer>
+        <div class="easyui-panel" data-options="border:false,footer:'#page-footer',header:'#page-header',fit:true">
+            <div class="easyui-layout" data-options="border:false,fit:true">
+                <div style="width: 10%;" data-options="region:'west',split:true,title:'功能导航'">
+                    <div id="main-menu" class="easyui-accordion" data-options="fit:true,border:false">
+                        {{#each menus}}
+                        <div title={{name}} style="padding: 5px;" data-options="selected:{{selected}}">
+                            <ul class="menu-nav-item">
+                                {{#each childMenus}}
+                                <li class="{{class}}"><a href="index.html?page={{url}}">{{name}}</a></li> {{/each}}
+                            </ul>
+                        </div>
+                        {{/each}}
+                    </div>
+                </div>
+                <div class="easyui-panel" data-options="region:'center',border:{{border}},href:'{{url}}'"></div>
+            </div>
+        </div>
+    </div>
+    <div id="change-password-dialog" class="easyui-dialog" data-options="closed:true"></div>
+    <div id="alarm-tooltip" class="easyui-dialog" data-options="closed:true"></div>
+</body>
+</html>

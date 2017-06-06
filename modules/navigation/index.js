@@ -51,7 +51,6 @@ app.get('/objectNodes/:id', function(req, res) {
 			return;
 		}
 
-		console.log(config.objectTypes[objects[0].OBJECT_TYPE]);
 		var namespace = config.objectTypes[objects[0].OBJECT_TYPE].namespace;
 		
 		objectDao[namespace].getById(db.pool, req.params.id, function(error, result) {

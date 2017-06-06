@@ -46,9 +46,7 @@ $(document).ready(
 					border : false,
 					method : "get",
 					singleSelect : true,
-					onLoadError : function(s) {
-						$.messager.alert('失败', "加载失败");
-					},
+					onLoadError : WUI.onLoadError,
 					toolbar : toobar,
 					columns : [ [
 							{
@@ -84,11 +82,17 @@ $(document).ready(
 							}, {
 								field : 'LONGITUDE',
 								title : '经度(度)',
-								width : 150
+								width : 150,
+								formatter : function(value, row, index) {
+									return row.LONGITUDE.toFixed(6);
+								}
 							}, {
 								field : 'LATITUDE',
 								title : '纬度(度)',
-								width : 150
+								width : 150,
+								formatter : function(value, row, index) {
+									return row.LATITUDE.toFixed(6);
+								}
 							} ] ]
 				});
 			}

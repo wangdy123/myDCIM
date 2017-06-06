@@ -8,7 +8,7 @@ body{
 	margin-right: 0px;
 	margin-bottom: 0px;
 	overflow:hidden;
-	background: url(../image/background.jpg);
+	background: url(../images/background.jpg);
 }
 .container-login{
 width:1024px;
@@ -27,7 +27,7 @@ height:300px;
 border:1px solid #008800;
 padding:0px;
 overflow:hidden;
-background:url(../image/loginface.png) no-repeat !important;
+background:url(../images/loginface.png) no-repeat !important;
 }
 #login-form{
 width:480px;
@@ -48,6 +48,6 @@ position:absolute;
  
 #user-password{
     background-color : #FFFFFF;
-    background-image :url("../image/text-bg.gif") !important;
+    background-image :url("../images/text-bg.gif") !important;
     border-color : #B5B8C8 !important;
 }

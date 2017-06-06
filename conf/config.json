@@ -17,6 +17,10 @@
 		"password" : "wangsx",
 		"database" : "config"
 	},
+	"cassandra":{"nodes":[{"host" : "192.168.0.165",
+	     		"port" : 9042},{"host" : "192.168.0.177",
+		     		"port" : 9042}],
+		     		"record_keyspace":"history_record"},
 	"redis" : {
 		"host" : "localhost",
 		"port" : 6379,
@@ -35,6 +39,6 @@
 	"systemName":"DCIM测试平台",
 	"copyRightText":"copyright:wincom",
 	"company":"广东盈嘉科技工程发展股份有限公司",
-	"logo":"image/logo1.jpg",
+	"logo":"images/logo1.jpg",
 	"confs":["themes","accountRights","menus","dashboard","objectTypeDef","objectTypes","stationTypes","roomTypes","powerTypes","deviceTypes","object_ex","regionTypes"]
 }

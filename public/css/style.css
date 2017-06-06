@@ -18,7 +18,7 @@ label {
 }
 
 #system-name {
- padding: 10px 20px;
+ padding: 8px 20px;
  margin: 0;
  display: inline-block;
 }
@@ -42,6 +42,13 @@ label {
 #node-nav {
  width: 15%;
  margin: 0;
+ padding: 0;
+}
+
+.nav-menu-icon {
+ display: inline-block;
+ width: 18px;
+ height: 16px;
  padding: 0;
 }
 
@@ -83,6 +90,9 @@ label {
  cursor: pointer;
 }
 
+.configer{
+   margin:20px 40px;
+}
 .statusInvalid {
  background-color: gray;
 }
@@ -136,60 +146,71 @@ label {
 }
 
 .icon-close {
- background: url('../image/close.png') no-repeat center center;
+ background: url('../images/close.png') no-repeat center center;
 }
+
 .icon-key {
- background: url('../image/key_16.png') no-repeat center center;
+ background: url('../images/key_16.png') no-repeat center center;
 }
 
 .icon-csc {
- background: url('../image/csc.gif') no-repeat center center;
+ background: url('../images/csc.gif') no-repeat center center;
 }
 
 .icon-lsc {
- background: url('../image/lsc.gif') no-repeat center center;
+ background: url('../images/lsc.gif') no-repeat center center;
 }
+
 .icon-region {
- background: url('../image/area.gif') no-repeat center center;
+ background: url('../images/area.gif') no-repeat center center;
 }
+
 .icon-station {
- background: url('../image/station.gif') no-repeat center center;
+ background: url('../images/station.gif') no-repeat center center;
 }
+
 .icon-building {
- background: url('../image/building.gif') no-repeat center center;
+ background: url('../images/building.gif') no-repeat center center;
 }
+
 .icon-room {
- background: url('../image/room.gif') no-repeat center center;
+ background: url('../images/room.gif') no-repeat center center;
 }
+
 .icon-floor {
- background: url('../image/floor.gif') no-repeat center center;
+ background: url('../images/floor.gif') no-repeat center center;
 }
-.icon-cabinet-model{
- background: url('../image/device.gif') no-repeat center center;
+
+.icon-cabinet-model {
+ background: url('../images/device.gif') no-repeat center center;
 }
-.icon-cabinet-column{
- background: url('../image/device.gif') no-repeat center center;
+
+.icon-cabinet-row {
+ background: url('../images/device.gif') no-repeat center center;
 }
-.icon-cabinet{
- background: url('../image/device.gif') no-repeat center center;
+
+.icon-cabinet {
+ background: url('../images/device.gif') no-repeat center center;
 }
+
 .icon-device {
- background: url('../image/device.gif') no-repeat center center;
+ background: url('../images/device.gif') no-repeat center center;
 }
+
 .icon-devModule {
- background: url('../image/devModule.gif') no-repeat center center;
+ background: url('../images/devModule.gif') no-repeat center center;
 }
 
 .icon-screen {
- background: url('../image/Panel_16.png') no-repeat center center;
+ background: url('../images/Panel_16.png') no-repeat center center;
 }
 
 .icon-detail {
- background: url('../image/detailed_view_16.png') no-repeat center center;
+ background: url('../images/detailed_view_16.png') no-repeat center center;
 }
 
 .icon-map {
- background: url('../image/map_16.png') no-repeat center center;
+ background: url('../images/map_16.png') no-repeat center center;
 }
 
 .menu-nav-item {

@@ -1,0 +1,60 @@
+{
+	"1" : {
+		"name" : "区域",
+		"iconCls" : "icon-region",
+		"childTypes" : [ 2 ],
+		"namespace" : "region"
+	},
+	"2" : {
+		"name" : "园区",
+		"iconCls" : "icon-station",
+		"childTypes" : [ 3, 4 ],
+		"namespace" : "station-base"
+	},
+	"3" : {
+		"name" : "机楼",
+		"iconCls" : "icon-building",
+		"childTypes" : [ 4, 5 ],
+		"namespace" : "building"
+	},
+	"4" : {
+		"name" : "楼层",
+		"iconCls" : "icon-floor",
+		"childTypes" : [ 5 ],
+		"namespace" : "floor"
+	},
+	"5" : {
+		"name" : "机房",
+		"iconCls" : "icon-room",
+		"childTypes" : [ 11, 21, 22, 23 ],
+		"namespace" : "room"
+	},
+	"11" : {
+		"name" : "机柜列",
+		"iconCls" : "icon-cabinet-row",
+		"childTypes" : [ 12 ],
+		"namespace" : "cabinet-row"
+	},
+	"12" : {
+		"name" : "机柜",
+		"iconCls" : "icon-region",
+		"childTypes" : [ 24 ],
+		"namespace" : "region"
+	},
+	"21" : {
+		"name" : "环境设备",
+		"iconCls" : "icon-device"
+	},
+	"22" : {
+		"name" : "动力设备",
+		"iconCls" : "icon-device"
+	},
+	"23" : {
+		"name" : "安防设备",
+		"iconCls" : "icon-device"
+	},
+	"24" : {
+		"name" : "IT设备",
+		"iconCls" : "icon-devModule"
+	}
+}

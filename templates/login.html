@@ -10,12 +10,54 @@
 <script type="text/javascript" src="/easyui/locale/easyui-lang-zh_CN.js"></script>
 <link rel="stylesheet" type="text/css" href="css/login.css" />
 <title>登录DCIM系统</title>
+<script type="text/javascript">
+	function doLogin() {
+		var loginInfo = {
+			username : $('#username').val(),
+			password : $('#password').val()
+		};
+		console.log(window.location);
+		$.ajax({
+			url : "login",
+			type : 'POST',
+			data : loginInfo,
+			contentType : "application/x-www-form-urlencoded",
+			timeout : 30000, // 超时时间
+			success : function(data, textStatus, jqXHR) {
+				if ($("#enable-map-ck").prop("checked")) {
+					$.cookie('enableMap', "enable");
+				} else {
+					$.removeCookie('enableMap', null);
+				}
+				if ($("#enable-3d-ck").prop("checked")) {
+					$.cookie('enable3D', 'enable');
+				} else {
+					$.removeCookie('enable3D', null);
+				}
+				location.reload();
+			},
+			error : function(xhr, textStatus) {
+				$("#error-info").text(xhr.responseText);
+			}
+		});
+	}
+	$(function() {
+		document.onkeydown = function(e) {
+			var event = e || window.event;
+			var code = event.keyCode || event.which || event.charCode;
+			if (code == 13) {
+				doLogin();
+			}
+		}
+		$("#username").focus();
+	});
+</script>
 </head>
 <body>
     <div class="container-login">
         <div class="login-pic">
             <div>
-                <img class="panel" title="logo" src="image/logo1.jpg"></img>
+                <img class="panel" title="logo" src="images/logo1.jpg"></img>
             </div>
             <div>
                 <form id="login-form">
@@ -40,43 +82,11 @@
                     <div style="float: left; padding: 60px 10px 0; vertical-align: middle;">
                         <input id="login-button" type="button" name="login" onclick="doLogin()" value="登录" />
                     </div>
-                    <div style="float: left; width: 100px; padding: 70px 0 0;color:red;">
+                    <div style="float: left; width: 100px; padding: 70px 0 0; color: red;">
                         <label id="error-info"></label>
                     </div>
                 </form>
             </div>
         </div>
     </div>
-    <script type="text/javascript">
-					function doLogin() {
-						var loginInfo = {
-							username : $('#username').val(),
-							password : $('#password').val()
-						};
-						console.log(window.location);
-						$.ajax({
-							url : "login",
-							type : 'POST',
-							data : loginInfo,
-							contentType : "application/x-www-form-urlencoded",
-							timeout : 30000, // 超时时间
-							success : function(data, textStatus, jqXHR) {
-								if ($("#enable-map-ck").prop("checked")) {
-									$.cookie('enableMap', "enable");
-								} else {
-									$.removeCookie('enableMap', null);
-								}
-								if ($("#enable-3d-ck").prop("checked")) {
-									$.cookie('enable3D', 'enable');
-								} else {
-									$.removeCookie('enable3D', null);
-								}
-								location.reload();
-							},
-							error : function(xhr, textStatus) {
-								$("#error-info").text(xhr.responseText);
-							}
-						});
-					}
-				</script>
 </body>

@@ -77,7 +77,6 @@ $(function() {
 			}, function() {
 				$.messager.alert('失败', "标记节点位置失败！");
 			});
-			console.log(objectLocation);
 		}
 
 		WUI.openNodeSelectDialog($("#map-object-select-dialog"), {

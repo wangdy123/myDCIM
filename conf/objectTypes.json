@@ -2,7 +2,43 @@
 	"1" : {
 		"name" : "行政区域",
 		"iconCls" : "icon-region",
-		"childTypes" : [ 1 ],
+		"childTypes" : [ 1,2 ],
 		"namespace" : "region"
+	},
+	"2" : {
+		"name" : "园区",
+		"iconCls" : "icon-station",
+		"childTypes" : [ 3 ],
+		"namespace" : "station"
+	},
+	"3" : {
+		"name" : "机楼",
+		"iconCls" : "icon-building",
+		"childTypes" : [ 4,5 ],
+		"namespace" : "building"
+	},
+	"4" : {
+		"name" : "楼层",
+		"iconCls" : "icon-floor",
+		"childTypes" : [ 5 ],
+		"namespace" : "floor"
+	},
+	"5" : {
+		"name" : "机房",
+		"iconCls" : "icon-room",
+		"childTypes" : [ 6],
+		"namespace" : "room"
+	},
+	"6" : {
+		"name" : "机柜分组",
+		"iconCls" : "icon-cabinet-group",
+		"childTypes" : [ 11,23 ],
+		"namespace" : "cabinetGroup"
+	},
+	"11" : {
+		"name" : "机柜",
+		"iconCls" : "icon-cabinet",
+		"childTypes" : [ 24 ],
+		"namespace" : "cabinet"
 	}
 }

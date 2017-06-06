@@ -1,15 +1,18 @@
 [ {
 	"id" : 1,
 	"name" : "实时监控",
+	"icon" : "icon-region",
 	"childMenus" : [ {
 		"id" : 11,
 		"title" : "主页",
+		"icon" : "icon-region",
 		"url" : "dashboard/dashboard.html",
 		"border" : false,
 		"name" : "主页"
 	}, {
 		"id" : 12,
 		"title" : "监控系统",
+		"icon" : "icon-region",
 		"url" : "monitor/monitor.html",
 		"border" : false,
 		"name" : "监控系统",
@@ -17,9 +20,9 @@
 			"src" : "tw/libs/t.js"
 		}, {
 			"src" : "tw/libs/twaver.js"
-		} , {
+		}, {
 			"src" : "tw/libs/twaver-make.js"
-		}],
+		} ],
 		"scriptsMap" : [ {
 			"src" : "mapfiles/mapapi.js"
 		} ]

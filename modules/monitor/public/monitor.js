@@ -55,12 +55,15 @@ $(document).ready(
 					}
 				});
 			});
+			var isFullScreen=false;
 			$("#fullscreem-btn").click(function() {
-				var target = $("#main-workspace")[0];
-				if (target.outerHeigth == screen.heigth && target.outerWidth == screen.width) {
-					WUI.exitFullscreen(target);
+				var target = $("#main-workspace");
+				if (isFullScreen) {
+					isFullScreen=false;
+					WUI.exitFullscreen();
 				} else {
-					WUI.fullscreen(target);
+					isFullScreen=true;
+					WUI.fullscreen(target[0]);
 				}
 			});
 		});

@@ -182,31 +182,47 @@ window.WUI.intFormat = function(value, width, prefix, radio) {
 	return str;
 };
 
-window.WUI.date_reformat = function(datestr) {
+
+Date.prototype.getZone=function(){
+	var zone = -this.getTimezoneOffset()/60;
+	var str = zone.toString();
+	while (str.length < 2) {
+		str = '0' + str;
+	}
+	return (zone>=0?"+":"-")+str+"00";
+}
+
+Date.prototype.format = function (fmt) {
+    var o = {
+        "M+": this.getMonth() + 1, // 月份
+        "d+": this.getDate(), // 日
+        "h+": this.getHours(), // 小时
+        "m+": this.getMinutes(), // 分
+        "s+": this.getSeconds(), // 秒
+        "q+": Math.floor((this.getMonth() + 3) / 3), // 季度
+        "S": this.getMilliseconds(), // 毫秒
+        "Z": this.getZone()// 毫秒
+    };
+    if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+    for (var k in o)
+    if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+    return fmt;
+}
+
+window.WUI.dateFormat = function(date) {
 	if (!datestr) {
 		return "";
 	}
-
+	if(!fmt){
+		fmt="yyyy-MM-dd";
+	}
 	var date=new Date();
 	try {
 		date= new Date(Date.parse(datestr));
 	} catch (e) {
 		return "";
 	}
-	var y = date.getFullYear();
-	var m = date.getMonth() + 1;
-	var d = date.getDate();
-	return y + '-' + (m < 10 ? ('0' + m) : m) + '-' + (d < 10 ? ('0' + d) : d);
-};
-
-window.WUI.date_format = function(date) {
-	if (!date) {
-		return "";
-	}
-	var y = date.getFullYear();
-	var m = date.getMonth() + 1;
-	var d = date.getDate();
-	return y + '-' + (m < 10 ? ('0' + m) : m) + '-' + (d < 10 ? ('0' + d) : d);
+	return date.format(fmt);
 };
 
 window.WUI.time_reformat = function(timestr) {
@@ -229,20 +245,30 @@ window.WUI.time_reformat = function(timestr) {
 	return y + '-' + (m < 10 ? ('0' + m) : m) + '-' + (d < 10 ? ('0' + d) : d) + ' ' + (h < 10 ? ('0' + h) : h)
 			+ ':' + (min < 10 ? ('0' + h) : min) + ':' + (s < 10 ? ('0' + s) : s);
 };
-
-window.WUI.time_format = function(time) {
+window.WUI.timeformat = function(time,fmt) {
 	if (!time) {
 		return "";
 	}
-	var y = time.getFullYear();
-	var m = time.getMonth() + 1;
-	var d = time.getDate();
-	var h = time.getHours();
-	var min = time.getMinutes();
-	var s = time.getSeconds();
-	return y + '-' + (m < 10 ? ('0' + m) : m) + '-' + (d < 10 ? ('0' + d) : d) + ' ' + (h < 10 ? ('0' + h) : h)
-			+ ':' + (min < 10 ? ('0' + h) : min) + ':' + (s < 10 ? ('0' + s) : s);
+	if(!fmt){
+		fmt="yyyy-MM-dd hh:mm:ss";
+	}
+	var date=new Date();
+	try {
+		date= new Date(Date.parse(time));
+	} catch (e) {
+		return "";
+	}
+	return date.format(fmt);
 };
+
+window.WUI.timeformat_t = function(time) {
+	if(!fmt){
+		fmt="yyyy-MM-ddThh:mm:ssZ";
+	}
+	return WUI.timeformat(time,fmt);
+};
+
+
 window.WUI.date_parse = function(datestr) {
 	if (!datestr) {
 		return new Date();
@@ -255,6 +281,31 @@ window.WUI.date_parse = function(datestr) {
 	}
 };
 
+Date.prototype.getZone=function(){
+	var zone = -this.getTimezoneOffset()/60;
+	var str = zone.toString();
+	while (str.length < 2) {
+		str = '0' + str;
+	}
+	return (zone>=0?"+":"-")+str+"00";
+}
+
+Date.prototype.format = function (fmt) {
+    var o = {
+        "M+": this.getMonth() + 1, // 月份
+        "d+": this.getDate(), // 日
+        "h+": this.getHours(), // 小时
+        "m+": this.getMinutes(), // 分
+        "s+": this.getSeconds(), // 秒
+        "q+": Math.floor((this.getMonth() + 3) / 3), // 季度
+        "S": this.getMilliseconds(), // 毫秒
+        "Z": this.getZone()// 毫秒
+    };
+    if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+    for (var k in o)
+    if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+    return fmt;
+}
 window.WUI.timeAddSecond = function(time,timeDiffSecond) {
 	var objTime=new Date();
 	try {
@@ -397,16 +448,15 @@ window.WUI.fullscreen=function(elem){
         // 浏览器不支持全屏API或已被禁用
     }  
 };  
-window.WUI.exitFullscreen=function(elem){  
-    elem=elem?elem:document.body;  
-    if(elem.webkitCancelFullScreen){  
-        elem.webkitCancelFullScreen();      
-    }else if(elem.mozCancelFullScreen){  
-        elem.mozCancelFullScreen();  
-    }else if(elem.cancelFullScreen){  
-        elem.cancelFullScreen();  
-    }else if(elem.exitFullscreen){  
-        elem.exitFullscreen();  
+window.WUI.exitFullscreen=function(){  
+    if(document.webkitCancelFullScreen){  
+    	document.webkitCancelFullScreen();      
+    }else if(document.mozCancelFullScreen){  
+    	document.mozCancelFullScreen();  
+    }else if(document.cancelFullScreen){  
+    	document.cancelFullScreen();  
+    }else if(document.exitFullscreen){  
+    	document.exitFullscreen();  
     }else{  
         // 浏览器不支持全屏API或已被禁用
     }  

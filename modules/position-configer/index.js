@@ -120,7 +120,6 @@ app.delete('/objectNodes/:id', function(req, res) {
 				if(err){
 				callback(err);
 				}else{
-					console.log(result);
 					if(result.length>0){
 						callback("has child ,can't delete");
 					}

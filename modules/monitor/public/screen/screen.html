@@ -1,12 +1,11 @@
 <div id="screen-container" class="easyui-panel" border="false" fit="true">
-    <div
-        style="position: absolute; left: 20px; top: 60px; z-index: 100; background-image: url(image/direction_48.png); width: 48px; height: 48px;">
-        <a id="screem-move-up-btn" class="operator-tool" style="position: absolute; left: 14px; top: 0px;" title="向上平移"></a>
-        <a id="screem-move-down-btn" class="operator-tool" style="position: absolute; left: 14px; bottom: 0px;"
-            title="向下平移"></a> <a id="screem-move-left-btn" class="operator-tool"
-            style="position: absolute; left: 0px; top: 14px;" title="向左平移"></a> <a id="screem-move-right-btn"
-            class="operator-tool" style="position: absolute; right: 0px; top: 14px;" title="向右平移"></a>
+    <div class="screen-direction">
+        <a id="screem-move-up-btn" class="operator-tool move-up" title="向上平移"></a> <a id="screem-move-down-btn"
+            class="operator-tool move-down" title="向下平移"></a> <a id="screem-move-left-btn"
+            class="operator-tool move-left" title="向左平移"></a> <a id="screem-move-right-btn"
+            class="operator-tool move-right" title="向右平移"></a>
     </div>
     <canvas id="monoCanvas"></canvas>
 </div>
+<link rel="stylesheet" type="text/css" href="monitor/screen/screen.css">
 <script type="text/javascript" src="monitor/screen/screen.js"></script>

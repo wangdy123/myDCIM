@@ -1,0 +1,1624 @@
+[
+		{
+			"id" : "twaver.idc.wall",
+			"objectId" : "twaver.idc.wall_1",
+			"data" : [ [ 11, -280 ], [ 11, -1408 ], [ 2598, -1408 ], [ 2598, -73 ], [ 133, -73 ], [ 133, -280 ] ],
+			"closed" : true,
+			"showFloor" : true,
+			"client" : {
+				"bid" : "twaver.idc.wall_1",
+				"label" : "外墙",
+				"imageSrc-trigger" : 1,
+				"focusIndex" : -1
+			},
+			"style" : {},
+			"children" : [ {
+				"id" : "twaver.idc.door",
+				"objectId" : "JsonObject6E037AD9FD14462884C4E64A7A58B84F",
+				"width" : 184.4253049171151,
+				"position" : [ 133.49585120349113, 10, -177.04287719529964 ],
+				"rotation" : [ 0, -1.5707963267948966, 0 ],
+				"client" : {
+					"edgeIndex" : 4,
+					"offset" : 0.5026225951463751,
+					"label" : "双开门"
+				},
+				"style" : {}
+			} ]
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_100",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 60,
+			"position" : [ 1324, "floor-top", -1130 ],
+			"rotation" : [ 0, 270, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_100",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_99",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 60,
+			"position" : [ 1139, "floor-top", -1130 ],
+			"rotation" : [ 0, 90, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_99",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_98",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 60,
+			"position" : [ 1324, "floor-top", -1052 ],
+			"rotation" : [ 0, 270, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_98",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_97",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 60,
+			"position" : [ 1139, "floor-top", -1052 ],
+			"rotation" : [ 0, 90, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_97",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_96",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 60,
+			"position" : [ 1324, "floor-top", -975 ],
+			"rotation" : [ 0, 270, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_96",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_95",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 60,
+			"position" : [ 1139, "floor-top", -975 ],
+			"rotation" : [ 0, 90, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_95",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_94",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 60,
+			"position" : [ 1324, "floor-top", -897 ],
+			"rotation" : [ 0, 270, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_94",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_93",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 60,
+			"position" : [ 1139, "floor-top", -897 ],
+			"rotation" : [ 0, 90, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_93",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_92",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 60,
+			"position" : [ 1324, "floor-top", -820 ],
+			"rotation" : [ 0, 270, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_92",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_91",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 60,
+			"position" : [ 1139, "floor-top", -820 ],
+			"rotation" : [ 0, 90, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_91",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_90",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 60,
+			"position" : [ 1324, "floor-top", -741 ],
+			"rotation" : [ 0, 270, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_90",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_89",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 60,
+			"position" : [ 1139, "floor-top", -741 ],
+			"rotation" : [ 0, 90, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_89",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_88",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 60,
+			"position" : [ 1324, "floor-top", -664 ],
+			"rotation" : [ 0, 270, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_88",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_87",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 60,
+			"position" : [ 1139, "floor-top", -664 ],
+			"rotation" : [ 0, 90, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_87",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_86",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 60,
+			"position" : [ 1324, "floor-top", -584 ],
+			"rotation" : [ 0, 270, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_86",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_85",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 60,
+			"position" : [ 1139, "floor-top", -584 ],
+			"rotation" : [ 0, 90, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_85",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_84",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 60,
+			"position" : [ 1324, "floor-top", -510 ],
+			"rotation" : [ 0, 270, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_84",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_83",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 60,
+			"position" : [ 1139, "floor-top", -510 ],
+			"rotation" : [ 0, 90, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_83",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_82",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 60,
+			"position" : [ 1324, "floor-top", -431 ],
+			"rotation" : [ 0, 270, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_82",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_81",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 60,
+			"position" : [ 1139, "floor-top", -431 ],
+			"rotation" : [ 0, 90, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_81",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_80",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 90,
+			"position" : [ 2258, "floor-top", -662 ],
+			"rotation" : [ 0, 270, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_80",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_79",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 90,
+			"position" : [ 2258, "floor-top", -602 ],
+			"rotation" : [ 0, 270, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_79",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_78",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 90,
+			"position" : [ 2258, "floor-top", -542 ],
+			"rotation" : [ 0, 270, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_78",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_77",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 90,
+			"position" : [ 2258, "floor-top", -482 ],
+			"rotation" : [ 0, 270, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_77",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_76",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 90,
+			"position" : [ 2036, "floor-top", -662 ],
+			"rotation" : [ 0, 90, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_76",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_75",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 90,
+			"position" : [ 2036, "floor-top", -602 ],
+			"rotation" : [ 0, 90, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_75",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_74",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 90,
+			"position" : [ 2036, "floor-top", -542 ],
+			"rotation" : [ 0, 90, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_74",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_73",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 90,
+			"position" : [ 2036, "floor-top", -482 ],
+			"rotation" : [ 0, 90, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_73",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_72",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 90,
+			"position" : [ 1773, "floor-top", -662 ],
+			"rotation" : [ 0, 270, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_72",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_71",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 90,
+			"position" : [ 1773, "floor-top", -602 ],
+			"rotation" : [ 0, 270, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_71",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_70",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 90,
+			"position" : [ 1773, "floor-top", -542 ],
+			"rotation" : [ 0, 270, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_70",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_69",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 90,
+			"position" : [ 1773, "floor-top", -482 ],
+			"rotation" : [ 0, 270, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_69",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_68",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 90,
+			"position" : [ 1551, "floor-top", -662 ],
+			"rotation" : [ 0, 90, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_68",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_67",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 90,
+			"position" : [ 1551, "floor-top", -602 ],
+			"rotation" : [ 0, 90, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_67",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_66",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 90,
+			"position" : [ 1551, "floor-top", -542 ],
+			"rotation" : [ 0, 90, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_66",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_65",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 90,
+			"position" : [ 1551, "floor-top", -482 ],
+			"rotation" : [ 0, 90, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_65",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_64",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 90,
+			"position" : [ 2258, "floor-top", -1142 ],
+			"rotation" : [ 0, 270, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_64",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_63",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 90,
+			"position" : [ 2258, "floor-top", -1082 ],
+			"rotation" : [ 0, 270, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_63",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_62",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 90,
+			"position" : [ 2258, "floor-top", -1022 ],
+			"rotation" : [ 0, 270, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_62",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_61",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 90,
+			"position" : [ 2258, "floor-top", -962 ],
+			"rotation" : [ 0, 270, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_61",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_60",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 90,
+			"position" : [ 2258, "floor-top", -902 ],
+			"rotation" : [ 0, 270, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_60",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_59",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 90,
+			"position" : [ 2258, "floor-top", -842 ],
+			"rotation" : [ 0, 270, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_59",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_58",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 90,
+			"position" : [ 2258, "floor-top", -782 ],
+			"rotation" : [ 0, 270, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_58",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_57",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 90,
+			"position" : [ 2258, "floor-top", -722 ],
+			"rotation" : [ 0, 270, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_57",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_56",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 90,
+			"position" : [ 2036, "floor-top", -1142 ],
+			"rotation" : [ 0, 90, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_56",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_55",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 90,
+			"position" : [ 2036, "floor-top", -1082 ],
+			"rotation" : [ 0, 90, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_55",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_54",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 90,
+			"position" : [ 2036, "floor-top", -1022 ],
+			"rotation" : [ 0, 90, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_54",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_53",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 90,
+			"position" : [ 2036, "floor-top", -962 ],
+			"rotation" : [ 0, 90, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_53",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_52",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 90,
+			"position" : [ 2036, "floor-top", -902 ],
+			"rotation" : [ 0, 90, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_52",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_51",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 90,
+			"position" : [ 2036, "floor-top", -842 ],
+			"rotation" : [ 0, 90, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_51",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_50",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 90,
+			"position" : [ 2036, "floor-top", -782 ],
+			"rotation" : [ 0, 90, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_50",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_49",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 90,
+			"position" : [ 2036, "floor-top", -722 ],
+			"rotation" : [ 0, 90, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_49",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_48",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 90,
+			"position" : [ 1773, "floor-top", -1142 ],
+			"rotation" : [ 0, 270, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_48",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_47",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 90,
+			"position" : [ 1773, "floor-top", -1082 ],
+			"rotation" : [ 0, 270, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_47",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_46",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 90,
+			"position" : [ 1773, "floor-top", -1022 ],
+			"rotation" : [ 0, 270, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_46",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_45",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 90,
+			"position" : [ 1773, "floor-top", -962 ],
+			"rotation" : [ 0, 270, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_45",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_44",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 90,
+			"position" : [ 1773, "floor-top", -902 ],
+			"rotation" : [ 0, 270, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_44",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_43",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 90,
+			"position" : [ 1773, "floor-top", -842 ],
+			"rotation" : [ 0, 270, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_43",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_42",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 90,
+			"position" : [ 1773, "floor-top", -782 ],
+			"rotation" : [ 0, 270, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_42",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_41",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 90,
+			"position" : [ 1773, "floor-top", -722 ],
+			"rotation" : [ 0, 270, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_41",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_40",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 90,
+			"position" : [ 1551, "floor-top", -1142 ],
+			"rotation" : [ 0, 90, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_40",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_39",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 90,
+			"position" : [ 1551, "floor-top", -1082 ],
+			"rotation" : [ 0, 90, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_39",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_38",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 90,
+			"position" : [ 1551, "floor-top", -1022 ],
+			"rotation" : [ 0, 90, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_38",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_37",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 90,
+			"position" : [ 1551, "floor-top", -962 ],
+			"rotation" : [ 0, 90, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_37",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_36",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 90,
+			"position" : [ 1551, "floor-top", -902 ],
+			"rotation" : [ 0, 90, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_36",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_35",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 90,
+			"position" : [ 1551, "floor-top", -842 ],
+			"rotation" : [ 0, 90, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_35",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_34",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 90,
+			"position" : [ 1551, "floor-top", -782 ],
+			"rotation" : [ 0, 90, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_34",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_33",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 90,
+			"position" : [ 1551, "floor-top", -722 ],
+			"rotation" : [ 0, 90, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_33",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_32",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 90,
+			"position" : [ 908, "floor-top", -1143 ],
+			"rotation" : [ 0, 270, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_32",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_31",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 90,
+			"position" : [ 908, "floor-top", -1083 ],
+			"rotation" : [ 0, 270, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_31",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_30",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 90,
+			"position" : [ 908, "floor-top", -1023 ],
+			"rotation" : [ 0, 270, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_30",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_29",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 90,
+			"position" : [ 908, "floor-top", -963 ],
+			"rotation" : [ 0, 270, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_29",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_28",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 90,
+			"position" : [ 908, "floor-top", -903 ],
+			"rotation" : [ 0, 270, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_28",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_27",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 90,
+			"position" : [ 908, "floor-top", -843 ],
+			"rotation" : [ 0, 270, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_27",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_26",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 90,
+			"position" : [ 908, "floor-top", -783 ],
+			"rotation" : [ 0, 270, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_26",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_25",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 90,
+			"position" : [ 908, "floor-top", -723 ],
+			"rotation" : [ 0, 270, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_25",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_24",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 90,
+			"position" : [ 686, "floor-top", -1143 ],
+			"rotation" : [ 0, 90, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_24",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_23",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 90,
+			"position" : [ 686, "floor-top", -1083 ],
+			"rotation" : [ 0, 90, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_23",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_22",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 90,
+			"position" : [ 686, "floor-top", -1023 ],
+			"rotation" : [ 0, 90, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_22",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_21",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 90,
+			"position" : [ 686, "floor-top", -963 ],
+			"rotation" : [ 0, 90, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_21",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_20",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 90,
+			"position" : [ 686, "floor-top", -903 ],
+			"rotation" : [ 0, 90, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_20",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_19",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 90,
+			"position" : [ 686, "floor-top", -843 ],
+			"rotation" : [ 0, 90, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_19",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_18",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 90,
+			"position" : [ 686, "floor-top", -783 ],
+			"rotation" : [ 0, 90, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_18",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_17",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 90,
+			"position" : [ 686, "floor-top", -723 ],
+			"rotation" : [ 0, 90, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_17",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_16",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 90,
+			"position" : [ 424, "floor-top", -1143 ],
+			"rotation" : [ 0, 270, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_16",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_15",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 90,
+			"position" : [ 424, "floor-top", -1083 ],
+			"rotation" : [ 0, 270, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_15",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_14",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 90,
+			"position" : [ 424, "floor-top", -1023 ],
+			"rotation" : [ 0, 270, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_14",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_13",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 90,
+			"position" : [ 424, "floor-top", -963 ],
+			"rotation" : [ 0, 270, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_13",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_12",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 90,
+			"position" : [ 424, "floor-top", -903 ],
+			"rotation" : [ 0, 270, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_12",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_11",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 90,
+			"position" : [ 424, "floor-top", -843 ],
+			"rotation" : [ 0, 270, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_11",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_10",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 90,
+			"position" : [ 424, "floor-top", -783 ],
+			"rotation" : [ 0, 270, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_10",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_9",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 90,
+			"position" : [ 424, "floor-top", -723 ],
+			"rotation" : [ 0, 270, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_9",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_8",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 90,
+			"position" : [ 202, "floor-top", -1143 ],
+			"rotation" : [ 0, 90, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_8",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_7",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 90,
+			"position" : [ 202, "floor-top", -1083 ],
+			"rotation" : [ 0, 90, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_7",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_6",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 90,
+			"position" : [ 202, "floor-top", -1023 ],
+			"rotation" : [ 0, 90, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_6",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_5",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 90,
+			"position" : [ 202, "floor-top", -963 ],
+			"rotation" : [ 0, 90, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_5",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_4",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 90,
+			"position" : [ 202, "floor-top", -903 ],
+			"rotation" : [ 0, 90, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_4",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_3",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 90,
+			"position" : [ 202, "floor-top", -843 ],
+			"rotation" : [ 0, 90, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_3",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_2",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 90,
+			"position" : [ 202, "floor-top", -783 ],
+			"rotation" : [ 0, 90, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_2",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.rack42",
+			"objectId" : "twaver.idc.rack42_1",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 60,
+			"depth" : 90,
+			"position" : [ 202, "floor-top", -723 ],
+			"rotation" : [ 0, 90, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.rack42_1",
+				"label" : "42U机柜"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.ups",
+			"objectId" : "twaver.idc.ups_4",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 159,
+			"depth" : 86,
+			"position" : [ 2488.5, "floor-top", -590 ],
+			"rotation" : [ 0, 270, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.ups_4",
+				"label" : "UPS"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.ups",
+			"objectId" : "twaver.idc.ups_3",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 159,
+			"depth" : 86,
+			"position" : [ 2488.5, "floor-top", -1077 ],
+			"rotation" : [ 0, 270, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.ups_3",
+				"label" : "UPS"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.airCondition",
+			"objectId" : "twaver.idc.airCondition_8",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 180,
+			"depth" : 100,
+			"position" : [ 2177, "floor-top", -136 ],
+			"rotation" : [ 0, 180, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.airCondition_8",
+				"label" : "空调"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.airCondition",
+			"objectId" : "twaver.idc.airCondition_7",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 180,
+			"depth" : 100,
+			"position" : [ 1528, "floor-top", -136 ],
+			"rotation" : [ 0, 180, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.airCondition_7",
+				"label" : "空调"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.airCondition",
+			"objectId" : "twaver.idc.airCondition_6",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 180,
+			"depth" : 100,
+			"position" : [ 684, "floor-top", -359 ],
+			"rotation" : [ 0, 180, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.airCondition_6",
+				"label" : "空调"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.airCondition",
+			"objectId" : "twaver.idc.airCondition_5",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 180,
+			"depth" : 100,
+			"position" : [ 222, "floor-top", -359 ],
+			"rotation" : [ 0, 180, 0 ],
+			"client" : {
+				"bid" : "twaver.idc.airCondition_5",
+				"label" : "空调"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.airCondition",
+			"objectId" : "twaver.idc.airCondition_4",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 180,
+			"depth" : 100,
+			"position" : [ 2212, "floor-top", -1321 ],
+			"client" : {
+				"bid" : "twaver.idc.airCondition_4",
+				"label" : "空调"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.airCondition",
+			"objectId" : "twaver.idc.airCondition_3",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 180,
+			"depth" : 100,
+			"position" : [ 1469, "floor-top", -1321 ],
+			"client" : {
+				"bid" : "twaver.idc.airCondition_3",
+				"label" : "空调"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.airCondition",
+			"objectId" : "twaver.idc.airCondition_2",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 180,
+			"depth" : 100,
+			"position" : [ 830, "floor-top", -1321 ],
+			"client" : {
+				"bid" : "twaver.idc.airCondition_2",
+				"label" : "空调"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.airCondition",
+			"objectId" : "twaver.idc.airCondition_1",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 180,
+			"depth" : 100,
+			"position" : [ 297, "floor-top", -1321 ],
+			"client" : {
+				"bid" : "twaver.idc.airCondition_1",
+				"label" : "空调"
+			},
+			"style" : {}
+		},
+		{
+			"id" : "twaver.idc.floor",
+			"objectId" : "twaver.idc.floor_1",
+			"parentId" : "twaver.idc.wall_1",
+			"data" : [ [ 133, -73 ], [ 2598, -73 ], [ 2598, -1408 ], [ 11, -1408 ], [ 11, -280 ], [ 133, -280 ],
+					[ 133, -73 ] ],
+			"client" : {
+				"bid" : "twaver.idc.floor_1",
+				"label" : "地板",
+				"imageSrc-trigger" : 1
+			},
+			"style" : {}
+		}, {
+			"id" : "twaver.idc.ups",
+			"objectId" : "twaver.idc.ups_2",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 159,
+			"depth" : 86,
+			"position" : [ 1823.5, "floor-top", -1331 ],
+			"client" : {
+				"bid" : "twaver.idc.ups_2",
+				"label" : "UPS"
+			},
+			"style" : {}
+		}, {
+			"id" : "twaver.idc.ups",
+			"objectId" : "twaver.idc.ups_1",
+			"parentId" : "twaver.idc.wall_1",
+			"width" : 159,
+			"depth" : 86,
+			"position" : [ 1151.5, "floor-top", -1331 ],
+			"client" : {
+				"bid" : "twaver.idc.ups_1",
+				"label" : "UPS"
+			},
+			"style" : {}
+		}, {
+			"id" : "twaver.idc.innerWall",
+			"objectId" : "twaver.idc.innerWall_1",
+			"parentId" : "twaver.idc.wall_1",
+			"data" : [ [ 133, -280 ], [ 962, -280 ], [ 962, -73 ] ],
+			"client" : {
+				"bid" : "twaver.idc.innerWall_1",
+				"label" : "内墙"
+			},
+			"style" : {},
+			"children" : [ {
+				"id" : "twaver.idc.door",
+				"objectId" : "JsonObjectEBDE779161A144BA938A20F8058F9169",
+				"width" : 184.4253049171151,
+				"position" : [ 962.189487728038, 10, -177.04287719529964 ],
+				"rotation" : [ 0, -1.5707963267948966, 0 ],
+				"client" : {
+					"edgeIndex" : 1,
+					"offset" : 0.4973774048536249,
+					"label" : "双开门"
+				},
+				"style" : {}
+			} ]
+		} ]

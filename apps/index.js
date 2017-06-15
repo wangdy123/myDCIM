@@ -16,7 +16,7 @@ app.use(express.static(__dirname + '/public', {
 
 app.use(function(req, res, next) {
 	if (req.url.match("/roadmap/*")) {
-		res.redirect("/image/blank_map.png");
+		res.redirect("/images/blank_map.png");
 	} else {
 		next();
 	}

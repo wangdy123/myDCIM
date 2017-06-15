@@ -1,7 +1,9 @@
 $(document).ready(
 		function() {
-			var objectNodeUrl = 'navigation/objectNodes/';
+			var objectNodeUrl = 'logicobject/objectNodes/';
 			WUI.monitor = WUI.monitor ? WUI.monitor : {};
+			WUI.monitor.REALTIME_VALUE_INTEVAL=5000;
+			
 			if (!WUI.monitor.inited) {
 				WUI.monitor.inited = true;
 				if ($.cookie('enableMap')) {
@@ -41,7 +43,13 @@ $(document).ready(
 						$('#monitor-tabs').tabs('select', 1);
 					}
 				}
+				if(!event.object.PARENT_ID){
+					$("#return-btn").hide();
+				}else{
+					$("#return-btn").show();				
+				}
 			});
+
 			$("#return-btn").click(function() {
 				WUI.publishEvent('request_current_object', {
 					publisher : "monitor_panel",

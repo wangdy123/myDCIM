@@ -1,0 +1,39 @@
+
+<div class="easyui-panel" data-options="border:false,fit:true">
+    <table class="configer">
+        <tr>
+            <td align="right" style="width: 120px;">名称：</td>
+            <td id="cabinet-name-txt" style="width: 200px;"></td>
+            <td align="right" >编码：</td>
+            <td id="cabinet-code-txt" style="width: 200px;"></td>
+            <td align="right" style="width: 120px;">机柜型号：</td>
+            <td id="cabinet-model-txt" style="width: 200px;">
+        </tr>
+        <tr>
+            <td align="right">本组内序号：</td>
+            <td id="cabinet-sequence-txt"></td>
+            <td align="right">机柜深度：</td>
+            <td id="cabinet-depth-txt"></td>
+            <td align="right">U1位置：</td>
+            <td id="cabinet-u1_position-txt"></td>
+        </tr>
+        <tr>
+             <td align="right">投产日期：</td>
+            <td id="cabinet-start-use-date"></td>
+            <td align="right">预计报废日期：</td>
+            <td id="cabinet-expect-end-date"></td>
+           <td align="right">总U数：</td>
+            <td id="cabinet-u-count-txt"></td>
+        </tr>
+        <tr>
+            <td align="right">告警统计：</td>
+            <td id="cabinet-alarm-count-txt"></td>
+            <td align="right">状态：</td>
+            <td id="cabinet-status-txt"></td>
+            <td style="width: 100px;"><a href="#" id="cabinet-alarm-detal" class="easyui-linkbutton"
+                data-options="iconCls:'icon-sum'">告警详情</a></td>
+        </tr>
+    </table>
+    <div id="child-object-panel" class="easyui-panel" border="true" style="width: 100%"></div>
+</div>
+<script type="text/javascript" src="monitor/detail/cabinet/page.js"></script>

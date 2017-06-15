@@ -14,7 +14,7 @@
 		"host" : "localhost",
 		"port" : 3306,
 		"user" : "root",
-		"password" : "wangsx",
+		"password" : "wangDY123",
 		"database" : "config"
 	},
 	"cassandra":{"nodes":[{"host" : "192.168.0.165",
@@ -28,8 +28,12 @@
 	},
 	"modules":{
 		"account":"/account",
+		"logicobject":"/logicobject",
 		"alarm":"/alarm",
 		"position-configer":"/position-configer",
+		"cabinet-model":"/cabinet-model",
+		"device-model":"/device-model",
+		"device-vender":"/device-vender",
 		"door":"/door",
 		"monitor":"/monitor",
 		"dashboard":"/dashboard",
@@ -40,5 +44,8 @@
 	"copyRightText":"copyright:wincom",
 	"company":"广东盈嘉科技工程发展股份有限公司",
 	"logo":"images/logo1.jpg",
-	"confs":["themes","accountRights","menus","dashboard","objectTypeDef","objectTypes","stationTypes","roomTypes","powerTypes","deviceTypes","object_ex","regionTypes"]
+	"confs":["themes","accountRights","menus","dashboard","objectTypeDef","objectTypes",
+	         "stationTypes","roomTypes","powerTypes","deviceTypes","object_ex","regionTypes","businessTypes"]
+	
+	
 }

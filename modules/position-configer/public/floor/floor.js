@@ -1,8 +1,9 @@
 $(document).ready(
 		function() {
-			var objectNodeUrl = 'position-configer/objectNodes';
-			var floorUrl = "position-configer/floors";
+			var objectNodeUrl = 'logicobject/objectNodes';
+			var floorUrl = "logicobject/floors";
 			var $node = $('#floor-datagrid');
+			var typeName = WUI.objectTypes[WUI.objectTypeDef.FLOOR].name;
 
 			WUI.floor = WUI.floor || {};
 
@@ -31,11 +32,13 @@ $(document).ready(
 					onLoadError : WUI.onLoadError,
 					toolbar : [ {
 						iconCls : 'icon-add',
+						text : '添加【' + typeName + '】',
 						handler : function() {
 							floorDialog(null, currentObject.ID);
 						}
 					}, '-', {
 						iconCls : 'icon-reload',
+						text : '刷新',
 						handler : function() {
 							reload(true);
 						}
@@ -55,6 +58,11 @@ $(document).ready(
 									return e + s + d;
 								}
 							}, {
+								field : 'CODE',
+								title : '编码',
+								align : 'right',
+								width : 80
+							}, {
 								field : 'NAME',
 								title : '楼层',
 								width : 150
@@ -67,7 +75,6 @@ $(document).ready(
 					WUI.ajax.get(objectNodeUrl + "/" + object.ID, {}, function(floorObject) {
 						openObject(floorObject);
 					}, function() {
-						var typeName = WUI.objectTypes[WUI.objectTypeDef.FLOOR].name;
 						$.messager.alert('失败', "读取" + typeName + "配置失败！");
 					});
 				}
@@ -79,7 +86,6 @@ $(document).ready(
 			}
 			WUI.floor.deleterow = function(target) {
 				var floor = WUI.getDatagridRow($node, target);
-				var typeName = WUI.objectTypes[WUI.objectTypeDef.FLOOR].name;
 				$.messager.confirm('确认', '确定要删除' + typeName + '【' + floor.NAME + '】吗?', function(r) {
 					if (r) {
 						WUI.ajax.remove(objectNodeUrl + "/" + floor.ID, {}, function() {
@@ -91,13 +97,12 @@ $(document).ready(
 				});
 			}
 			function floorDialog(floor, parentId) {
-				var typeName = WUI.objectTypes[WUI.objectTypeDef.FLOOR].name;
 				var cfg = {
 					iconCls : floor ? "icon-edit" : "icon-add",
 					title : (floor ? "修改" : "添加") + typeName,
-					left : ($(window).width() - 300) * 0.5,
+					left : ($(window).width() - 500) * 0.5,
 					top : ($(window).height() - 300) * 0.5,
-					width : 300,
+					width : 500,
 					closed : false,
 					cache : false,
 					href : WUI.getConfigerDialogPath(WUI.objectTypes[WUI.objectTypeDef.FLOOR].namespace),
@@ -115,6 +120,8 @@ $(document).ready(
 						}
 						if (floor) {
 							$('#floor-sel').val(floor.SEQUENCE);
+							$('#floor-code-txt').val(floor.CODE);
+							$('#floor-code-txt').validatebox("isValid");
 						}
 					},
 					modal : true,
@@ -125,12 +132,14 @@ $(document).ready(
 						text : '保存',
 						handler : function() {
 							var isValid = $('#floor-sel').val();
+							isValid = isValid && $('#floor-code-txt').validatebox("isValid");
 							if (!isValid) {
 								return;
 							}
 
 							var newfloor = {
 								NAME : $('#floor-sel option:selected').text(),
+								CODE : $('#floor-code-txt').val(),
 								SEQUENCE : $('#floor-sel').val(),
 								OBJECT_TYPE : WUI.objectTypeDef.FLOOR,
 								PARENT_ID : parentId,

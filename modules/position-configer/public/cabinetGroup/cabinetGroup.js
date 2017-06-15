@@ -1,8 +1,9 @@
 $(document).ready(
 		function() {
-			var objectNodeUrl = 'position-configer/objectNodes';
-			var cabinetGroupUrl = "position-configer/cabinetGroups";
+			var objectNodeUrl = 'logicobject/objectNodes';
+			var cabinetGroupUrl = "logicobject/cabinetGroups";
 			var $node = $('#cabinetGroup-datagrid');
+			var typeName = WUI.objectTypes[WUI.objectTypeDef.CABINNET_GROUP].name;
 
 			WUI.cabinetGroup = WUI.cabinetGroup || {};
 
@@ -31,11 +32,13 @@ $(document).ready(
 					onLoadError : WUI.onLoadError,
 					toolbar : [ {
 						iconCls : 'icon-add',
+						text : '添加【' + typeName + '】',
 						handler : function() {
 							cabinetGroupDialog(null, currentObject.ID);
 						}
 					}, '-', {
 						iconCls : 'icon-reload',
+						text : '刷新',
 						handler : function() {
 							reload(true);
 						}
@@ -87,7 +90,6 @@ $(document).ready(
 					WUI.ajax.get(objectNodeUrl + "/" + object.ID, {}, function(cabinetGroupObject) {
 						openObject(cabinetGroupObject);
 					}, function() {
-						var typeName = WUI.objectTypes[WUI.objectTypeDef.CABINNET_GROUP].name;
 						$.messager.alert('失败', "读取" + typeName + "配置失败！");
 					});
 				}
@@ -99,7 +101,6 @@ $(document).ready(
 			}
 			WUI.cabinetGroup.deleterow = function(target) {
 				var cabinetGroup = WUI.getDatagridRow($node, target);
-				var typeName = WUI.objectTypes[WUI.objectTypeDef.CABINNET_GROUP].name;
 				$.messager.confirm('确认', '确定要删除' + typeName + '【' + cabinetGroup.NAME + '】吗?', function(r) {
 					if (r) {
 						WUI.ajax.remove(objectNodeUrl + "/" + cabinetGroup.ID, {}, function() {
@@ -111,7 +112,6 @@ $(document).ready(
 				});
 			}
 			function cabinetGroupDialog(cabinetGroup, parentId) {
-				var typeName = WUI.objectTypes[WUI.objectTypeDef.CABINNET_GROUP].name;
 				$('#configer-dialog').dialog({
 					iconCls : cabinetGroup ? "icon-edit" : "icon-add",
 					title : (cabinetGroup ? "修改" : "添加") + typeName,

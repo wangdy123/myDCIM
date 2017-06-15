@@ -18,13 +18,17 @@ window.WUI.subscribe = function(evt, fn) {
 // evt:open_object(event),reload_object(event),current_object(cbk(object))
 window.WUI.publishEvent = function(name, event) {
 	for ( var evt in subscribes) {
+		try{
 		if (name === subscribes[evt].name) {
 			subscribes[evt].fn(event);
+		}
+		}catch(e){
+			console.log(e);
 		}
 	}
 };
 
-window.WUI.onLoadError=function(){
+window.WUI.onLoadError=function(xhr){
 	if(xhr.status===401){
 		$.messager.alert('失败', "登录已超时，请重新登录！");
 		location.reload();
@@ -209,42 +213,24 @@ Date.prototype.format = function (fmt) {
     return fmt;
 }
 
-window.WUI.dateFormat = function(date) {
+window.WUI.dateFormat = function(datestr,fmt) {
 	if (!datestr) {
 		return "";
 	}
 	if(!fmt){
 		fmt="yyyy-MM-dd";
 	}
-	var date=new Date();
 	try {
-		date= new Date(Date.parse(datestr));
+		var date= new Date(Date.parse(datestr));
+		if(date){
+			return date.format(fmt);
+		}
 	} catch (e) {
 		return "";
 	}
-	return date.format(fmt);
+	return "";
 };
 
-window.WUI.time_reformat = function(timestr) {
-	if (!timestr) {
-		return "";
-	}
-
-	var date=new Date();
-	try {
-		date= new Date(Date.parse(timestr));
-	} catch (e) {
-		return "";
-	}
-	var y = date.getFullYear();
-	var m = date.getMonth() + 1;
-	var d = date.getDate();
-	var h = date.getHours();
-	var min = date.getMinutes();
-	var s = date.getSeconds();
-	return y + '-' + (m < 10 ? ('0' + m) : m) + '-' + (d < 10 ? ('0' + d) : d) + ' ' + (h < 10 ? ('0' + h) : h)
-			+ ':' + (min < 10 ? ('0' + h) : min) + ':' + (s < 10 ? ('0' + s) : s);
-};
 window.WUI.timeformat = function(time,fmt) {
 	if (!time) {
 		return "";
@@ -252,16 +238,18 @@ window.WUI.timeformat = function(time,fmt) {
 	if(!fmt){
 		fmt="yyyy-MM-dd hh:mm:ss";
 	}
-	var date=new Date();
 	try {
-		date= new Date(Date.parse(time));
+		var date= new Date(Date.parse(time));
+		if(date){
+			return date.format(fmt);
+		}
 	} catch (e) {
 		return "";
 	}
-	return date.format(fmt);
+	return "";
 };
 
-window.WUI.timeformat_t = function(time) {
+window.WUI.timeformat_t = function(time,fmt) {
 	if(!fmt){
 		fmt="yyyy-MM-ddThh:mm:ssZ";
 	}
@@ -271,13 +259,13 @@ window.WUI.timeformat_t = function(time) {
 
 window.WUI.date_parse = function(datestr) {
 	if (!datestr) {
-		return new Date();
+		return null;
 	}
 	try {
 		var d= new Date(Date.parse(datestr));
 		return d;
 	} catch (e) {
-		return new Date();
+		return null;
 	}
 };
 

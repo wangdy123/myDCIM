@@ -1,8 +1,9 @@
 $(document).ready(
 		function() {
-			var objectNodeUrl = 'position-configer/objectNodes';
-			var buildingUrl = "position-configer/buildings";
+			var objectNodeUrl = 'logicobject/objectNodes';
+			var buildingUrl = "logicobject/buildings";
 			var $node = $('#building-datagrid');
+			var typeName = WUI.objectTypes[WUI.objectTypeDef.BUILDDING].name;
 			var currentObject = null;
 			WUI.building = {};
 
@@ -30,11 +31,13 @@ $(document).ready(
 					onLoadError : WUI.onLoadError,
 					toolbar : [ {
 						iconCls : 'icon-add',
+						text : '添加【' + typeName + '】',
 						handler : function() {
 							buildingDialog(null, currentObject.ID);
 						}
 					}, '-', {
 						iconCls : 'icon-reload',
+						text : '刷新',
 						handler : function() {
 							reload(true);
 						}
@@ -79,7 +82,6 @@ $(document).ready(
 					WUI.ajax.get(objectNodeUrl + "/" + object.ID, {}, function(buildingObject) {
 						openObject(buildingObject);
 					}, function() {
-						var typeName = WUI.objectTypes[WUI.objectTypeDef.BUILDDING].name;
 						$.messager.alert('失败', "读取" + typeName + "配置失败！");
 					});
 				}
@@ -90,7 +92,6 @@ $(document).ready(
 				buildingDialog(building, building.PARENT_ID);
 			}
 			WUI.building.deleterow = function(target) {
-				var typeName = WUI.objectTypes[WUI.objectTypeDef.BUILDDING].name;
 				var building = WUI.getDatagridRow($node, target);
 				$.messager.confirm('确认', '确定要删除' + typeName + '【' + building.NAME + '】吗?', function(r) {
 					if (r) {
@@ -103,14 +104,13 @@ $(document).ready(
 				});
 			}
 			function buildingDialog(building, parentId) {
-				var typeName = WUI.objectTypes[WUI.objectTypeDef.BUILDDING].name;
 				$('#configer-dialog').dialog(
 						{
 							iconCls : building ? "icon-edit" : "icon-add",
 							title : (building ? "修改" : "添加") + typeName,
 							left : ($(window).width() - 400) * 0.5,
 							top : ($(window).height() - 300) * 0.5,
-							width : 400,
+							width : 500,
 							closed : false,
 							cache : false,
 							href : WUI.getConfigerDialogPath(WUI.objectTypes[WUI.objectTypeDef.BUILDDING].namespace),

@@ -1,12 +1,12 @@
 $(document).ready(
 		function() {
-			var objectNodeUrl = 'position-configer/objectNodes';
-			var regionUrl = "position-configer/regions";
+			var objectNodeUrl = 'logicobject/objectNodes';
+			var regionUrl = "logicobject/regions";
 			var $node = $('#region-datagrid');
 
 			WUI.region = WUI.region || {};
-			
-			var currentRegionObject=null;
+
+			var currentRegionObject = null;
 			function reload(publish) {
 				$node.datagrid("reload");
 				if (publish) {
@@ -18,13 +18,14 @@ $(document).ready(
 			}
 
 			function openObject(regionObject) {
-				currentRegionObject=regionObject;
+				currentRegionObject = regionObject;
 				var toobar = [];
 				for (var i = 0; i < WUI.regionTypes[regionObject.REGION_TYPE].childTypes.length; i++) {
 					var childRegionTypeId = WUI.regionTypes[regionObject.REGION_TYPE].childTypes[i];
 					var childRegionTypeCfg = WUI.regionTypes[childRegionTypeId];
 					toobar.push({
-						iconCls : childRegionTypeCfg.iconCls,
+						iconCls : 'icon-add',
+						text : '添加【' + childRegionTypeCfg.name + '】',
 						handler : function() {
 							regionDialog(null, regionObject.ID, childRegionTypeId);
 						}
@@ -33,6 +34,7 @@ $(document).ready(
 				toobar.push('-');
 				toobar.push({
 					iconCls : 'icon-reload',
+					text : '刷新',
 					handler : function() {
 						reload(true);
 					}
@@ -67,7 +69,7 @@ $(document).ready(
 								title : '区域级别',
 								width : 80
 							}, {
-								field : 'ZIP_CODE',
+								field : 'CODE',
 								title : '行政编码',
 								align : 'right',
 								width : 80
@@ -131,7 +133,7 @@ $(document).ready(
 					title : (region ? "修改" : "添加") + typeName,
 					left : ($(window).width() - 300) * 0.5,
 					top : ($(window).height() - 300) * 0.5,
-					width : 450,
+					width : 550,
 					closed : false,
 					cache : false,
 					href : WUI.getConfigerDialogPath(WUI.objectTypes[WUI.objectTypeDef.REGION].namespace),
@@ -141,13 +143,16 @@ $(document).ready(
 					onLoad : function() {
 						if (region) {
 							$('#region-name-txt').val(region.NAME);
-							$('#region-zip-code-txt').val(region.ZIP_CODE);
+							$('#region-zip-code-txt').val(region.CODE);
 							$('#region-ABBREVIATION-txt').val(region.ABBREVIATION);
 							$('#region-LONGITUDE-txt').numberbox("setValue", region.LONGITUDE);
 							$('#region-LATITUDE-txt').numberbox("setValue", region.LATITUDE);
 							$('#region-name-txt').validatebox("isValid");
 							$('#region-zip-code-txt').validatebox("isValid");
 							$('#region-ABBREVIATION-txt').validatebox("isValid");
+						}else{
+							$('#region-LONGITUDE-txt').numberbox("setValue", currentRegionObject.LONGITUDE);
+							$('#region-LATITUDE-txt').numberbox("setValue", currentRegionObject.LATITUDE);							
 						}
 					},
 					modal : true,
@@ -160,8 +165,6 @@ $(document).ready(
 							var isValid = $('#region-name-txt').validatebox("isValid");
 							isValid = isValid && $('#region-zip-code-txt').validatebox("isValid");
 							isValid = isValid && $('#region-ABBREVIATION-txt').validatebox("isValid");
-							isValid = isValid && $('#region-LONGITUDE-txt').val();
-							isValid = isValid && $('#region-LATITUDE-txt').val();
 							if (!isValid) {
 								return;
 							}
@@ -169,7 +172,7 @@ $(document).ready(
 							var newRegion = {
 								NAME : $('#region-name-txt').val(),
 								ABBREVIATION : $('#region-ABBREVIATION-txt').val(),
-								ZIP_CODE : $('#region-zip-code-txt').val(),
+								CODE : $('#region-zip-code-txt').val(),
 								LONGITUDE : parseFloat($('#region-LONGITUDE-txt').val()),
 								LATITUDE : parseFloat($('#region-LATITUDE-txt').val()),
 								OBJECT_TYPE : WUI.objectTypeDef.REGION,

@@ -25,21 +25,22 @@ $(function() {
 			}
 			return true;
 		}
+
+		function openObject(node) {
+			if (config.eventEnable) {
+				WUI.publishEvent('open_object', {
+					publisher : publisherName,
+					object : node.attributes.data
+				});
+			}
+		}
 		$treeNode.tree({
-			url : config.url ? config.url : 'navigation/objectNodes',
+			url : config.url ? config.url : 'logicobject/objectNodes',
 			method : 'get',
 			lines : true,
 			dnd : true,
 			animate : true,
-			onSelect : function(node) {
-				if (config.eventEnable) {
-					WUI.publishEvent('open_object', {
-						publisher : publisherName,
-						object : node.attributes.data
-					});
-				}
-			},
-
+			onSelect : openObject,
 			loadFilter : function(datas, parent) {
 				var objects = [];
 				for (var i = 0; i < datas.length; i++) {
@@ -61,7 +62,10 @@ $(function() {
 			},
 			onLoadSuccess : function(node, data) {
 				if (!node) {
-					$treeNode.tree("expand", $treeNode.tree("getRoot").target);
+					var root = $treeNode.tree("getRoot");
+					$treeNode.tree("expand", root.target);
+					openObject(root);
+					$treeNode.tree("select", root.target);
 				} else {
 					if (node.attributes.data.OBJECT_TYPE === WUI.objectTypeDef.REGION) {
 						$treeNode.tree("expand", node.target);
@@ -90,12 +94,25 @@ $(function() {
 				var node = $treeNode.tree('find', event.object.ID);
 				if (node) {
 					$treeNode.tree('scrollTo', node.target);
-					$treeNode.tree('expandTo', node.target);
+					$treeNode.tree('expand', node.target);
 					$treeNode.tree('select', node.target);
+				}else{
+					var parent = $treeNode.tree('find', event.object.PARENT_ID);
+					if (parent) {
+						$treeNode.tree('scrollTo', parent.target);
+						$treeNode.tree('expand', parent.target);
+						$treeNode.tree('select', parent.target);
+					}
 				}
 			});
 			WUI.subscribe('request_current_object', function(event) {
 				var node = $treeNode.tree('getSelected');
+				if (node) {
+					event.cbk(node.attributes.data);
+				}
+			});
+			WUI.subscribe('request_root_object', function(event) {
+				var node = $treeNode.tree('getRoot');
 				if (node) {
 					event.cbk(node.attributes.data);
 				}
@@ -124,7 +141,7 @@ window.WUI.openNodeSelectDialog = function($dialogNode, config) {
 				return false;
 			}
 			$("#object-select-tree").tree({
-				url : config.url ? config.url : 'navigation/objectNodes',
+				url : config.url ? config.url : 'logicobject/objectNodes',
 				method : 'get',
 				lines : true,
 				dnd : true,

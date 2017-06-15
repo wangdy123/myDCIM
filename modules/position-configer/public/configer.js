@@ -11,6 +11,7 @@ $(document).ready(function() {
 	WUI.getConfigerDialogPath = function(namespace) {
 		return "position-configer/" + namespace + "/dialog.html";
 	};
+	
 	function openObject(object) {
 		if (currentObject && currentObject.ID === object.ID) {
 			return;
@@ -30,7 +31,8 @@ $(document).ready(function() {
 					title : childTypeCfg.name,
 					index : i,
 					iconCls : childTypeCfg.iconCls,
-					href : "position-configer/" + childTypeCfg.namespace + "/wokspace.html"
+					href : "position-configer/" + childTypeCfg.namespace + "/wokspace.html",
+					onLoadError:WUI.onLoadError
 				});
 			})(childTypes[i]);
 		}

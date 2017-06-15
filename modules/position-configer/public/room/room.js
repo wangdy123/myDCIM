@@ -1,8 +1,9 @@
 $(document).ready(
 		function() {
-			var objectNodeUrl = 'position-configer/objectNodes';
-			var roomUrl = "position-configer/rooms";
+			var objectNodeUrl = 'logicobject/objectNodes';
+			var roomUrl = "logicobject/rooms";
 			var $node = $('#room-datagrid');
+			var typeName = WUI.objectTypes[WUI.objectTypeDef.ROOM].name;
 
 			WUI.room = WUI.room || {};
 
@@ -31,11 +32,13 @@ $(document).ready(
 					onLoadError : WUI.onLoadError,
 					toolbar : [ {
 						iconCls : 'icon-add',
+						text : '添加【' + typeName + '】',
 						handler : function() {
 							roomDialog(null, currentObject.ID);
 						}
 					}, '-', {
 						iconCls : 'icon-reload',
+						text : '刷新',
 						handler : function() {
 							reload(true);
 						}
@@ -95,7 +98,6 @@ $(document).ready(
 			}
 			WUI.room.deleterow = function(target) {
 				var room = WUI.getDatagridRow($node, target);
-				var typeName = WUI.objectTypes[WUI.objectTypeDef.ROOM].name;
 				$.messager.confirm('确认', '确定要删除' + typeName + '【' + room.NAME + '】吗?', function(r) {
 					if (r) {
 						WUI.ajax.remove(objectNodeUrl + "/" + room.ID, {}, function() {
@@ -107,13 +109,12 @@ $(document).ready(
 				});
 			}
 			function roomDialog(room, parentId) {
-				var typeName = WUI.objectTypes[WUI.objectTypeDef.ROOM].name;
 				$('#configer-dialog').dialog({
 					iconCls : room ? "icon-edit" : "icon-add",
 					title : (room ? "修改" : "添加") + typeName,
-					left : ($(window).width() - 300) * 0.5,
+					left : ($(window).width() - 500) * 0.5,
 					top : ($(window).height() - 300) * 0.5,
-					width : 450,
+					width : 500,
 					closed : false,
 					cache : false,
 					href : WUI.getConfigerDialogPath(WUI.objectTypes[WUI.objectTypeDef.ROOM].namespace),

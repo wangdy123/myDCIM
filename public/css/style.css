@@ -58,6 +58,7 @@ label {
  min-width: 400px;
 }
 
+
 .title-panel {
  text-align: center;
  vertical-align: middle;
@@ -90,9 +91,10 @@ label {
  cursor: pointer;
 }
 
-.configer{
-   margin:20px 40px;
+.configer {
+ margin: 20px 40px;
 }
+
 .statusInvalid {
  background-color: gray;
 }
@@ -115,6 +117,61 @@ label {
 
 .alarmLevel4 {
  background-color: #00F9FF;
+}
+
+
+.statusInvalid-icon {
+ background: url('/images/status-small/status_offline.png') no-repeat center center;;
+ display: inline-block;
+ width: 18px;
+ height: 16px;
+ padding: 0;
+ margin: 0 2px;
+}
+
+.alarmLevel0-icon {
+ background: url('/images/status-small/green_light.png') no-repeat center center;;
+ display: inline-block;
+ width: 18px;
+ height: 16px;
+ padding: 0;
+ margin: 0 2px;
+}
+
+.alarmLevel1-icon {
+ background: url('/images/status-small/red_light.png') no-repeat center center;;
+ display: inline-block;
+ width: 18px;
+ height: 16px;
+ padding: 0;
+ margin: 0 2px;
+}
+
+.alarmLevel2-icon {
+ background: url('/images/status-small/red_light.png') no-repeat center center;;
+ display: inline-block;
+ width: 18px;
+ height: 16px;
+ padding: 0;
+ margin: 0 2px;
+}
+
+.alarmLevel3-icon {
+ background: url('/images/status-small/red_light.png') no-repeat center center;;
+ display: inline-block;
+ width: 18px;
+ height: 16px;
+ padding: 0;
+ margin: 0 2px;
+}
+
+.alarmLevel4 -icon {
+ background: url('/images/status-small/red_light.png') no-repeat center center;;
+ display: inline-block;
+ width: 18px;
+ height: 16px;
+ padding: 0;
+ margin: 0 2px;
 }
 
 .required-propertiy {

@@ -8,7 +8,7 @@
 	"2" : {
 		"name" : "园区",
 		"iconCls" : "icon-station",
-		"childTypes" : [ 3 ],
+		"childTypes" : [ 3,5 ],
 		"namespace" : "station"
 	},
 	"3" : {
@@ -26,19 +26,24 @@
 	"5" : {
 		"name" : "机房",
 		"iconCls" : "icon-room",
-		"childTypes" : [ 6],
+		"childTypes" : [ 6,21],
 		"namespace" : "room"
 	},
 	"6" : {
 		"name" : "机柜分组",
 		"iconCls" : "icon-cabinet-group",
-		"childTypes" : [ 11,23 ],
+		"childTypes" : [ 11 ],
 		"namespace" : "cabinetGroup"
 	},
 	"11" : {
 		"name" : "机柜",
 		"iconCls" : "icon-cabinet",
-		"childTypes" : [ 24 ],
+		"childTypes" : [ 21 ],
 		"namespace" : "cabinet"
+	},"21" : {
+		"name" : "设备",
+		"iconCls" : "icon-device",
+		"childTypes" : [  ],
+		"namespace" : "device"
 	}
 }

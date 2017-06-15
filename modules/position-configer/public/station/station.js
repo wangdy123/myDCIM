@@ -1,28 +1,29 @@
 $(document).ready(
 		function() {
-			var objectNodeUrl = 'position-configer/objectNodes';
-			var stationUrl = "position-configer/stations";
+			var objectNodeUrl = 'logicobject/objectNodes';
+			var stationUrl = "logicobject/stations";
 			var $node = $('#station-datagrid');
+			var typeName = WUI.objectTypes[WUI.objectTypeDef.STATION_BASE].name;
 
 			WUI.station = WUI.station || {};
 
-			var currentStationObject = null;
+			var currentObject = null;
 			function reload(publish) {
 				$node.datagrid("reload");
 				if (publish) {
 					WUI.publishEvent('reload_object', {
 						publisher : "station-configer",
-						object : currentStationObject
+						object : currentObject
 					});
 				}
 			}
 
 			function openObject(stationObject) {
-				currentStationObject = stationObject;
+				currentObject = stationObject;
 				$node.datagrid({
 					url : stationUrl,
 					queryParams : {
-						parentId : stationObject.ID
+						parentId : currentObject.ID
 					},
 					fit : true,
 					border : false,
@@ -31,11 +32,13 @@ $(document).ready(
 					onLoadError : WUI.onLoadError,
 					toolbar : [ {
 						iconCls : 'icon-add',
+						text : '添加【' + typeName + '】',
 						handler : function() {
-							stationDialog(null, currentStationObject.ID);
+							stationDialog(null, currentObject);
 						}
 					}, '-', {
 						iconCls : 'icon-reload',
+						text : '刷新',
 						handler : function() {
 							reload(true);
 						}
@@ -105,10 +108,9 @@ $(document).ready(
 
 			WUI.station.editrow = function(target) {
 				var station = WUI.getDatagridRow($node, target);
-				stationDialog(station, station.PARENT_ID);
+				stationDialog(station, currentObject);
 			}
 			WUI.station.deleterow = function(target) {
-				var typeName = WUI.objectTypes[WUI.objectTypeDef.STATION_BASE].name;
 				var station = WUI.getDatagridRow($node, target);
 				$.messager.confirm('确认', '确定要删除' + typeName + '【' + station.NAME + '】吗?', function(r) {
 					if (r) {
@@ -120,13 +122,12 @@ $(document).ready(
 					}
 				});
 			}
-			function stationDialog(station, parentId) {
-				var typeName = WUI.objectTypes[WUI.objectTypeDef.STATION_BASE].name;
+			function stationDialog(station, parentObject) {
 				var cfg = {
 					iconCls : station ? "icon-edit" : "icon-add",
 					title : (station ? "修改" : "添加") + typeName,
 					left : ($(window).width() - 500) * 0.5,
-					top : ($(window).height() - 300) * 0.5,
+					top : ($(window).height() - 400) * 0.5,
 					width : 500,
 					closed : false,
 					cache : false,
@@ -151,6 +152,9 @@ $(document).ready(
 							$('#station-name-txt').validatebox("isValid");
 							$('#station-code-txt').validatebox("isValid");
 
+						}else{
+								$('#station-LONGITUDE-txt').numberbox("setValue", parentObject.LONGITUDE);
+								$('#station-LATITUDE-txt').numberbox("setValue", parentObject.LATITUDE);							
 						}
 					},
 					modal : true,
@@ -162,8 +166,6 @@ $(document).ready(
 						handler : function() {
 							var isValid = $('#station-name-txt').validatebox("isValid");
 							isValid = isValid && $('#station-code-txt').validatebox("isValid");
-							isValid = isValid && $('#station-LONGITUDE-txt').val();
-							isValid = isValid && $('#station-LATITUDE-txt').val();
 							isValid = isValid && $('#station-type-txt').val();
 							if (!isValid) {
 								return;
@@ -178,7 +180,7 @@ $(document).ready(
 								OBJECT_TYPE : window.WUI.objectTypeDef.STATION_BASE,
 								ADDRESS : $('#station-address-txt').val(),
 								DESCRIPTION : $('#station-desc-txt').textbox("getValue"),
-								PARENT_ID : parentId,
+								PARENT_ID : parentObject.ID,
 								properties : []
 							};
 

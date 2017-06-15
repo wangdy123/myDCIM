@@ -1,0 +1,22 @@
+
+.screen-direction {
+ position: absolute;
+ left: 20px;
+ top: 60px;
+ z-index: 100;
+ background-image: url('/images/direction_48.png');
+ width: 48px;
+ height: 48px;
+}
+.screen-direction .move-up{
+ position: absolute; left: 14px; top: 0px;
+}
+.screen-direction .move-down{
+ position: absolute; left: 14px; bottom: 0px;
+}
+.screen-direction .move-left{
+ position: absolute; left: 0px; top: 14px;
+}
+.screen-direction .move-right{
+ position: absolute; right: 0px; top: 14px;
+}

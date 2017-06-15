@@ -6,8 +6,5 @@
 	"ROOM" : 5,
 	"CABINNET_GROUP" : 6,
 	"CABINNET" : 11,
-	"ENV_DEVICE" : 21,
-	"POWER_DEVICE" : 22,
-	"SAFETY_DEVICE" : 23,
-	"IT_DEVICE" : 24
+	"DEVICE" : 21
 }

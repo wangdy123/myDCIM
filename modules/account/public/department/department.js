@@ -105,21 +105,21 @@ $(function() {
 					if (!$('#department-name-txt').val()) {
 						return;
 					}
-					var department = {
+					var newObject = {
 						NAME : $('#department-name-txt').val(),
 						DESCRIPTION : $('#department-description-txt').val()
 					};
 
 					if (department) {
 						var ID = $('#department-id-txt').val();
-						WUI.ajax.put(departmentUrl + "/" + ID, department, function() {
+						WUI.ajax.put(departmentUrl + "/" + ID, newObject, function() {
 							$node.datagrid("reload");
 							$('#department-dialog').dialog("close");
 						}, function() {
 							$.messager.alert('失败', "修改部门失败！");
 						});
 					} else {
-						WUI.ajax.post(departmentUrl, department, function() {
+						WUI.ajax.post(departmentUrl, newObject, function() {
 							$node.datagrid("reload");
 							$('#department-dialog').dialog("close");
 						}, function() {

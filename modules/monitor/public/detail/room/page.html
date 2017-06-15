@@ -1,0 +1,28 @@
+
+<div class="easyui-panel" data-options="border:false,fit:true">
+    <table class="configer">
+        <tr>
+            <td align="right" style="width: 100px;">名称：</td>
+            <td id="room-name-txt" style="width: 200px;"></td>
+            <td align="right" style="width: 100px;">机房类型：</td>
+            <td id="room-type-txt">
+        </tr>
+        <tr>
+            <td align="right">编码：</td>
+            <td id="room-code-txt"></td>
+        </tr>
+        <tr>
+            <td align="right">描述:</td>
+            <td colspan="3" id="station-desc-txt"></td>
+        </tr>
+        <tr>
+            <td align="right">告警统计：</td>
+            <td id="room-alarm-count-txt"></td>
+            <td align="right">状态：</td>
+            <td id="room-status-txt"></td>
+            <td style="width: 100px;"><a href="#" id="room-alarm-detal" class="easyui-linkbutton" data-options="iconCls:'icon-sum'">告警详情</a></td>
+        </tr>
+    </table>
+    <div id="child-object-panel" class="easyui-panel" border="true" style="width: 100%"></div>
+</div>
+<script type="text/javascript" src="monitor/detail/room/page.js"></script>

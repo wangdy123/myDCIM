@@ -1,0 +1,32 @@
+
+<div class="easyui-panel" data-options="border:false,fit:true">
+    <table class="configer">
+        <tr>
+            <td align="right" style="width: 100px;">名称：</td>
+            <td id="region-name-txt" style="width: 200px;"></td>
+            <td align="right" style="width: 100px;">经度：</td>
+            <td id="region-LONGITUDE-txt" align="right">
+            <td>度</td>
+        </tr>
+        <tr>
+            <td align="right">简称：</td>
+            <td id="region-ABBREVIATION-txt"></td>
+            <td align="right">纬度：</td>
+            <td id="region-LATITUDE-txt" align="right"></td>
+            <td>度</td>
+        </tr>
+        <tr>
+            <td align="right">行政编码：</td>
+            <td id="region-zip-code-txt"></td>
+        </tr>
+        <tr>
+            <td align="right">告警统计：</td>
+            <td id="region-alarm-count-txt"></td>
+            <td align="right">状态：</td>
+            <td id="region-status-txt"></td>
+            <td style="width: 100px;"><a href="#" id="region-alarm-detal" class="easyui-linkbutton" data-options="iconCls:'icon-sum'">告警详情</a></td>
+        </tr>
+    </table>
+    <div id="child-object-panel" class="easyui-panel" border="true" style="width:100%"></div>
+</div>
+<script type="text/javascript" src="monitor/detail/region/page.js"></script>

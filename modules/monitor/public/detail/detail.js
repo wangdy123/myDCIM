@@ -1,25 +1,42 @@
 $(function() {
-	var box = new twaver.ElementBox();
-	var network = new twaver.vector.Network(box);
-	var container = $("#detail-container")[0];
-	container.appendChild(network.getView());
-	network.adjustBounds({
-		x : container.offsetLeft,
-		y : container.offsetTop,
-		width : container.offsetWidth,
-		height : container.offsetHeight
-	});
-	var node1 = new twaver.Node();
-	node1.setName("TWaver");
-	node1.setLocation(100, 100);
-	box.add(node1);
-	var node2 = new twaver.Node();
-	node2.setName("HTML5");
-	node2.setLocation(300, 200);
-	box.add(node2);
-	var link = new twaver.Link(node1, node2);
-	link.setName("Hello!");
-	link.setToolTip("<b>Hello!</b>");
-	box.add(link);
+	var currentObject = null;
 
+	function openObject(object) {
+		if (currentObject && currentObject.ID === object.ID) {
+			return;
+		}
+		currentObject = object;
+
+		var namespace = WUI.objectTypes[currentObject.OBJECT_TYPE].namespace;
+		$("#detail-container").panel({
+			href : "monitor/detail/" + namespace + "/page.html",
+			onLoadError : WUI.onLoadError
+		});
+	}
+
+	WUI.subscribe('open_object', function(event) {
+		openObject(event.object);
+	});
+
+	WUI.detail = WUI.detail || {};
+
+	function replaceAll(str, sptr, sptr1) {
+		while (str.indexOf(sptr) >= 0) {
+			str = str.replace(sptr, sptr1);
+		}
+		return str;
+	}
+
+	function replaceStr(s) {
+		s = replaceAll(s, "\r\n", "<br>")
+		s = replaceAll(s, "\n", "<br>")
+		s = replaceAll(s, " ", "&nbsp")
+		return s;
+	}
+
+	WUI.detail.setHtml = function($node, s) {
+		if (s) {
+			$node.html(replaceStr(s));
+		}
+	}
 });

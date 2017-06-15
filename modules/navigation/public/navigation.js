@@ -25,21 +25,22 @@ $(function() {
 			}
 			return true;
 		}
+
+		function openObject(node) {
+			if (config.eventEnable) {
+				WUI.publishEvent('open_object', {
+					publisher : publisherName,
+					object : node.attributes.data
+				});
+			}
+		}
 		$treeNode.tree({
-			url : config.url ? config.url : 'navigation/objectNodes',
+			url : config.url ? config.url : 'logicobject/objectNodes',
 			method : 'get',
 			lines : true,
 			dnd : true,
 			animate : true,
-			onSelect : function(node) {
-				if (config.eventEnable) {
-					WUI.publishEvent('open_object', {
-						publisher : publisherName,
-						object : node.attributes.data
-					});
-				}
-			},
-
+			onSelect : openObject,
 			loadFilter : function(datas, parent) {
 				var objects = [];
 				for (var i = 0; i < datas.length; i++) {
@@ -61,7 +62,10 @@ $(function() {
 			},
 			onLoadSuccess : function(node, data) {
 				if (!node) {
-					$treeNode.tree("expand", $treeNode.tree("getRoot").target);
+					var root = $treeNode.tree("getRoot");
+					$treeNode.tree("expand", root.target);
+					openObject(root);
+					$treeNode.tree("select", root.target);
 				} else {
 					if (node.attributes.data.OBJECT_TYPE === WUI.objectTypeDef.REGION) {
 						$treeNode.tree("expand", node.target);
@@ -100,6 +104,12 @@ $(function() {
 					event.cbk(node.attributes.data);
 				}
 			});
+			WUI.subscribe('request_root_object', function(event) {
+				var node = $treeNode.tree('getRoot');
+				if (node) {
+					event.cbk(node.attributes.data);
+				}
+			});
 		}
 	}
 });
@@ -124,7 +134,7 @@ window.WUI.openNodeSelectDialog = function($dialogNode, config) {
 				return false;
 			}
 			$("#object-select-tree").tree({
-				url : config.url ? config.url : 'navigation/objectNodes',
+				url : config.url ? config.url : 'logicobject/objectNodes',
 				method : 'get',
 				lines : true,
 				dnd : true,

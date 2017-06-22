@@ -129,11 +129,11 @@ function setMenu(body, account, menus, path, req) {
 	body.menus = mainMenus;
 }
 app.get('/index.html', function(req, res) {
-	var isMobile = req.headers['user-agent'].match(/AppleWebKit.*Mobile.*/);
+	//var isMobile = req.headers['user-agent'].match(/AppleWebKit.*Mobile.*/);
 	permissions.getCurrentUser(req, res, function(error, account) {
 		if (error) {
 			logger.error(error);
-			res.render(isMobile ? 'mobile-login' : 'login', {});
+			res.render('login', {});
 			return;
 		}
 		getTheme(account, req, function(theme) {
@@ -146,7 +146,7 @@ app.get('/index.html', function(req, res) {
 			body.theme = theme;
 			var page = req.query.page ? req.query.page : "dashboard/dashboard.html";
 			setMenu(body, account, config.menus, page, req);
-			res.render(isMobile ? 'mobile-index' : 'index', body);
+			res.render('index', body);
 		});
 	});
 });

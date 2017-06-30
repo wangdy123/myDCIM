@@ -1,27 +1,31 @@
 <div class="easyui-layout" data-options="border:false,fit:true">
-<div class="panel" region="north" border="false">
-    <table class="configer">
-        <tr>
-            <td align="right" style="width: 100px;">楼层：</td>
-            <td id="cabinetGroup-name-txt" style="width: 200px;"></td>
-            <td align="right">编码：</td>
-            <td id="cabinetGroup-code-txt"></td>
-        </tr>
-        <tr>
-            <td align="right">机柜数：</td>
-            <td id="cabinetGroup-count-txt"></td>
-            <td align="right">编码：</td>
-            <td id="cabinetGroup-depth-txt"></td>
-        </tr>
-        <tr>
-            <td align="right">告警统计：</td>
-            <td id="cabinetGroup-alarm-count-txt"></td>
-            <td align="right">状态：</td>
-            <td id="cabinetGroup-status-txt"></td>
-            <td style="width: 100px;"><a href="#" id="cabinetGroup-alarm-detal" class="easyui-linkbutton" data-options="iconCls:'icon-sum'">告警详情</a></td>
-        </tr>
-    </table>
-  </div>
-  <div id="child-object-panel" class="easyui-panel" region="center"  border="false" style="width:100%"></div>
+	<div class="panel" region="north" border="false">
+		<table class="configer">
+			<tr>
+				<td align="right" style="width: 100px;">楼层：</td>
+				<td id="cabinetGroup-name-txt" style="width: 200px;"></td>
+				<td align="right">编码：</td>
+				<td id="cabinetGroup-code-txt"></td>
+			</tr>
+			<tr>
+				<td align="right">机柜数：</td>
+				<td id="cabinetGroup-count-txt"></td>
+				<td align="right">编码：</td>
+				<td id="cabinetGroup-depth-txt"></td>
+			</tr>
+			<tr>
+				<td align="right">告警统计：</td>
+				<td id="cabinetGroup-alarm-count-txt"></td>
+				<td align="right">状态：</td>
+				<td id="cabinetGroup-status-txt"></td>
+			</tr>
+		</table>
+	</div>
+	<div class="easyui-panel" region="center" border="false" style="width: 100%">
+		<div class="easyui-tabs" data-options=" border:true,plain:true,fit:true" style="padding: 5px;">
+			<div title="子对象状态" index="0" iconCls="icon-childs" href="monitor/detail/child-objects/page.html"></div>
+			<div id="child-alarm-panel" title="告警信息" index="1" iconCls="icon-alarm" href="monitor/detail/child-alarm/page.html"></div>
+		</div>
+	</div>
 </div>
 <script type="text/javascript" src="monitor/detail/cabinetGroup/page.js"></script>

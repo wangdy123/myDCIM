@@ -1,16 +1,29 @@
 $(document).ready(function() {
-    $('#qrcode-panel').tooltip({
-        content: '<div id="qrcode" ></div>',
-        onShow: function(){
-        	$('#qrcode').empty();
-        	$('#qrcode').qrcode({ 
-        	    render: "table", 
-        	    width:100,
-        	    height:100,
-        	    text: window.location.href
-        	});
-        }
-    });
+	var currentLogicObject = null;
+
+	WUI.subscribe('request_current_object', function(event) {
+		event.cbk(currentLogicObject);
+	});
+
+	WUI.subscribe('open_object', function(event) {
+		if (currentLogicObject && currentLogicObject.ID === event.object.ID) {
+			return;
+		}
+		currentLogicObject = event.object;
+	});
+
+	$('#qrcode-panel').tooltip({
+		content : '<div id="qrcode" ></div>',
+		onShow : function() {
+			$('#qrcode').empty();
+			$('#qrcode').qrcode({
+				render : "table",
+				width : 100,
+				height : 100,
+				text : window.location.href
+			});
+		}
+	});
 	var passwordUrl = "setPassword";
 	$("#change-password-btn").click(function() {
 		$('#change-password-dialog').dialog({

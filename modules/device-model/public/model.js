@@ -92,7 +92,7 @@ $(function() {
 	WUI.deviceModel.editrow = function(target) {
 		var deviceModel = WUI.getDatagridRow($node, target);
 		deviceModelDialog(deviceModel);
-	}
+	};
 	WUI.deviceModel.deleterow = function(target) {
 		var deviceModel = WUI.getDatagridRow($node, target);
 		$.messager.confirm('确认', '确定要删除设备型号【' + deviceModel.NAME + '】吗?', function(r) {
@@ -104,7 +104,7 @@ $(function() {
 				});
 			}
 		});
-	}
+	};
 
 	function deviceModelDialog(deviceModel) {
 		var dialogNode = $('#device-model-dialog');

@@ -50,17 +50,14 @@ $(function() {
 				} ] ]
 	});
 
-	function getRowIndex(target) {
-		var tr = $(target).closest('tr.datagrid-row');
-		return parseInt(tr.attr('datagrid-row-index'));
-	}
+
 	WUI.department = {};
 	WUI.department.editrow = function(target) {
-		var department = $node.datagrid("getRows")[getRowIndex(target)];
+		var department = WUI.getDatagridRow($node,target);
 		departmentDialog(department);
-	}
+	};
 	WUI.department.deleterow = function(target) {
-		var department = $node.datagrid("getRows")[getRowIndex(target)];
+		var department = WUI.getDatagridRow($node,target);
 		$.messager.confirm('确认', '确定要删除部门【' + department.NAME + '】吗?', function(r) {
 			if (r) {
 				WUI.ajax.remove(departmentUrl + "/" + department.ID, {}, function() {
@@ -70,7 +67,7 @@ $(function() {
 				});
 			}
 		});
-	}
+	};
 
 	function departmentDialog(department) {
 		$('#department-dialog').dialog({

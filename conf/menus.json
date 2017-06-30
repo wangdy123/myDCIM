@@ -1,21 +1,21 @@
 [ {
 	"id" : 1,
-	"name" : "实时监控",
+	"name" : "监控业务",
 	"icon" : "icon-region",
 	"childMenus" : [ {
 		"id" : 11,
-		"title" : "主页",
+		"title" : "仪表板",
 		"icon" : "icon-region",
 		"url" : "dashboard/dashboard.html",
 		"border" : false,
-		"name" : "主页"
+		"name" : "仪表板"
 	}, {
 		"id" : 12,
-		"title" : "监控系统",
+		"title" : "实时监控",
 		"icon" : "icon-region",
 		"url" : "monitor/monitor.html",
 		"border" : false,
-		"name" : "监控系统",
+		"name" : "实时监控",
 		"scripts3D" : [ {
 			"src" : "tw/libs/t.js"
 		}, {

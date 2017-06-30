@@ -13,7 +13,7 @@
               "filename": "./log/error.log",
               "maxLogSize": 2048000,
               "backups": 10,
-              "category": "logErr",
+              "category": ["logErr","console"],
               "level" : "ERROR"
             }, {
             "type": "file",

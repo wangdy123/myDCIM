@@ -29,9 +29,9 @@
 }, {
 	"type" : 5,
 	"name" : "门禁",
-	"iconCls" : "icon-devicetype5",
+	"iconCls" : "icon-door",
 	"businessType" : 1,
-	"namespace" : "devicetype5",
+	"namespace" : "door",
 	"parentNodeTypes" : [5]
 }, {
 	"type" : 6,

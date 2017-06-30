@@ -181,8 +181,7 @@ $(function() {
 				deviceDialog(device, device.PARENT_ID, WUI.deviceTypes[i]);
 			}
 		}
-
-	}
+	};
 	WUI.device.deleterow = function(target) {
 		var device = WUI.getDatagridRow($node, target);
 		var typeName = WUI.objectTypes[WUI.objectTypeDef.DEVICE].name;
@@ -195,7 +194,7 @@ $(function() {
 				});
 			}
 		});
-	}
+	};
 
 	requestVender();
 
@@ -217,29 +216,6 @@ $(function() {
 			onLoad : function() {
 				$('#device-start-use-date').datebox("setValue", WUI.dateFormat(new Date()));
 
-				for (var i = 0; i < WUI.businessTypes.length; i++) {
-					$('#device-business-type-sel').append(
-							'<option value="' + WUI.businessTypes[i].type + '">' + WUI.businessTypes[i].name
-									+ '</option>');
-				}
-
-				function updateDeviceType() {
-					$('#device-type-sel').empty();
-					if (!$('#device-business-type-sel').val()) {
-						return;
-					}
-					var type = parseInt($('#device-business-type-sel').val(), 10);
-					for (var i = 0; i < WUI.deviceTypes.length; i++) {
-						if (WUI.deviceTypes[i].businessType === type) {
-							$('#device-type-sel').append(
-									'<option value="' + WUI.deviceTypes[i].type + '">' + WUI.deviceTypes[i].name
-											+ '</option>');
-						}
-					}
-					updateModel();
-				}
-				$('#device-business-type-sel').change(updateDeviceType);
-				updateDeviceType();
 				for (var i = 0; i < deviceVenders.length; i++) {
 					$('#device-vender-sel').append(
 							'<option value="' + deviceVenders[i].ID + '">' + deviceVenders[i].NAME + '</option>');
@@ -247,20 +223,24 @@ $(function() {
 
 				function updateModel() {
 					$('#device-model-sel').empty();
-					if (!$('#device-vender-sel').val() || !$('#device-type-sel').val()) {
+					if (!$('#device-vender-sel').val()) {
 						return;
 					}
 					var vender = parseInt($('#device-vender-sel').val(), 10);
-					var deviceType = parseInt($('#device-type-sel').val(), 10);
+					var type = parseInt(deviceType.type,10);
+					console.log(vender);
+					console.log(type);
+					console.log(deviceModels);
+
 					for (var i = 0; i < deviceModels.length; i++) {
-						if (deviceModels[i].VENDER === vender && deviceModels[i].DEVICE_TYPE === deviceType) {
+						if (deviceModels[i].VENDER === vender && deviceModels[i].DEVICE_TYPE === type) {
 							$('#device-model-sel').append(
 									'<option value="' + deviceModels[i].ID + '">' + deviceModels[i].NAME + '</option>');
 						}
 					}
 					updateTime();
 				}
-				$('#device-type-sel').change(updateModel);
+
 				$('#device-vender-sel').change(updateModel);
 				updateModel();
 				
@@ -271,7 +251,7 @@ $(function() {
 						return;
 					}
 
-					var model = parseInt(model, 10);
+					model = parseInt(model, 10);
 					for (var i = 0; i < deviceModels.length; i++) {
 						if (deviceModels[i].ID === model) {
 							var endDate = new Date(startTime);
@@ -295,8 +275,6 @@ $(function() {
 				if (device) {
 					$('#device-name-txt').val(device.NAME);
 					$('#device-code-txt').val(device.CODE);
-					$('#device-business-type-sel').val(device.BUSINESS_TYPE);
-					$('#device-type-sel').val(device.DEVICE_TYPE);
 					$('#device-vender-sel').val(device.VENDER);
 					$('#device-model-sel').val(device.MODEL);
 					$('#device-start-use-date').datebox("setValue", device.START_USE_DATE);
@@ -317,8 +295,6 @@ $(function() {
 					var isValid = $('#device-name-txt').validatebox("isValid");
 					isValid = isValid && $('#device-code-txt').validatebox("isValid");
 					isValid = isValid && $('#device-model-sel').val();
-					isValid = isValid && $('#device-business-type-sel').val();
-					isValid = isValid && $('#device-type-sel').val();
 					isValid = isValid && $('#device-vender-sel').val();
 					isValid = isValid && WUI.deviceConfiger[deviceType.namespace].checkValid();
 					if (!isValid) {
@@ -328,8 +304,8 @@ $(function() {
 					var newdevice = {
 						NAME : $('#device-name-txt').val(),
 						CODE : $('#device-code-txt').val(),
-						BUSINESS_TYPE : parseInt($('#device-business-type-sel').val(), 10),
-						DEVICE_TYPE : parseInt($('#device-type-sel').val(), 10),
+						BUSINESS_TYPE : deviceType.businessType,
+						DEVICE_TYPE : deviceType.type,
 						VENDER : parseInt($('#device-vender-sel').val(), 10),
 						MODEL : parseInt($('#device-model-sel').val(), 10),
 						START_USE_DATE : WUI.timeformat_t($('#device-start-use-date').datebox("getValue")),

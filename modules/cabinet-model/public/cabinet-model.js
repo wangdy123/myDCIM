@@ -76,7 +76,7 @@ $(function() {
 	WUI.cabinetModel.editrow = function(target) {
 		var cabinetModel = WUI.getDatagridRow($node, target);
 		cabinetModelDialog(cabinetModel);
-	}
+	};
 	WUI.cabinetModel.deleterow = function(target) {
 		var cabinetModel = WUI.getDatagridRow($node, target);
 		$.messager.confirm('确认', '确定要删除机柜型号【' + cabinetModel.NAME + '】吗?', function(r) {
@@ -88,7 +88,7 @@ $(function() {
 				});
 			}
 		});
-	}
+	};
 
 	function cabinetModelDialog(cabinetModel) {
 		var dialogNode = $('#cabinet-model-dialog');

@@ -1,4 +1,4 @@
-var config = require('dcim-config')
+var config = require('dcim-config');
 var permissions = require('dcim-permissions');
 
 module.exports = function(req, res) {
@@ -15,6 +15,7 @@ module.exports = function(req, res) {
 	str = str + 'window.WUI.businessTypes=' + JSON.stringify(config.businessTypes) + ';';
 	str = str + 'window.WUI.root_object_id=' + config.config.root_object_id + ';';
 	str = str + 'window.WUI.mapCfg=' + JSON.stringify(config.config.map) + ';';
+	str = str + 'window.WUI.menus=' + JSON.stringify(config.menus) + ';';
 	permissions.getCurrentUser(req, res, function(err, account) {
 		if (err) {
 			res.send(str);

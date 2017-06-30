@@ -12,6 +12,20 @@ for(var type in config.objectTypes){
 	require("./"+config.objectTypes[type].namespace).initRequest(app);
 }
 
+app.get('/seach', function(req, res) {
+		var sql = 'select o.ID,o.OBJECT_TYPE,o.NAME,o.CODE,p.PARENT_ID from config.OBJECT o '
+				+ 'left join config.POSITION_RELATION p on p.ID=o.ID where o.NAME like(?) or o.CODE like(?)';
+		var param="%"+req.query.value+"%";
+		db.pool.query(sql, [ param,param ], function(error, objects, fields) {
+			if (error) {
+				logger.error(error);
+				res.status(500).send(error);
+			} else {
+				res.send(objects);
+			}
+		});
+});
+
 app.get('/objectNodes', function(req, res) {
 	if (req.query.id) {
 		var sql = 'select o.ID,o.OBJECT_TYPE,o.CODE,o.NAME,p.PARENT_ID from config.OBJECT o '

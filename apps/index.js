@@ -93,13 +93,13 @@ function checkRight(account, menuId) {
 }
 function setMenu(body, account, menus, path, req) {
 	var mainMenus = [];
-	for (var i = 0; i < menus.length; i++) {
+	for ( var i = 0; i < menus.length; i++) {
 		var menu = util.deepClone(menus[i]);
 		menu.selected = false;
 		body.url = path;
 		body.border = false;
 		var childMenus = [];
-		for (var j = 0; j < menu.childMenus.length; j++) {
+		for ( var j = 0; j < menu.childMenus.length; j++) {
 			var childMenu = menu.childMenus[j];
 			if (checkRight(account, childMenu.id)) {
 				if (childMenu.url === path) {
@@ -128,8 +128,19 @@ function setMenu(body, account, menus, path, req) {
 	}
 	body.menus = mainMenus;
 }
+
+function findMenu(menuId){
+	for ( var i = 0; i < config.menus.length; i++) {
+		var childMenus = config.menus[i].childMenus;
+		for ( var j = 0; j < childMenus.length; j++) {
+			if (childMenus[j].id === menuId) {
+				return childMenus[j].url;
+			}
+		}
+	}
+}
 app.get('/index.html', function(req, res) {
-	//var isMobile = req.headers['user-agent'].match(/AppleWebKit.*Mobile.*/);
+	// var isMobile = req.headers['user-agent'].match(/AppleWebKit.*Mobile.*/);
 	permissions.getCurrentUser(req, res, function(error, account) {
 		if (error) {
 			logger.error(error);
@@ -144,7 +155,8 @@ app.get('/index.html', function(req, res) {
 			body.company = config.config.company;
 			body.logo = config.config.logo;
 			body.theme = theme;
-			var page = req.query.page ? req.query.page : "dashboard/dashboard.html";
+			var homePage=findMenu(account.HOME_PAGE);
+			var page = req.query.page ||homePage|| "dashboard/dashboard.html";
 			setMenu(body, account, config.menus, page, req);
 			res.render('index', body);
 		});

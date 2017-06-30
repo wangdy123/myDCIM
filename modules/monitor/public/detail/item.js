@@ -29,6 +29,7 @@ $(function() {
 		if(!object){
 			return;
 		}
-		object.alarmNode.html('<label class="alarmLevel' + status.maxAlarmLevel + '">告警统计:' + status.alarmCount + '</label>')
+		object.alarmNode.html('<label class="alarmLevel' + status.maxAlarmLevel + '">告警统计:' + status.alarmCount + '</label>');
 	};
+	
 });

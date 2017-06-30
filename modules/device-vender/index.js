@@ -25,45 +25,72 @@ app.get('/deviceVenders', function(req, res) {
 
 app.post('/deviceVenders', function(req, res) {
 	var obj = req.body;
-	try{
-	var chain = db.transaction(function(chain) {
-		var sql='INSERT INTO config.DEVICE_VENDER(NAME,CODE,ABBREVIATION,DESCRIPTION)values(?,?,?,?)';
-		chain.query(sql, [ obj.NAME,obj.CODE,obj.ABBREVIATION,obj.DESCRIPTION]);
-	}, function() {
-		res.status(201).end();
-	}, function(error) {
-		logger.error(error);
-		res.status(500).send(error);
+	db.doTransaction(function(connection) {
+		return [ function(callback) {
+			var sql='INSERT INTO config.DEVICE_VENDER(NAME,CODE,ABBREVIATION,DESCRIPTION)values(?,?,?,?)';
+			connection.query(sql, [ obj.NAME,obj.CODE,obj.ABBREVIATION,obj.DESCRIPTION], function(err, result) {
+				if(err){
+				callback(err);
+				}else{
+					callback();
+				}
+			});
+		}];
+
+	}, function(error, result) {
+		if (error) {
+			logger.error(error);
+			res.status(500).send(error);
+		} else {
+			res.status(201).end();
+		}
 	});
-	}
-	catch(err){
-		logger.error(err);
-		res.status(500).send(error);
-	}
 });
 
 app.put('/deviceVenders/:id', function(req, res) {
 	var obj = req.body;
-	var chain = db.transaction(
-			function(chain) {
-				var sql='update config.DEVICE_VENDER set NAME=?,CODE=?,ABBREVIATION=?,DESCRIPTION=? where ID=?';
-				chain.query(sql, [obj.NAME,obj.CODE,obj.ABBREVIATION,obj.DESCRIPTION,req.params.id]);
-			}, function() {
-				res.status(204).end();
-			}, function(error) {
-				logger.error(error);
-				res.status(500).send(error);
+	db.doTransaction(function(connection) {
+		return [ function(callback) {
+			var sql='update config.DEVICE_VENDER set NAME=?,CODE=?,ABBREVIATION=?,DESCRIPTION=? where ID=?';
+			connection.query(sql,[obj.NAME,obj.CODE,obj.ABBREVIATION,obj.DESCRIPTION,req.params.id], function(err, result) {
+				if(err){
+				callback(err);
+				}else{
+					callback();
+				}
 			});
+		}];
+
+	}, function(error, result) {
+		if (error) {
+			logger.error(error);
+			res.status(500).send(error);
+		} else {
+			res.status(204).end();
+		}
+	});
 });
 
 app.delete('/deviceVenders/:id', function(req, res) {
-	var chain = db.transaction(function(chain) {
-		chain.query('delete from config.DEVICE_VENDER where ID=?', [ req.params.id ]);
-	}, function() {
-		res.status(200).end();
-	}, function(error) {
-		logger.error(error);
-		res.status(500).send(error);
+	db.doTransaction(function(connection) {
+		return [ function(callback) {
+			var sql='delete from config.DEVICE_VENDER where ID=?';
+			connection.query(sql, [req.params.id ], function(err, result) {
+				if(err){
+				callback(err);
+				}else{
+					callback();
+				}
+			});
+		}];
+
+	}, function(error, result) {
+		if (error) {
+			logger.error(error);
+			res.status(500).send(error);
+		} else {
+			res.status(200).end();
+		}
 	});
 });
 

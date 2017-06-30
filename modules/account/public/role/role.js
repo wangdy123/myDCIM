@@ -71,17 +71,13 @@ $(function() {
 		} ] ]
 	});
 
-	function getRowIndex(target) {
-		var tr = $(target).closest('tr.datagrid-row');
-		return parseInt(tr.attr('datagrid-row-index'));
-	}
 	WUI.role = {};
 	WUI.role.editrow = function(target) {
-		var role = $node.datagrid("getRows")[getRowIndex(target)];
+		var role = WUI.getDatagridRow($node,target);
 		roleDialog(role);
-	}
+	};
 	WUI.role.deleterow = function(target) {
-		var role = $node.datagrid("getRows")[getRowIndex(target)];
+		var role = WUI.getDatagridRow($node,target);
 		$.messager.confirm('确认', '确定要删除角色【' + role.NAME + '】吗?', function(r) {
 			if (r) {
 				WUI.ajax.remove(roleUrl + "/" + role.ID, {}, function() {
@@ -91,7 +87,7 @@ $(function() {
 				});
 			}
 		});
-	}
+	};
 
 	function roleDialog(role) {
 		WUI.ajax.get(rightUrl, {}, function(accountRights) {

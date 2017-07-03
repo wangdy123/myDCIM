@@ -1,6 +1,6 @@
 var app = require('./app');
 var expressWs = require('express-ws')(app); 
-// require('./role')
+require('./self-diagnosis');
 // require('./department')
 // require('./personnel')
 // require('./account')

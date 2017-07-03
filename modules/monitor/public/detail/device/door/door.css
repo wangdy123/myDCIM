@@ -1,0 +1,56 @@
+.door_closed_bmp {
+ display: inline-block;
+ background: url("images/close.bmp") 1px 0 no-repeat;
+ width: 120px;
+ height: 200px;
+}
+
+.door_opened_bmp {
+ display: inline-block;
+ background: url("images/open.bmp") 1px 0 no-repeat;
+ width: 120px;
+ height: 200px;
+}
+
+.door_invalid_bmp {
+ display: inline-block;
+ background: url("images/invalid.bmp") 1px 0 no-repeat;
+ width: 120px;
+ height: 200px;
+}
+
+.door_closed_icon {
+ display: inline-block;
+ background: url("images/green_light.png") 1px 0 no-repeat;
+ width: 16px;
+ height: 16px;
+}
+
+.door_opened_icon {
+ display: inline-block;
+ background: url("images/red_light.png") 1px 0 no-repeat;
+ width: 16px;
+ height: 16px;
+}
+
+.door_invalid_icon {
+ display: inline-block;
+ background: url("images/status_offline.png") 1px 0 no-repeat;
+ width: 16px;
+ height: 16px;
+}
+.card-auth{
+  display:inline-block;  
+  background:   url("images/use.png") 1px 0 no-repeat;
+  width: 16px;
+  height: 16px;
+  cursor:pointer;
+}
+
+.card-unauth{
+  display:inline-block;  
+  background:   url("images/0_delete.gif") 1px 0 no-repeat;
+  width: 16px;
+  height: 16px;
+  cursor:pointer;
+}

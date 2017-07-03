@@ -34,6 +34,9 @@ $(function() {
 	window.WUI.publishEvent('request_current_object', {
 		publisher : publisherName,
 		cbk : function(object) {
+			if(!object){
+				return;
+			}
 			WUI.ajax.get(objectNodeUrl + "/" + object.ID, {}, function(regionObject) {
 				openObject(regionObject);
 			}, function() {

@@ -129,7 +129,7 @@ function setMenu(body, account, menus, path, req) {
 	body.menus = mainMenus;
 }
 
-function findMenu(menuId){
+function findMenu(menuId) {
 	for ( var i = 0; i < config.menus.length; i++) {
 		var childMenus = config.menus[i].childMenus;
 		for ( var j = 0; j < childMenus.length; j++) {
@@ -155,8 +155,8 @@ app.get('/index.html', function(req, res) {
 			body.company = config.config.company;
 			body.logo = config.config.logo;
 			body.theme = theme;
-			var homePage=findMenu(account.HOME_PAGE);
-			var page = req.query.page ||homePage|| "dashboard/dashboard.html";
+			var homePage = findMenu(account.HOME_PAGE);
+			var page = req.query.page || homePage || "dashboard/dashboard.html";
 			setMenu(body, account, config.menus, page, req);
 			res.render('index', body);
 		});

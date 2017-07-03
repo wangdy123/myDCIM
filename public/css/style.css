@@ -119,6 +119,24 @@ label {
  background-color: #00F9FF;
 }
 
+.alarmLevel0-icon {
+ background: url('/images/status-small/green_light.png') no-repeat center center;;
+ display: inline-block;
+ width: 18px;
+ height: 16px;
+ padding: 0;
+ margin: 0 2px;
+ cursor: pointer;
+}
+
+.alarm_sound_icon {
+ display: inline-block;
+ width: 18px;
+ height: 16px;
+ padding: 0 5px;
+ margin: 0 2px;
+ cursor: pointer;
+}
 
 .statusInvalid-icon {
  background: url('/images/status-small/status_offline.png') no-repeat center center;;
@@ -139,7 +157,7 @@ label {
 }
 
 .alarmLevel1-icon {
- background: url('/images/status-small/red_light.png') no-repeat center center;;
+ background: url('/images/status-small/blue_light.png') no-repeat center center;;
  display: inline-block;
  width: 18px;
  height: 16px;
@@ -148,7 +166,7 @@ label {
 }
 
 .alarmLevel2-icon {
- background: url('/images/status-small/red_light.png') no-repeat center center;;
+ background: url('/images/status-small/yellow_light.png') no-repeat center center;;
  display: inline-block;
  width: 18px;
  height: 16px;
@@ -157,7 +175,7 @@ label {
 }
 
 .alarmLevel3-icon {
- background: url('/images/status-small/red_light.png') no-repeat center center;;
+ background: url('/images/status-small/pink_light.png') no-repeat center center;;
  display: inline-block;
  width: 18px;
  height: 16px;

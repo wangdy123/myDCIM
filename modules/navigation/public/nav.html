@@ -1,0 +1,21 @@
+<div class="easyui-layout" fit="true">
+	<div class="panel" region="north" border="true">
+		<input id="object-seach-box" style="width: 100%;"
+			class="easyui-validatebox"></input>
+	</div>
+	<div class="panel" region="center" border="false">
+		<div id="navigation-tab" class="easyui-tabs"
+			data-options=" border:true,plain:true,fit:true,tabPosition:'bottom'"
+			style="padding: 5px;">
+			<div title="位置导航" index="0" >
+				<ul id="monitor-object-tree" class="easyui-tree" selected="true"></ul>
+			</div>
+			<div title="查询结果" index="1">
+				<div id="seach-result-panel" class="panel" border="false" fit="true"></div>
+			</div>
+		</div>
+
+	</div>
+</div>
+<script type="text/javascript" src="navigation/navigation.js"></script>
+<script type="text/javascript" src="navigation/nav.js"></script>

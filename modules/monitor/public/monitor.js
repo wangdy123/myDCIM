@@ -54,6 +54,9 @@ $(document).ready(
 				WUI.publishEvent('request_current_object', {
 					publisher : "monitor_panel",
 					cbk : function(object) {
+						if(!object){
+							return;
+						}
 						window.WUI.ajax.get(objectNodeUrl + object.PARENT_ID, {}, function(parentObject) {
 							WUI.publishEvent('open_object', {
 								publisher : "monitor_panel",

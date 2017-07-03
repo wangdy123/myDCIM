@@ -1,4 +1,6 @@
-$(document).ready(function() {
+$(function() {
+	var selfDiagnosisUrl = 'alarm/selfDiagnosis';
+
 	var currentLogicObject = null;
 
 	WUI.subscribe('request_current_object', function(event) {
@@ -84,4 +86,98 @@ $(document).ready(function() {
 	$("#current-user-panel").click(function() {
 
 	});
+
+	function selfDiagnosis() {
+		if (WUI.selfDiagnosisTimer) {
+			clearTimeout(WUI.detail.selfDiagnosisTimer);
+			WUI.selfDiagnosisTimer = null;
+		}
+		WUI.ajax.get(selfDiagnosisUrl, {}, function(status) {
+			WUI.selfDiagnosisTimer = setTimeout(selfDiagnosis, WUI.monitor.REALTIME_VALUE_INTEVAL);
+
+		}, function() {
+			WUI.selfDiagnosisTimer = setTimeout(selfDiagnosis, WUI.monitor.REALTIME_VALUE_INTEVAL);
+		});
+	}
+
+	$("#realtime-status").click(showAlarmTooltip);
+	$('#sound-icon').click(function() {
+		setShoundmuted(!isShoundmuted());
+	});
+
+	var $soundBox = $("#sound-box");
+	var global_shoundFile = $.cookie('shoundFile');
+	var shound_muted = isShoundmuted();
+
+	if (!$soundBox) {
+		$soundBox = $(document.createElement("div"));
+		$("body").append($soundBox);
+	}
+
+	function setShoundmuted(muted) {
+		shound_muted = muted;
+		if (muted) {
+			$('#sound-icon').attr("src", "/images/Sound_off.png");
+			$.cookie('shoundmuted', 1);
+		} else {
+			$('#sound-icon').attr("src", "/images/Sound_on.png");
+			$.removeCookie('shoundmuted', null);
+		}
+	}
+
+	function isShoundmuted() {
+		return $.cookie('shoundmuted');
+	}
+
+	setShoundmuted(isShoundmuted());
+
+	function setSound(shoundFile) {
+		if (global_shoundFile && !shound_muted) {
+			$soundBox.html('<audio autoplay loop><source src="/image' + global_shoundFile
+					+ '" type="audio/wav" /></audio>');
+		} else {
+			$soundBox.empty();
+		}
+	}
+
+	var maxalarmLevel = 0;
+	function setSoundFile() {
+		var shoundFile = null;
+		if (maxalarmLevel > 0) {
+			shoundFile = "/level" + maxalarmLevel + ".wav";
+		} else {
+			shoundFile = null;
+		}
+		if (global_shoundFile === shoundFile) {
+			return;
+		}
+		global_shoundFile = shoundFile;
+		if (shoundFile) {
+			$.cookie('shoundFile', shoundFile);
+		} else {
+			$.removeCookie('shoundFile', null);
+		}
+		setSound();
+	}
+
+	function showAlarmTooltip() {
+		var $dialogNode = $('#alarm-tooltip');
+		$dialogNode.dialog({
+			iconCls : "icon-alarm",
+			title : "告警统计",
+			left : $(window).width() - 200,
+			top : $(window).height() - 200,
+			width : 200,
+			closed : false,
+			cache : false,
+			href : 'system-status-dialog.html',
+			onLoad : function() {
+
+			},
+			modal : false,
+			onClose : function() {
+				$dialogNode.empty();
+			}
+		});
+	}
 });

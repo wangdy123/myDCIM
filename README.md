@@ -7,6 +7,7 @@ Chart.js
 yum -y install cairo-devel libjpeg-turbo-devel giflib-devel
 yum -y install mariadb-server mariadb 
 yum -y install redis
+
 systemctl start mariadb
 systemctl enable mariadb
 systemctl start redis
@@ -17,3 +18,7 @@ cd /usr/share/fonts/chinese/TrueType
 mkfontscale
 mkfontdir
 fc-cache -f -v
+
+npm install pm2 -g
+
+pm2 start index.js -i 0 --name "DCIM"

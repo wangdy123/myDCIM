@@ -37,7 +37,7 @@ app.use(function(req, res, next) {
 require('dcim-permissions').initLogin(app, "");
 
 app.get('/', function(req, res) {
-	res.redirect("index.html?page=dashboard/dashboard.html");
+	res.redirect("index.html");
 });
 
 app.use('', require("./apps"));

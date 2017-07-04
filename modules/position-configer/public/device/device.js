@@ -214,8 +214,6 @@ $(function() {
 				$.messager.alert('失败', "对话框加载失败，请刷新后重试！");
 			},
 			onLoad : function() {
-				$('#device-start-use-date').datebox("setValue", WUI.dateFormat(new Date()));
-
 				for (var i = 0; i < deviceVenders.length; i++) {
 					$('#device-vender-sel').append(
 							'<option value="' + deviceVenders[i].ID + '">' + deviceVenders[i].NAME + '</option>');
@@ -228,9 +226,6 @@ $(function() {
 					}
 					var vender = parseInt($('#device-vender-sel').val(), 10);
 					var type = parseInt(deviceType.type,10);
-					console.log(vender);
-					console.log(type);
-					console.log(deviceModels);
 
 					for (var i = 0; i < deviceModels.length; i++) {
 						if (deviceModels[i].VENDER === vender && deviceModels[i].DEVICE_TYPE === type) {
@@ -242,11 +237,11 @@ $(function() {
 				}
 
 				$('#device-vender-sel').change(updateModel);
-				updateModel();
 				
 				function updateTime(model, startTime) {
 					var startTime = $('#device-start-use-date').datebox("getValue");
 					var model=$('#device-model-sel').val();
+
 					if (!model || !startTime) {
 						return;
 					}
@@ -271,6 +266,8 @@ $(function() {
 					parser:WUI.date_parse,
 					formatter : WUI.dateFormat
 				});
+				$('#device-start-use-date').datebox("setValue", WUI.dateFormat(new Date()));
+				updateModel();
 				updateTime();
 				if (device) {
 					$('#device-name-txt').val(device.NAME);

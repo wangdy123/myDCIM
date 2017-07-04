@@ -2,7 +2,7 @@ $(document).ready(
 		function() {
 			var objectNodeUrl = 'logicobject/objectNodes/';
 			WUI.monitor = WUI.monitor ? WUI.monitor : {};
-			WUI.monitor.REALTIME_VALUE_INTEVAL=5000;
+			WUI.monitor.REALTIME_VALUE_INTEVAL=WUI.requestInteval.realtimeValue;
 			
 			if (!WUI.monitor.inited) {
 				WUI.monitor.inited = true;

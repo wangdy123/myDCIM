@@ -1,49 +1,75 @@
 {
-	"root_object_id":1,
-	"fileMaxAge" : 30,
-	"httpPort" : 8080,
-	"secure":false,
-	"map":{
-		"defaultZoom":10,
-		"minZoom":8,
-		"maxZoom":16,
-		"LATITUDE":23.146984,
-		"LONGITUDE":113.30735
+	"requestInteval": {
+		"selfDiagnosis": 5000,
+		"realtimeValue": 5000
 	},
-	"db" : {
-		"host" : "localhost",
-		"port" : 3306,
-		"user" : "root",
-		"password" : "wangDY123",
-		"database" : "config"
+	"root_object_id": 1,
+	"fileMaxAge": 30,
+	"httpPort": 8080,
+	"secure": false,
+	"map": {
+		"defaultZoom": 10,
+		"minZoom": 8,
+		"maxZoom": 16,
+		"LATITUDE": 23.146984,
+		"LONGITUDE": 113.30735
 	},
-	"cassandra":{"nodes":[{"host" : "192.168.0.165",
-	     		"port" : 9042},{"host" : "192.168.0.177",
-		     		"port" : 9042}],
-		     		"record_keyspace":"history_record"},
-	"redis" : {
-		"host" : "localhost",
-		"port" : 6379,
-		"auth" : "wincom"
+	"db": {
+		"host": "localhost",
+		"port": 3306,
+		"user": "root",
+		"password": "wangDY123",
+		"database": "config"
 	},
-	"modules":{
-		"account":"/account",
-		"logicobject":"/logicobject",
-		"alarm":"/alarm",
-		"position-configer":"/position-configer",
-		"cabinet-model":"/cabinet-model",
-		"device-model":"/device-model",
-		"device-vender":"/device-vender",
-		"door":"/door",
-		"monitor":"/monitor",
-		"dashboard":"/dashboard",
-		"navigation":"/navigation",
-		"screen-edit":"/screen-edit"
+	"cassandra": {
+		"nodes": [
+			{
+				"host": "192.168.0.165",
+				"port": 9042
+			},
+			{
+				"host": "192.168.0.166",
+				"port": 9042
+			}
+		],
+		"record_keyspace": "history_record"
 	},
-	"systemName":"DCIM测试平台",
-	"copyRightText":"copyright:wincom",
-	"company":"广东盈嘉科技工程发展股份有限公司",
-	"logo":"images/logo1.jpg",
-	"confs":["themes","accountRights","menus","dashboard","objectTypeDef","objectTypes",
-	         "stationTypes","roomTypes","powerTypes","deviceTypes","object_ex","regionTypes","businessTypes"]
+	"redis": {
+		"host": "localhost",
+		"port": 6379,
+		"auth": "wincom"
+	},
+	"modules": {
+		"account": "/account",
+		"logicobject": "/logicobject",
+		"alarm": "/alarm",
+		"position-configer": "/position-configer",
+		"cabinet-model": "/cabinet-model",
+		"device-model": "/device-model",
+		"device-vender": "/device-vender",
+		"door": "/door",
+		"monitor": "/monitor",
+		"dashboard": "/dashboard",
+		"navigation": "/navigation",
+		"screen-edit": "/screen-edit"
+	},
+	"systemName": "DCIM测试平台",
+	"copyRightText": "copyright:wincom",
+	"company": "广东盈嘉科技工程发展股份有限公司",
+	"logo": "images/logo1.jpg",
+	"confs": [
+		"themes",
+		"accountRights",
+		"menus",
+		"dashboard",
+		"objectTypeDef",
+		"objectTypes",
+		"stationTypes",
+		"roomTypes",
+		"powerTypes",
+		"deviceTypes",
+		"object_ex",
+		"regionTypes",
+		"businessTypes"
+	]
 }

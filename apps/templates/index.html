@@ -66,11 +66,13 @@
 		<div style="position: absolute; left: 5px; display: inline-block;">{{company}}</div>
 		<div style="display: inline-block;">{{copyRightText}}</div>
 		<div style="position: absolute; right: 20px; display: inline-block;">
+			<a style="cursor: pointer;" id="selfDiagnosis-status"  href="#">自诊断状态:</a>
 			<img id="sound-icon" class="alarm_sound_icon" src="/images/Sound_on.png"></img>
-			<a style="cursor: pointer;" id="realtime-status"  href="#">告警计数：0</a>
+			<a style="cursor: pointer;" id="alarm-count-status"  href="#">告警计数：0</a>
 		</div>
 	</div>
 	<div id="change-password-dialog" class="easyui-dialog" data-options="closed:true"></div>
 	<div id="alarm-tooltip" class="easyui-dialog" data-options="closed:true"></div>
+	<div id="self-diagnosis-tooltip" class="easyui-dialog" data-options="closed:true"></div>
 </body>
 </html>

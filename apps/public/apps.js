@@ -84,23 +84,46 @@ $(function() {
 		});
 	});
 	$("#current-user-panel").click(function() {
-
+		//TODO::显示当前用户
 	});
 
 	function selfDiagnosis() {
 		if (WUI.selfDiagnosisTimer) {
-			clearTimeout(WUI.detail.selfDiagnosisTimer);
+			clearTimeout(WUI.selfDiagnosisTimer);
 			WUI.selfDiagnosisTimer = null;
 		}
 		WUI.ajax.get(selfDiagnosisUrl, {}, function(status) {
-			WUI.selfDiagnosisTimer = setTimeout(selfDiagnosis, WUI.monitor.REALTIME_VALUE_INTEVAL);
-
+			WUI.selfDiagnosisTimer = setTimeout(selfDiagnosis, WUI.requestInteval.selfDiagnosis);
+			//TODO
 		}, function() {
-			WUI.selfDiagnosisTimer = setTimeout(selfDiagnosis, WUI.monitor.REALTIME_VALUE_INTEVAL);
+			WUI.selfDiagnosisTimer = setTimeout(selfDiagnosis, WUI.requestInteval.selfDiagnosis);
 		});
 	}
-
-	$("#realtime-status").click(showAlarmTooltip);
+	
+	function showSelfDiagnosis(){
+		var $dialogNode = $('#self-diagnosis-tooltip');
+		$dialogNode.dialog({
+			iconCls : "icon-self-diagnosis",
+			title : "自诊断状态",
+			left : $(window).width() - 400,
+			top : $(window).height() - 220,
+			width : 200,
+			closed : false,
+			cache : false,
+			href : 'self-diagnosis-status-dialog.html',
+			onLoad : function() {
+				//TODO 显示自诊断
+			},
+			modal : false,
+			onClose : function() {
+				$dialogNode.empty();
+			}
+		});
+	}
+	selfDiagnosis();
+	$("#selfDiagnosis-status").click(showSelfDiagnosis);
+	
+	$("#alarm-count-status").click(showAlarmTooltip);
 	$('#sound-icon').click(function() {
 		setShoundmuted(!isShoundmuted());
 	});
@@ -166,11 +189,11 @@ $(function() {
 			iconCls : "icon-alarm",
 			title : "告警统计",
 			left : $(window).width() - 200,
-			top : $(window).height() - 200,
+			top : $(window).height() - 220,
 			width : 200,
 			closed : false,
 			cache : false,
-			href : 'system-status-dialog.html',
+			href : 'alarm-status-dialog.html',
 			onLoad : function() {
 
 			},

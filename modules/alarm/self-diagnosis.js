@@ -2,12 +2,14 @@ var app = require('./app');
 
 var redis = require('dcim-redis');
 var db = require('dcim-db');
+require('dcim-logger');
 
 function checkDb(status, beginCbk, endCbk) {
 	beginCbk();
 	db.pool.query('SELECT * FROM config.OBJECT where ID=1', function(error, results, fields) {
 		if (error) {
 			status.configdb = false;
+			logger.error(err);
 		} else {
 			status.configdb = true;
 		}
@@ -19,6 +21,7 @@ function checkHistory(status, beginCbk, endCbk) {
 	db.getRecordConnect(function(err, connect) {
 		if (err) {
 			status.historydb = false;
+			logger.error(err);
 		} else {
 			status.historydb = true;
 		}
@@ -36,6 +39,7 @@ function checkRedis(status, beginCbk, endCbk) {
 	client.set("link-test", "test string", function(err) {
 		if (err) {
 			status.redis = false;
+			logger.error(err);
 		} else {
 			status.redis = true;
 		}

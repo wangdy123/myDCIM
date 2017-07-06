@@ -2,7 +2,6 @@ CREATE KEYSPACE IF NOT EXISTS history_record WITH REPLICATION = {'class': 'Simpl
 use history_record;
 
 CREATE TABLE alarm (
-	sequence bigint,
 	object_id int,
 	signal_id int,
   	alarm_begin  bigint,
@@ -16,8 +15,10 @@ CREATE TABLE alarm (
   	ack_time     bigint,
     ack_desc     text,
     ack_user     text,
-	PRIMARY KEY (sequence) );
+	PRIMARY KEY (object_id,signal_id,alarm_begin) )WITH CLUSTERING ORDER BY (alarm_begin DESC);
 
-create index on alarm(object_id);
-create  CUSTOM index on alarm(object_id,signal_id,alarm_begin);
-create index on alarm(object_id,signal_id,end_time);
+create index on alarm(alarm_level);
+create index on alarm(end_time);
+create index on alarm(ack_time);
+
+SELECT * FROM alarm WHERE object_id = 1 AND alarm_level > 2 ALLOW FILTERING; 

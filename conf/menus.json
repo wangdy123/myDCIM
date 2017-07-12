@@ -45,7 +45,7 @@
 	}, {
 		"id" : 13,
 		"title" : "活动告警",
-		"url" : "alarm/active-alarm.html",
+		"url" : "alarm/active-alarm/workspace.html",
 		"border" : true,
 		"name" : "活动告警"
 	}, {

@@ -17,6 +17,8 @@ module.exports = function(req, res) {
 	str = str + 'window.WUI.menus=' + JSON.stringify(config.menus) + ';';
 	str = str + 'window.WUI.root_object_id=' + config.config.root_object_id + ';';
 	str = str + 'window.WUI.requestInteval=' + JSON.stringify(config.config.requestInteval) + ';';
+	str = str + 'window.WUI.alarmLevels=' + JSON.stringify(config.alarmLevels) + ';';
+	str = str + 'window.WUI.alarmTypes=' + JSON.stringify(config.alarmTypes) + ';';
 	permissions.getCurrentUser(req, res, function(err, account) {
 		if (err) {
 			res.send(str);
@@ -28,4 +30,4 @@ module.exports = function(req, res) {
 			res.send(str);
 		}
 	});
-}
+};

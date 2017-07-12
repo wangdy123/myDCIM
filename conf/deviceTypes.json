@@ -51,28 +51,28 @@
 	"type" : 8,
 	"name" : "机架式服务器",
 	"iconCls" : "icon-devicetype8",
-	"businessType" : 1,
+	"businessType" : 4,
 	"namespace" : "devicetype8",
 	"parentNodeTypes" : [11]
 }, {
 	"type" : 9,
 	"name" : "刀片式服务器",
 	"iconCls" : "icon-devicetype9",
-	"businessType" : 1,
+	"businessType" : 4,
 	"namespace" : "devicetype9",
 	"parentNodeTypes" : [11]
 }, {
 	"type" : 10,
 	"name" : "服务器机笼",
 	"iconCls" : "icon-devicetype10",
-	"businessType" : 1,
+	"businessType" : 4,
 	"namespace" : "devicetype10",
 	"parentNodeTypes" : [11]
 }, {
 	"type" : 11,
 	"name" : "交换机",
 	"iconCls" : "icon-devicetype11",
-	"businessType" : 1,
+	"businessType" :4,
 	"namespace" : "devicetype11",
 	"parentNodeTypes" : [11]
 } ]

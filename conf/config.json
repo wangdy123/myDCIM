@@ -70,6 +70,8 @@
 		"deviceTypes",
 		"object_ex",
 		"regionTypes",
-		"businessTypes"
+		"businessTypes",
+		"alarmLevels",
+		"alarmTypes"
 	]
 }

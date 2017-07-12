@@ -1,0 +1,38 @@
+{
+	"levels": [
+		{
+			"level": 1,
+			"name": "一级告警",
+			"iconCls": "alarmLevel1-icon",
+			"color": "#00F9FF"
+		},
+		{
+			"level": 2,
+			"name": "二级告警",
+			"iconCls": "alarmLevel2-icon",
+			"color": "#FFFF00"
+		},
+		{
+			"level": 3,
+			"name": "三级告警",
+			"iconCls": "alarmLevel3-icon",
+			"color": "#F500FF"
+		},
+		{
+			"level": 4,
+			"name": "四级告警",
+			"iconCls": "alarmLevel4-icon",
+			"color": "#FF0000"
+		}
+	],
+	"statusInvalid": {
+		"name": "无效",
+		"iconCls": "statusInvalid-icon",
+		"color": "gray"
+	},
+	"normal": {
+		"name": "正常",
+		"iconCls": "alarmLevel0-icon",
+		"color": "#00FF00"
+	}
+}

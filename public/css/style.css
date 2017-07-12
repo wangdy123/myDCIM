@@ -17,6 +17,11 @@ label {
  font-weight: bold;
 }
 
+select{
+	height:24px;
+	font-size:11px;
+	padding: 0;
+}
 #system-name {
  padding: 8px 20px;
  margin: 0;
@@ -95,32 +100,8 @@ label {
  margin: 20px 40px;
 }
 
-.statusInvalid {
- background-color: gray;
-}
-
-.alarmLevel0 {
- background-color: #00FF00;
-}
-
-.alarmLevel1 {
- background-color: #FF0000;
-}
-
-.alarmLevel2 {
- background-color: #F500FF;
-}
-
-.alarmLevel3 {
- background-color: #FFFF00;
-}
-
-.alarmLevel4 {
- background-color: #00F9FF;
-}
-
 .alarmLevel0-icon {
- background: url('/images/status-small/green_light.png') no-repeat center center;;
+ background: url('../images/status-small/green_light.png') no-repeat center center;;
  display: inline-block;
  width: 18px;
  height: 16px;
@@ -139,7 +120,7 @@ label {
 }
 
 .statusInvalid-icon {
- background: url('/images/status-small/status_offline.png') no-repeat center center;;
+ background: url('../images/status-small/status_offline.png') no-repeat center center;;
  display: inline-block;
  width: 18px;
  height: 16px;
@@ -148,7 +129,7 @@ label {
 }
 
 .alarmLevel0-icon {
- background: url('/images/status-small/green_light.png') no-repeat center center;;
+ background: url('../images/status-small/green_light.png') no-repeat center center;;
  display: inline-block;
  width: 18px;
  height: 16px;
@@ -157,7 +138,7 @@ label {
 }
 
 .alarmLevel1-icon {
- background: url('/images/status-small/blue_light.png') no-repeat center center;;
+ background: url('../images/status-small/blue_light.png') no-repeat center center;;
  display: inline-block;
  width: 18px;
  height: 16px;
@@ -166,7 +147,7 @@ label {
 }
 
 .alarmLevel2-icon {
- background: url('/images/status-small/yellow_light.png') no-repeat center center;;
+ background: url('../images/status-small/yellow_light.png') no-repeat center center;;
  display: inline-block;
  width: 18px;
  height: 16px;
@@ -184,7 +165,7 @@ label {
 }
 
 .alarmLevel4 -icon {
- background: url('/images/status-small/red_light.png') no-repeat center center;;
+ background: url('../images/status-small/red_light.png') no-repeat center center;;
  display: inline-block;
  width: 18px;
  height: 16px;
@@ -204,20 +185,12 @@ label {
  background-color: #dfdfdf;
 }
 
-.form-label {
- margin: 0 5px 0 1em;
+.icon-use {
+ background: url('../images/use.png') no-repeat center center;
 }
 
-.form-table-col {
- width: 12em;
-}
-
-.form-table-col-mid {
- width: 10em;
-}
-
-.form-table-col-sm {
- width: 8em;
+.icon-delete {
+ background: url('../images/0_delete.gif') no-repeat center center;
 }
 
 .icon-close {

@@ -16,5 +16,7 @@ app.ws('/alarm-ws', function(ws, req) {
 	});
 });
 
-
+app.get('/activeAlarms', function(req, res) {
+	res.status(200).send([]);
+});
 module.exports = app;

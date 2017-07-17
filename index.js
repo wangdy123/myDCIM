@@ -86,9 +86,9 @@ if (config.secure) {
 	var httpsServer = https.createServer(credentials, app);
 
 	httpsServer.listen(config.httpPort, function() {
-		logger.log('HTTPS Server is running on: https://localhost:%s', config.httpPort);
+		logger.log('HTTPS Server is running onport:'+ config.httpPort);
 	});
 } else {
 	app.listen(config.httpPort);
-	logger.log('Express server listening on port ' + config.httpPort);
+	logger.log('Express server listening on port: ' + config.httpPort);
 }

@@ -39,7 +39,7 @@
 	"name" : "按位置配置节点"
 }, {
 	"url" : "active-alarm.html",
-	"target" : "active-alarm.html",
+	"target" : "active-alarm/workspace.html",
 	"publicPath" : "./modules/alarm/public",
 	"name" : "活动告警"
 } , {

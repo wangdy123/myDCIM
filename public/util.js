@@ -324,17 +324,18 @@ window.WUI.timediffFormat = function(timeDiffSecond) {
 	res.S = (timeDiff - res.M * 60);// 减去分钟的秒数。再求秒的个数
 
 	res.toString = function() {
-		if (this.D > 0 || this.H > 0 || this.M > 0) {
-			return (this.D > 0 ? (this.D + "天") : "") + (this.H > 0 ? (this.H + "时") : "") + (this.M > 0 ? (this.M + "分") : "");
-		} else {
-			return this.S > 0 ? (this.S + "秒") : "";
-		}
+		return (this.D > 0 ? (this.D + "天") : "") + (this.H > 0 ? (this.H + "时") : "") + (this.M > 0 ? (this.M + "分") : "")+(this.S > 0 ? (this.S + "秒") : "");
+// if (this.D > 0 || this.H > 0 || this.M > 0) {
+// return (this.D > 0 ? (this.D + "天") : "") + (this.H > 0 ? (this.H + "时") : "") + (this.M > 0 ? (this.M + "分") : "");
+// } else {
+// return this.S > 0 ? (this.S + "秒") : "";
+// }
 	};
 	return res;
 };
 window.WUI.timeDiff = function(start, end) {
 	var endTime = end ? end : new Date();
-	return window.WUI.timediffFormat(Math.floor((endTime.getTime() - start.getTime()) / 1000));
+	return window.WUI.timediffFormat(Math.floor((endTime.getTime() - start.getTime()) / 1000)).toString();
 };
 $.extend($.fn.validatebox.defaults.rules, {
 	equalTo: {

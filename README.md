@@ -21,4 +21,7 @@ fc-cache -f -v
 
 npm install pm2 -g
 
+GRANT ALL PRIVILEGES ON *.* TO 'root'@'%'IDENTIFIED BY 'wangDY123' WITH GRANT OPTION; 
+flush privileges;
+
 pm2 start index.js -i 0 --name "DCIM"

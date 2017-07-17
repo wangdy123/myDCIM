@@ -27,7 +27,14 @@ window.WUI.publishEvent = function(name, event) {
 		}
 	}
 };
-
+window.WUI.findFromArray=function(array,key,value){
+	for (var i = 0; i < array.length; i++) {
+		var item = array[i];
+		if (item[key] === value) {
+			return item;
+		}
+	}
+};
 window.WUI.onLoadError=function(xhr){
 	if(xhr.status===401){
 		$.messager.alert('失败', "登录已超时，请重新登录！");
@@ -49,7 +56,7 @@ function doError(fail,xhr,textStatus){
 		location.reload();
 		return;
 	}
-	if(xhr.status===405){
+	if(xhr.status===403){
 		$.messager.alert('失败', "无操作权限，请联系系统管理员确认用户权限！");
 		return;
 	}
@@ -324,12 +331,13 @@ window.WUI.timediffFormat = function(timeDiffSecond) {
 	res.S = (timeDiff - res.M * 60);// 减去分钟的秒数。再求秒的个数
 
 	res.toString = function() {
-		return (this.D > 0 ? (this.D + "天") : "") + (this.H > 0 ? (this.H + "时") : "") + (this.M > 0 ? (this.M + "分") : "")+(this.S > 0 ? (this.S + "秒") : "");
-// if (this.D > 0 || this.H > 0 || this.M > 0) {
-// return (this.D > 0 ? (this.D + "天") : "") + (this.H > 0 ? (this.H + "时") : "") + (this.M > 0 ? (this.M + "分") : "");
-// } else {
-// return this.S > 0 ? (this.S + "秒") : "";
-// }
+		// return (this.D > 0 ? (this.D + "天") : "") + (this.H > 0 ? (this.H + "时") : "") + (this.M > 0 ? (this.M + "分")
+		// : "")+(this.S > 0 ? (this.S + "秒") : "");
+		if (this.D > 0 || this.H > 0 || this.M > 0) {
+			return (this.D > 0 ? (this.D + "天") : "") + (this.H > 0 ? (this.H + "时") : "") + (this.M > 0 ? (this.M + "分") : "");
+		} else {
+			return this.S > 0 ? (this.S + "秒") : "";
+		}
 	};
 	return res;
 };

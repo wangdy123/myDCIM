@@ -1,6 +1,8 @@
 $(function() {
 	var alarmUrl = "alarm/activeAlarms";
 	var finishAlarmUrl = "alarm/finishAlarm";
+	var alarmReasonUrl = "alarm/alarmReason";
+	var alarmAckUrl = "alarm/alarmAck";
 	var $node = $('#active-alarm-datagrid');
 	if (WUI.alarmWs_init) {
 		return;
@@ -8,21 +10,12 @@ $(function() {
 	WUI.alarmWs_init = true;
 
 	function isLeaf(data) {
-		if (!WUI.objectTypes[data.OBJECT_TYPE].childTypes) {
+		if (!WUI.objectTypes[data.OBJECT_TYPE].childTypes || WUI.objectTypes[data.OBJECT_TYPE].childTypes.length === 0) {
 			return true;
 		}
 		return false;
 	}
 
-	function getIconCls(data) {
-		try {
-			return WUI.objectTypes[data.OBJECT_TYPE].iconCls;
-		} catch (e) {
-			console.log(data.OBJECT_TYPE);
-			console.log(e);
-			return "";
-		}
-	}
 	$('#alarm-filter-object').combotree({
 		url : 'logicobject/objectNodes',
 		method : 'get',
@@ -43,14 +36,13 @@ $(function() {
 				objects.push({
 					id : data.ID,
 					text : data.NAME,
-					state : isLeaf(data) ? "open" : "closed",
-					iconCls : getIconCls(data),
+					state : !isLeaf(data) ? "open" : "closed",
+					iconCls : WUI.objectTypes[data.OBJECT_TYPE].iconCls,
 					attributes : {
 						data : data
 					}
 				});
 			}
-			console.log(objects);
 			return objects;
 		}
 	});
@@ -127,14 +119,42 @@ $(function() {
 		}
 		var endDate = $('#alarm-filter-endDate').datebox('getValue');
 		if (endDate) {
-			param.startDate = WUI.timeformat_t(endDate);
+			param.endDate = WUI.timeformat_t(endDate);
 		}
 		$node.datagrid("load", param);
 	}
 	$('#alarm-filter-search-btn').click(seachAlarm);
-	$('#alarm-filter-export-btn').click(function() {
-
-	});
+	$('#alarm-filter-export-btn').click(
+			function() {
+				var querys = [];
+				var objectId = $('#alarm-filter-object').combotree('getValue');
+				if (objectId) {
+					querys.push("objectId=" + objectId);
+				}
+				var alarmType = $('#alarm-filter-type').combobox('getValue');
+				if (alarmType) {
+					querys.push("alarmType=" + alarmType);
+				}
+				var alarmLevel = $('#alarm-filter-level').combobox('getValue');
+				if (alarmLevel) {
+					querys.push("alarmLevel=" + alarmLevel);
+				}
+				var deviceType = $('#alarm-filter-device-type').combobox('getValue');
+				if (deviceType) {
+					querys.push("deviceType=" + deviceType);
+				}
+				var startDate = $('#alarm-filter-startDate').datebox('getValue');
+				if (startDate) {
+					querys.push("startDate=" + WUI.timeformat_t(startDate));
+				}
+				var endDate = $('#alarm-filter-endDate').datebox('getValue');
+				if (endDate) {
+					querys.push("endDate=" + WUI.timeformat_t(endDate));
+				}
+				var url = alarmUrl + "/活动告警" + WUI.timeformat(new Date()) + ".xlsx"
+						+ (querys.length > 0 ? ("?" + querys.join("&")) : "");
+				open(url, '_self', 'height=100,width=400, top=0,left=0');
+			});
 
 	function showReasonDialog(title, msg, iconCls, okHandler) {
 		$('#alarm-reason-dialog').dialog({
@@ -168,10 +188,68 @@ $(function() {
 		});
 	}
 	$('#alarm-filter-ack-btn').click(function() {
+		var checkeds = $node.datagrid("getChecked");
+		var actives = [];
+		checkeds.forEach(function(record) {
+			if (!record.is_acked) {
+				actives.push(record);
+			}
+		});
+		if (actives.length > 0) {
+			showReasonDialog("告警处理", "请输入告警原因", 'icon-use', function(reason, password) {
+				var alarms = [];
+				for (var i = 0; i < actives.length; i++) {
+					var obj = {
+						object_id : actives[i].object_id,
+						signal_id : actives[i].signal_id,
+						alarm_begin : actives[i].alarm_begin,
+						reason : reason
+					};
+					alarms.push(obj);
+				}
 
+				WUI.ajax.put(alarmAckUrl, {
+					alarms : alarms,
+					password : password
+				}, function() {
+					seachAlarm();
+				}, function() {
+					$.messager.alert('失败', "确认告警失败！");
+				});
+			});
+
+		} else {
+			$.messager.alert('提示', "请选择未处理告警！");
+		}
 	});
 	$('#alarm-filter-reason-btn').click(function() {
+		var checkeds = $node.datagrid("getChecked");
+		if (checkeds.length > 0) {
+			showReasonDialog("告警原因", "确定要设置告警原因吗？", 'icon-edit', function(reason, password) {
+				var alarms = [];
+				for (var i = 0; i < checkeds.length; i++) {
+					var obj = {
+						object_id : checkeds[i].object_id,
+						signal_id : checkeds[i].signal_id,
+						alarm_begin : checkeds[i].alarm_begin,
+						reason : reason
+					};
+					alarms.push(obj);
+				}
 
+				WUI.ajax.put(alarmReasonUrl, {
+					alarms : alarms,
+					password : password
+				}, function() {
+					seachAlarm();
+				}, function() {
+					$.messager.alert('失败', "设置告警原因失败！");
+				});
+			});
+
+		} else {
+			$.messager.alert('提示', "请选择告警！");
+		}
 	});
 	$('#alarm-filter-cancel-btn').click(function() {
 		var checkeds = $node.datagrid("getChecked");
@@ -188,14 +266,9 @@ $(function() {
 					var obj = {
 						object_id : actives[i].object_id,
 						signal_id : actives[i].signal_id,
-						alarm_begin : actives[i].alarm_begin
+						alarm_begin : actives[i].alarm_begin,
+						reason : reason
 					};
-
-					if (actives[i].reason) {
-						obj.reason = reason ? (actives[i].reason + ";" + reason) : actives[i].reason;
-					} else {
-						obj.reason = reason;
-					}
 					alarms.push(obj);
 				}
 
@@ -214,17 +287,34 @@ $(function() {
 		}
 	});
 	WUI.activeAlarm = WUI.activeAlarm || {};
+	function isAlarmInArray(row, records) {
+		for (var i = 0; i < records.length; i++) {
+			if (records[i] === row) {
+				return true;
+			}
+		}
+		return false;
+	}
 	function checkAlarmDiff() {
 		if (WUI.activeAlarm.TimeDiffTimer) {
 			clearTimeout(WUI.activeAlarm.TimeDiffTimer);
 			WUI.activeAlarm.TimeDiffTimer = null;
 		}
 		var datas = $node.datagrid("getRows");
+		var endTime = new Date();
+		var checkeds = $node.datagrid("getChecked");
 		for (var i = 0; i < datas.length; i++) {
 			if (!datas[i].is_finished) {
 				var row = $node.datagrid("getRows")[i];
-				var checkeds=$node.datagrid("getChecked");
-				//$node.datagrid('refreshRow', i);
+				$node.datagrid('updateRow', {
+					index : i,
+					row : {
+						continued : WUI.timeDiff(WUI.date_parse(row.alarm_begin), endTime),
+					}
+				});
+				if (isAlarmInArray(datas[i], checkeds)) {
+					$node.datagrid("checkRow", i);
+				}
 			}
 		}
 		WUI.activeAlarm.TimeDiffTimer = setTimeout(checkAlarmDiff, 1000);
@@ -281,12 +371,8 @@ $(function() {
 					width : 80,
 					field : "alarm_type",
 					formatter : function(value, row, index) {
-						for (var i = 0; i < WUI.alarmTypes.length; i++) {
-							var type = WUI.alarmTypes[i];
-							if (type.type === row.alarm_type) {
-								return type.name;
-							}
-						}
+						var type = WUI.findFromArray(WUI.alarmTypes, "type", row.alarm_type);
+						return type ? type.name : "";
 					}
 				},
 				{
@@ -347,14 +433,7 @@ $(function() {
 				}, {
 					width : 100,
 					title : "持续时间",
-					field : "alarmBegin",
-					formatter : function(value, row, index) {
-						var endTime = new Date();
-						if (row.is_finished) {
-							endTime = WUI.date_parse(row.alarm_end);
-						}
-						return WUI.timeDiff(WUI.date_parse(row.alarm_begin), endTime);
-					}
+					field : "continued"
 				}, {
 					width : 130,
 					title : "处理时间",

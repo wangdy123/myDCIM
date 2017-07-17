@@ -8,7 +8,8 @@ $(function() {
 			if (config.isLeaf) {
 				return config.isLeaf(data);
 			} else {
-				if (!WUI.objectTypes[data.OBJECT_TYPE].childTypes) {
+				if (!WUI.objectTypes[data.OBJECT_TYPE].childTypes
+						|| WUI.objectTypes[data.OBJECT_TYPE].childTypes.length === 0) {
 					return true;
 				}
 			}
@@ -49,7 +50,7 @@ $(function() {
 			onSelect : openObject,
 			loadFilter : function(datas, parent) {
 				var objects = [];
-				for ( var i = 0; i < datas.length; i++) {
+				for (var i = 0; i < datas.length; i++) {
 					var data = datas[i];
 					if (!showEable(data)) {
 						continue;
@@ -204,7 +205,7 @@ $(function() {
 					},
 					loadFilter : function(datas, parent) {
 						var objects = [];
-						for ( var i = 0; i < datas.length; i++) {
+						for (var i = 0; i < datas.length; i++) {
 							objects.push({
 								id : datas[i].ID,
 								text : datas[i].NAME,

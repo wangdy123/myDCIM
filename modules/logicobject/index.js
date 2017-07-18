@@ -1,6 +1,6 @@
 var db = require('dcim-db');
 var util = require("dcim-util");
-var objectDao = require('dcim-object-dao')
+var objectDao = require('dcim-object-dao');
 
 var express = require('express');
 var app = express();

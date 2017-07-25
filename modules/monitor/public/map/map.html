@@ -1,5 +1,35 @@
-<div id="map-container" class="easyui-panel" border="false" fit="true"></div>
-<div id="map-object-select-dialog" data-options="closed: true,modal:true,width : 350,height: 400">
+<div class="easyui-layout" data-options="fit:true,border:false">
+	<div class="easyui-panel" data-options="region:'north', border:false" style="height: 80px;">
+		<div class="easyui-panel" style="padding: 0 5px;" data-options="border:false">
+			<div class="easyui-panel" data-options="border:true">
+				<table>
+					<tr>
+						<td align="right" style="width: 120px;"><label>数据中心机楼：</label></td>
+						<td style="width: 220px;" id="building-count"></td>
+						<td colspan="8"><label>该区域告警统计</label></td>
+					</tr>
+					<tr>
+						<td align="right"><label>数据中心机房：</label></td>
+						<td id="room-count"></td>
+						<td><div class="alarmLevel1-icon" title="一级告警"></div></td>
+						<td id="alarmLevel1-count"></td>
+						<td align="right" style="width: 30px;"><div class="alarmLevel2-icon" title="二级告警"></div></td>
+						<td id="alarmLevel2-count"></td>
+						<td align="right" style="width: 30px;"><div class="alarmLevel3-icon" title="三级告警"></div></td>
+						<td id="alarmLevel3-count"></td>
+						<td align="right" style="width: 30px;"><div class="alarmLevel4-icon" title="四级告警"></div></td>
+						<td id="alarmLevel4-count"></td>
+					</tr>
+					<tr>
+						<td align="right"><label>总机架数：</label></td>
+						<td id="cabinet-count"></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+	<div id="map-container" class="easyui-panel" data-options="border:false,region:'center'"></div>
 </div>
+<div id="map-object-select-dialog" data-options="closed: true,modal:true,width : 350,height: 400"></div>
 <script type="text/javascript" src="navigation/navigation.js"></script>
 <script type="text/javascript" src="monitor/map/gmap.js"></script>

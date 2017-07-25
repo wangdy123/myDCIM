@@ -3,7 +3,7 @@ var app = require('./app');
 var db = require('dcim-db');
 var util = require('dcim-util');
 var config = require('dcim-config');
-var dao = require('dcim-object-dao');
+var cache = require('dcim-cache');
 
 function queryActiveAlarm(querys,callback){
 	var params=[];
@@ -51,11 +51,10 @@ function queryActiveAlarm(querys,callback){
 		db.pool.query(sql, params, callback);
 	}
 	if(querys.objectId){
-		dao.getChildObjectId(db.pool,querys.objectId,function(err,childIds){
+		cache.getChildObjectId(db.pool,querys.objectId,function(err,childIds){
 			if (err) {
 				callback(err);
 			}else{
-			childIds.push(querys.objectId);
 			filters.push("object_id in("+childIds.join(',')+")");
 			query(params,filters,orderBy);
 			}

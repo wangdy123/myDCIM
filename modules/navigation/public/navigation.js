@@ -72,18 +72,6 @@ $(function() {
 					objects.push(item);
 				}
 				return objects;
-			},
-			onLoadSuccess : function(node, data) {
-				if (!node) {
-					var root = $treeNode.tree("getRoot");
-					$treeNode.tree("expand", root.target);
-					openObject(root);
-					$treeNode.tree("select", root.target);
-				} else {
-					if (node.attributes.data.OBJECT_TYPE === WUI.objectTypeDef.REGION) {
-						$treeNode.tree("expand", node.target);
-					}
-				}
 			}
 		});
 		function reload(object) {
@@ -135,16 +123,20 @@ $(function() {
 				});
 			});
 		}
+
 		if (config.eventEnable) {
 			WUI.subscribe('reload_object', function(event) {
 				if (event.publisher === publisherName) {
 					return;
 				}
 				reload(event.object);
-			},"navigation");
-
+			}, "navigation");
+			var currentObject = null;
 			WUI.subscribe('open_object', function(event) {
 				if (event.publisher === publisherName) {
+					return;
+				}
+				if (currentObject && currentObject.ID === event.object.ID) {
 					return;
 				}
 				var node = $treeNode.tree('find', event.object.ID);
@@ -162,14 +154,14 @@ $(function() {
 						}
 					});
 				}
-			},"navigation");
+			}, "navigation");
 
 			WUI.subscribe('request_root_object', function(event) {
 				var node = $treeNode.tree('getRoot');
 				if (node) {
 					event.cbk(node.attributes.data);
 				}
-			},"navigation");
+			}, "navigation");
 		}
 	};
 	window.WUI.createLogicObjectSeachBox = function(config) {
@@ -220,7 +212,7 @@ $(function() {
 	};
 
 	window.WUI.openNodeSelectDialog = function($dialogNode, config) {
-		$dialogNode.dialog({
+		var cfg = {
 			title : "选择要标记的对象",
 			left : ($(window).width() - 300) * 0.5,
 			top : ($(window).height() - 300) * 0.5,
@@ -287,6 +279,7 @@ $(function() {
 					$dialogNode.dialog("close");
 				}
 			} ]
-		});
+		};
+		$dialogNode.dialog(cfg);
 	};
 });

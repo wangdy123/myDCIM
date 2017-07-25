@@ -7,3 +7,12 @@
  cursor: pointer;
  background: url('/images/return.png') no-repeat center center;
 }
+.bread-separator {
+ display: inline-block;
+}
+
+.bread-item {
+ display: inline-block;
+ cursor: pointer;
+  padding: 5px;
+}

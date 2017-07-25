@@ -24,7 +24,7 @@ window.WUI.publishEvent = function(name, event) {
 			subscribes[evt].fn(event);
 		}
 		}catch(e){
-			console.log(evt);
+			console.log(subscribes[evt].subscriber);
 			console.log(e);
 		}
 	}
@@ -37,6 +37,11 @@ window.WUI.findFromArray=function(array,key,value){
 		}
 	}
 };
+
+window.WUI.hasRight=function(rightId){
+	return WUI.findFromArray(WUI.userRights, "id", rightId);
+};
+
 window.WUI.onLoadError=function(xhr){
 	if(xhr.status===401){
 		$.messager.alert('失败', "登录已超时，请重新登录！");

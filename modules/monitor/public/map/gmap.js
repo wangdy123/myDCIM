@@ -84,35 +84,49 @@ $(function() {
 				markerObject(data);
 			},
 			isLeaf : function(data) {
-				return [ WUI.objectTypeDef.REGION, WUI.objectTypeDef.STATION_BASE ].indexOf(data.OBJECT_TYPE) < 0;
+				return [ WUI.objectTypeDef.REGION ].indexOf(data.OBJECT_TYPE) < 0;
 			}
 		});
 	}
-	map.addListener('rightclick', markObject);
-
+	if (WUI.hasRight(2)) {
+		map.addListener('rightclick', markObject);
+	}
 	function setCenter(objectLocation) {
 		map.panTo(new google.maps.LatLng(objectLocation.LATITUDE, objectLocation.LONGITUDE));
 		map.setZoom(getMakerPro(objectLocation).zoom);
 	}
 
 	function getObjectContent(objectLocation) {
-		var content = "<p style='font-size:12px;lineheight:1.8em;'><b>" + objectLocation.NAME + "</b><br>";
-		content += "<span><strong>类型：</strong>" + getMakerPro(objectLocation).name + "</span><br>";
-		content += "<span><strong>计数：</strong>" + objectLocation.count + "</span><br></p>";
+		var content = '<table><tr><td colspan="8"><b style="font-size:18px;lineheight:24px;">' + objectLocation.NAME
+				+ '</b></td></tr>' + '<tr><td align="right" colspan="6"><label>节点类型：</label></td><td>'
+				+ getMakerPro(objectLocation).name + '</td></tr>'
+				+ '<tr><td align="right" colspan="6"><label>编码：</label></td><td>' + objectLocation.CODE + '</td></tr>'
+				+ '<tr><td align="right" colspan="6"><label>数据中心机楼：</label></td><td>' + objectLocation.buildingCount
+				+ '</td></tr>' + '<tr><td align="right" colspan="6"><label>数据中心机楼：</label></td><td>'
+				+ objectLocation.buildingCount + '</td></tr>'
+				+ '<tr><td align="right" colspan="6"><label>数据中心机房：</label></td><td>' + objectLocation.roomCount
+				+ '</td></tr>' + '<tr><td align="right" colspan="6"><label>总机架数：</label></td><td>'
+				+ objectLocation.cabinetCount + '</td></tr>' + '<tr><td colspan="8"><label>该区域告警统计</label></td></tr>'
+				+ '<tr><td><div class="alarmLevel1-icon" title="一级告警"></div></td><td>'
+				+ objectLocation.alarmLevel1Count + '</td>'
+				+ '<td><div class="alarmLevel2-icon" title="二级告警"></div></td><td>' + objectLocation.alarmLevel2Count
+				+ '</td>' + '<td><div class="alarmLevel3-icon" title="三级告警"></div></td><td>'
+				+ objectLocation.alarmLevel3Count + '</td>'
+				+ '<td><div class="alarmLevel4-icon" title="四级告警"></div></td><td>' + objectLocation.alarmLevel4Count
+				+ '</td></tr></table>';
 		return content;
 	}
 
 	function addMarker(objectLocation) {
 		if (makers[objectLocation.ID]) {
 			makers[objectLocation.ID].marker.setMap(null);
-			// map.removeOverlay(makers[objectLocation.ID].marker);
 		}
 		if (!objectLocation.LONGITUDE || !objectLocation.LATITUDE) {
 			return;
 		}
 		var marker = new google.maps.Marker({
 			map : map,
-			// icon : iconUrl + objectLocation.NAME + ".png"
+			icon : iconUrl + objectLocation.NAME + ".png",
 			position : new google.maps.LatLng(objectLocation.LATITUDE, objectLocation.LONGITUDE),
 			title : objectLocation.NAME
 		});
@@ -127,6 +141,7 @@ $(function() {
 		google.maps.event.addListener(marker, 'click', function(p) {
 			openObject(objectLocation, true);
 		});
+
 		var infowindow = new google.maps.InfoWindow({// 定义一个窗口，当点击时弹出该窗口
 			content : getObjectContent(objectLocation)
 		});
@@ -176,6 +191,13 @@ $(function() {
 			if (!objectLocation.LONGITUDE || !objectLocation.LATITUDE) {
 				return;
 			}
+			$("#building-count").text(objectLocation.buildingCount);
+			$("#room-count").text(objectLocation.roomCount);
+			$("#cabinet-count").text(objectLocation.cabinetCount);
+			$("#alarmLevel1-count").text(objectLocation.alarmLevel1Count);
+			$("#alarmLevel2-count").text(objectLocation.alarmLevel2Count);
+			$("#alarmLevel3-count").text(objectLocation.alarmLevel3Count);
+			$("#alarmLevel4-count").text(objectLocation.alarmLevel4Count);
 			if (objectLocation && objectLocation.OBJECT_TYPE === WUI.objectTypeDef.STATION_BASE) {
 				hightLight(objectLocation);
 			} else {
@@ -190,7 +212,12 @@ $(function() {
 			}
 		});
 	}
-
+	// WUI.subscribe('open_object', function(event) {
+	// if (!event.object) {
+	// return;
+	// }
+	// openObject(event.object);
+	// }, "map");
 	window.WUI.publishEvent('request_current_object', {
 		publisher : publisherName,
 		cbk : function(object) {

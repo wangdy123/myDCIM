@@ -25,16 +25,6 @@
 			contentType : "application/x-www-form-urlencoded",
 			timeout : 30000, // 超时时间
 			success : function(data, textStatus, jqXHR) {
-				if ($("#enable-map-ck").prop("checked")) {
-					$.cookie('enableMap', "enable");
-				} else {
-					$.removeCookie('enableMap', null);
-				}
-				if ($("#enable-3d-ck").prop("checked")) {
-					$.cookie('enable3D', 'enable');
-				} else {
-					$.removeCookie('enable3D', null);
-				}
 				location.reload();
 			},
 			error : function(xhr, textStatus) {
@@ -64,14 +54,6 @@
                 <form id="login-form">
                     <table style="float: left;">
                         <tr>
-                            <td><input id="enable-map-ck" type="checkbox" checked="checked" /></td>
-                            <td>启用地图</td>
-                        </tr>
-                        <tr>
-                            <td><input id="enable-3d-ck" type="checkbox" checked="checked" /></td>
-                            <td>启用3D</td>
-                        </tr>
-                        <tr>
                             <td>帐号:</td>
                             <td><input id="username" type="text" name="username" value="" /></td>
                         </tr>
@@ -80,7 +62,7 @@
                             <td><input id="password" type="password" name="password" value="" /></td>
                         </tr>
                     </table>
-                    <div style="float: left; padding: 60px 10px 0; vertical-align: middle;">
+                    <div style="float: left; padding: 10px 10px 0; vertical-align: middle;">
                         <input id="login-button" type="button" name="login" onclick="doLogin()" value="登录" />
                     </div>
                     <div style="float: left; width: 100px; padding: 70px 0 0; color: red;">

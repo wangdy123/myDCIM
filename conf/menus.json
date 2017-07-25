@@ -26,18 +26,7 @@
 				"url": "monitor/monitor.html",
 				"border": false,
 				"name": "主控台",
-				"scripts3D": [
-					{
-						"src": "tw/libs/t.js"
-					},
-					{
-						"src": "tw/libs/twaver.js"
-					},
-					{
-						"src": "tw/libs/twaver-make.js"
-					}
-				],
-				"scriptsMap": [
+				"scripts": [
 					{
 						"src": "mapfiles/mapapi.js"
 					}

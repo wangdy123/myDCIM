@@ -1,0 +1,13 @@
+{
+  "name": "dcim-cache",
+  "version": "0.0.1",
+  "description": "wincom DCIM dcim-cache",
+  "main": "./index.js",
+  "dependencies": {
+  },
+  "repository": {
+  },
+  "author": {
+	    "name":"wang sx"
+	  }
+}

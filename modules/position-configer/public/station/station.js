@@ -96,14 +96,7 @@ $(document).ready(
 			}
 			window.WUI.publishEvent('request_current_object', {
 				publisher : 'station-configer',
-				cbk : function(object) {
-					WUI.ajax.get(objectNodeUrl + "/" + object.ID, {}, function(stationObject) {
-						openObject(stationObject);
-					}, function() {
-						var typeName = WUI.objectTypes[WUI.objectTypeDef.STATION_BASE].name;
-						$.messager.alert('失败', "读取" + typeName + "配置失败！");
-					});
-				}
+				cbk : openObject
 			});
 
 			WUI.station.editrow = function(target) {

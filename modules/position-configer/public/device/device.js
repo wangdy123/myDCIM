@@ -164,13 +164,7 @@ $(function() {
 	function queryObject() {
 		window.WUI.publishEvent('request_current_object', {
 			publisher : 'device-configer',
-			cbk : function(object) {
-				WUI.ajax.get(objectNodeUrl + "/" + object.ID, {}, function(deviceObject) {
-					openObject(deviceObject);
-				}, function() {
-					$.messager.alert('失败', "读取" + typeName + "配置失败！");
-				});
-			}
+			cbk : openObject
 		});
 	}
 
@@ -206,7 +200,7 @@ $(function() {
 			title : (device ? "修改" : "添加") + typeName,
 			left : ($(window).width() - 600) * 0.5,
 			top : ($(window).height() - 400) * 0.5,
-			width : 680,
+			width : 650,
 			closed : false,
 			cache : false,
 			href : "position-configer/device/" + deviceType.namespace + ".html",
@@ -225,7 +219,7 @@ $(function() {
 						return;
 					}
 					var vender = parseInt($('#device-vender-sel').val(), 10);
-					var type = parseInt(deviceType.type,10);
+					var type = parseInt(deviceType.type, 10);
 
 					for (var i = 0; i < deviceModels.length; i++) {
 						if (deviceModels[i].VENDER === vender && deviceModels[i].DEVICE_TYPE === type) {
@@ -237,10 +231,10 @@ $(function() {
 				}
 
 				$('#device-vender-sel').change(updateModel);
-				
+
 				function updateTime(model, startTime) {
 					var startTime = $('#device-start-use-date').datebox("getValue");
-					var model=$('#device-model-sel').val();
+					var model = $('#device-model-sel').val();
 
 					if (!model || !startTime) {
 						return;
@@ -258,12 +252,12 @@ $(function() {
 
 				$('#device-model-sel').change(updateTime);
 				$('#device-start-use-date').datebox({
-					parser:WUI.date_parse,
+					parser : WUI.date_parse,
 					formatter : WUI.dateFormat,
 					onSelect : updateTime
 				});
 				$('#device-expect-end-date').datebox({
-					parser:WUI.date_parse,
+					parser : WUI.date_parse,
 					formatter : WUI.dateFormat
 				});
 				$('#device-start-use-date').datebox("setValue", WUI.dateFormat(new Date()));

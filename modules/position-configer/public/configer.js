@@ -6,7 +6,7 @@ $(document).ready(function() {
 	var currentObject = null;
 	WUI.subscribe('open_object', function(event) {
 		openObject(event.object);
-	});
+	},"configer");
 
 	WUI.getConfigerDialogPath = function(namespace) {
 		return "position-configer/" + namespace + "/dialog.html";

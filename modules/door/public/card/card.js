@@ -48,7 +48,7 @@ $(document).ready(
 				});
 
 				reload(false);
-			});
+			},"card");
 			$node.datagrid({
 				url : doorUrl,
 				method : "get",

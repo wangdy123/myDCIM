@@ -1,4 +1,11 @@
 $(document).ready(function() {
+	if(WUI.navigationTreeInited){
+		return;
+	}
+	WUI.navigationTreeInited=true;
+	
+	var objectNodeUrl = 'logicobject/objectNodes/';
+	
 	WUI.createNavTree($('#monitor-object-tree'), {
 		eventEnable : true
 	});
@@ -15,4 +22,14 @@ $(document).ready(function() {
 			$('#navigation-tab').tabs('select', 1);
 		}
 	});
+	var objectId = WUI.getParameterByName("objectId") || $.cookie('currentObjectId');
+	if (objectId) {
+		window.WUI.ajax.get(objectNodeUrl + objectId, {}, function(obj) {
+			currentLogicObject = obj;
+			WUI.publishEvent('open_object', {
+				publisher : "apps",
+				object : obj
+			});
+		});
+	}
 });

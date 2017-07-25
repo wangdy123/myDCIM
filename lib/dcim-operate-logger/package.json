@@ -1,0 +1,14 @@
+{
+  "name": "dcim-operate-logger",
+  "version": "0.0.1",
+  "description": "wincom DCIM dcim-operate-logger",
+  "main": "./index.js",
+  "dependencies": {
+
+  },
+  "repository": {
+  },
+  "author": {
+	    "name":"wang sx"
+	  }
+}

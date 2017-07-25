@@ -1,0 +1,28 @@
+
+.icon-menu-monitor {
+ background: url('monitor.png') no-repeat center center;
+}
+.icon-menu-alarm {
+ background: url('alarm.png') no-repeat center center;
+}
+
+.icon-menu-dashboard {
+ background: url('dashboard.png') no-repeat center center;
+}
+
+.icon-menu-door {
+ background: url('alarm.png') no-repeat center center;
+}
+
+.icon-menu-card {
+ background: url('card.png') no-repeat center center;
+}
+.fullscreen-tool {
+ display: inline-block;
+ width: 18px;
+ height: 16px;
+ padding: 5px;
+ margin: 0 2px;
+ cursor: pointer;
+ background: url('fullscreen.png') no-repeat center center;
+}

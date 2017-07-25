@@ -12,7 +12,7 @@ app.get('/personnelsNotAccount', function(req, res) {
 	var sql = 'select p.ID,p.NAME,p.JOB_NUMBER,p.E_MAIL,p.TEL,p.ENABLE,p.CREATE_TIME,p.DEPARTMENT,'
 			+ 'd.NAME as DEPARTMENT_NAME from portal.PERSONNEL_CFG p '
 			+ 'join portal.DEPARTMENT d on p.DEPARTMENT=d.ID where p.DEPARTMENT=? '
-			+ 'and p.ID not in (select ID from portal.ACCOUNT)';
+			+ 'and p.ID not in (select ID from portal.ACCOUNT) and p.ENABLE=1';
 	db.pool.query(sql, [ req.query.departmentId ], function(error, personnels, fields) {
 		if (error) {
 			logger.error(error);
@@ -24,8 +24,9 @@ app.get('/personnelsNotAccount', function(req, res) {
 });
 
 app.get('/accounts', function(req, res) {
-	var sql = 'select a.ID,p.NAME,p.JOB_NUMBER,a.ACCOUNT,a.IS_GOD,p.E_MAIL,p.TEL,p.ENABLE as PERSONNEL_ENABLE,'
-			+ 'a.ENABLE,a.PASSWORD_TIME,a.DEFAULT_THEME,a.HOME_PAGE,p.CREATE_TIME,p.DEPARTMENT,d.NAME as DEPARTMENT_NAME '
+	var sql = 'select a.ID,p.NAME,p.JOB_NUMBER,a.ACCOUNT,a.IS_GOD,p.E_MAIL,p.TEL,'
+			+ 'p.ENABLE as PERSONNEL_ENABLE,a.ENABLE,a.PASSWORD_TIME,a.DEFAULT_THEME,'
+			+ 'a.HOME_PAGE,p.CREATE_TIME,p.DEPARTMENT,d.NAME as DEPARTMENT_NAME '
 			+ 'from portal.ACCOUNT a join portal.PERSONNEL_CFG p on a.ID=p.ID '
 			+ 'join portal.DEPARTMENT d on p.DEPARTMENT=d.ID';
 	db.pool.query(sql, function(error, accounts, fields) {
@@ -34,7 +35,8 @@ app.get('/accounts', function(req, res) {
 			res.status(500).send(error);
 			return;
 		}
-		var sql = 'select a.ACCOUNT_ID,r.ID as ROLE_ID,r.NAME from portal.ROLE r join portal.ACCOUNT_ROLE a on a.ROLE_ID=r.ID ';
+		var sql = 'select a.ACCOUNT_ID,r.ID as ROLE_ID,r.NAME '
+				+ 'from portal.ROLE r join portal.ACCOUNT_ROLE a on a.ROLE_ID=r.ID ';
 		db.pool.query(sql, function(err, roles) {
 			if (err) {
 				logger.error(error);
@@ -87,8 +89,8 @@ app.post('/accounts', function(req, res) {
 		var tasks = [ function(callback) {
 			var sql = 'INSERT INTO portal.ACCOUNT(ID,ACCOUNT,IS_GOD,DEFAULT_THEME,'
 					+ 'LOGIN_PASSWORD,PASSWORD_TIME,ENABLE,HOME_PAGE)values(?,?,0,?,?,sysdate(),1,?)';
-			connection.query(sql, [ account.ID, account.ACCOUNT, account.ROLE_ID, account.DEFAULT_THEME,
-					account.LOGIN_PASSWORD,account.HOME_PAGE ], function(err, result) {
+			connection.query(sql, [ account.ID, account.ACCOUNT, account.DEFAULT_THEME,
+					util.transToSha1(account.LOGIN_PASSWOR), account.HOME_PAGE ], function(err, result) {
 				callback(err);
 			});
 		} ];
@@ -110,7 +112,7 @@ app.put('/accounts', function(req, res) {
 	db.doTransaction(function(connection) {
 		var tasks = [ function(callback) {
 			var sql = 'update portal.ACCOUNT set DEFAULT_THEME=?,HOME_PAGE=? where ID=?';
-			connection.query(sql, [ account.DEFAULT_THEME,account.HOME_PAGE, account.ID ], function(err, result) {
+			connection.query(sql, [ account.DEFAULT_THEME, account.HOME_PAGE, account.ID ], function(err, result) {
 				callback(err);
 			});
 		}, function(callback) {

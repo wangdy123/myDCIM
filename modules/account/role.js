@@ -27,7 +27,9 @@ function pivotRoleRight(roles) {
 			};
 			results.push(role);
 		}
+		if(roles[i].RIGHT_ID){
 		role.rights.push(roles[i].RIGHT_ID);
+		}
 	}
 	return results;
 }

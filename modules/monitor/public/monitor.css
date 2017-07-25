@@ -7,13 +7,3 @@
  cursor: pointer;
  background: url('/images/return.png') no-repeat center center;
 }
-
-.fullscreen-tool {
- display: inline-block;
- width: 18px;
- height: 16px;
- padding: 5px;
- margin: 0 2px;
- cursor: pointer;
- background: url('/images/fullscreen.png') no-repeat center center;
-}

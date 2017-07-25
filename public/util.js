@@ -9,10 +9,11 @@ window.WUI.getDatagridRow=function($datagrid,target){
 	return $datagrid.datagrid("getRows")[WUI.getDatagridRowIndex(target)];
 }
 var subscribes = [];
-window.WUI.subscribe = function(evt, fn) {
+window.WUI.subscribe = function(evt, fn,subscriber) {
 	subscribes.push({
 		name : evt,
-		fn : fn
+		fn : fn,
+		subscriber:subscriber
 	});
 };
 // evt:open_object(event),reload_object(event),current_object(cbk(object))
@@ -23,6 +24,7 @@ window.WUI.publishEvent = function(name, event) {
 			subscribes[evt].fn(event);
 		}
 		}catch(e){
+			console.log(evt);
 			console.log(e);
 		}
 	}
@@ -174,7 +176,10 @@ window.WUI.makeFloorName=function(floorNum, isUnderground) {
 	}
 	return floorName;
 };
-
+window.WUI.getParameterByName = function(name) {
+	var match = new RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
+	return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
+};
 window.WUI.stringTrim = function(str) {
 	if(!str){
 		return str;

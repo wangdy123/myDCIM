@@ -122,7 +122,12 @@ function setMenu(body, account, menus, path, req) {
 			}
 		}
 		menu.childMenus = childMenus;
-		if (childMenus.length > 0) {
+		if (childMenus.length > 1) {
+			mainMenus.push(menu);
+		}else if(childMenus.length === 1){
+			menu.url=childMenus[0].url;
+			menu.name=childMenus[0].name;
+			menu.icon=childMenus[0].icon;
 			mainMenus.push(menu);
 		}
 	}

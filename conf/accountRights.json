@@ -1,21 +1,118 @@
 {
-	"baseMenus":[11,15,31,32,33,34],
-	"baseFunctions":[{"regexp" : "/dashboard/*",
-		"methods" : [ "get","put","post" ]}],
-	"rights":[ {
-	"id" : 1,
-	"name" : "告警确认",
-	"functions" : [ {
-		"regexp" : "alarm/alarmAck",
-		"methods" : [ "put" ]
-	} ]
-}, {
-	"id" : 2,
-	"name" : "主页",
-	"menus" : [ 11 ],
-	"functions" : [ {
-		"regexp" : "alarm/alarmAck",
-		"methods" : [ "put" ]
-	} ]
-} ]
+	"baseMenus": [
+		101,
+		201,
+		301
+	],
+	"baseFunctions": [
+		{
+			"regexp": "/dashboard/*",
+			"methods": [
+				"get",
+				"put",
+				"post"
+			]
+		},
+		{
+			"regexp": "/alarm/*",
+			"methods": [
+				"get"
+			]
+		},
+		{
+			"regexp": "/monitor/*",
+			"methods": [
+				"get"
+			]
+		},
+		{
+			"regexp": "/navigation/*",
+			"methods": [
+				"get"
+			]
+		},
+		{
+			"regexp": "/logicobject/*",
+			"methods": [
+				"get"
+			]
+		}
+	],
+	"rights": [
+		{
+			"id": 1,
+			"name": "告警处理",
+			"functions": [
+				{
+					"regexp": "alarm/*",
+					"methods": [
+						"put"
+					]
+				}
+			]
+		},
+		{
+			"id": 2,
+			"name": "配置",
+			"menus": [
+				2101,
+				2102,
+				2103,
+				2104
+			],
+			"functions": [
+				{
+					"regexp": "position-configer/*",
+					"methods": [
+						"get",
+						"put",
+						"post",
+						"delete"
+					]
+				},
+				{
+					"regexp": "cabinet-model/*",
+					"methods": [
+						"get",
+						"put",
+						"post",
+						"delete"
+					]
+				},
+				{
+					"regexp": "device-model/*",
+					"methods": [
+						"get",
+						"put",
+						"post",
+						"delete"
+					]
+				},
+				{
+					"regexp": "device-vender/*",
+					"methods": [
+						"get",
+						"put",
+						"post",
+						"delete"
+					]
+				}
+			]
+		},
+		{
+			"id": 3,
+			"name": "账号管理",
+			"functions": [
+				{
+					"regexp": "account/*",
+					"methods": [
+						"get",
+						"put",
+						"post",
+						"delete"
+					]
+				}
+			]
+		}
+	]
 }

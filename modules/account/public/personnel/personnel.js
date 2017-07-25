@@ -123,7 +123,7 @@ $(function() {
 						title : personnel ? "修改人员" : "添加人员",
 						left : ($(window).width() - 600) * 0.5,
 						top : ($(window).height() - 300) * 0.5,
-						width : 300,
+						width : 450,
 						closed : false,
 						cache : false,
 						href : 'account/personnel/personnel-dialog.html',

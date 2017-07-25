@@ -100,13 +100,7 @@ $(document).ready(
 			}
 			window.WUI.publishEvent('request_current_object', {
 				publisher : 'position-configer',
-				cbk : function(object) {
-					WUI.ajax.get(objectNodeUrl + "/" + object.ID, {}, function(regionObject) {
-						openObject(regionObject);
-					}, function() {
-						$.messager.alert('失败', "读取区域配置失败！");
-					});
-				}
+				cbk : openObject
 			});
 
 			WUI.region.editrow = function(target) {
@@ -133,7 +127,7 @@ $(document).ready(
 					title : (region ? "修改" : "添加") + typeName,
 					left : ($(window).width() - 300) * 0.5,
 					top : ($(window).height() - 300) * 0.5,
-					width : 550,
+					width : 450,
 					closed : false,
 					cache : false,
 					href : WUI.getConfigerDialogPath(WUI.objectTypes[WUI.objectTypeDef.REGION].namespace),

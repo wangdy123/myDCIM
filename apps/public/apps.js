@@ -5,15 +5,28 @@ $(function() {
 
 	WUI.subscribe('request_current_object', function(event) {
 		event.cbk(currentLogicObject);
-	});
+	},"apps");
 
 	WUI.subscribe('open_object', function(event) {
 		if (currentLogicObject && currentLogicObject.ID === event.object.ID) {
 			return;
 		}
 		currentLogicObject = event.object;
-	});
+		$.cookie('currentObjectId', event.object.ID);
+	},"apps");
 
+	var isFullScreen=false;
+	$("#fullscreem-btn").click(function() {
+		var target = $("body");
+		if (isFullScreen) {
+			isFullScreen=false;
+			WUI.exitFullscreen();
+		} else {
+			isFullScreen=true;
+			WUI.fullscreen(target[0]);
+		}
+	});
+	
 	$('#qrcode-panel').tooltip({
 		content : '<div id="qrcode" ></div>',
 		onShow : function() {
@@ -84,7 +97,7 @@ $(function() {
 		});
 	});
 	$("#current-user-panel").click(function() {
-		//TODO::显示当前用户
+		// TODO::显示当前用户
 	});
 
 	function selfDiagnosis() {
@@ -94,13 +107,13 @@ $(function() {
 		}
 		WUI.ajax.get(selfDiagnosisUrl, {}, function(status) {
 			WUI.selfDiagnosisTimer = setTimeout(selfDiagnosis, WUI.requestInteval.selfDiagnosis);
-			//TODO
+			// TODO
 		}, function() {
 			WUI.selfDiagnosisTimer = setTimeout(selfDiagnosis, WUI.requestInteval.selfDiagnosis);
 		});
 	}
-	
-	function showSelfDiagnosis(){
+
+	function showSelfDiagnosis() {
 		var $dialogNode = $('#self-diagnosis-tooltip');
 		$dialogNode.dialog({
 			iconCls : "icon-self-diagnosis",
@@ -112,7 +125,7 @@ $(function() {
 			cache : false,
 			href : 'self-diagnosis-status-dialog.html',
 			onLoad : function() {
-				//TODO 显示自诊断
+				// TODO 显示自诊断
 			},
 			modal : false,
 			onClose : function() {
@@ -122,7 +135,7 @@ $(function() {
 	}
 	selfDiagnosis();
 	$("#selfDiagnosis-status").click(showSelfDiagnosis);
-	
+
 	$("#alarm-count-status").click(showAlarmTooltip);
 	$('#sound-icon').click(function() {
 		setShoundmuted(!isShoundmuted());

@@ -14,8 +14,11 @@ $(function() {
 		});
 	}
 
-	WUI.subscribe('open_object', function(event) {
-		openObject(event.object);
+	window.WUI.publishEvent('request_current_object', {
+		publisher : "detail",
+		cbk : function(object) {
+			openObject(object);
+		}
 	});
 
 	WUI.detail = WUI.detail || {};

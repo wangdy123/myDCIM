@@ -1,7 +1,7 @@
 var db = require('dcim-db');
 var util = require("dcim-util");
 var objectDao = require('dcim-object-dao');
-
+var async = require("async");
 var express = require('express');
 var app = express();
 var config = require('dcim-config');
@@ -10,6 +10,21 @@ module.exports = app;
 
 for(var type in config.objectTypes){
 	require("./"+config.objectTypes[type].namespace).initRequest(app);
+}
+
+
+function getCompleteObjects(objects,callback){
+	var tasks = [];
+	function addTask(obj) {
+		tasks.push(function(cb) {
+			var namespace = config.objectTypes[objects[0].OBJECT_TYPE].namespace;
+			objectDao[namespace].getById(db.pool, obj.ID, cb);
+		});
+	}
+	for (var i = 0; i < objects.length; i++) {
+		addTask(objects[i]);
+	}
+	async.parallel(tasks,callback);
 }
 
 app.get('/seach', function(req, res) {
@@ -21,7 +36,14 @@ app.get('/seach', function(req, res) {
 				logger.error(error);
 				res.status(500).send(error);
 			} else {
-				res.send(objects);
+				getCompleteObjects(objects,function(err,results){
+					if (err) {
+						logger.error(err);
+						res.status(500).send(err);
+					}else{
+						res.send(results);
+					}
+				});
 			}
 		});
 });
@@ -35,7 +57,14 @@ app.get('/objectNodes', function(req, res) {
 				logger.error(error);
 				res.status(500).send(error);
 			} else {
-				res.send(objects);
+				getCompleteObjects(objects,function(err,results){
+					if (err) {
+						logger.error(err);
+						res.status(500).send(err);
+					}else{
+						res.send(results);
+					}
+				});
 			}
 		});
 	} else {
@@ -46,7 +75,14 @@ app.get('/objectNodes', function(req, res) {
 				logger.error(error);
 				res.status(500).send(error);
 			} else {
-				res.send(objects);
+				getCompleteObjects(objects,function(err,results){
+					if (err) {
+						logger.error(err);
+						res.status(500).send(err);
+					}else{
+						res.send(results);
+					}
+				});
 			}
 		});
 	}
@@ -66,7 +102,6 @@ app.get('/objectNodes/:id', function(req, res) {
 		}
 
 		var namespace = config.objectTypes[objects[0].OBJECT_TYPE].namespace;
-		
 		objectDao[namespace].getById(db.pool, req.params.id, function(error, result) {
 			if (error) {
 				logger.error(error);

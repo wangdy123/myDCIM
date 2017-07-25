@@ -9,7 +9,7 @@ $(document).ready(function() {
 
 	WUI.subscribe('open_object', function(event) {
 		openObject(event.object);
-	});
+	},"door_monitor");
 	function openObject(object) {
 		if (currentObject && currentObject.ID === object.ID) {
 			return;

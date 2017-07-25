@@ -164,7 +164,7 @@ select{
  margin: 0 2px;
 }
 
-.alarmLevel4 -icon {
+.alarmLevel4-icon {
  background: url('../images/status-small/red_light.png') no-repeat center center;;
  display: inline-block;
  width: 18px;
@@ -259,24 +259,4 @@ select{
 
 .icon-map {
  background: url('../images/map_16.png') no-repeat center center;
-}
-
-.menu-nav-item {
- padding: 2px;
- margin: 0;
-}
-
-.menu-nav-item li {
- padding: 5px;
- font-size: 14px;
- line-height: 20px;
- margin: 0;
- list-style-type: none;
- line-height: 20px;
-}
-
-.menu-nav-item li a {
- color: #5b5b5b;
- display: block;
- font-weight: bold;
 }

@@ -7,7 +7,7 @@ $(function() {
 			return;
 		}
 		$("#main-workspace").panel({title:"页面配置-"+event.object.NAME});
-	});
+	},"screen_edit");
 	
 	var data = [{
         title: '机柜',

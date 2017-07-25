@@ -3,24 +3,29 @@ $(function() {
 	var publisherName = "navigation";
 	var logicObjectSeachUrl = "logicobject/seach";
 	window.WUI.createNavTree = function($treeNode, config) {
+		var objectNodeUrl = config.url ? config.url : 'logicobject/objectNodes';
 		config.eventEnable = config.eventEnable ? config.eventEnable : false;
 		function isLeaf(data) {
-			if (config.isLeaf) {
-				return config.isLeaf(data);
-			} else {
-				if (!WUI.objectTypes[data.OBJECT_TYPE].childTypes
-						|| WUI.objectTypes[data.OBJECT_TYPE].childTypes.length === 0) {
-					return true;
+			try {
+				if (config.isLeaf) {
+					return config.isLeaf(data);
+				} else {
+					if (!WUI.objectTypes[data.OBJECT_TYPE].childTypes
+							|| WUI.objectTypes[data.OBJECT_TYPE].childTypes.length === 0) {
+						return true;
+					}
 				}
+				return false;
+			} catch (e) {
+				console.log(e);
+				return false;
 			}
-			return false;
 		}
 
 		function getIconCls(data) {
 			try {
 				return WUI.objectTypes[data.OBJECT_TYPE].iconCls;
 			} catch (e) {
-				console.log(data.OBJECT_TYPE);
 				console.log(e);
 				return "";
 			}
@@ -42,7 +47,7 @@ $(function() {
 		}
 
 		$treeNode.tree({
-			url : config.url ? config.url : 'logicobject/objectNodes',
+			url : objectNodeUrl,
 			method : 'get',
 			lines : true,
 			dnd : true,
@@ -55,7 +60,7 @@ $(function() {
 					if (!showEable(data)) {
 						continue;
 					}
-					objects.push({
+					var item = {
 						id : data.ID,
 						text : data.NAME,
 						state : isLeaf(data) ? "open" : "closed",
@@ -63,7 +68,8 @@ $(function() {
 						attributes : {
 							data : data
 						}
-					});
+					};
+					objects.push(item);
 				}
 				return objects;
 			},
@@ -87,17 +93,55 @@ $(function() {
 			}
 		}
 
+		function appendChildren(children) {
+			for (var i = 0; i < children.length; i++) {
+				if (children[i].children) {
+					var node = $treeNode.tree('find', children[i].ID);
+					if (node) {
+						$treeNode.tree('append', {
+							parent : node.target,
+							data : children[i].children
+						});
+						appendChildren(children[i].children);
+					}
+				}
+			}
+		}
+		function loadParentTree(obj, callback) {
+			var node = $treeNode.tree('find', obj.ID);
+			if (node) {
+				$treeNode.tree('append', {
+					parent : node.target,
+					data : obj.children
+				});
+				appendChildren(obj.children);
+				callback();
+				return;
+			}
+			WUI.ajax.get(objectNodeUrl + "/" + obj.PARENT_ID, {}, function(parent) {
+				WUI.ajax.get(objectNodeUrl, {
+					id : parent.ID
+				}, function(results) {
+					parent.children = results;
+					for (var i = 0; i < results.length; i++) {
+						var result = results[i];
+						var children = [];
+						if (result.ID === obj.ID) {
+							children = obj.children || [];
+						}
+						result.children = children;
+					}
+					loadParentTree(parent, callback);
+				});
+			});
+		}
 		if (config.eventEnable) {
 			WUI.subscribe('reload_object', function(event) {
 				if (event.publisher === publisherName) {
 					return;
 				}
 				reload(event.object);
-			});
-
-			function openParentObject(obj) {
-
-			}
+			},"navigation");
 
 			WUI.subscribe('open_object', function(event) {
 				if (event.publisher === publisherName) {
@@ -109,22 +153,23 @@ $(function() {
 					$treeNode.tree('expand', node.target);
 					$treeNode.tree('select', node.target);
 				} else {
-
-					var parent = $treeNode.tree('find', event.object.PARENT_ID);
-					if (parent) {
-						$treeNode.tree('scrollTo', parent.target);
-						$treeNode.tree('expand', parent.target);
-						$treeNode.tree('select', parent.target);
-					}
+					loadParentTree(event.object, function() {
+						var node = $treeNode.tree('find', event.object.ID);
+						if (node) {
+							$treeNode.tree('scrollTo', node.target);
+							$treeNode.tree('expand', node.target);
+							$treeNode.tree('select', node.target);
+						}
+					});
 				}
-			});
+			},"navigation");
 
 			WUI.subscribe('request_root_object', function(event) {
 				var node = $treeNode.tree('getRoot');
 				if (node) {
 					event.cbk(node.attributes.data);
 				}
-			});
+			},"navigation");
 		}
 	};
 	window.WUI.createLogicObjectSeachBox = function(config) {

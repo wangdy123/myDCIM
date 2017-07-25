@@ -82,14 +82,7 @@ $(document).ready(
 			}
 			window.WUI.publishEvent('request_current_object', {
 				publisher : 'position-configer',
-				cbk : function(object) {
-					WUI.ajax.get(objectNodeUrl + "/" + object.ID, {}, function(roomObject) {
-						openObject(roomObject);
-					}, function() {
-						var typeName = WUI.objectTypes[WUI.objectTypeDef.ROOM].name;
-						$.messager.alert('失败', "读取" + typeName + "配置失败！");
-					});
-				}
+				cbk : openObject
 			});
 
 			WUI.room.editrow = function(target) {

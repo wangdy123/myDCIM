@@ -57,6 +57,7 @@ $(function() {
 			field : 'rights',
 			title : '权限',
 			resizable : true,
+			width : 300,
 			formatter : function(value, row, index) {
 				if (row.rights) {
 					var rights = [];

@@ -78,13 +78,7 @@ $(document).ready(
 			}
 			window.WUI.publishEvent('request_current_object', {
 				publisher : 'building-configer',
-				cbk : function(object) {
-					WUI.ajax.get(objectNodeUrl + "/" + object.ID, {}, function(buildingObject) {
-						openObject(buildingObject);
-					}, function() {
-						$.messager.alert('失败', "读取" + typeName + "配置失败！");
-					});
-				}
+				cbk : openObject
 			});
 
 			WUI.building.editrow = function(target) {

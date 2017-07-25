@@ -46,7 +46,7 @@ app.post('/personnels', function(req, res) {
 	db.doTransaction(function(connection) {
 		return [ function(callback) {
 			var sql = 'INSERT INTO portal.PERSONNEL_CFG(NAME,JOB_NUMBER,E_MAIL,TEL,DEPARTMENT,ENABLE,CREATE_TIME) '
-					+ 'values(?,?,?,?,1,sysdate())';
+					+ 'values(?,?,?,?,?,1,sysdate())';
 			connection.query(sql, [ personnel.NAME, personnel.JOB_NUMBER, personnel.E_MAIL, personnel.TEL,
 					personnel.DEPARTMENT ], function(err, result) {
 				callback(err);

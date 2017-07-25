@@ -152,6 +152,6 @@ $(document)
 					}
 					WUI.subscribe('open_object', function(event) {
 						openObject(event.object);
-					});
+					},"map");
 					openObject();
 				});

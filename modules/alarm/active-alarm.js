@@ -3,32 +3,79 @@ var app = require('./app');
 var db = require('dcim-db');
 var util = require('dcim-util');
 var config = require('dcim-config');
+var dao = require('dcim-object-dao');
 
-function queryActiveAlarm(param,callback){
-	
-	db.QueryRecord('select * from alarm where is_finished=?', [ false ], function(err, result) {
-		if (err) {
-			res.status(500).send(err);
-			logger.error(err);
-		} else {
+function queryActiveAlarm(querys,callback){
+	var params=[];
+	var filters=[];
+	var orderBy="";
+	if(querys.alarmType){
+		var alarmType = querys.alarmType.split(",");
+		if(alarmType.length>0){
+			filters.push("alarm_type in("+querys.alarmType+")");
 		}
+	}
+	if(querys.alarmLevel){
+		var alarmLevel = querys.alarmLevel.split(",");
+		if(alarmLevel.length>0){
+			filters.push("alarm_level in("+alarmLevel.join(',')+")");
+		}
+	}
+	if(querys.deviceType){
+		var deviceType = querys.deviceType.split(",");
+		if(deviceType.length>0){
+		console.log(deviceType);
+			filters.push("device_type in("+deviceType.join(',')+")");
+		}
+	}
+	if(querys.startDate){
+		filters.push(" alarm_begin >=? ");
+		var start=util.date_parse(querys.startDate);
+		start.setHours(0,0,0,0);
+		params.push(start);
+	}
+	if(querys.endDate){
+		filters.push(" alarm_begin <=? ");
+		var end=util.date_parse(querys.endDate);
+		end.setHours(23,59,59,999);
+		params.push(end);
+	}
+	if(querys.sort){
+		orderBy=" order by "+querys.sort+" "+querys.order;
+	}
+	
+	function query(params,filters,orderBy){
+		var sql="select sequence,object_id,signal_id,alarm_type,alarm_begin,alarm_level,end_time," +
+		"object_name,alarm_name,alarm_value,alarm_desc,alarm_status,ack_time,reason,ack_user " +
+		"from record.alarm where end_time is null or ack_time is null " +(filters.length>0?("and "+filters.join(" and ")):"")+orderBy;
+		db.pool.query(sql, params, callback);
+	}
+	if(querys.objectId){
+		dao.getChildObjectId(db.pool,querys.objectId,function(err,childIds){
+			if (err) {
+				callback(err);
+			}else{
+			childIds.push(querys.objectId);
+			filters.push("object_id in("+childIds.join(',')+")");
+			query(params,filters,orderBy);
+			}
 		});
+	}else{
+		query(params,filters,orderBy);
+	}
+
 }
+
 app.get('/activeAlarms', function(req, res) {
-	db.QueryRecord('select * from alarm where is_finished=?', [ false ], function(err, result) {
+	queryActiveAlarm(req.query, function(err, result) {
 		if (err) {
 			res.status(500).send(err);
 			logger.error(err);
 		} else {
 			var alarms = [];
-			result.rows.forEach(function(alarm) {
-				var date = new Date();
-				date.setTime(alarm.alarm_begin);
-				alarm.alarm_begin = new Date(date);
-				date.setTime(alarm.end_time);
-				alarm.end_time = new Date(date);
-				date.setTime(alarm.ack_time);
-				alarm.ack_time = new Date(date);
+			result.forEach(function(alarm) {
+				alarm.is_finished=alarm.end_time?true:false;
+				alarm.is_acked=alarm.ack_time?true:false;
 				alarm.continued = util.timeDiff(alarm.alarm_begin, alarm.is_finished ? alarm.end_time : null);
 				alarm.alarm_begin = util.timeformat_t(alarm.alarm_begin);
 				alarm.end_time = util.timeformat_t(alarm.end_time);
@@ -63,21 +110,16 @@ function makeExcel(alarms, res) {
 	});
 }
 app.get('/activeAlarms/:path', function(req, res) {
-	db.QueryRecord('select * from alarm where is_finished=?', [ false ], function(err, result) {
+	queryActiveAlarm(req.query, function(err, results) {
 		if (err) {
 			res.status(500).send(err);
 			logger.error(err);
 		} else {
 			var alarms = [];
 			var sq=1;
-			result.rows.forEach(function(alarm) {
-				var date = new Date();
-				date.setTime(alarm.alarm_begin);
-				alarm.alarm_begin = new Date(date);
-				date.setTime(alarm.end_time);
-				alarm.end_time = new Date(date);
-				date.setTime(alarm.ack_time);
-				alarm.ack_time = new Date(date);
+			results.forEach(function(alarm) {
+				alarm.is_finished=alarm.end_time?true:false;
+				alarm.is_acked=alarm.ack_time?true:false;
 				alarm.continued = util.timeDiff(alarm.alarm_begin, alarm.is_finished ? alarm.end_time : null);
 				alarm.alarm_begin = util.timeformat(alarm.alarm_begin);
 				alarm.end_time =alarm.is_finished? util.timeformat(alarm.end_time):"<活动告警>";
@@ -86,6 +128,8 @@ app.get('/activeAlarms/:path', function(req, res) {
 				alarm.alarm_type = alarm_type ? alarm_type.name : alarm.alarm_type;
 				var alarm_level = util.findFromArray(config.alarmLevels.levels, "level", alarm.alarm_level);
 				alarm.alarm_level = alarm_level ? alarm_level.name : alarm.alarm_level;
+				var device_type = util.findFromArray(config.deviceTypes, "type", alarm.device_type);
+				alarm.device_type = device_type ? device_type.name : alarm.device_type;
 				alarm.sq=sq;
 				sq++;
 				alarms.push(alarm);

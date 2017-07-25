@@ -113,13 +113,7 @@ $(document).ready(
 				cabinetModels = results;
 				window.WUI.publishEvent('request_current_object', {
 					publisher : 'position-configer',
-					cbk : function(object) {
-						WUI.ajax.get(objectNodeUrl + "/" + object.ID, {}, function(cabinetObject) {
-							openObject(cabinetObject);
-						}, function() {
-							$.messager.alert('失败', "读取" + typeName + "配置失败！");
-						});
-					}
+					cbk :openObject
 				});
 			}, function() {
 				$.messager.alert('失败', "读取机柜型号失败，请重试！");

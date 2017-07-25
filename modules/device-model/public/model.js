@@ -41,12 +41,12 @@ $(function() {
 						width : 100
 					}, {
 						field : 'NAME',
-						title : '名称',
-						width : 200
+						title : '型号名称',
+						width : 150
 					}, {
 						field : 'DEVICE_TYPE',
 						title : '设备类型',
-						width : 60,
+						width : 100,
 						formatter : function(value, row, index) {
 							for (var i = 0; i < WUI.deviceTypes.length; i++) {
 								if (WUI.deviceTypes[i].type === row.DEVICE_TYPE) {
@@ -57,7 +57,8 @@ $(function() {
 						}
 					}, {
 						field : 'VENDER',
-						title : '设备型号',
+						title : '设备厂家',
+						width : 150,
 						formatter : function(value, row, index) {
 							for (var i = 0; i < venders.length; i++) {
 								if (venders[i].ID === row.VENDER) {
@@ -70,6 +71,7 @@ $(function() {
 						field : 'MAX_USE_AGE',
 						title : '最大使用年限',
 						align : 'right',
+						width : 100,
 						formatter : function(value, row, index) {
 							return row.MAX_USE_AGE+" 年";
 						}

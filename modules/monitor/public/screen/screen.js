@@ -104,7 +104,7 @@ $(function() {
 		}
 		currentObject = event.object;
 		openObject(currentObject);
-	});
+	},"screen");
 
 	function openObject(object) {
 		network.getDataBox().clear();

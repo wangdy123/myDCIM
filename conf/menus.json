@@ -1,180 +1,288 @@
-[ {
-	"id" : 1,
-	"name" : "监控业务",
-	"icon" : "icon-region",
-	"childMenus" : [ {
-		"id" : 11,
-		"title" : "仪表板",
-		"icon" : "icon-region",
-		"url" : "dashboard/dashboard.html",
-		"border" : false,
-		"name" : "仪表板"
-	}, {
-		"id" : 12,
-		"title" : "实时监控",
-		"icon" : "icon-region",
-		"url" : "monitor/monitor.html",
-		"border" : false,
-		"name" : "实时监控",
-		"scripts3D" : [ {
-			"src" : "tw/libs/t.js"
-		}, {
-			"src" : "tw/libs/twaver.js"
-		}, {
-			"src" : "tw/libs/twaver-make.js"
-		} ],
-		"scriptsMap" : [ {
-			"src" : "mapfiles/mapapi.js"
-		} ]
-	}, {
-		"id" : 12,
-		"title" : "配置",
-		"icon" : "icon-region",
-		"url" : "screen-edit/screen.html",
-		"border" : false,
-		"name" : "配置",
-		"scripts" : [ {
-			"src" : "tw/libs/t.js"
-		}, {
-			"src" : "tw/libs/twaver.js"
-		}, {
-			"src" : "tw/libs/twaver-make.js"
-		}, {
-			"src" : "tw/libs/twaver-doodle.js"
-		}  ]
-	}, {
-		"id" : 13,
-		"title" : "活动告警",
-		"url" : "alarm/active-alarm/workspace.html",
-		"border" : true,
-		"name" : "活动告警"
-	}, {
-		"id" : 14,
-		"title" : "历史告警",
-		"url" : "alarm/history-alarm.html",
-		"border" : true,
-		"name" : "历史告警"
-	}, {
-		"id" : 15,
-		"title" : "温度场图",
-		"url" : "heatmap/heatmap.html",
-		"border" : true,
-		"name" : "温度场图"
-	} ]
-}, {
-	"id" : 2,
-	"name" : "门禁管理",
-	"childMenus" : [ {
-		"id" : 21,
-		"title" : "门禁监控",
-		"url" : "door/monitor-workspace.html",
-		"border" : false,
-		"name" : "门禁监控"
-	}, {
-		"id" : 23,
-		"title" : "门卡管理",
-		"url" : "door/card.html",
-		"border" : false,
-		"name" : "门卡管理"
-	}, {
-		"id" : 24,
-		"title" : "门卡授权",
-		"url" : "door/card-auth.html",
-		"border" : false,
-		"name" : "门卡授权"
-	}, {
-		"id" : 25,
-		"title" : "开门记录统计",
-		"url" : "door/record.html",
-		"border" : true,
-		"name" : "开门记录统计"
-	} ]
-}, {
-	"id" : 3,
-	"name" : "权限管理",
-	"childMenus" : [ {
-		"id" : 31,
-		"title" : "部门管理",
-		"url" : "account/department/department-wokspace.html",
-		"border" : false,
-		"name" : "部门管理"
-	}, {
-		"id" : 34,
-		"title" : "角色管理",
-		"url" : "account/role/role-wokspace.html",
-		"border" : false,
-		"name" : "角色管理"
-	}, {
-		"id" : 32,
-		"title" : "人员管理",
-		"url" : "account/personnel/personnel-wokspace.html",
-		"border" : false,
-		"name" : "人员管理"
-	}, {
-		"id" : 33,
-		"title" : "帐号管理",
-		"url" : "account/account/account-wokspace.html",
-		"border" : false,
-		"name" : "帐号管理"
-	} ]
-}, {
-	"id" : 4,
-	"name" : "基础设施配置",
-	"childMenus" : [ {
-		"id" : 41,
-		"title" : "业务配置",
-		"url" : "position-configer/wokspace.html",
-		"border" : false,
-		"name" : "业务配置"
-	}, {
-		"id" : 42,
-		"title" : "机柜型号管理",
-		"url" : "cabinet-model/wokspace.html",
-		"border" : false,
-		"name" : "机柜型号管理"
-	}, {
-		"id" : 43,
-		"title" : "设备厂家管理",
-		"url" : "device-vender/wokspace.html",
-		"border" : false,
-		"name" : "设备厂家管理"
-	}, {
-		"id" : 44,
-		"title" : "设备型号管理",
-		"url" : "device-model/wokspace.html",
-		"border" : false,
-		"name" : "设备型号管理"
-	} ]
-}, {
-	"id" : 6,
-	"name" : "机房空间管理",
-	"childMenus" : [ {
-		"id" : 67,
-		"title" : "机架机位申请",
-		"url" : "itdevice/cabinet-unit/wokspace.html",
-		"border" : false,
-		"name" : "机架机位申请"
-	} ]
-}, {
-	"id" : 7,
-	"name" : "资产管理",
-	"childMenus" : [ {
-		"id" : 71,
-		"title" : "器材管理",
-		"url" : "assets/equipment/equipment-wokspace.html",
-		"border" : false,
-		"name" : "器材管理"
-	}, {
-		"id" : 72,
-		"title" : "配件管理",
-		"url" : "assets/accessories/accessories-wokspace.html",
-		"border" : false,
-		"name" : "配件管理"
-	}, {
-		"id" : 73,
-		"title" : "资产报表",
-		"url" : "assets/report/report-wokspace.html",
-		"border" : false,
-		"name" : "资产报表"
-	} ]
-} ]
+[
+	{
+		"id": 1,
+		"name": "仪表板",
+		"icon": "icon-menu-dashboard",
+		"childMenus": [
+			{
+				"id": 101,
+				"title": "仪表板",
+				"icon": "icon-menu-dashboard",
+				"url": "dashboard/dashboard.html",
+				"border": false,
+				"name": "仪表板"
+			}
+		]
+	},
+	{
+		"id": 2,
+		"name": "主控台",
+		"icon": "icon-menu-monitor",
+		"childMenus": [
+			{
+				"id": 201,
+				"title": "主控台",
+				"icon": "icon-menu-monitor",
+				"url": "monitor/monitor.html",
+				"border": false,
+				"name": "主控台",
+				"scripts3D": [
+					{
+						"src": "tw/libs/t.js"
+					},
+					{
+						"src": "tw/libs/twaver.js"
+					},
+					{
+						"src": "tw/libs/twaver-make.js"
+					}
+				],
+				"scriptsMap": [
+					{
+						"src": "mapfiles/mapapi.js"
+					}
+				]
+			}
+		]
+	},
+	{
+		"id": 3,
+		"name": "活动告警",
+		"icon": "icon-menu-alarm",
+		"childMenus": [
+			{
+				"id": 301,
+				"title": "活动告警",
+				"icon": "icon-menu-alarm",
+				"url": "alarm/active-alarm/workspace.html",
+				"border": true,
+				"name": "活动告警"
+			}
+		]
+	},
+	{
+		"id": 4,
+		"name": "门禁管理",
+		"icon": "icon-menu-door",
+		"childMenus": [
+			{
+				"id": 402,
+				"title": "门卡管理",
+				"icon": "icon-menu-card",
+				"url": "door/card.html",
+				"border": false,
+				"name": "门卡管理"
+			},
+			{
+				"id": 403,
+				"title": "门卡授权",
+				"url": "door/card-auth.html",
+				"border": false,
+				"name": "门卡授权"
+			},
+			{
+				"id": 404,
+				"title": "开门记录统计",
+				"url": "door/record.html",
+				"border": true,
+				"name": "开门记录统计"
+			}
+		]
+	},
+	{
+		"id": 5,
+		"name": "能耗管理",
+		"childMenus": [
+			{
+				"id": 501,
+				"title": "能耗结构分析",
+				"url": "energy/workspace.html",
+				"border": false,
+				"name": "能耗结构分析"
+			},
+			{
+				"id": 502,
+				"title": "能耗趋势分析",
+				"url": "energy/workspace.html",
+				"border": false,
+				"name": "能耗趋势分析"
+			},
+			{
+				"id": 503,
+				"title": "能耗指标分析",
+				"url": "energy/workspace.html",
+				"border": false,
+				"name": "能耗指标分析"
+			}
+		]
+	},
+	{
+		"id": 7,
+		"name": "资产管理",
+		"childMenus": [
+			{
+				"id": 701,
+				"title": "器材管理",
+				"url": "assets/equipment/equipment-wokspace.html",
+				"border": false,
+				"name": "器材管理"
+			},
+			{
+				"id": 702,
+				"title": "配件管理",
+				"url": "assets/accessories/accessories-wokspace.html",
+				"border": false,
+				"name": "配件管理"
+			},
+			{
+				"id": 703,
+				"title": "资产报表",
+				"url": "assets/report/report-wokspace.html",
+				"border": false,
+				"name": "资产报表"
+			}
+		]
+	},
+	{
+		"id": 8,
+		"name": "容量管理",
+		"childMenus": [
+			{
+				"id": 801,
+				"title": "容量管理",
+				"url": "assets/equipment/equipment-wokspace.html",
+				"border": false,
+				"name": "容量管理"
+			},
+			{
+				"id": 802,
+				"title": "配件管理",
+				"url": "assets/accessories/accessories-wokspace.html",
+				"border": false,
+				"name": "配件管理"
+			},
+			{
+				"id": 803,
+				"title": "机架机位申请",
+				"url": "itdevice/cabinet-unit/wokspace.html",
+				"border": false,
+				"name": "机架机位申请"
+			}
+		]
+	},
+	{
+		"id": 9,
+		"name": "历史查询",
+		"childMenus": [
+			{
+				"id": 901,
+				"title": "历史数据查询",
+				"url": "history/data/wokspace.html",
+				"border": false,
+				"name": "历史数据查询"
+			},
+			{
+				"id": 902,
+				"title": "历史告警查询",
+				"url": "history/alarm/wokspace.html",
+				"border": false,
+				"name": "历史告警查询"
+			},
+			{
+				"id": 903,
+				"title": "操作日志查询",
+				"url": "history/log/wokspace.html",
+				"border": false,
+				"name": "操作日志查询"
+			}
+		]
+	},
+	{
+		"id": 10,
+		"name": "报表管理",
+		"childMenus": [
+			{
+				"id": 1001,
+				"title": "告警报表",
+				"url": "history/data/wokspace.html",
+				"border": false,
+				"name": "告警报表"
+			},
+			{
+				"id": 1002,
+				"title": "登录报表",
+				"url": "history/data/wokspace.html",
+				"border": false,
+				"name": "登录报表"
+			}
+		]
+	},
+	{
+		"id": 21,
+		"name": "配置",
+		"childMenus": [
+			{
+				"id": 2101,
+				"title": "业务配置",
+				"url": "position-configer/wokspace.html",
+				"border": false,
+				"name": "业务配置"
+			},
+			{
+				"id": 2102,
+				"title": "机柜型号管理",
+				"url": "cabinet-model/wokspace.html",
+				"border": false,
+				"name": "机柜型号管理"
+			},
+			{
+				"id": 2103,
+				"title": "设备厂家管理",
+				"url": "device-vender/wokspace.html",
+				"border": false,
+				"name": "设备厂家管理"
+			},
+			{
+				"id": 2104,
+				"title": "设备型号管理",
+				"url": "device-model/wokspace.html",
+				"border": false,
+				"name": "设备型号管理"
+			}
+		]
+	},
+	{
+		"id": 22,
+		"name": "权限管理",
+		"childMenus": [
+			{
+				"id": 2201,
+				"title": "部门管理",
+				"url": "account/department/department-wokspace.html",
+				"border": false,
+				"name": "部门管理"
+			},
+			{
+				"id": 2202,
+				"title": "角色管理",
+				"url": "account/role/role-wokspace.html",
+				"border": false,
+				"name": "角色管理"
+			},
+			{
+				"id": 2203,
+				"title": "人员管理",
+				"url": "account/personnel/personnel-wokspace.html",
+				"border": false,
+				"name": "人员管理"
+			},
+			{
+				"id": 2204,
+				"title": "帐号管理",
+				"url": "account/account/account-wokspace.html",
+				"border": false,
+				"name": "帐号管理"
+			}
+		]
+	}
+]

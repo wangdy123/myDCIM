@@ -1,6 +1,5 @@
 $(function() {
-	var objectNodeUrl = 'logicobject/objectNodes';
-	var statusUrl = 'monitor/status';
+	var statusUrl = 'monitor/regionStatus';
 	var publisherName = "detail";
 	var currentObject = null;
 	WUI.detail = WUI.detail || {};
@@ -22,11 +21,13 @@ $(function() {
 		}
 		WUI.ajax.get(statusUrl + "/" + currentObject.ID, {}, function(status) {
 			WUI.detail.realtimeValueTimer = setTimeout(requestStatus, WUI.monitor.REALTIME_VALUE_INTEVAL);
-			if (status.ID !== currentObject.ID) {
-				return;
-			}
-			$("#region-alarm-count-txt").html('<label>' + status.alarmCount + '</label>');
-			$("#region-status-txt").html('<label class="alarmLevel' + status.maxAlarmLevel + '-icon"></label>');
+			$("#region-building-count").text(status.buildingCount);
+			$("#region-room-count").text(status.roomCount);
+			$("#region-cabinet-count").text(status.cabinetCount);
+			$("#region-alarmLevel1-count").text(status.alarmLevel1Count);
+			$("#region-alarmLevel2-count").text(status.alarmLevel2Count);
+			$("#region-alarmLevel3-count").text(status.alarmLevel3Count);
+			$("#region-alarmLevel4-count").text(status.alarmLevel4Count);
 		}, function() {
 			WUI.detail.realtimeValueTimer = setTimeout(requestStatus, WUI.monitor.REALTIME_VALUE_INTEVAL);
 		});
@@ -37,13 +38,7 @@ $(function() {
 			if(!object){
 				return;
 			}
-			WUI.ajax.get(objectNodeUrl + "/" + object.ID, {}, function(regionObject) {
-				openObject(regionObject);
-			}, function() {
-				var typeName = WUI.objectTypes[WUI.objectTypeDef.REGION].name;
-				$.messager.alert('失败', "读取" + typeName + "失败！");
-			});
+			openObject(object);
 		}
 	});
-
 });

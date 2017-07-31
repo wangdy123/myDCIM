@@ -4,19 +4,24 @@ var db = require('dcim-db');
 var util = require("dcim-util");
 var config = require('dcim-config');
 
-// TODO::获取对象实时状态
-app.get('/status/:id', function(req, res) {
+// TODO::获取对象实时状态 
+app.get('/regionStatus/:id', function(req, res) {
 	var objectId = parseInt(req.params.id, 10);
 	var status = {
 		ID : objectId,
-		alarmCount : 2,
-		maxAlarmLevel : 3
+		buildingCount : 2,
+		roomCount : 3,
+		cabinetCount:100,
+		alarmLevel1Count:5,
+		alarmLevel2Count:2,
+		alarmLevel3Count:22,
+		alarmLevel4Count:1
 	};
 	res.send(status);
 });
 
 // TODO::获取子对象实时状态
-app.get('/status', function(req, res) {
+app.get('/childStatus', function(req, res) {
 	var objectId = parseInt(req.query.id, 10);
 	var status = {
 		ID : objectId,
@@ -29,11 +34,20 @@ app.get('/status', function(req, res) {
 			for ( var i = 0; i < objects.length; i++) {
 				status.childObject.push({
 					ID : objects[i].ID,
-					alarmCount : 2,
-					maxAlarmLevel : 3
+					alarmLevel1Count:5,
+					alarmLevel2Count:2,
+					alarmLevel3Count:22,
+					alarmLevel4Count:1
 				});
 			}
 		}
 		res.send(status);
 	});
 });
+
+app.get('/detailPage/:id', function(req, res) {
+	var objectId = parseInt(req.params.id, 10);
+
+});
+
+

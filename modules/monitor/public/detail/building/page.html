@@ -1,36 +1,91 @@
+<div class="easyui-panel" data-options="border:false,fit:true,width:980" style="padding: 10px; overflow: auto;">
 
-<div class="easyui-layout" data-options="border:false,fit:true">
-	<div class="panel" region="north" border="false">
-		<table class="configer">
-			<tr>
-				<td align="right" style="width: 100px;">名称：</td>
-				<td id="building-name-txt" style="width: 200px;"></td>
-				<td align="right" style="width: 100px;">地上层数：</td>
-				<td id="building-ground-txt">
-			</tr>
-			<tr>
-				<td align="right">编码：</td>
-				<td id="building-code-txt"></td>
-				<td align="right">地下层数：</td>
-				<td id="building-underground-txt"></td>
-			</tr>
-			<tr>
-				<td align="right">描述:</td>
-				<td colspan="2" id="station-desc-txt"></td>
-			</tr>
-			<tr>
-				<td align="right">告警统计：</td>
-				<td id="building-alarm-count-txt"></td>
-				<td align="right">状态：</td>
-				<td id="building-status-txt"></td>
-			</tr>
-		</table>
-	</div>
-	<div class="easyui-panel" region="center" border="false" style="width: 100%">
-		<div class="easyui-tabs" data-options=" border:true,plain:true,fit:true" style="padding: 5px;">
-			<div title="子对象状态" index="0" iconCls="icon-childs" href="monitor/detail/child-objects/page.html"></div>
-			<div id="child-alarm-panel" title="告警信息" index="1" iconCls="icon-alarm" href="monitor/detail/child-alarm/page.html"></div>
-		</div>
-	</div>
+	<table style="padding: 0 0 0 -5px; width: 100%;">
+		<tr>
+			<td colspan="4">
+				<div class="easyui-panel" data-options="border:true,width:'100%'" style="padding: 10px; margin: 0 0 10px 0;">
+					<div style="font-size: 18px; lineheight: 24px;">机楼概况</div>
+					<p id="id-building-profile"></p>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td class="building-row1"><div class="energy">
+					<div class="label"></div>
+					<div class="value">
+						<div>
+							用电量：<span id="building-totol-energy"></span>kwh
+						</div>
+						<div>
+							IT：<span id="building-it-energy"></span>kwh
+						</div>
+					</div>
+				</div></td>
+			<td class="building-row1"><div class=environment>
+					<div class="label"></div>
+					<div class="value">
+						<div>
+							温度：<span id="building-temperature"></span>℃
+						</div>
+						<div>
+							湿度：<span id="building-humidity"></span>%
+						</div>
+					</div>
+				</div></td>
+			<td class="building-row1"><div class=extremum>
+					<div class="label"></div>
+					<div class="value">
+						<div>
+							最大功耗：<span id="building-maxPower"></span>kw
+						</div>
+						<div>
+							最小功耗：<span id="building-minPower"></span>kw
+						</div>
+					</div>
+				</div></td>
+			<td class="building-row1">
+				<table>
+					<tr>
+						<td colspan="8"><label>当前活动告警总数：<span id="building-alarm-count"></span></label></td>
+					</tr>
+					<tr>
+						<td><div class="alarmLevel1-icon" title="一级告警"></div></td>
+						<td id="building-alarmLevel1-count"></td>
+						<td align="right" style="width: 30px;"><div class="alarmLevel2-icon" title="二级告警"></div></td>
+						<td id="building-alarmLevel2-count"></td>
+						<td align="right" style="width: 30px;"><div class="alarmLevel3-icon" title="三级告警"></div></td>
+						<td id="building-alarmLevel3-count"></td>
+						<td align="right" style="width: 30px;"><div class="alarmLevel4-icon" title="四级告警"></div></td>
+						<td id="building-alarmLevel4-count"></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td class="building-row2">
+				<div class="easyui-panel" data-options="border:true,fit:true" id="building-power-pie"></div>
+			</td>
+			<td class="building-row2">
+				<div class="easyui-panel" data-options="border:true,fit:true">
+					<div id="building-pue-pie"></div>
+				</div>
+			</td>
+			<td class="building-row2" colspan="2">
+				<div class="easyui-panel" data-options="border:true,fit:true" id="building-power-top-axis"></div>
+			</td>
+		</tr>
+		<tr>
+			<td class="building-row3" colspan="2">
+				<div class="easyui-panel" data-options="border:false,fit:true">
+					<img id="building-img" class="easyui-panel" data-options="border:false,fit:true" />
+				</div>
+			</td>
+			<td class="building-row3" colspan="2">
+				<div class="easyui-panel" data-options="border:false,fit:true" id="building-power-line"></div>
+			</td>
+		</tr>
+	</table>
 </div>
+<script src="/echarts/echarts.min.js"></script>
 <script type="text/javascript" src="monitor/detail/building/page.js"></script>
+<link rel="stylesheet" type="text/css" href="monitor/detail/building/building.css">

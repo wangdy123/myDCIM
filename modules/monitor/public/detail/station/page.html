@@ -1,43 +1,91 @@
-<div class="easyui-layout" data-options="border:false,fit:true">
-	<div class="panel" region="north" border="false">
-		<table class="configer">
-			<tr>
-				<td align="right" style="width: 100px;">名称：</td>
-				<td id="station-name-txt" style="width: 200px;"></td>
-				<td align="right" style="width: 100px;">经度：</td>
-				<td id="station-LONGITUDE-txt" align="right">
-				<td>度</td>
-			</tr>
-			<tr>
-				<td align="right">编码：</td>
-				<td id="station-code-txt"></td>
-				<td align="right">纬度：</td>
-				<td id="station-LATITUDE-txt" align="right"></td>
-				<td>度</td>
-			</tr>
-			<tr>
-				<td align="right">园区类型：</td>
-				<td id="station-type-txt"></td>
-				<td align="right">详细地址：</td>
-				<td colspan="2" id="station-address-txt"></td>
-			</tr>
-			<tr>
-				<td align="right">描述：</td>
-				<td colspan="4" id="station-desc-txt"></td>
-			</tr>
-			<tr>
-				<td align="right">告警统计：</td>
-				<td id="station-alarm-count-txt"></td>
-				<td align="right">状态：</td>
-				<td id="station-status-txt"></td>
-			</tr>
-		</table>
-	</div>
-	<div class="easyui-panel" region="center" border="false" style="width: 100%">
-		<div class="easyui-tabs" data-options=" border:true,plain:true,fit:true" style="padding: 5px;">
-			<div title="子对象状态" index="0" iconCls="icon-childs" href="monitor/detail/child-objects/page.html"></div>
-			<div id="child-alarm-panel" title="告警信息" index="1" iconCls="icon-alarm" href="monitor/detail/child-alarm/page.html"></div>
-		</div>
-	</div>
+<div class="easyui-panel" data-options="border:false,fit:true,width:980" style="padding: 10px; overflow: auto;">
+
+	<table style="padding: 0 0 0 -5px; width: 100%;">
+		<tr>
+			<td colspan="4">
+				<div class="easyui-panel" data-options="border:true,width:'100%'" style="padding: 10px; margin: 0 0 10px 0;">
+					<div style="font-size: 18px; lineheight: 24px;">园区概况</div>
+					<p id="id-station-profile"></p>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td class="station-row1"><div class="energy">
+					<div class="label"></div>
+					<div class="value">
+						<div>
+							用电量：<span id="station-totol-energy"></span>kwh
+						</div>
+						<div>
+							IT：<span id="station-it-energy"></span>kwh
+						</div>
+					</div>
+				</div></td>
+			<td class="station-row1"><div class=environment>
+					<div class="label"></div>
+					<div class="value">
+						<div>
+							温度：<span id="station-temperature"></span>℃
+						</div>
+						<div>
+							湿度：<span id="station-humidity"></span>%
+						</div>
+					</div>
+				</div></td>
+			<td class="station-row1"><div class=extremum>
+					<div class="label"></div>
+					<div class="value">
+						<div>
+							最大功耗：<span id="station-maxPower"></span>kw
+						</div>
+						<div>
+							最小功耗：<span id="station-minPower"></span>kw
+						</div>
+					</div>
+				</div></td>
+			<td class="station-row1">
+				<table>
+					<tr>
+						<td colspan="8"><label>当前活动告警总数：<span id="station-alarm-count"></span></label></td>
+					</tr>
+					<tr>
+						<td><div class="alarmLevel1-icon" title="一级告警"></div></td>
+						<td id="station-alarmLevel1-count"></td>
+						<td align="right" style="width: 30px;"><div class="alarmLevel2-icon" title="二级告警"></div></td>
+						<td id="station-alarmLevel2-count"></td>
+						<td align="right" style="width: 30px;"><div class="alarmLevel3-icon" title="三级告警"></div></td>
+						<td id="station-alarmLevel3-count"></td>
+						<td align="right" style="width: 30px;"><div class="alarmLevel4-icon" title="四级告警"></div></td>
+						<td id="station-alarmLevel4-count"></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td class="station-row2">
+				<div class="easyui-panel" data-options="border:true,fit:true" id="station-power-pie"></div>
+			</td>
+			<td class="station-row2">
+				<div class="easyui-panel" data-options="border:true,fit:true">
+					<div id="station-pue-pie"></div>
+				</div>
+			</td>
+			<td class="station-row2" colspan="2">
+				<div class="easyui-panel" data-options="border:true,fit:true" id="station-power-top-axis"></div>
+			</td>
+		</tr>
+		<tr>
+			<td class="station-row3" colspan="2">
+				<div class="easyui-panel" data-options="border:false,fit:true">
+					<img id="station-img" class="easyui-panel" data-options="border:false,fit:true"/>
+				</div>
+			</td>
+			<td class="station-row3" colspan="2">
+				<div class="easyui-panel" data-options="border:false,fit:true" id="station-power-line"></div>
+			</td>
+		</tr>
+	</table>
 </div>
+<script src="/echarts/echarts.min.js"></script>
 <script type="text/javascript" src="monitor/detail/station/page.js"></script>
+<link rel="stylesheet" type="text/css" href="monitor/detail/station/station.css">

@@ -74,6 +74,10 @@ $(document).ready(
 									return WUI.stationTypes[row.STATION_TYPE];
 								}
 							}, {
+								field : 'AREA',
+								title : '占地面积(m²)',
+								width : 100
+							}, {
 								field : 'LONGITUDE',
 								title : '经度(度)',
 								width : 100,
@@ -138,6 +142,7 @@ $(document).ready(
 							$('#station-code-txt').val(station.CODE);
 							$('#station-LONGITUDE-txt').numberbox("setValue", station.LONGITUDE);
 							$('#station-LATITUDE-txt').numberbox("setValue", station.LATITUDE);
+							$('#station-AREA-txt').numberbox("setValue", station.AREA);
 							$('#station-address-txt').textbox("setValue", station.ADDRESS);
 							$('#station-desc-txt').textbox("setValue", station.DESCRIPTION);
 							$('#station-type-txt').val(station.STATION_TYPE);
@@ -145,9 +150,9 @@ $(document).ready(
 							$('#station-name-txt').validatebox("isValid");
 							$('#station-code-txt').validatebox("isValid");
 
-						}else{
-								$('#station-LONGITUDE-txt').numberbox("setValue", parentObject.LONGITUDE);
-								$('#station-LATITUDE-txt').numberbox("setValue", parentObject.LATITUDE);							
+						} else {
+							$('#station-LONGITUDE-txt').numberbox("setValue", parentObject.LONGITUDE);
+							$('#station-LATITUDE-txt').numberbox("setValue", parentObject.LATITUDE);
 						}
 					},
 					modal : true,
@@ -169,6 +174,7 @@ $(document).ready(
 								CODE : $('#station-code-txt').val(),
 								LONGITUDE : parseFloat($('#station-LONGITUDE-txt').val()),
 								LATITUDE : parseFloat($('#station-LATITUDE-txt').val()),
+								AREA : parseInt($('#station-AREA-txt').val(), 10),
 								STATION_TYPE : parseInt($('#station-type-txt').val(), 10),
 								OBJECT_TYPE : window.WUI.objectTypeDef.STATION_BASE,
 								ADDRESS : $('#station-address-txt').val(),

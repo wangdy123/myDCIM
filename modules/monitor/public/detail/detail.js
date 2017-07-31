@@ -1,5 +1,6 @@
 $(function() {
 	var currentObject = null;
+	var pageUrl = 'monitor/detailPage/';
 
 	function openObject(object) {
 		if (currentObject && currentObject.ID === object.ID) {
@@ -7,17 +8,30 @@ $(function() {
 		}
 		currentObject = object;
 
+		function openPage(page) {
+			$("#detail-container").panel({
+				href : "monitor/detail/" + namespace + "/page.html",
+				onLoadError : WUI.onLoadError
+			});
+		}
+		// WUI.ajax.get(pageUrl + currentObject.ID, {}, function(result) {
+		// openPage(result.page);
+		// }, function(s) {
 		var namespace = WUI.objectTypes[currentObject.OBJECT_TYPE].namespace;
-		$("#detail-container").panel({
-			href : "monitor/detail/" + namespace + "/page.html",
-			onLoadError : WUI.onLoadError
-		});
+		openPage(namespace);
+		// });
+
 	}
+	WUI.subscribe('open_object', function(event) {
+		openObject(event.object);
+	}, "detail");
 
 	window.WUI.publishEvent('request_current_object', {
 		publisher : "detail",
 		cbk : function(object) {
-			openObject(object);
+			if (object) {
+				openObject(object);
+			}
 		}
 	});
 
@@ -37,7 +51,7 @@ $(function() {
 		return s;
 	}
 
-	WUI.detail.setHtml = function($node, s) {
+	WUI.detail.setDescription = function($node, s) {
 		if (s) {
 			$node.html(replaceStr(s));
 		}

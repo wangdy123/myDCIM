@@ -17,8 +17,14 @@ function getCompleteObjects(objects,callback){
 	var tasks = [];
 	function addTask(obj) {
 		tasks.push(function(cb) {
-			var namespace = config.objectTypes[objects[0].OBJECT_TYPE].namespace;
-			objectDao[namespace].getById(db.pool, obj.ID, cb);
+			var namespace = config.objectTypes[obj.OBJECT_TYPE].namespace;
+			objectDao[namespace].getById(db.pool, obj.ID, function(err,result){
+				if(err){
+					cb(null,obj);
+				}else{
+					cb(null,result);
+				}
+			});
 		});
 	}
 	for (var i = 0; i < objects.length; i++) {

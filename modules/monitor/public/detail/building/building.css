@@ -1,0 +1,75 @@
+.building-row1 {
+	min-width: 200px;
+	width: 25%;
+	height: 60px;
+	padding: 0 10px 0 0;
+}
+
+.building-row1 .energy {
+	background-color: #729fcf;
+	border-radius: 5px;
+	width: 100%;
+	height: 100%;
+}
+
+.building-row1 .energy .label {
+	float: left;
+	border-radius: 5px 0 0 5px;
+	background-color: #3465a4;
+	width: 80px;
+	height: 100%;
+}
+
+.building-row1 div .value {
+	float: left;
+	padding: 15px 10px;
+	color: white;
+}
+
+.building-row1 .environment {
+	background-color: #ad7fa8;
+	border-radius: 5px;
+	width: 100%;
+	height: 100%;
+}
+
+.building-row1 .environment .label {
+	float: left;
+	border-radius: 5px 0 0 5px;
+	background-color: #75507b;
+	width: 80px;
+	height: 100%;
+}
+
+.building-row1 .extremum {
+	background-color: #8ae234;
+	border-radius: 5px;
+	width: 100%;
+	height: 100%;
+}
+
+.building-row1 .extremum .label {
+	float: left;
+	border-radius: 5px 0 0 5px;
+	background-color: #73d216;
+	width: 80px;
+	height: 100%;
+}
+
+.building-row2 {
+	min-width: 200px;
+	height: 200px;
+	padding: 0 10px 0 0;
+}
+
+.building-row2 div {
+	border-radius: 5px;
+	width: 100%;
+	height: 100%;
+}
+
+.building-row3 {
+	min-width: 200px;
+	height:350px;
+	padding: 10px 10px 0 0;
+}

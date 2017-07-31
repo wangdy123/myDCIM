@@ -29,6 +29,15 @@
 				"scripts": [
 					{
 						"src": "mapfiles/mapapi.js"
+					},
+					{
+						"src": "tw/libs/twaver.js"
+					},
+					{
+						"src": "tw/libs/twaver-make.js"
+					},
+					{
+						"src": "tw/libs/t.js"
 					}
 				]
 			}

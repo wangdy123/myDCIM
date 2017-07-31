@@ -93,7 +93,7 @@ $(function() {
 	$("#screem-move-right-btn").click(function() {
 		network.moveRight();
 	});
-	
+
 	var currentObject = null;
 	WUI.subscribe('open_object', function(event) {
 		if (!event.object) {
@@ -104,7 +104,7 @@ $(function() {
 		}
 		currentObject = event.object;
 		openObject(currentObject);
-	},"screen");
+	}, "screen");
 
 	function openObject(object) {
 		network.getDataBox().clear();

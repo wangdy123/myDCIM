@@ -190,31 +190,80 @@ app.put('/objectNodes/:id', function(req, res) {
 	});
 });
 
+function deleteChild(connection,childObjects,callback){
+	if(childObjects.length<=0){
+		callback();
+		return;
+	}
+	var tasks=[];
+	childObjects.forEach(function(object){
+		tasks.push(function(cb){
+			deleteObject(connection,object, function(err,result){
+				cb(err);
+			});
+		});
+	});
+	async.parallel(tasks, function(err,result){
+		callback(err);
+	});
+}
+function deleteObject(connection,nodeObject,callback){
+	var tasks=[];
+	tasks.push(function(cb) {
+		var sql = 'select o.ID,o.OBJECT_TYPE,o.CODE,o.NAME,p.PARENT_ID from config.OBJECT o '
+			+ 'join config.POSITION_RELATION p on p.ID=o.ID where p.PARENT_ID=?';
+		connection.query(sql, [ nodeObject.ID], function(err, results) {
+			if(err){
+				cb(err);
+			}else{
+				deleteChild(connection,results,cb);
+			}
+		});
+	});
+	
+	var namespace=config.objectTypes[nodeObject.OBJECT_TYPE].namespace;
+	objectDao[namespace].createDeleteTasks(connection,tasks,nodeObject.ID);
+	tasks.push(function(cb) {
+		var sql ='delete from config.OBJECT_EXT where ID=?';
+		connection.query(sql, [ nodeObject.ID], function(err,result){
+			cb(err);
+		});
+	});
+	tasks.push(function(cb) {
+		
+		var sql ='delete from config.POSITION_RELATION where ID=?';
+		connection.query(sql, [ nodeObject.ID], function(err,result){
+			cb(err);
+		});
+	});
+	tasks.push(function(cb) {
+		var sql ='delete from config.OBJECT where ID=?';
+		connection.query(sql, [ nodeObject.ID], function(err,result){
+			cb(err);
+		});
+	});
+	async.waterfall(tasks, function(err,result){
+		callback(err);
+	});
+}
+
 app.delete('/objectNodes/:id', function(req, res) {
 	db.doTransaction(function(connection) {
 		var tasks=[];
+		var nodeObject=null;
 		tasks.push(function(callback) {
-			var sql ='select ID from config.POSITION_RELATION where PARENT_ID=?';
+			var sql = 'select ID,OBJECT_TYPE,NAME,CODE from config.OBJECT where ID=?';
 			connection.query(sql, [ req.params.id], function(err, result) {
 				if(err){
 				callback(err);
 				}else{
-					if(result.length>0){
-						callback("包含子对象，不能删除！");
-					}
-					else{
+					if (result.length === 0) {
 						callback();
+					}else{
+						deleteObject(connection,result[0], function(err,result){
+							callback(err);
+						});
 					}
-				}
-			});
-		});
-		tasks.push(function(callback) {
-			var sql ='delete from config.OBJECT where ID=?';
-			connection.query(sql, [ req.params.id], function(err, result) {
-				if(err){
-				callback(err);
-				}else{
-					callback();
 				}
 			});
 		});

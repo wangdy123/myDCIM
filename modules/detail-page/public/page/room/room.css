@@ -1,0 +1,86 @@
+.room-row1 {
+	width: 300px;
+	height: 60px;
+	padding: 0 10px 0 0;
+}
+
+.room-row1 .energy {
+	background-color: #729fcf;
+	border-radius: 5px;
+	width: 100%;
+	height: 100%;
+}
+
+.room-row1 .energy .label {
+	float: left;
+	border-radius: 5px 0 0 5px;
+	background-color: #3465a4;
+	width: 80px;
+	height: 100%;
+}
+
+.room-row1 div .value {
+	float: left;
+	padding: 15px 10px;
+	color: white;
+}
+
+.room-row1 .extremum {
+	background-color: #8ae234;
+	border-radius: 5px;
+	width: 100%;
+	height: 100%;
+}
+
+.room-row1 .extremum .label {
+	float: left;
+	border-radius: 5px 0 0 5px;
+	background-color: #73d216;
+	width: 80px;
+	height: 100%;
+}
+
+.room-row2 {
+	width: 240px;
+	height: 200px;
+	padding: 0 10px 0 0;
+}
+
+.room-row2 div {
+	border-radius: 5px;
+	width: 100%;
+	height: 100%;
+}
+
+.room-profile {
+	width: 100%;
+	background-color: #83d2f4;
+	border-radius: 5px;
+}
+
+.room-profile .label {
+	font-weight: bold;
+	color: white;
+	border-radius: 5px 0 5px 0;
+	background-color: #0328fd;
+	text-align: center;
+	font-size: 16px;
+	lineheight: 18px;
+	padding:5px 20px;
+}
+.room-profile .value {
+	padding:5px 50px;
+}
+
+.room-profile .extremum {
+	background-color: #8ae234;
+	border-radius: 5px;
+	width: 100%;
+	height: 100%;
+}
+
+.room-row3 {
+	min-width: 200px;
+	height: 300px;
+	padding: 10px 10px 0 0;
+}

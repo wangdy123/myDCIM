@@ -52,6 +52,7 @@ function queryActiveAlarm(querys,callback){
 	}
 	if(querys.objectId){
 		cache.getChildObjectId(db.pool,querys.objectId,function(err,childIds){
+			childIds.push(parseInt(querys.objectId, 10));
 			if (err) {
 				callback(err);
 			}else{

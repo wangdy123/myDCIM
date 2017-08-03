@@ -468,3 +468,44 @@ window.WUI.exitFullscreen=function(){
         // 浏览器不支持全屏API或已被禁用
     }  
 } ; 
+
+window.WUI.waterfall=function(tasks,callback){
+	if(tasks.length<=0){
+		callback();
+	}
+	var i=0;
+	var errs=[];
+	function finishedCbk(err){
+		if(err){
+			errs.push(err);
+		}
+		i++;
+		if(i<tasks.length){
+			tasks[i](finishedCbk);
+		}else{
+			callback();
+		}
+	}
+	tasks[i](finishedCbk);
+};
+window.WUI.parallel=function(tasks,callback){
+	var finishedCount=0;
+	var errs=[];
+	function finishedCbk(err){
+		if(err){
+			errs.push(err);
+		}
+		finishedCount++;
+		if(finishedCount===tasks.length){
+			if(errs.length>0){
+				callback(errs);
+			}else{
+			callback();
+			}
+		}
+	}
+	tasks.forEach(function(item){
+		item(finishedCbk);
+	});
+};
+

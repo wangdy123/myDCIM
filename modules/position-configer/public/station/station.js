@@ -95,18 +95,21 @@ $(document).ready(
 								field : 'ADDRESS',
 								title : '详细地址',
 								width : 200
-							} ] ]
+							}, WUI.pageConfiger.createConfigerColumn() ] ]
 				});
 			}
 			window.WUI.publishEvent('request_current_object', {
 				publisher : 'station-configer',
 				cbk : openObject
 			});
-
+			WUI.pageConfiger.editPage = function(target) {
+				var station = WUI.getDatagridRow($node, target);
+				WUI.pageConfiger.pageDialog(station);
+			};
 			WUI.station.editrow = function(target) {
 				var station = WUI.getDatagridRow($node, target);
 				stationDialog(station, currentObject);
-			}
+			};
 			WUI.station.deleterow = function(target) {
 				var station = WUI.getDatagridRow($node, target);
 				$.messager.confirm('确认', '确定要删除' + typeName + '【' + station.NAME + '】吗?', function(r) {
@@ -118,7 +121,7 @@ $(document).ready(
 						});
 					}
 				});
-			}
+			};
 			function stationDialog(station, parentObject) {
 				var cfg = {
 					iconCls : station ? "icon-edit" : "icon-add",

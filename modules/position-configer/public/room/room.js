@@ -2,9 +2,13 @@ $(document).ready(
 		function() {
 			var objectNodeUrl = 'logicobject/objectNodes';
 			var roomUrl = "logicobject/rooms";
+			var departmentUrl = "account/departments";
+			var personnelUrl = "account/personnels";
 			var $node = $('#room-datagrid');
 			var typeName = WUI.objectTypes[WUI.objectTypeDef.ROOM].name;
 
+			var departments = [];
+			var personnels = [];
 			WUI.room = WUI.room || {};
 
 			var currentObject = null;
@@ -74,21 +78,65 @@ $(document).ready(
 									return WUI.roomTypes[row.ROOM_TYPE];
 								}
 							}, {
+								field : 'CABINET_COUNT',
+								title : '机架数量',
+								width : 80
+							}, {
+								field : 'SAFETY_PERSON',
+								title : '安全负责人',
+								width : 150,
+								formatter : function(value, row, index) {
+									var personnel = WUI.findFromArray(personnels, "ID", row.SAFETY_PERSON);
+									if (personnel) {
+										return personnel.NAME;
+									}
+								}
+							}, {
+								field : 'DEPARTMENT',
+								title : '所属部门',
+								width : 150,
+								formatter : function(value, row, index) {
+									var department = WUI.findFromArray(departments, "ID", row.DEPARTMENT);
+									if (department) {
+										return department.NAME;
+									}
+								}
+							}, {
 								field : 'DESCRIPTION',
 								title : '描述',
 								width : 200
-							} ] ]
+							}, WUI.pageConfiger.createConfigerColumn() ] ]
 				});
 			}
-			window.WUI.publishEvent('request_current_object', {
-				publisher : 'position-configer',
-				cbk : openObject
+			var tasks = [ function(finishedCbk) {
+				WUI.ajax.get(departmentUrl, {}, function(results) {
+					departments = results;
+					finishedCbk();
+				}, function(err) {
+					finishedCbk(err);
+				});
+			}, function(finishedCbk) {
+				WUI.ajax.get(personnelUrl, {}, function(results) {
+					personnels = results;
+					finishedCbk();
+				}, function(err) {
+					finishedCbk(err);
+				});
+			} ]
+			WUI.parallel(tasks, function(errs) {
+				window.WUI.publishEvent('request_current_object', {
+					publisher : 'position-configer',
+					cbk : openObject
+				});
 			});
-
+			WUI.pageConfiger.editPage = function(target) {
+				var nodeObject = WUI.getDatagridRow($node, target);
+				WUI.pageConfiger.pageDialog(nodeObject);
+			};
 			WUI.room.editrow = function(target) {
 				var room = WUI.getDatagridRow($node, target);
 				roomDialog(room, room.PARENT_ID);
-			}
+			};
 			WUI.room.deleterow = function(target) {
 				var room = WUI.getDatagridRow($node, target);
 				$.messager.confirm('确认', '确定要删除' + typeName + '【' + room.NAME + '】吗?', function(r) {
@@ -100,9 +148,9 @@ $(document).ready(
 						});
 					}
 				});
-			}
+			};
 			function roomDialog(room, parentId) {
-				$('#configer-dialog').dialog({
+				var cfg = {
 					iconCls : room ? "icon-edit" : "icon-add",
 					title : (room ? "修改" : "添加") + typeName,
 					left : ($(window).width() - 500) * 0.5,
@@ -119,10 +167,63 @@ $(document).ready(
 							$('#room-type-txt').append(
 									'<option value="' + key + '">' + WUI.roomTypes[key] + '</option>');
 						}
+						$('#room-department').combobox({
+							url : departmentUrl,
+							editable : false,
+							method : 'get',
+							valueField : 'ID',
+							textField : 'NAME',
+							onSelect : function(rec) {
+								var url = personnelUrl + '?departmentId=' + rec.ID;
+								$('#room-safety-person').combobox('reload', url);
+							},
+							onLoadSuccess : function() {
+								if (room) {
+									$('#room-department').combobox("setValue", room.DEPARTMENT);
+								} else {
+									var departments = $('#room-department').combobox("getData");
+									if (departments.length > 0) {
+										$('#room-department').combobox("setValue", departments[0].ID);
+									} else {
+										$('#room-department').combobox("clear");
+									}
+								}
+							},
+							keyHandler : {
+								down : function(e) {
+									$('#room-department').combobox("showPanel");
+								}
+							}
+
+						});
+						$('#room-safety-person').combobox({
+							editable : false,
+							keyHandler : {
+								down : function(e) {
+									$('#room-safety-person').combobox("showPanel");
+								}
+							},
+							method : 'get',
+							valueField : 'ID',
+							textField : 'NAME',
+							onLoadSuccess : function() {
+								if (room) {
+									$('#room-safety-person').combobox("setValue", room.SAFETY_PERSON);
+								} else {
+									var personnels = $('#room-safety-person').combobox("getData");
+									if (personnels.length > 0) {
+										$('#room-safety-person').combobox("setValue", personnels[0].ID);
+									} else {
+										$('#room-safety-person').combobox("clear");
+									}
+								}
+							}
+						});
 						if (room) {
 							$('#room-name-txt').val(room.NAME);
 							$('#room-code-txt').val(room.CODE);
 							$('#room-type-txt').val(room.ROOM_TYPE);
+							$('#room-cabinet-count').numberbox("setValue",room.CABINET_COUNT);
 							$('#room-desc-txt').textbox("setValue", room.DESCRIPTION);
 							$('#room-name-txt').validatebox("isValid");
 							$('#room-code-txt').validatebox("isValid");
@@ -147,6 +248,9 @@ $(document).ready(
 								ROOM_TYPE : parseInt($('#room-type-txt').val(), 10),
 								CODE : $('#room-code-txt').val(),
 								DESCRIPTION : $('#room-desc-txt').textbox("getValue"),
+								CABINET_COUNT : parseInt($('#room-cabinet-count').val(), 10),
+								DEPARTMENT : $("#room-department").combobox("getValue"),
+								SAFETY_PERSON : $("#room-safety-person").combobox("getValue"),
 								OBJECT_TYPE : WUI.objectTypeDef.ROOM,
 								PARENT_ID : parentId,
 								properties : []
@@ -175,6 +279,7 @@ $(document).ready(
 							$('#configer-dialog').dialog("close");
 						}
 					} ]
-				});
+				};
+				$('#configer-dialog').dialog(cfg);
 			}
 		});

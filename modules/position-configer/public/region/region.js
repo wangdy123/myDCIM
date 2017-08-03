@@ -95,9 +95,13 @@ $(document).ready(
 								formatter : function(value, row, index) {
 									return row.LATITUDE.toFixed(6);
 								}
-							} ] ]
+							}, WUI.pageConfiger.createConfigerColumn() ] ]
 				});
 			}
+			WUI.pageConfiger.editPage = function(target) {
+				var region = WUI.getDatagridRow($node, target);
+				WUI.pageConfiger.pageDialog(region);
+			};
 			window.WUI.publishEvent('request_current_object', {
 				publisher : 'position-configer',
 				cbk : openObject
@@ -106,7 +110,7 @@ $(document).ready(
 			WUI.region.editrow = function(target) {
 				var region = WUI.getDatagridRow($node, target);
 				regionDialog(region, region.PARENT_ID, region.REGION_TYPE);
-			}
+			};
 			WUI.region.deleterow = function(target) {
 				var region = WUI.getDatagridRow($node, target);
 				var typeName = WUI.regionTypes[region.REGION_TYPE].name;
@@ -119,7 +123,7 @@ $(document).ready(
 						});
 					}
 				});
-			}
+			};
 			function regionDialog(region, parentId, regionType) {
 				var typeName = WUI.regionTypes[regionType].name;
 				$('#configer-dialog').dialog({
@@ -144,9 +148,9 @@ $(document).ready(
 							$('#region-name-txt').validatebox("isValid");
 							$('#region-zip-code-txt').validatebox("isValid");
 							$('#region-ABBREVIATION-txt').validatebox("isValid");
-						}else{
+						} else {
 							$('#region-LONGITUDE-txt').numberbox("setValue", currentRegionObject.LONGITUDE);
-							$('#region-LATITUDE-txt').numberbox("setValue", currentRegionObject.LATITUDE);							
+							$('#region-LATITUDE-txt').numberbox("setValue", currentRegionObject.LATITUDE);
 						}
 					},
 					modal : true,

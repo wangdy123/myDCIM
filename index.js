@@ -18,6 +18,7 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(require('cookie-parser')());
 
+app.use('', require("./uploads"));
 app.use(express.static(__dirname + '/public', {
 	maxAge : config.fileMaxAge * 3600 * 24 * 1000
 }));

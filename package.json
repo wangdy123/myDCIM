@@ -15,7 +15,7 @@
     "express-ws": "~2.0.0",
     "hbs": "~4.0.1",
     "log4js": "~1.1.1",
-    "multer": "~1.2.1",
+    "multer": "^0.1.8",
     "mysql": "~2.11.1",
     "node-uuid": "~1.4.7",
     "nodemailer": "2.6.0",

@@ -1,0 +1,26 @@
+[ {
+	"type" : 1,
+	"name" : "AI",
+	"iconCls" : "icon-AI",
+	"namespace" : "AI"
+}, {
+	"type" : 2,
+	"name" : "DI",
+	"iconCls" : "icon-DI",
+	"namespace" : "DI"
+}, {
+	"type" : 3,
+	"name" : "AO",
+	"iconCls" : "icon-AO",
+	"namespace" : "AO"
+}, {
+	"type" : 4,
+	"name" : "DO",
+	"iconCls" : "icon-DO",
+	"namespace" : "DO"
+}, {
+	"type" : 5,
+	"name" : "ALARM",
+	"iconCls" : "icon-ALARM",
+	"namespace" : "ALARM"
+} ]

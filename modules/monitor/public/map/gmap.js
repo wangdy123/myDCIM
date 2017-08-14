@@ -102,11 +102,10 @@ $(function() {
 				+ getMakerPro(objectLocation).name + '</td></tr>'
 				+ '<tr><td align="right" colspan="6"><label>编码：</label></td><td>' + objectLocation.CODE + '</td></tr>'
 				+ '<tr><td align="right" colspan="6"><label>数据中心机楼：</label></td><td>' + objectLocation.buildingCount
-				+ '</td></tr>' + '<tr><td align="right" colspan="6"><label>数据中心机楼：</label></td><td>'
-				+ objectLocation.buildingCount + '</td></tr>'
-				+ '<tr><td align="right" colspan="6"><label>数据中心机房：</label></td><td>' + objectLocation.roomCount
-				+ '</td></tr>' + '<tr><td align="right" colspan="6"><label>总机架数：</label></td><td>'
-				+ objectLocation.cabinetCount + '</td></tr>' + '<tr><td colspan="8"><label>该区域告警统计</label></td></tr>'
+				+ '</td></tr>' + '<tr><td align="right" colspan="6"><label>数据中心机房：</label></td><td>'
+				+ objectLocation.roomCount + '</td></tr>'
+				+ '<tr><td align="right" colspan="6"><label>总机架数：</label></td><td>' + objectLocation.cabinetCount
+				+ '</td></tr>' + '<tr><td colspan="8"><label>该区域告警统计</label></td></tr>'
 				+ '<tr><td><div class="alarmLevel1-icon" title="一级告警"></div></td><td>'
 				+ objectLocation.alarmLevel1Count + '</td>'
 				+ '<td><div class="alarmLevel2-icon" title="二级告警"></div></td><td>' + objectLocation.alarmLevel2Count

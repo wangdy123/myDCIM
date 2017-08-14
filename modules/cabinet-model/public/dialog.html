@@ -1,32 +1,36 @@
 <div class="panel" fit="true">
-    <table class="configer">
-       <tr>
-            <td align="right">名称:</td>
-            <td><input id="model-name-txt" class="easyui-validatebox" type="text" style="width: 100%"
-                data-options="required:true"></td>
-        </tr>
-        <tr>
-            <td align="right">简称:</td>
-            <td><input id="model-ABBREVIATION-txt" class="easyui-validatebox" type="text" style="width: 100%"></td>
-        </tr>
-        <tr>
-            <td align="right">U1位置:</td>
-            <td><select id="model-u1_position-txt" style="width: 100%"><option value="0">顶部</option><option value="0">底部</option></select></td>
-        </tr>
-        <tr>
-            <td align="right">总U数:</td>
-            <td><input id="model-u-count-txt" class="easyui-numberbox easyui-validatebox" type="text" style="width: 100%" value="42"
-               data-options="required:true,min:1,max:50,precision:0"></td>
-        </tr>
-        <tr>
-            <td align="right">机柜深度:</td>
-            <td><input id="model-depth-txt" class="easyui-numberbox easyui-validatebox" type="text" style="width: 100%" value="1.2"
-                data-options="required:true,min:0,max:2,precision:3"></td><td>米</td>
-        </tr>
-        <tr>
-            <td align="right">最大使用年限:</td>
-            <td><input id="model-max-use-age-txt" class="easyui-numberbox easyui-validatebox" type="text" style="width: 100%" value="100"
-                data-options="required:true,min:0,max:100,precision:0"></td><td>年</td>
-        </tr>
-    </table>
+	<table class="configer">
+		<tr>
+			<td align="right">名称:</td>
+			<td><input id="model-name-txt" class="easyui-textbox" type="text" style="width: 100%"
+				data-options="required:true"></td>
+		</tr>
+		<tr>
+			<td align="right">简称:</td>
+			<td><input id="model-ABBREVIATION-txt" class="easyui-textbox" type="text" style="width: 100%"></td>
+		</tr>
+		<tr>
+			<td align="right">U1位置:</td>
+			<td><select id="model-u1_position-txt" class="easyui-combobox" style="width: 100%" data-options="required:true,editable:false"><option
+						value="0">顶部</option>
+					<option value="0">底部</option></select></td>
+		</tr>
+		<tr>
+			<td align="right">总U数:</td>
+			<td><input id="model-u-count-txt" class="easyui-numberbox" type="text" style="width: 100%" value="42"
+				data-options="required:true,min:1,max:50,precision:0"></td>
+		</tr>
+		<tr>
+			<td align="right">机柜深度:</td>
+			<td><input id="model-depth-txt" class="easyui-numberbox" type="text" style="width: 100%" value="1.2"
+				data-options="required:true,min:0,max:2,precision:3"></td>
+			<td>米</td>
+		</tr>
+		<tr>
+			<td align="right">最大使用年限:</td>
+			<td><input id="model-max-use-age-txt" class="easyui-numberbox" type="text" style="width: 100%" value="100"
+				data-options="required:true,min:0,max:100,precision:0"></td>
+			<td>年</td>
+		</tr>
+	</table>
 </div>

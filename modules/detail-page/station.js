@@ -3,37 +3,40 @@ var app = require('./app');
 var db = require('dcim-db');
 var util = require("dcim-util");
 var config = require('dcim-config');
+var common = require('dcim-common');
 
 // TODO::获取对象实时状态
-app.get('/stationStatus/:id', function(req, res) {
+app.post('/stationStatus/:id', function(req, res) {
 	var objectId = parseInt(req.params.id, 10);
-	var status = {
-		totolEnergy : 2,
-		itEnergy : 3,
-		temperature : 22,
-		humidity : 54,
-		maxPower : 2,
-		minPower : 22,
-		energyStructure : [ {
-			type : 1,
-			value : 158
-		}, {
-			type : 2,
-			value : 24
-		}, {
-			type : 3,
-			value : 45
-		}, {
-			type : 4,
-			value : 5
-		} ],
-		pue : 1.5,
-		alarmLevel1Count : 5,
-		alarmLevel2Count : 2,
-		alarmLevel3Count : 22,
-		alarmLevel4Count : 1
-	};
-	res.send(status);
+	common.getAlarmCount(db.pool, objectId, function(err, status) {
+		if (err) {
+			res.status(500).send(err);
+			logger.error(err);
+		} else {
+			status.totolEnergy = 2;
+			status.itEnergy = 3;
+			status.temperature = 22;
+			status.humidity = 54;
+			status.maxPower = 2;
+			status.minPower = 22;
+			status.energyStructure = [ {
+				type : 1,
+				value : 158
+			}, {
+				type : 2,
+				value : 24
+			}, {
+				type : 3,
+				value : 45
+			}, {
+				type : 4,
+				value : 5
+			} ];
+			status.pue = 1.5;
+			res.send(status);
+		}
+	});
+
 });
 
 app.get('/stationProfile/:id', function(req, res) {
@@ -42,8 +45,7 @@ app.get('/stationProfile/:id', function(req, res) {
 		BUILDING : 2,
 		IDC_ROOM : 3,
 		SUPPORT_ROOM : 100,
-		CABINET : 5,
-		img:'u240.jpg'
+		CABINET : 5
 	};
 	res.send(profile);
 });

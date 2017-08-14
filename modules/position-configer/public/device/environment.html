@@ -1,15 +1,15 @@
 <script type="text/javascript">
 WUI.deviceConfiger=WUI.deviceConfiger||{};
-WUI.deviceConfiger.devicetype1=WUI.deviceConfiger.devicetype1||{};
-WUI.deviceConfiger.devicetype1.init=function(device,parentId,deviceType){
+WUI.deviceConfiger.environment=WUI.deviceConfiger.environment||{};
+WUI.deviceConfiger.environment.init=function(device,parentId,deviceType){
     
 };
 
-WUI.deviceConfiger.devicetype1.checkValid=function(device){
+WUI.deviceConfiger.environment.checkValid=function(device){
     return true;
 };
 
-WUI.deviceConfiger.devicetype1.getExProperties=function(){
+WUI.deviceConfiger.environment.getExProperties=function(){
     return [];
 };
 </script>
@@ -18,11 +18,11 @@ WUI.deviceConfiger.devicetype1.getExProperties=function(){
     <table class="configer">
         <tr>
             <td align="right">编码:</td>
-            <td style="width: 150px;"><input id="device-code-txt" class="easyui-validatebox" type="text" style="width: 100%"
+            <td style="width: 150px;"><input id="device-code-txt" class="easyui-textbox" type="text" style="width: 100%"
                 data-options="required:true"></td>
              <td style="width: 20px;"></td>
             <td align="right" >名称:</td>
-            <td style="width: 150px;"><input id="device-name-txt" class="easyui-validatebox" type="text" style="width: 100%"
+            <td style="width: 150px;"><input id="device-name-txt" class="easyui-textbox" type="text" style="width: 100%"
                 data-options="required:true"></td>
         </tr>
         <tr>

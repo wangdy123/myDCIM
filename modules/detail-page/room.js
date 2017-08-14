@@ -3,9 +3,10 @@ var app = require('./app');
 var db = require('dcim-db');
 var util = require("dcim-util");
 var config = require('dcim-config');
+var objectDao = require('dcim-object-dao');
 
 // TODO::获取对象实时状态
-app.get('/roomStatus/:id', function(req, res) {
+app.post('/roomStatus/:id', function(req, res) {
 	var objectId = parseInt(req.params.id, 10);
 	var status = {
 		totolEnergy : 2,
@@ -25,8 +26,7 @@ app.get('/roomProfile/:id', function(req, res) {
 	var objectId = parseInt(req.params.id, 10);
 	var profile = {
 		safetyPerson : '张上',
-		department : '运维部',
-		img : 'u501.png'
+		department : '运维部'
 	};
 	res.send(profile);
 });

@@ -4,6 +4,7 @@ var db = require('dcim-db');
 var util = require("dcim-util");
 var config = require('dcim-config');
 var async = require("async");
+var common = require('dcim-common');
 
 var baseSql = "select o.ID,o.NAME,o.CODE,o.OBJECT_TYPE,p.PARENT_ID,a.REGION_TYPE,a.LONGITUDE,a.LATITUDE from "
 		+ "(select ID,REGION_TYPE,LONGITUDE,LATITUDE FROM config.ADMINISTRATIVE_REGION UNION "
@@ -20,16 +21,51 @@ function getChildLocations(pool, id, cbk) {
 	});
 }
 
-// TODO::获取添加节点状态：数据中心机楼数、数据中心机房数、总机架数、各级别告警数
 function getStatusCount(pool, object, callback) {
-	object.buildingCount = 5;
-	object.roomCount = 47;
-	object.cabinetCount = 500;
-	object.alarmLevel1Count = 1;
-	object.alarmLevel2Count = 87;
-	object.alarmLevel3Count = 6;
-	object.alarmLevel4Count = 7;
-	callback(null, object);
+	var tasks = [];
+	tasks.push(function(cbk) {
+		common.getBuildingCount(pool,object.ID, function(err, count) {
+			if (!err) {
+				object.buildingCount = count;
+			}
+			cbk(err);
+		});
+	});
+	tasks.push(function(cbk) {
+		common.getRoomCount(pool,object.ID, function(err, count) {
+			logger.error("getRoomCount"+count);
+			if (!err) {
+				object.roomCount = count;
+			}
+			cbk(err);
+		});
+	});
+	tasks.push(function(cbk) {
+		common.getCabinetCount(pool,object.ID, function(err, count) {
+			logger.error("getCabinetCount"+err);
+			if (!err) {
+				object.cabinetCount = count;
+			}
+			cbk(err);
+		});
+	});
+	tasks.push(function(cbk) {
+		common.getAlarmCount(pool,object.ID, function(err, status) {
+			if (!err) {
+				object.alarmLevel1Count = status.alarmLevel1Count;
+				object.alarmLevel2Count = status.alarmLevel2Count;
+				object.alarmLevel3Count = status.alarmLevel3Count;
+				object.alarmLevel4Count = status.alarmLevel4Count;
+			}
+			cbk(err);
+		});
+	});
+	async.parallel(tasks, function(err, results) {
+		if(err){
+			logger.error(err);
+		}
+		callback(null, object);
+	});
 }
 
 function getChildObject(pool, object, callback) {

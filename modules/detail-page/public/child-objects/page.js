@@ -1,6 +1,6 @@
 $(function() {
 	var objectNodeUrl = 'logicobject/objectNodes';
-	var statusUrl = 'detail/childStatus';
+	var statusUrl = 'monitor/childStatus';
 	var publisherName = "detail";
 	WUI.detail = WUI.detail || {};
 	var childObjects = [];

@@ -27,18 +27,18 @@ $(function() {
 		}
 	});
 	
-	$('#qrcode-panel').tooltip({
-		content : '<div id="qrcode" ></div>',
-		onShow : function() {
-			$('#qrcode').empty();
-			$('#qrcode').qrcode({
-				render : "table",
-				width : 100,
-				height : 100,
-				text : window.location.href
-			});
-		}
-	});
+//	$('#qrcode-panel').tooltip({
+//		content : '<div id="qrcode" ></div>',
+//		onShow : function() {
+//			$('#qrcode').empty();
+//			$('#qrcode').qrcode({
+//				render : "table",
+//				width : 100,
+//				height : 100,
+//				text : window.location.href
+//			});
+//		}
+//	});
 	var passwordUrl = "setPassword";
 	$("#change-password-btn").click(function() {
 		$('#change-password-dialog').dialog({
@@ -51,11 +51,11 @@ $(function() {
 			cache : false,
 			href : 'paaasord-dialog.html',
 			onLoad : function() {
-				$('#account-password').validatebox({
+				$('#account-password').textbox({
 					required : true,
 					validType : 'password'
 				});
-				$('#account-password-confirm').validatebox({
+				$('#account-password-confirm').textbox({
 					required : true,
 					validType : "equalTo['#account-password']",
 					invalidMessage : "两次输入密码不匹配"
@@ -68,8 +68,8 @@ $(function() {
 			buttons : [ {
 				text : '保存',
 				handler : function() {
-					var isValid = $('#account-password').validatebox("isValid");
-					isValid = isValid && $('#account-password-confirm').validatebox("isValid");
+					var isValid = $('#account-password').textbox("isValid");
+					isValid = isValid && $('#account-password-confirm').textbox("isValid");
 					if ($('#account-password').val() !== $('#account-password-confirm').val()) {
 						isValid = false;
 					}

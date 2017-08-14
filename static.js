@@ -19,6 +19,8 @@ module.exports = function(req, res) {
 	str = str + 'window.WUI.requestInteval=' + JSON.stringify(config.config.requestInteval) + ';';
 	str = str + 'window.WUI.alarmLevels=' + JSON.stringify(config.alarmLevels) + ';';
 	str = str + 'window.WUI.alarmTypes=' + JSON.stringify(config.alarmTypes) + ';';
+	str = str + 'window.WUI.signalType=' + JSON.stringify(config.signalType) + ';';
+	str = str + 'window.WUI.object_ex=' + JSON.stringify(config.object_ex) + ';';
 	str = str + 'window.WUI.energyConsumptionType=' + JSON.stringify(config.energyConsumptionType) + ';';
 	permissions.getCurrentUser(req, res, function(err, account) {
 		if (err) {

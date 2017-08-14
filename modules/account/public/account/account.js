@@ -157,11 +157,11 @@ $(function() {
 					url : departmentUrl,
 					editable : false,
 					method : 'get',
-					disabled:account?true:false,
+					disabled : account ? true : false,
 					valueField : 'ID',
 					textField : 'NAME',
 					onSelect : function(rec) {
-						var url = account?personnelUrl:(personnelsNotAccountUrl + '?departmentId=' + rec.ID);
+						var url = account ? personnelUrl : (personnelsNotAccountUrl + '?departmentId=' + rec.ID);
 						$('#account-personnel-sel').combobox('reload', url);
 					},
 					onLoadSuccess : function() {
@@ -191,7 +191,7 @@ $(function() {
 							$('#account-personnel-sel').combobox("showPanel");
 						}
 					},
-					disabled:account?true:false,
+					disabled : account ? true : false,
 					method : 'get',
 					valueField : 'ID',
 					textField : 'NAME',
@@ -209,13 +209,19 @@ $(function() {
 					}
 				});
 
+				var menus = [];
 				for (var i = 0; i < WUI.menus.length; i++) {
 					var childMenus = WUI.menus[i].childMenus;
 					for (var j = 0; j < childMenus.length; j++) {
-						$('#account-home-page').append(
-								'<option value="' + childMenus[j].id + '">' + childMenus[j].name + '</option>');
+						menus.push(childMenus[j]);
 					}
 				}
+				$('#account-home-page').combobox({
+					valueField : 'id',
+					textField : 'name',
+					editable : false,
+					data : menus
+				});
 
 				WUI.ajax.get(roleUrl, {}, function(roloes) {
 					function isAccountRole(role) {
@@ -253,26 +259,26 @@ $(function() {
 					}
 				});
 				if (account) {
-					$('#account-txt').val(account.ACCOUNT);
-					$('#account-home-page').val(account.HOME_PAGE);
-					$('#account-txt').validatebox({
+					$('#account-txt').textbox("setValue", account.ACCOUNT);
+					$('#account-home-page').combobox("setValue", account.HOME_PAGE);
+					$('#account-txt').textbox({
 						disabled : true
 					});
-					$('#account-password').validatebox({
+					$('#account-password').textbox({
 						disabled : true
 					});
-					$('#account-password-confirm').validatebox({
+					$('#account-password-confirm').textbox({
 						disabled : true
 					});
 				} else {
-					$('#account-txt').validatebox({
+					$('#account-txt').textbox({
 						validType : 'username'
 					});
-					$('#account-password').validatebox({
+					$('#account-password').textbox({
 						required : true,
 						validType : 'password'
 					});
-					$('#account-password-confirm').validatebox({
+					$('#account-password-confirm').textbox({
 						required : true,
 						validType : "equalTo['#account-password']",
 						invalidMessage : "两次输入密码不匹配"
@@ -291,8 +297,8 @@ $(function() {
 					isValid = isValid && $('#account-theme').combobox("getValue");
 					isValid = isValid && $('#account-personnel-sel').combobox('getValue');
 					if (!account) {
-						isValid = isValid && $('#account-password').validatebox("isValid");
-						isValid = isValid && $('#account-password-confirm').validatebox("isValid");
+						isValid = isValid && $('#account-password').textbox("isValid");
+						isValid = isValid && $('#account-password-confirm').textbox("isValid");
 						if ($('#account-password').val() !== $('#account-password-confirm').val()) {
 							isValid = false;
 						}
@@ -303,8 +309,8 @@ $(function() {
 
 					var newAccount = {
 						DEFAULT_THEME : $('#account-theme').combobox("getValue"),
-						ID : $("#account-personnel-sel").combobox("getValue"),
-						HOME_PAGE : $('#account-home-page').val(),
+						ID : parseInt($("#account-personnel-sel").combobox("getValue"), 10),
+						HOME_PAGE : parseInt($('#account-home-page').combobox("getValue")),
 						roles : []
 					};
 					var roleItems = $(".account-role-item");

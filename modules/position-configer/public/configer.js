@@ -10,11 +10,20 @@ $(document).ready(function() {
 		openObject(event.object);
 	}, "configer");
 
+	if (!currentObject) {
+		WUI.publishEvent('request_current_object', {
+			publisher : 'signal-configer',
+			cbk : openObject
+		});
+	}
 	WUI.getConfigerDialogPath = function(namespace) {
 		return "position-configer/" + namespace + "/dialog.html";
 	};
 
 	function openObject(object) {
+		if(!object){
+			return;
+		}
 		if (currentObject && currentObject.ID === object.ID) {
 			return;
 		}
@@ -26,6 +35,7 @@ $(document).ready(function() {
 			var title = onetab.panel('options').tab.text();
 			$('#configer-tabs').tabs("close", title);
 		}
+
 		var childTypes = WUI.objectTypes[object.OBJECT_TYPE].childTypes;
 		for (var i = 0; i < childTypes.length; i++) {
 			(function(type) {
@@ -38,6 +48,15 @@ $(document).ready(function() {
 					onLoadError : WUI.onLoadError
 				});
 			})(childTypes[i]);
+		}
+		if (WUI.objectTypes[object.OBJECT_TYPE].hasSignal) {
+			$('#configer-tabs').tabs('add', {
+				title : "监控信号",
+				index : i,
+				iconCls : "icon-signal",
+				href : "position-configer/signal/wokspace.html",
+				onLoadError : WUI.onLoadError
+			});
 		}
 		$('#configer-tabs').tabs('select', 0);
 	}

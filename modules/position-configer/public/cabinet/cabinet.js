@@ -113,7 +113,7 @@ $(document).ready(
 				cabinetModels = results;
 				window.WUI.publishEvent('request_current_object', {
 					publisher : 'position-configer',
-					cbk :openObject
+					cbk : openObject
 				});
 			}, function() {
 				$.messager.alert('失败', "读取机柜型号失败，请重试！");
@@ -149,12 +149,22 @@ $(document).ready(
 						$.messager.alert('失败', "对话框加载失败，请刷新后重试！");
 					},
 					onLoad : function() {
-						$('#cabinet-start-use-date').datebox("setValue", WUI.dateFormat(new Date()));
-						for (var i = 0; i < cabinetModels.length; i++) {
-							$('#cabinet-model-sel').append(
-									'<option value="' + cabinetModels[i].ID + '">' + cabinetModels[i].NAME
-											+ '</option>');
-						}
+						$('#cabinet-model-sel').combobox({
+							editable : false,
+							required : true,
+							valueField : 'ID',
+							textField : 'NAME',
+							data : cabinetModels,
+							onSelect : function(rec) {
+								var startTime = $('#cabinet-start-use-date').datebox("getValue");
+								updateTime(rec.ID, startTime);
+							},
+							keyHandler : {
+								down : function(e) {
+									$('#cabinet-model-sel').combobox("showPanel");
+								}
+							}
+						});
 						function updateTime(model, startTime) {
 							if (!model || !startTime) {
 								return;
@@ -170,31 +180,30 @@ $(document).ready(
 							}
 						}
 
-						$('#cabinet-model-sel').change(function() {
-							var startTime = $('#cabinet-start-use-date').datebox("getValue");
-							updateTime($('#cabinet-model-sel').val(), startTime);
-						});
 						$('#cabinet-start-use-date').datebox({
-							parser:WUI.date_parse,
+							required : true,
+							parser : WUI.date_parse,
 							formatter : WUI.dateFormat,
 							onSelect : function(date) {
-								updateTime($('#cabinet-model-sel').val(), date);
+								updateTime($('#cabinet-model-sel').combobox("getValue"), date);
 							}
 						});
 						$('#cabinet-expect-end-date').datebox({
-							parser:WUI.date_parse,
+							required : true,
+							parser : WUI.date_parse,
 							formatter : WUI.dateFormat
 						});
+						$('#cabinet-start-use-date').datebox("setValue", WUI.dateFormat(new Date()));
 						if (cabinet) {
-							$('#cabinet-name-txt').val(cabinet.NAME);
-							$('#cabinet-code-txt').val(cabinet.CODE);
-							$('#cabinet-model-sel').val(cabinet.CABINET_MODEL);
+							$('#cabinet-name-txt').textbox("setValue", cabinet.NAME);
+							$('#cabinet-code-txt').textbox("setValue", cabinet.CODE);
+							$('#cabinet-model-sel').combobox("setValue", cabinet.CABINET_MODEL);
 							$('#cabinet-sequence-txt').numberbox("setValue", cabinet.SEQUENCE);
 							$('#cabinet-depth-txt').numberbox("setValue", cabinet.CABINET_DEPTH);
 							$('#cabinet-start-use-date').datebox("setValue", cabinet.START_USE_DATE);
 							$('#cabinet-expect-end-date').datebox("setValue", cabinet.EXPECT_END_DATE);
-							$('#cabinet-name-txt').validatebox("isValid");
-							$('#cabinet-code-txt').validatebox("isValid");
+							$('#cabinet-name-txt').textbox("isValid");
+							$('#cabinet-code-txt').textbox("isValid");
 						}
 					},
 					modal : true,
@@ -204,28 +213,28 @@ $(document).ready(
 					buttons : [ {
 						text : '保存',
 						handler : function() {
-							var isValid = $('#cabinet-name-txt').validatebox("isValid");
-							isValid = isValid && $('#cabinet-code-txt').validatebox("isValid");
-							isValid = isValid && $('#cabinet-model-sel').val();
-							isValid = isValid && $('#cabinet-sequence-txt').val();
-							isValid = isValid && $('#cabinet-depth-txt').val();
+							var isValid = $('#cabinet-name-txt').textbox("isValid");
+							isValid = isValid && $('#cabinet-code-txt').textbox("isValid");
+							isValid = isValid && $('#cabinet-model-sel').combobox("isValid");
+							isValid = isValid && $('#cabinet-sequence-txt').numberbox("isValid");
+							isValid = isValid && $('#cabinet-depth-txt').numberbox("isValid");
 							if (!isValid) {
 								return;
 							}
 
 							var newcabinet = {
-								NAME : $('#cabinet-name-txt').val(),
-								CODE : $('#cabinet-code-txt').val(),
-								CABINET_MODEL : parseInt($('#cabinet-model-sel').val(), 10),
-								SEQUENCE : parseInt($('#cabinet-sequence-txt').val(), 10),
-								CABINET_DEPTH : parseFloat($('#cabinet-depth-txt').val()),
+								NAME : $('#cabinet-name-txt').textbox("getValue"),
+								CODE : $('#cabinet-code-txt').textbox("getValue"),
+								CABINET_MODEL : parseInt($('#cabinet-model-sel').combobox("getValue"), 10),
+								SEQUENCE : parseInt($('#cabinet-sequence-txt').numberbox("getValue"), 10),
+								CABINET_DEPTH : parseFloat($('#cabinet-depth-txt').numberbox("getValue")),
 								START_USE_DATE : WUI.timeformat_t($('#cabinet-start-use-date').datebox("getValue")),
 								EXPECT_END_DATE : WUI.timeformat_t($('#cabinet-expect-end-date').datebox("getValue")),
 								OBJECT_TYPE : WUI.objectTypeDef.CABINNET,
 								PARENT_ID : parentId,
 								properties : []
 							};
-							
+
 							if (cabinet) {
 								newcabinet.ID = cabinet.ID;
 								WUI.ajax.put(objectNodeUrl + "/" + newcabinet.ID, newcabinet, function() {

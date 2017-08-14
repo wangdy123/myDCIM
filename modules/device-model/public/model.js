@@ -73,7 +73,7 @@ $(function() {
 						align : 'right',
 						width : 100,
 						formatter : function(value, row, index) {
-							return row.MAX_USE_AGE+" 年";
+							return row.MAX_USE_AGE + " 年";
 						}
 					}, {
 						field : 'DESCRIPTION',
@@ -123,23 +123,30 @@ $(function() {
 				$.messager.alert('失败', "对话框加载失败，请刷新后重试！");
 			},
 			onLoad : function() {
-				for (var i = 0; i < WUI.deviceTypes.length; i++) {
-					$('#model-device-type-sel').append(
-							'<option value="' + WUI.deviceTypes[i].type + '">' + WUI.deviceTypes[i].name + '</option>');
-				}
-				for (var j = 0; j < venders.length; j++) {
-					$('#model-vender-sel').append(
-							'<option value="' + venders[j].ID + '">' + venders[j].NAME + '</option>');
-				}
+				$('#model-device-type-sel').combobox({
+					valueField : 'type',
+					textField : 'name',
+					editable : false,
+					required : true,
+					data : WUI.deviceTypes
+				});
+				$('#model-vender-sel').combobox({
+					valueField : 'ID',
+					textField : 'NAME',
+					editable : false,
+					required : true,
+					data : venders
+				});
+
 				if (deviceModel) {
-					$('#model-name-txt').val(deviceModel.NAME);
-					$('#model-code-txt').val(deviceModel.CODE);
-					$('#model-device-type-sel').val(deviceModel.DEVICE_TYPE);
-					$('#model-vender-sel').val(deviceModel.VENDER);
+					$('#model-name-txt').textbox("setValue", deviceModel.NAME);
+					$('#model-code-txt').textbox("setValue", deviceModel.CODE);
+					$('#model-device-type-sel').combobox("setValue", deviceModel.DEVICE_TYPE);
+					$('#model-vender-sel').combobox("setValue", deviceModel.VENDER);
 					$('model-max-use-age-txt').numberbox("setValue", deviceModel.MAX_USE_AGE);
 					$('#model-desc-txt').textbox("setValue", deviceModel.DESCRIPTION);
-					$('#model-name-txt').validatebox("isValid");
-					$('#model-code-txt').validatebox("isValid");
+					$('#model-name-txt').textbox("isValid");
+					$('#model-code-txt').textbox("isValid");
 				}
 			},
 			modal : true,
@@ -149,18 +156,18 @@ $(function() {
 			buttons : [ {
 				text : '保存',
 				handler : function() {
-					var isValid = $('#model-name-txt').validatebox("isValid");
-					isValid = isValid && $('#model-device-type-sel').val();
-					isValid = isValid && $('#model-vender-sel').val();
+					var isValid = $('#model-name-txt').textbox("isValid");
+					isValid = isValid && $('#model-device-type-sel').combobox("getValue");
+					isValid = isValid && $('#model-vender-sel').combobox("getValue");
 					isValid = isValid && $('#model-max-use-age-txt').numberbox("getValue");
 					if (!isValid) {
 						return;
 					}
 					var newObject = {
-						NAME : $('#model-name-txt').val(),
-						CODE : $('#model-code-txt').val(),
-						DEVICE_TYPE : parseInt($('#model-device-type-sel').val(), 10),
-						VENDER : parseInt($('#model-vender-sel').val(), 10),
+						NAME : $('#model-name-txt').textbox("getValue"),
+						CODE : $('#model-code-txt').textbox("getValue"),
+						DEVICE_TYPE : parseInt($('#model-device-type-sel').combobox("getValue"), 10),
+						VENDER : parseInt($('#model-vender-sel').combobox("getValue"), 10),
 						MAX_USE_AGE : parseInt($('#model-max-use-age-txt').numberbox("getValue"), 10),
 						DESCRIPTION : $('#model-desc-txt').textbox("getValue")
 					};

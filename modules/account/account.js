@@ -90,7 +90,7 @@ app.post('/accounts', function(req, res) {
 			var sql = 'INSERT INTO portal.ACCOUNT(ID,ACCOUNT,IS_GOD,DEFAULT_THEME,'
 					+ 'LOGIN_PASSWORD,PASSWORD_TIME,ENABLE,HOME_PAGE)values(?,?,0,?,?,sysdate(),1,?)';
 			connection.query(sql, [ account.ID, account.ACCOUNT, account.DEFAULT_THEME,
-					util.transToSha1(account.LOGIN_PASSWOR), account.HOME_PAGE ], function(err, result) {
+					util.transToSha1(account.LOGIN_PASSWORD), account.HOME_PAGE ], function(err, result) {
 				callback(err);
 			});
 		} ];

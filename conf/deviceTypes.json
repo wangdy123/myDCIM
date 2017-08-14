@@ -1,16 +1,9 @@
 [ {
 	"type" : 1,
-	"name" : "温湿度",
-	"iconCls" : "icon-devicetype1",
+	"name" : "机房环境",
+	"iconCls" : "icon-environment",
 	"businessType" : 1,
-	"namespace" : "devicetype1",
-	"parentNodeTypes" : [5]
-}, {
-	"type" : 2,
-	"name" : "水浸",
-	"iconCls" : "icon-devicetype2",
-	"businessType" : 1,
-	"namespace" : "devicetype2",
+	"namespace" : "environment",
 	"parentNodeTypes" : [5]
 }, {
 	"type" : 3,
@@ -22,9 +15,9 @@
 }, {
 	"type" : 4,
 	"name" : "UPS",
-	"iconCls" : "icon-devicetype4",
+	"iconCls" : "icon-UPS",
 	"businessType" : 1,
-	"namespace" : "devicetype4",
+	"namespace" : "UPS",
 	"parentNodeTypes" : [5]
 }, {
 	"type" : 5,

@@ -67,11 +67,6 @@ $(document).ready(
 								title : '名称',
 								width : 150
 							}, {
-								field : 'SEQUENCE',
-								title : '序号',
-								align : 'right',
-								width : 100
-							}, {
 								field : 'CABINET_COUNT',
 								title : '机柜数',
 								align : 'right',
@@ -120,12 +115,12 @@ $(document).ready(
 					},
 					onLoad : function() {
 						if (cabinetGroup) {
-							$('#cabinetGroup-name-txt').val(cabinetGroup.NAME);
-							$('#cabinetGroup-code-txt').val(cabinetGroup.CODE);
+							$('#cabinetGroup-name-txt').textbox("setValue", cabinetGroup.NAME);
+							$('#cabinetGroup-code-txt').textbox("setValue", cabinetGroup.CODE);
 							$('#cabinetGroup-count-txt').numberbox("setValue", cabinetGroup.CABINET_COUNT);
 							$('#cabinetGroup-depth-txt').numberbox("setValue", cabinetGroup.CABINET_DEPTH);
-							$('#cabinetGroup-name-txt').validatebox("isValid");
-							$('#cabinetGroup-code-txt').validatebox("isValid");
+							$('#cabinetGroup-name-txt').textbox("isValid");
+							$('#cabinetGroup-code-txt').textbox("isValid");
 						}
 					},
 					modal : true,
@@ -135,19 +130,19 @@ $(document).ready(
 					buttons : [ {
 						text : '保存',
 						handler : function() {
-							var isValid = $('#cabinetGroup-name-txt').validatebox("isValid");
-							isValid = isValid && $('#cabinetGroup-code-txt').validatebox("isValid");
-							isValid = isValid && $('#cabinetGroup-count-txt').val();
-							isValid = isValid && $('#cabinetGroup-depth-txt').val();
+							var isValid = $('#cabinetGroup-name-txt').textbox("isValid");
+							isValid = isValid && $('#cabinetGroup-code-txt').textbox("isValid");
+							isValid = isValid && $('#cabinetGroup-count-txt').numberbox("isValid");
+							isValid = isValid && $('#cabinetGroup-depth-txt').numberbox("isValid");
 							if (!isValid) {
 								return;
 							}
 
 							var newcabinetGroup = {
-								NAME : $('#cabinetGroup-name-txt').val(),
-								CODE : $('#cabinetGroup-code-txt').val(),
-								CABINET_COUNT : parseFloat($('#cabinetGroup-count-txt').val()),
-								CABINET_DEPTH : parseFloat($('#cabinetGroup-depth-txt').val()),
+								NAME : $('#cabinetGroup-name-txt').textbox("getValue"),
+								CODE : $('#cabinetGroup-code-txt').textbox("getValue"),
+								CABINET_COUNT : parseFloat($('#cabinetGroup-count-txt').numberbox("getValue")),
+								CABINET_DEPTH : parseFloat($('#cabinetGroup-depth-txt').numberbox("getValue")),
 								OBJECT_TYPE : WUI.objectTypeDef.CABINNET_GROUP,
 								PARENT_ID : parentId,
 								properties : []

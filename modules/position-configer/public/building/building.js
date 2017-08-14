@@ -120,15 +120,19 @@ $(document).ready(
 									$('#building-type-txt').append(
 											'<option value="' + key + '">' + WUI.buildingTypes[key] + '</option>');
 								}
+								$('#building-type-txt').combobox({
+									editable : false,
+									required : true
+								});
 								if (building) {
-									$('#building-name-txt').val(building.NAME);
-									$('#building-code-txt').val(building.CODE);
+									$('#building-name-txt').textbox("setValue",building.NAME);
+									$('#building-code-txt').textbox("setValue",building.CODE);
 									$('#building-ground-txt').numberbox("setValue", building.FLOOR_GROUND);
 									$('#building-underground-txt').numberbox("setValue", building.FLOOR_UNDERGROUND);
 									$('#building-desc-txt').textbox("setValue", building.DESCRIPTION);
 
-									$('#building-name-txt').validatebox("isValid");
-									$('#building-code-txt').validatebox("isValid");
+									$('#building-name-txt').textbox("isValid");
+									$('#building-code-txt').textbox("isValid");
 
 								}
 							},
@@ -139,19 +143,19 @@ $(document).ready(
 							buttons : [ {
 								text : '保存',
 								handler : function() {
-									var isValid = $('#building-name-txt').validatebox("isValid");
-									isValid = isValid && $('#building-code-txt').validatebox("isValid");
-									isValid = isValid && $('#building-ground-txt').val();
-									isValid = isValid && $('#building-underground-txt').val();
+									var isValid = $('#building-name-txt').textbox("isValid");
+									isValid = isValid && $('#building-code-txt').textbox("isValid");
+									isValid = isValid && $('#building-ground-txt').numberbox("isValid");
+									isValid = isValid && $('#building-underground-txt').numberbox("isValid");
 									if (!isValid) {
 										return;
 									}
 
 									var newbuilding = {
-										NAME : $('#building-name-txt').val(),
-										CODE : $('#building-code-txt').val(),
-										FLOOR_GROUND : parseInt($('#building-ground-txt').val(), 10),
-										FLOOR_UNDERGROUND : parseInt($('#building-underground-txt').val(), 10),
+										NAME : $('#building-name-txt').textbox("getValue"),
+										CODE : $('#building-code-txt').textbox("getValue"),
+										FLOOR_GROUND : parseInt($('#building-ground-txt').numberbox("getValue"), 10),
+										FLOOR_UNDERGROUND : parseInt($('#building-underground-txt').numberbox("getValue"), 10),
 										OBJECT_TYPE : window.WUI.objectTypeDef.BUILDDING,
 										DESCRIPTION : $('#building-desc-txt').textbox("getValue"),
 										PARENT_ID : parentId,

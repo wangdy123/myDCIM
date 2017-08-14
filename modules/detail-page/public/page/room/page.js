@@ -3,25 +3,36 @@ $(document).ready(
 			var roomProfileUrl = 'detail/roomProfile/';
 			var statusUrl = 'detail/roomStatus/';
 			var roomEnergyUrl = 'detail/roomEnergy/';
+			var pageConfigUrl = 'detail/pageConfig/';
 			var publisherName = "detail";
 			var currentObject = null;
 
 			WUI.detail = WUI.detail || {};
 			var puePie = null;
-			function openObject(roomObject) {
-				currentObject = roomObject;
+			var pageConfig = {};
+			function openObject(bject) {
+				currentObject = bject;
+				WUI.ajax.get(pageConfigUrl + currentObject.ID, {}, createPage, function() {
+					createPage({
+						img : 'u796.jpg'
+					});
+				});
+
+			}
+			function createPage(config) {
+				pageConfig = config;
+				WUI.detail.initImg($("#room-img"), pageConfig.img, currentObject);
 				initProfile();
 				puePie = new WUI.PuePie('room-pue-pie');
 				WUI.initPowerLine('room-power-line', roomEnergyUrl + currentObject.ID);
 				requestStatus();
 			}
-
 			function requestStatus() {
 				if (WUI.detail.realtimeValueTimer) {
 					clearTimeout(WUI.detail.realtimeValueTimer);
 					WUI.detail.realtimeValueTimer = null;
 				}
-				WUI.ajax.get(statusUrl + currentObject.ID, {}, function(status) {
+				WUI.ajax.post(statusUrl + currentObject.ID, {}, function(status) {
 					WUI.detail.realtimeValueTimer = setTimeout(requestStatus, WUI.monitor.REALTIME_VALUE_INTEVAL);
 					$("#room-totol-energy").text(status.totolEnergy.toFixed(2));
 					$("#room-it-energy").text(status.itEnergy.toFixed(2));
@@ -54,19 +65,6 @@ $(document).ready(
 				WUI.ajax.get(roomProfileUrl + currentObject.ID, {}, function(profile) {
 					$("#room-safety-person").text(profile.safetyPerson);
 					$("#room-department").text(profile.department);
-
-					$("#room-img").attr("width", $("#room-img").parent().width());
-					$("#room-img").attr("height", $("#room-img").parent().height());
-					$("#room-img").attr("src", "monitor/detail/images/" + profile.img);
-
-					$("#room-img").attr("alt", "打开3D");
-					$("#room-img").css("cursor", "pointer");
-					$("#room-img").click(function() {
-						WUI.publishEvent('open_3D', {
-							publisher : publisherName,
-							object : currentObject
-						});
-					});
 				});
 			}
 

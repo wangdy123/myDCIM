@@ -140,14 +140,14 @@ $(document).ready(
 					},
 					onLoad : function() {
 						if (region) {
-							$('#region-name-txt').val(region.NAME);
-							$('#region-zip-code-txt').val(region.CODE);
-							$('#region-ABBREVIATION-txt').val(region.ABBREVIATION);
+							$('#region-name-txt').textbox("setValue", region.NAME);
+							$('#region-zip-code-txt').textbox("setValue", region.CODE);
+							$('#region-ABBREVIATION-txt').textbox("setValue", region.ABBREVIATION);
 							$('#region-LONGITUDE-txt').numberbox("setValue", region.LONGITUDE);
 							$('#region-LATITUDE-txt').numberbox("setValue", region.LATITUDE);
-							$('#region-name-txt').validatebox("isValid");
-							$('#region-zip-code-txt').validatebox("isValid");
-							$('#region-ABBREVIATION-txt').validatebox("isValid");
+							$('#region-name-txt').textbox("isValid");
+							$('#region-zip-code-txt').textbox("isValid");
+							$('#region-ABBREVIATION-txt').textbox("isValid");
 						} else {
 							$('#region-LONGITUDE-txt').numberbox("setValue", currentRegionObject.LONGITUDE);
 							$('#region-LATITUDE-txt').numberbox("setValue", currentRegionObject.LATITUDE);
@@ -160,19 +160,19 @@ $(document).ready(
 					buttons : [ {
 						text : '保存',
 						handler : function() {
-							var isValid = $('#region-name-txt').validatebox("isValid");
-							isValid = isValid && $('#region-zip-code-txt').validatebox("isValid");
-							isValid = isValid && $('#region-ABBREVIATION-txt').validatebox("isValid");
+							var isValid = $('#region-name-txt').textbox("isValid");
+							isValid = isValid && $('#region-zip-code-txt').textbox("isValid");
+							isValid = isValid && $('#region-ABBREVIATION-txt').textbox("isValid");
 							if (!isValid) {
 								return;
 							}
 
 							var newRegion = {
-								NAME : $('#region-name-txt').val(),
-								ABBREVIATION : $('#region-ABBREVIATION-txt').val(),
-								CODE : $('#region-zip-code-txt').val(),
-								LONGITUDE : parseFloat($('#region-LONGITUDE-txt').val()),
-								LATITUDE : parseFloat($('#region-LATITUDE-txt').val()),
+								NAME : $('#region-name-txt').textbox("getValue"),
+								ABBREVIATION : $('#region-ABBREVIATION-txt').textbox("getValue"),
+								CODE : $('#region-zip-code-txt').textbox("getValue"),
+								LONGITUDE : parseFloat($('#region-LONGITUDE-txt').numberbox("getValue")),
+								LATITUDE : parseFloat($('#region-LATITUDE-txt').numberbox("getValue")),
 								OBJECT_TYPE : WUI.objectTypeDef.REGION,
 								REGION_TYPE : regionType,
 								PARENT_ID : parentId,

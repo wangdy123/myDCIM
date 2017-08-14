@@ -4,14 +4,34 @@ $(document).ready(
 			var statusUrl = 'detail/stationStatus/';
 			var stationEnergyTopUrl = 'detail/stationEnergyTop/';
 			var stationEnergyUrl = 'detail/stationEnergy/';
+			var pageConfigUrl = 'detail/pageConfig/';
 			var publisherName = "detail";
 			var currentObject = null;
 
 			WUI.detail = WUI.detail || {};
 			var puePie = null;
 			var powerPie = null;
+			var pageConfig = {};
 			function openObject(stationObject) {
 				currentObject = stationObject;
+				WUI.ajax.get(pageConfigUrl + currentObject.ID, {}, createPage, function() {
+					createPage({
+						img : 'u240.jpg',
+						temperature : {
+							objectId : 4,
+							signalId : 1
+						},
+						humidity : {
+							objectId : 4,
+							signalId : 1
+						}
+					});
+				});
+
+			}
+			function createPage(config) {
+				pageConfig = config;
+				WUI.detail.initImg($("#station-img"), pageConfig.img, currentObject);
 				initProfile();
 				puePie = new WUI.PuePie('station-pue-pie');
 				powerPie = new WUI.PowerPie('station-power-pie');
@@ -19,13 +39,15 @@ $(document).ready(
 				WUI.initPowerLine('station-power-line', stationEnergyUrl + currentObject.ID);
 				requestStatus();
 			}
-
 			function requestStatus() {
 				if (WUI.detail.realtimeValueTimer) {
 					clearTimeout(WUI.detail.realtimeValueTimer);
 					WUI.detail.realtimeValueTimer = null;
 				}
-				WUI.ajax.get(statusUrl + currentObject.ID, {}, function(status) {
+				WUI.ajax.post(statusUrl + currentObject.ID, {
+					temperature : pageConfig.temperature,
+					temperature : pageConfig.humidity
+				}, function(status) {
 					WUI.detail.realtimeValueTimer = setTimeout(requestStatus, WUI.monitor.REALTIME_VALUE_INTEVAL);
 					$("#station-totol-energy").text(status.totolEnergy.toFixed(2));
 					$("#station-it-energy").text(status.itEnergy.toFixed(2));
@@ -59,18 +81,6 @@ $(document).ready(
 							+ currentObject.AREA + '平方米，位于' + currentObject.ADDRESS + '，共有' + profile.BUILDING
 							+ '栋数据机楼，其中数据机房共' + profile.IDC_ROOM + '个，配套用电和空调机房共' + profile.SUPPORT_ROOM + '个，总机架数'
 							+ profile.CABINET + '个。\n' + currentObject.DESCRIPTION);
-					$("#station-img").attr("width", $("#station-img").parent().width());
-					$("#station-img").attr("height", $("#station-img").parent().height());
-					$("#station-img").attr("src", "detail/images/" + profile.img);
-
-					$("#station-img").attr("alt", "打开3D");
-					$("#station-img").css("cursor", "pointer");
-					$("#station-img").click(function() {
-						WUI.publishEvent('open_3D', {
-							publisher : publisherName,
-							object : currentObject
-						});
-					});
 				});
 			}
 

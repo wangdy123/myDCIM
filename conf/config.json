@@ -75,6 +75,7 @@
 		"businessTypes",
 		"alarmLevels",
 		"alarmTypes",
+		"signalType",
 		"energyConsumptionType"
 	]
 }

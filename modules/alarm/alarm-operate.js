@@ -4,7 +4,9 @@ var util = require('dcim-util');
 var db = require('dcim-db');
 var operateLogger = require('dcim-operate-logger');
 var async = require("async");
-var redis = require("dcim-redis");
+
+var common = require("dcim-common");
+
 
 function selectAlarm(conn, sequences, finishCbk) {
 	var sql = 'select * from record.alarm where sequence in(' + sequences.join(',') + ')';
@@ -26,9 +28,7 @@ function deleteAlarm(conn, sequences, finishCbk) {
 		}
 	});
 }
-function publishEndMsg(alarm){
-	redis.publish("alarm-message",alarm);
-}
+
 function setAlarmFinised(alarms, finishInfo, user, finishCbk) {
 	var sql = 'insert into alarm (sequence,object_id,signal_id,alarm_type,device_type,alarm_begin,alarm_level,end_time,'
 			+ 'object_name,alarm_name,alarm_value,alarm_desc,alarm_status,ack_time,reason,ack_user)'
@@ -44,7 +44,7 @@ function setAlarmFinised(alarms, finishInfo, user, finishCbk) {
 			alarm.ack_time = new Date();
 			alarm.ack_user = user.NAME;
 		}
-		publishEndMsg(alarm);
+		common.alarmFinished(alarm);
 		var param = [ alarm.sequence, alarm.object_id, alarm.signal_id, alarm.alarm_type, alarm.device_type,
 				alarm.alarm_begin.getTime(), alarm.alarm_level, new Date().getTime(), alarm.object_name,
 				alarm.alarm_name, alarm.alarm_value, alarm.alarm_desc, alarm.alarm_status, alarm.ack_time.getTime(),
@@ -225,6 +225,7 @@ app.put('/alarmAck', function(req, res) {
 					res.status(500).send(err);
 					logger.error(err);
 				} else {
+					common.alarmAck(user.NAME,req.body.alarms);
 					operateLogger.loggerAckAlarm(user, req.body.alarms);
 					res.status(204).end();
 				}

@@ -1,7 +1,7 @@
 {
-  "name": "dcim-cache",
+  "name": "dcim-common",
   "version": "0.0.1",
-  "description": "wincom DCIM dcim-cache",
+  "description": "wincom DCIM dcim-common",
   "main": "./index.js",
   "dependencies": {
   },

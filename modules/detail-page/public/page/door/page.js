@@ -1,10 +1,10 @@
 $(document).ready(function() {
 	var publisherName = "detail";
 	var objectNodeUrl = 'logicobject/objectNodes';
-	var doorStatusUrl = WUI.urlPath + "/door/doorStatus";
-	var doorRecordUrl = WUI.urlPath + "/door/doorRecords";
-	var doorAuthUrl = WUI.urlPath + "/door/doorAuths";
-	var openDoorUrl = WUI.urlPath + "/door/openDoor";
+	var doorStatusUrl = "door/doorStatus";
+	var doorRecordUrl = "door/doorRecords";
+	var doorAuthUrl = "door/doorAuths";
+	var openDoorUrl = "door/openDoor";
 
 	var currentObject = null;
 	WUI.door = WUI.door ? WUI.door : {};
@@ -207,11 +207,7 @@ $(document).ready(function() {
 	window.WUI.publishEvent("request_current_object", {
 		publisher : publisherName,
 		cbk : function(object) {
-			WUI.ajax.get(objectNodeUrl + "/" + object.ID, {}, function(doorObject) {
-				openObject(doorObject);
-			}, function() {
-				$.messager.alert('失败', "读取门禁失败！");
-			});
+			openObject(object);
 		}
 	});
 });

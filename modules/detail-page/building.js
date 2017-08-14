@@ -5,7 +5,7 @@ var util = require("dcim-util");
 var config = require('dcim-config');
 
 // TODO::获取对象实时状态
-app.get('/buildingStatus/:id', function(req, res) {
+app.post('/buildingStatus/:id', function(req, res) {
 	var objectId = parseInt(req.params.id, 10);
 	var status = {
 		totolEnergy : 2,
@@ -41,8 +41,7 @@ app.get('/buildingProfile/:id', function(req, res) {
 	var profile = {
 		IDC_ROOM : 3,
 		SUPPORT_ROOM : 100,
-		CABINET : 5,
-		img : 'u501.png'
+		CABINET : 5
 	};
 	res.send(profile);
 });

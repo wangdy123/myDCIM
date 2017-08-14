@@ -35,4 +35,10 @@ $(function() {
 		object.alarmNode.html(html);
 	};
 
+	WUI.detail.createSignal = function($parentNode, signal) {
+
+	};
+	WUI.detail.setsignalValue = function(object, value) {
+
+	};
 });

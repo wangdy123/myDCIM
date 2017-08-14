@@ -64,7 +64,35 @@
 		]
 	},
 	"21": {
-		"defaultPage": "devicetype1",
-		"devicePages": {}
+		"defaultPage": "device",
+		"devicePages": {
+			"1": {
+				"defaultPage": "environment",
+				"pages": [
+					{
+						"name": "机房环境",
+						"pageName": "environment"
+					}
+				]
+			},
+			"4": {
+				"defaultPage": "UPS",
+				"pages": [
+					{
+						"name": "UPS",
+						"pageName": "UPS"
+					}
+				]
+			},
+			"5": {
+				"defaultPage": "door",
+				"pages": [
+					{
+						"name": "门禁",
+						"pageName": "door"
+					}
+				]
+			}
+		}
 	}
 }

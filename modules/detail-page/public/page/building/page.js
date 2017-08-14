@@ -4,14 +4,35 @@ $(document).ready(
 			var statusUrl = 'detail/buildingStatus/';
 			var buildingEnergyTopUrl = 'detail/buildingEnergyTop/';
 			var buildingEnergyUrl = 'detail/buildingEnergy/';
+			var pageConfigUrl = 'detail/pageConfig/';
 			var publisherName = "detail";
 			var currentObject = null;
 
 			WUI.detail = WUI.detail || {};
 			var puePie = null;
 			var powerPie = null;
-			function openObject(buildingObject) {
-				currentObject = buildingObject;
+
+			var pageConfig = {};
+			function openObject(stationObject) {
+				currentObject = stationObject;
+				WUI.ajax.get(pageConfigUrl + currentObject.ID, {}, createPage, function() {
+					createPage({
+						img : 'u501.png',
+						temperature : {
+							objectId : 4,
+							signalId : 1
+						},
+						humidity : {
+							objectId : 4,
+							signalId : 1
+						}
+					});
+				});
+
+			}
+			function createPage(config) {
+				pageConfig = config;
+				WUI.detail.initImg($("#building-img"), pageConfig.img, currentObject);
 				initProfile();
 				puePie = new WUI.PuePie('building-pue-pie');
 				powerPie = new WUI.PowerPie('building-power-pie');
@@ -19,7 +40,6 @@ $(document).ready(
 				WUI.initPowerLine('building-power-line', buildingEnergyUrl + currentObject.ID);
 				requestStatus();
 			}
-
 			function requestStatus() {
 				if (WUI.detail.realtimeValueTimer) {
 					clearTimeout(WUI.detail.realtimeValueTimer);
@@ -58,18 +78,6 @@ $(document).ready(
 					WUI.detail.setDescription($('#id-building-profile'), currentObject.NAME + '，共有数据机房共'
 							+ profile.IDC_ROOM + '个，配套用电和空调机房共' + profile.SUPPORT_ROOM + '个，总机架数' + profile.CABINET
 							+ '个。\n' + currentObject.DESCRIPTION);
-					$("#building-img").attr("width", $("#building-img").parent().width());
-					$("#building-img").attr("height", $("#building-img").parent().height());
-					$("#building-img").attr("src", "detail/images/" + profile.img);
-
-					$("#building-img").attr("alt", "打开3D");
-					$("#building-img").css("cursor", "pointer");
-					$("#building-img").click(function() {
-						WUI.publishEvent('open_3D', {
-							publisher : publisherName,
-							object : currentObject
-						});
-					});
 				});
 			}
 

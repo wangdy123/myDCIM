@@ -167,6 +167,10 @@ $(document).ready(
 							$('#room-type-txt').append(
 									'<option value="' + key + '">' + WUI.roomTypes[key] + '</option>');
 						}
+						$('#room-type-txt').combobox({
+							editable : false,
+							required : true
+						});
 						$('#room-department').combobox({
 							url : departmentUrl,
 							editable : false,
@@ -220,13 +224,13 @@ $(document).ready(
 							}
 						});
 						if (room) {
-							$('#room-name-txt').val(room.NAME);
-							$('#room-code-txt').val(room.CODE);
-							$('#room-type-txt').val(room.ROOM_TYPE);
-							$('#room-cabinet-count').numberbox("setValue",room.CABINET_COUNT);
+							$('#room-name-txt').textbox("setValue", room.NAME);
+							$('#room-code-txt').textbox("setValue", room.CODE);
+							$('#room-type-txt').combobox("setValue", room.ROOM_TYPE);
+							$('#room-cabinet-count').numberbox("setValue", room.CABINET_COUNT);
 							$('#room-desc-txt').textbox("setValue", room.DESCRIPTION);
-							$('#room-name-txt').validatebox("isValid");
-							$('#room-code-txt').validatebox("isValid");
+							$('#room-name-txt').textbox("isValid");
+							$('#room-code-txt').textbox("isValid");
 						}
 					},
 					modal : true,
@@ -236,19 +240,19 @@ $(document).ready(
 					buttons : [ {
 						text : '保存',
 						handler : function() {
-							var isValid = $('#room-name-txt').validatebox("isValid");
-							isValid = isValid && $('#room-code-txt').val();
-							isValid = isValid && $('#room-type-txt').val();
+							var isValid = $('#room-name-txt').textbox("isValid");
+							isValid = isValid && $('#room-code-txt').textbox("isValid");
+							isValid = isValid && $('#room-type-txt').combobox("getValue");
 							if (!isValid) {
 								return;
 							}
 
 							var newroom = {
-								NAME : $('#room-name-txt').val(),
-								ROOM_TYPE : parseInt($('#room-type-txt').val(), 10),
-								CODE : $('#room-code-txt').val(),
+								NAME : $('#room-name-txt').textbox("getValue"),
+								ROOM_TYPE : parseInt($('#room-type-txt').combobox("getValue"), 10),
+								CODE : $('#room-code-txt').textbox("getValue"),
 								DESCRIPTION : $('#room-desc-txt').textbox("getValue"),
-								CABINET_COUNT : parseInt($('#room-cabinet-count').val(), 10),
+								CABINET_COUNT : parseInt($('#room-cabinet-count').numberbox("getValue"), 10),
 								DEPARTMENT : $("#room-department").combobox("getValue"),
 								SAFETY_PERSON : $("#room-safety-person").combobox("getValue"),
 								OBJECT_TYPE : WUI.objectTypeDef.ROOM,

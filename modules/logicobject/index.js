@@ -1,10 +1,13 @@
+var app = require('./app');
+
 var db = require('dcim-db');
 var util = require("dcim-util");
 var objectDao = require('dcim-object-dao');
 var async = require("async");
-var express = require('express');
-var app = express();
+
 var config = require('dcim-config');
+
+require('./signal');
 
 module.exports = app;
 

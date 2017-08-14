@@ -37,7 +37,12 @@ window.WUI.findFromArray=function(array,key,value){
 		}
 	}
 };
-
+WUI.getPropertyValue = function(properties, name) {
+	var item = WUI.findFromArray(properties, "PRO_NAME", name);
+	if (item) {
+		return item.PRO_VALUE;
+	}
+};
 window.WUI.hasRight=function(rightId){
 	return WUI.findFromArray(WUI.userRights, "id", rightId);
 };

@@ -1,0 +1,43 @@
+
+.environment-item-title {
+	border-radius: 5px;
+	background-color: #0328fd;
+	color: white;
+	width: 150px;
+	font-size: 16px;
+	lineheight: 18px;
+	text-align: center;
+	lineheight: 18px;
+}
+
+.environment-item {
+	background-color: #eeeeec;
+	text-align: center;
+	padding: 5px;
+}
+
+.environment-value {
+	text-align: center;
+	padding: 5px;
+}
+
+.ups-profile {
+	width: 250px;
+	background-color: #83d2f4;
+	border-radius: 5px;
+}
+
+.ups-profile .label {
+	font-weight: bold;
+	color: white;
+	border-radius: 5px 5px 0 0;
+	background-color: #0328fd;
+	text-align: center;
+	font-size: 16px;
+	lineheight: 18px;
+	padding: 5px 10px;
+}
+
+.ups-profile .value {
+	padding: 5px 20px;
+}

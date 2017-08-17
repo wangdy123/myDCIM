@@ -1,33 +1,27 @@
 
-.building-row1 .energy {
+.building .energy {
 	background-color: #729fcf;
-	border-radius: 5px;
-	width: 100%;
-	height: 100%;
 }
 
-.building-row1 .energy .label {
+.building .energy .label {
 	float: left;
-	border-radius: 5px 5px 0 0;
+	border-radius: 5px 0 0 5px;
 	background-color: #3465a4;
 	width: 80px;
 	height: 100%;
 }
 
-.building-row1 div .value {
+.building div .value {
 	float: left;
 	padding: 15px 10px;
 	color: white;
 }
 
-.building-row1 .environment {
+.building .environment {
 	background-color: #ad7fa8;
-	border-radius: 5px;
-	width: 100%;
-	height: 100%;
 }
 
-.building-row1 .environment .label {
+.building .environment .label {
 	float: left;
 	border-radius: 5px 5px 0 0;
 	background-color: #75507b;
@@ -35,14 +29,11 @@
 	height: 100%;
 }
 
-.building-row1 .extremum {
+.building .extremum {
 	background-color: #8ae234;
-	border-radius: 5px;
-	width: 100%;
-	height: 100%;
 }
 
-.building-row1 .extremum .label {
+.building .extremum .label {
 	float: left;
 	border-radius: 5px 5px 0 0;
 	background-color: #73d216;
@@ -50,9 +41,3 @@
 	height: 100%;
 }
 
-
-.building-row2 div {
-	border-radius: 5px;
-	width: 100%;
-	height: 100%;
-}

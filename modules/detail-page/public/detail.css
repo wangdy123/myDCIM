@@ -1,25 +1,24 @@
 .object-detail-item {
- display: inline-block;
- text-align: center;
- padding: 5px;
- margin: 20px;
- cursor: pointer;
+	display: inline-block;
+	text-align: center;
+	padding: 5px;
+	margin: 20px;
+	cursor: pointer;
 }
 
 .object-detail-item .type1 {
- background: url('images/csc.png') no-repeat center center;;
- width: 72px;
- height: 72px;
-  padding:0 40px;
+	background: url('images/csc.png') no-repeat center center;;
+	width: 72px;
+	height: 72px;
+	padding: 0 40px;
 }
 
 .object-detail-item .type2 {
- background: url('images/station.png') no-repeat center center;;
- width: 72px;
- height: 72px;
- padding:0 40px;
+	background: url('images/station.png') no-repeat center center;;
+	width: 72px;
+	height: 72px;
+	padding: 0 40px;
 }
-
 
 .detail-statusInvalid-icon {
 	background: url('images/status_offline.png') no-repeat center center;;
@@ -46,4 +45,59 @@
 	height: 16px;
 	padding: 0;
 	margin: 0 2px;
+}
+
+.profile {
+	margin: 10px 0 0 10px;
+	background-color: #83d2f4;
+	border-radius: 5px;
+}
+
+.profile .label {
+	font-weight: bold;
+	color: white;
+	border-radius: 5px 5px 0 0;
+	background-color: #0328fd;
+	text-align: center;
+	font-size: 14px;
+	lineheight: 18px;
+	padding: 5px 10px;
+}
+
+.profile .value {
+	padding: 5px 20px;
+}
+
+.value-block {
+	margin: 10px 0 0 10px;
+	background-color: #eeeeec;
+	border-radius: 5px;
+}
+
+.value-block .label {
+	font-weight: bold;
+	color: white;
+	border-radius: 5px 5px 0 0;
+	background-color: #3465a4;
+	text-align: center;
+	font-size: 14px;
+	lineheight: 18px;
+	padding: 5px 10px;
+}
+
+.value-block .value {
+	padding: 5px 20px;
+}
+
+.detail-table-head {
+	background-color: #eeeeec;
+	min-width: 80px;
+	text-align: center;
+	padding: 5px;
+}
+
+.detail-table-cell {
+	text-align: center;
+	min-width: 80px;
+	padding: 5px;
 }

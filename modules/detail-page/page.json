@@ -76,7 +76,7 @@
 				]
 			},
 			"4": {
-				"defaultPage": "UPS",
+			"defaultPage": "UPS",
 				"pages": [
 					{
 						"name": "UPS",
@@ -90,6 +90,24 @@
 					{
 						"name": "门禁",
 						"pageName": "door"
+					}
+				]
+			},
+			"8": {
+				"defaultPage": "rack_server",
+				"pages": [
+					{
+						"name": "机架服务器",
+						"pageName": "rack_server"
+					}
+				]
+			},
+			"9": {
+				"defaultPage": "blade_server",
+				"pages": [
+					{
+						"name": "机架服务器",
+						"pageName": "blade_server"
 					}
 				]
 			}

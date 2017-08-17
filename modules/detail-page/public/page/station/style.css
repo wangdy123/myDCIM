@@ -1,8 +1,3 @@
-.station-row1 {
-	width: 300px;
-	height: 60px;
-	padding: 0 10px 0 0;
-}
 
 .station-row1 .energy {
 	background-color: #729fcf;
@@ -55,11 +50,6 @@
 	height: 100%;
 }
 
-.station-row2 {
-	min-width: 200px;
-	height: 200px;
-	padding: 0 10px 0 0;
-}
 
 .station-row2 div {
 	border-radius: 5px;

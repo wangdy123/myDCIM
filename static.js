@@ -22,6 +22,8 @@ module.exports = function(req, res) {
 	str = str + 'window.WUI.signalType=' + JSON.stringify(config.signalType) + ';';
 	str = str + 'window.WUI.object_ex=' + JSON.stringify(config.object_ex) + ';';
 	str = str + 'window.WUI.energyConsumptionType=' + JSON.stringify(config.energyConsumptionType) + ';';
+	str = str + 'window.WUI.maxRowItem=12;';
+
 	permissions.getCurrentUser(req, res, function(err, account) {
 		if (err) {
 			res.send(str);

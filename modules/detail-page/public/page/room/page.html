@@ -2,7 +2,7 @@
 
 	<table style="padding: 0 0 0 -5px;">
 		<tr>
-			<td class="room-row1"><div class="energy">
+			<td class="room-row1" style="width: 300px; height: 60px; padding: 0 10px 0 0;"><div class="energy">
 					<div class="label"></div>
 					<div class="value">
 						<div>
@@ -13,7 +13,7 @@
 						</div>
 					</div>
 				</div></td>
-			<td class="room-row1"><div class=extremum>
+			<td class="room-row1" style="width: 300px; height: 60px; padding: 0 10px 0 0;"><div class=extremum>
 					<div class="label"></div>
 					<div class="value">
 						<div>
@@ -24,7 +24,7 @@
 						</div>
 					</div>
 				</div></td>
-			<td>
+			<td style="width: 300px; height: 60px; padding: 0 10px 0 0;">
 				<table>
 					<tr>
 						<td colspan="8"><label>当前活动告警总数：<span id="room-alarm-count"></span></label></td>
@@ -43,13 +43,13 @@
 			</td>
 		</tr>
 		<tr>
-			<td colspan="2" rowspan="2">
+			<td colspan="2" rowspan="2" style="padding:10px 0 0">
 				<div class="easyui-panel" data-options="border:false,fit:true">
 					<img id="room-img" class="easyui-panel" data-options="border:false,fit:true" />
 				</div>
 			</td>
 			<td>
-				<div class="easyui-panel room-profile" data-options="border:true">
+				<div class="easyui-panel profile" data-options="border:true">
 					<div class="label">机房概况</div>
 					<div class="value">
 						<div>
@@ -75,21 +75,20 @@
 			</td>
 		</tr>
 		<tr>
-			<td class="room-row2">
+			<td class="room-row2" style="height: 200px; width: 240px; padding: 0 0 0 10px;">
 				<div class="easyui-panel" data-options="border:true,fit:true">
 					<div id="room-pue-pie"></div>
 				</div>
 			</td>
 		</tr>
 		<tr>
-
-			<td class="room-row3" colspan="3">
+			<td colspan="3" style="height: 300px; padding: 10px 10px 0 0;">
 				<div class="easyui-panel" data-options="border:false,fit:true" id="room-power-line"></div>
 			</td>
 		</tr>
 	</table>
 </div>
-<script src="/echarts/echarts.min.js"></script>
+
 <script type="text/javascript" src="detail/chart-item.js"></script>
 <script type="text/javascript" src="detail/page/room/page.js"></script>
 <link rel="stylesheet" type="text/css" href="detail/page/room/room.css">

@@ -17,7 +17,7 @@ function saveFile(name, objectType, deviceType, callback) {
 		}
 		db.doTransaction(function(connection) {
 			return [ function(cbk) {
-				var query = "INSERT INTO detail_page.IMG(NAME, OBJECT_TYPE,DEVICE_TYPE,IMG) VALUES (?,?,?)";
+				var query = "INSERT INTO detail_page.IMG(NAME, OBJECT_TYPE,DEVICE_TYPE,IMG) VALUES (?,?,?,?)";
 				connection.query(query, [ name, objectType, deviceType, data ], function(err, result) {
 					if (err) {
 						cbk(err);
@@ -77,6 +77,18 @@ app.get('/resources/:file', function(req, res) {
 				var buffer = new Buffer(objects[0].IMG, 'binary');
 				res.send(buffer);
 			}
+		}
+	});
+});
+
+app.delete('/resources/:file', function(req, res) {
+	var sql = 'delete from detail_page.IMG where NAME=?';
+	db.pool.query(sql, [ req.params.file ], function(error, objects, fields) {
+		if (error) {
+			logger.error(error);
+			res.status(500).send(error);
+		} else {
+			res.status(200).end();
 		}
 	});
 });

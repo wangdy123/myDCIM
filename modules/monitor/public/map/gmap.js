@@ -1,7 +1,7 @@
 $(function() {
 	var publisherName = "map";
 	var objectLocationUrl = "monitor/objectLocations";
-	var treeNodeUrl = 'monitor/treeNode';
+	var objectNodeUrl = 'logicobject/objectNodes/';
 	var iconUrl = 'monitor/map-icon/';
 
 	var mapPicDir = "roadmap/";
@@ -177,9 +177,11 @@ $(function() {
 	// 如果为站点则高亮显示站点信息（显示大图标及基本信息）
 	function openObject(object, needPublish, callback) {
 		if (needPublish) {
-			window.WUI.publishEvent("open_object", {
-				publisher : publisherName,
-				object : object
+			window.WUI.ajax.get(objectNodeUrl + object.ID, {}, function(fullObject) {
+				window.WUI.publishEvent("open_object", {
+					publisher : publisherName,
+					object : fullObject
+				});
 			});
 		}
 		if (object && object.OBJECT_TYPE && !isMapPoint(object)) {

@@ -14,29 +14,18 @@ $(document).ready(
 			var pageConfig = {};
 			function openObject(stationObject) {
 				currentObject = stationObject;
-				WUI.ajax.get(pageConfigUrl + currentObject.ID, {}, createPage, function() {
-					createPage({
-						img : 'u240.jpg',
-						temperature : {
-							objectId : 4,
-							signalId : 1
-						},
-						humidity : {
-							objectId : 4,
-							signalId : 1
-						}
-					});
+				WUI.ajax.get(pageConfigUrl + currentObject.ID, {}, createPage, function(s) {
+					$.messager.alert('失败', "未配置页面，请联系业务配置人员！");
 				});
-
 			}
 			function createPage(config) {
-				pageConfig = config;
-				WUI.detail.initImg($("#station-img"), pageConfig.img, currentObject);
+				pageConfig = config.CONFIG;
 				initProfile();
 				puePie = new WUI.PuePie('station-pue-pie');
 				powerPie = new WUI.PowerPie('station-power-pie');
 				WUI.initPowerTopAxis('station-power-top-axis', stationEnergyTopUrl + currentObject.ID);
 				WUI.initPowerLine('station-power-line', stationEnergyUrl + currentObject.ID);
+				WUI.detail.initImg($("#station-img"), pageConfig.img, currentObject);
 				requestStatus();
 			}
 			function requestStatus() {

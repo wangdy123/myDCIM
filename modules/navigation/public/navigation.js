@@ -213,7 +213,7 @@ $(function() {
 
 	window.WUI.openNodeSelectDialog = function($dialogNode, config) {
 		var cfg = {
-			title : "选择要标记的对象",
+			title : "选择要的节点对象",
 			left : ($(window).width() - 300) * 0.5,
 			top : ($(window).height() - 300) * 0.5,
 			width : 350,
@@ -271,6 +271,103 @@ $(function() {
 					if (node) {
 						$dialogNode.dialog("close");
 						config.onSelect(node.attributes.data);
+					}
+				}
+			}, {
+				text : '取消',
+				handler : function() {
+					$dialogNode.dialog("close");
+				}
+			} ]
+		};
+		$dialogNode.dialog(cfg);
+	};
+	window.WUI.openSignalSelectDialog = function($dialogNode, config) {
+		var cfg = {
+			title : "选择信号",
+			left : ($(window).width() - 300) * 0.5,
+			top : ($(window).height() - 300) * 0.5,
+			width : 350,
+			closed : false,
+			cache : false,
+			href : 'navigation/signal-select-dialog.html',
+			onLoadError : function() {
+				$.messager.alert('失败', "对话框加载失败，请刷新后重试！");
+			},
+			onLoad : function() {
+				function isLeaf(data) {
+					if (config.isLeaf) {
+						return config.isLeaf(data);
+					}
+					return false;
+				}
+
+				$('#object-select-combotree').combotree({
+					url : 'logicobject/objectNodes',
+					method : 'get',
+					queryParams : config.object ? {
+						id : config.object.ID
+					} : {},
+					lines : true,
+					dnd : true,
+					animate : true,
+					iconWidth : 22,
+					loadFilter : function(datas, parent) {
+						var objects = [];
+						for (var i = 0; i < datas.length; i++) {
+							var data = datas[i];
+							objects.push({
+								id : data.ID,
+								text : data.NAME,
+								state : isLeaf(data) ? "open" : "closed",
+								iconCls : WUI.objectTypes[data.OBJECT_TYPE].iconCls,
+								attributes : {
+									data : data
+								}
+							});
+						}
+						return objects;
+					},
+					onChange : function(rc) {
+						$('#signal-select-list').datalist({
+							url : 'logicobject/signals/',
+							queryParams : {
+								parentId : rc
+							}
+						});
+					}
+				});
+				$('#signal-select-list').datalist({
+					method : "get",
+					valueField : "SIGNAL_ID",
+					textField : "SIGNAL_NAME",
+					groupField : "SIGNAL_TYPE",
+					singleSelect : true,
+					textFormatter : function(value, row) {
+						return value + "( " + row.SIGNAL_ID + " )";
+					},
+					groupFormatter : function(value) {
+						return WUI.findFromArray(WUI.signalType, "type", value).name;
+					},
+					lines : true,
+					onDblClickRow : function(index, row) {
+						$dialogNode.dialog("close");
+						config.onSelect(row);
+					}
+				});
+			},
+			modal : true,
+			onClose : function() {
+				$dialogNode.empty();
+			},
+			buttons : [ {
+				text : '确定',
+				handler : function() {
+					var signal=$('#signal-select-list').datalist("getSelected");
+					console.log(signal);
+					if (signal) {
+						$dialogNode.dialog("close");
+						config.onSelect(signal);
 					}
 				}
 			}, {

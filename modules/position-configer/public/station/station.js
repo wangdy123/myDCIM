@@ -95,14 +95,14 @@ $(document).ready(
 								field : 'ADDRESS',
 								title : '详细地址',
 								width : 200
-							}, WUI.pageConfiger.createConfigerColumn() ] ]
+							}, WUI.pageConfiger.createConfigerColumn("station") ] ]
 				});
 			}
 			window.WUI.publishEvent('request_current_object', {
 				publisher : 'station-configer',
 				cbk : openObject
 			});
-			WUI.pageConfiger.editPage = function(target) {
+			WUI.station.editPage = function(target) {
 				var station = WUI.getDatagridRow($node, target);
 				WUI.pageConfiger.pageDialog(station);
 			};

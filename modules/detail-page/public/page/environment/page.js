@@ -31,7 +31,17 @@ $(function() {
 			$.messager.alert('失败', "读取配置失败！");
 		});
 	}
-
+	function createSignalNode($tr, signalId) {
+		if (signalId) {
+			signalObjects.push(WUI.detail.createTableItem($tr, signalId, {
+				className : "detail-table-cell",
+				type : 1,
+				fixedNum : 1
+			}));
+		} else {
+			$tr.append('<td class="detail-table-cell"></td>');
+		}
+	}
 	function createEnvironment(signals) {
 		$('#environment-temperature-table').empty();
 		var temperatures = [];
@@ -72,52 +82,46 @@ $(function() {
 		temperatures.sort(function(a, b) {
 			return a.seq > b.seq;
 		});
+
 		var $table = $(document.createElement("table"));
 		$table.addClass("table");
 		$('#environment-temperature-table').append($table);
 		$table.attr("cellspacing", "0");
 		$table.css("margin", "5px");
-		var $tr = $(document.createElement("tr"));
-		$table.append($tr);
-		$tr.append('<td class="environment-item"></td>');
-		temperatures.forEach(function(item) {
-			$tr.append('<td class="environment-item">温湿度' + item.seq + '</td>');
-		});
-		$tr = $(document.createElement("tr"));
-		$table.append($tr);
-		$tr.append('<td class="environment-item">温度(℃)</td>');
-		var config = {
-			className : "environment-value",
-			type : 1,
-			fixedNum : 1
-		};
-		temperatures.forEach(function(item) {
-			if (item.temperature) {
-				signalObjects.push(WUI.detail.createTableItem($tr, item.temperature, config));
-			} else {
-				$tr.append('<td></td>');
+		var trs = {};
+		function createRowHead() {
+			var trs = {};
+			trs.$head = $(document.createElement("tr"));
+			$table.append(trs.$head);
+			trs.$head.append('<td class="detail-table-head"></td>');
+			trs.$temperature = $(document.createElement("tr"));
+			$table.append(trs.$temperature);
+			trs.$temperature.append('<td class="detail-table-head">温度(℃)</td>');
+			trs.$humidity = $(document.createElement("tr"));
+			$table.append(trs.$humidity);
+			trs.$humidity.append('<td class="detail-table-head">湿度(%RH)</td>');
+			return trs;
+		}
+
+		for (var i = 0; i < temperatures.length; i++) {
+			var item = temperatures[i];
+			if ((i % WUI.maxRowItem) === 0) {
+				trs = createRowHead();
 			}
-		});
-		$tr = $(document.createElement("tr"));
-		$table.append($tr);
-		$tr.append('<td class="environment-item">湿度(%RH)</td>');
-		temperatures.forEach(function(item) {
-			if (item.humidity) {
-				signalObjects.push(WUI.detail.createTableItem($tr, item.humidity, config));
-			} else {
-				$tr.append('<td></td>');
-			}
-		});
+			trs.$head.append('<td class="detail-table-head">温湿度' + item.seq + '</td>');
+			createSignalNode(trs.$temperature, item.temperature);
+			createSignalNode(trs.$humidity, item.humidity);
+		}
 	}
 	function createCabinet(signals) {
 		$('#cabinet-temperature-table').empty();
 		var cabinets = [];
-		function addSignal(cabinet, key, signalId) {
+		function addSignal(cabinet, key, signalId, cabinetSeq) {
 			if (cabinet) {
 				cabinet[key] = signalId;
 			} else {
 				cabinet = {
-					cabineSeq : cabineSeq
+					cabinetSeq : cabinetSeq
 				};
 				cabinet[key] = signalId;
 				cabinets.push(cabinet);
@@ -130,26 +134,26 @@ $(function() {
 			}
 			var seq = item.SIGNAL_ID % 1000;
 			var cabinetSeq = Math.floor(seq / 10);
-			var cabinet = WUI.findFromArray(cabinets, 'cabineSeq', cabineSeq);
+			var cabinet = WUI.findFromArray(cabinets, 'cabinetSeq', cabinetSeq);
 
 			switch (seq % 10) {
 			case 1:
-				addSignal(cabinet, "ft", item.SIGNAL_ID);
+				addSignal(cabinet, "ft", item.SIGNAL_ID, cabinetSeq);
 				break;
 			case 2:
-				addSignal(cabinet, "fm", item.SIGNAL_ID);
+				addSignal(cabinet, "fm", item.SIGNAL_ID, cabinetSeq);
 				break;
 			case 3:
-				addSignal(cabinet, "fb", item.SIGNAL_ID);
+				addSignal(cabinet, "fb", item.SIGNAL_ID, cabinetSeq);
 				break;
 			case 4:
-				addSignal(cabinet, "bt", item.SIGNAL_ID);
+				addSignal(cabinet, "bt", item.SIGNAL_ID, cabinetSeq);
 				break;
 			case 5:
-				addSignal(cabinet, "bm", item.SIGNAL_ID);
+				addSignal(cabinet, "bm", item.SIGNAL_ID, cabinetSeq);
 				break;
 			case 5:
-				addSignal(cabinet, "bb", item.SIGNAL_ID);
+				addSignal(cabinet, "bb", item.SIGNAL_ID, cabinetSeq);
 				break;
 			}
 		});
@@ -159,7 +163,7 @@ $(function() {
 		}
 		$('#cabinet-temperature-panel').show();
 		cabinets.sort(function(a, b) {
-			return a.cabineSeq > b.cabineSeq;
+			return a.cabinetSeq > b.cabinetSeq;
 		});
 		var $table = $(document.createElement("table"));
 		$table.addClass("table");
@@ -171,69 +175,41 @@ $(function() {
 			var trs = {};
 			trs.$head = $(document.createElement("tr"));
 			$table.append(trs.$head);
-			trs.$head.append('<td class="environment-item"></td>');
+			trs.$head.append('<td class="detail-table-head"></td>');
 			trs.$position = $(document.createElement("tr"));
 			$table.append(trs.$position);
-			trs.$position.append('<td class="environment-item"></td>');
+			trs.$position.append('<td class="detail-table-head"></td>');
 			trs.$top = $(document.createElement("tr"));
 			$table.append(trs.$top);
-			trs.$top.append('<td class="environment-item">上(℃)</td>');
+			trs.$top.append('<td class="detail-table-head">上(℃)</td>');
 			trs.$mid = $(document.createElement("tr"));
 			$table.append(trs.$mid);
-			trs.$mid.append('<td class="environment-item">中(℃)</td>');
+			trs.$mid.append('<td class="detail-table-head">中(℃)</td>');
 			trs.$bottom = $(document.createElement("tr"));
 			$table.append(trs.$bottom);
-			trs.$bottom.append('<td class="environment-item">下(℃)</td>');
+			trs.$bottom.append('<td class="detail-table-head">下(℃)</td>');
 			return trs;
 		}
-		var config = {
-			className : "environment-value",
-			type : 1,
-			fixedNum : 1
-		};
+
 		for (var i = 0; i < cabinets.length; i++) {
 			var item = cabinets[i];
-			if ((i % 6) === 0) {
+			if ((i % parseInt(WUI.maxRowItem / 2, 10)) === 0) {
 				trs = createRowHead();
 			}
-			trs.$head.append('<td class="environment-item" colspan="2">柜' + item.cabineSeq + '</td>');
-			trs.$position.append('<td class="environment-item">前</td>');
-			trs.$position.append('<td class="environment-item">后</td>');
-			if (item.ft) {
-				signalObjects.push(WUI.detail.createTableItem(trs.$top, item.ft, config));
-			} else {
-				trs.$top.append('<td></td>');
-			}
-			if (item.bt) {
-				signalObjects.push(WUI.detail.createTableItem(trs.$top, item.bt, config));
-			} else {
-				trs.$top.append('<td></td>');
-			}
-			if (item.fm) {
-				signalObjects.push(WUI.detail.createTableItem(trs.$mid, item.fm, config));
-			} else {
-				trs.$mid.append('<td></td>');
-			}
-			if (item.bm) {
-				signalObjects.push(WUI.detail.createTableItem(trs.$mid, item.bm, config));
-			} else {
-				trs.$mid.append('<td></td>');
-			}
-			if (item.fb) {
-				signalObjects.push(WUI.detail.createTableItem(trs.$bottom, item.fb, config));
-			} else {
-				trs.$bottom.append('<td></td>');
-			}
-			if (item.bb) {
-				signalObjects.push(WUI.detail.createTableItem(trs.$bottom, item.bb, config));
-			} else {
-				trs.$bottom.append('<td></td>');
-			}
+			trs.$head.append('<td class="detail-table-head" colspan="2">柜' + item.cabinetSeq + '</td>');
+			trs.$position.append('<td class="detail-table-head">前</td>');
+			trs.$position.append('<td class="detail-table-head">后</td>');
+			createSignalNode(trs.$top, item.ft);
+			createSignalNode(trs.$top, item.bt);
+			createSignalNode(trs.$mid, item.fm);
+			createSignalNode(trs.$mid, item.bm);
+			createSignalNode(trs.$bottom, item.fb);
+			createSignalNode(trs.$bottom, item.bb);
 		}
 	}
 
-	function createDITable(signals, $panel, $table, id, name) {
-		$table.empty();
+	function createDITable(signals, $panel, $tableNode, id, name) {
+		$tableNode.empty();
 		var results = [];
 		signals.forEach(function(item) {
 			item.SIGNAL_ID = parseInt(item.SIGNAL_ID, 10);
@@ -241,15 +217,10 @@ $(function() {
 				return;
 			}
 			var seq = item.SIGNAL_ID % 1000;
-			var result = WUI.findFromArray(results, 'seq', seq);
-			if (result) {
-				result.ID = item.SIGNAL_ID;
-			} else {
-				results.push({
-					seq : seq,
-					ID : item.SIGNAL_ID
-				});
-			}
+			results.push({
+				seq : seq,
+				ID : item.SIGNAL_ID
+			});
 		});
 		if (results.length === 0) {
 			$panel.hide();
@@ -260,12 +231,16 @@ $(function() {
 			return a.seq > b.seq;
 		});
 		var $table = $(document.createElement("table"));
-		$table.append($table);
-		$tr = $(document.createElement("tr"));
-		$table.append($tr);
-		results.forEach(function(item) {
+		$tableNode.append($table);
+		var $tr = $(document.createElement("tr"));
+		for (var i = 0; i < results.length; i++) {
+			var item = results[i];
+			if ((i % 4) === 0) {
+				$tr = $(document.createElement("tr"));
+				$table.append($tr);
+			}
 			var $td = $(document.createElement("td"));
-			$td.addClass("environment-value");
+			$td.addClass("detail-table-cell");
 			$tr.append($td);
 			var $div = $(document.createElement("div"));
 			$td.append($div);
@@ -278,7 +253,7 @@ $(function() {
 			$div.append('<div>' + name + item.seq + '</div>');
 
 			signalObjects.push(panel);
-		});
+		}
 	}
 	function createFireAlarm(signals) {
 		createDITable(signals, $('#fire-alarm-panel'), $('#fire-alarm-table'), 2, '烟感');

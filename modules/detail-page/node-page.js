@@ -32,23 +32,23 @@ function getDefaultPage(objectType, deviceType, callback) {
 				return;
 			}
 			var pages = JSON.parse(data);
+			var page = null;
 			var objectPage = pages[objectType];
-			if (!objectPage) {
-				callback(null, pages.defaultPage);
-			}
-			console.log(deviceType);
-			console.log(objectPage.devicePages);
-			if (deviceType || objectPage.devicePages) {
-				var devicePage = objectPage.devicePages[deviceType];
-				console.log(devicePage);
-				if (devicePage) {
-					callback(null, devicePage.defaultPage);
-				} else {
-					callback(null, objectPage.defaultPage);
+			if (objectPage) {
+				if (deviceType && objectPage.devicePages) {
+					var devicePage = objectPage.devicePages[deviceType];
+					if (devicePage) {
+						page = devicePage.defaultPage;
+					}
 				}
-			} else {
-				callback(null, objectPage.defaultPage)
+				if (!page) {
+					page = objectPage.defaultPage;
+				}
 			}
+			if (!page) {
+				page = pages.defaultPage;
+			}
+			callback(null, page);
 		});
 	} catch (e) {
 		callback(e);
@@ -98,6 +98,16 @@ app.get('/pageConfig/:id', function(req, res) {
 			if (objects.length === 0) {
 				res.status(404).send("not found:" + objectId);
 			} else {
+				try {
+					if (objects[0].CONFIG) {
+						objects[0].CONFIG = JSON.parse(objects[0].CONFIG);
+						if ((typeof objects[0].CONFIG) == 'string') {
+							objects[0].CONFIG = JSON.parse(objects[0].CONFIG);
+						}
+					}
+				} catch (e) {
+					objects[0].CONFIG = {};
+				}
 				res.send(objects[0]);
 			}
 		}
@@ -110,7 +120,7 @@ app.put('/pageConfig/:id', function(req, res) {
 	db.doTransaction(function(connection) {
 		return [ function(callback) {
 			var sql = 'REPLACE INTO detail_page.NODE_PAGE(ID,PAGE_NAME,CONFIG)values(?,?,?)';
-			connection.query(sql, [ objectId, config.PAGE_NAME, JSON.stringify(config.CONFIG) ], function(err, result) {
+			connection.query(sql, [ objectId, config.PAGE_NAME, config.CONFIG ], function(err, result) {
 				callback(err);
 			});
 		} ];

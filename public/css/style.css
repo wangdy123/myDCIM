@@ -197,6 +197,10 @@ select {
 	background-color: #dfdfdf;
 }
 
+.icon-self-diagnosis {
+	background: url('../images/self-diagnosis.png') no-repeat center center;
+}
+
 .icon-use {
 	background: url('../images/use.png') no-repeat center center;
 }

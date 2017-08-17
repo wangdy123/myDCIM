@@ -1,20 +1,5 @@
 [
 	{
-		"id": 1,
-		"name": "仪表板",
-		"icon": "icon-menu-dashboard",
-		"childMenus": [
-			{
-				"id": 101,
-				"title": "仪表板",
-				"icon": "icon-menu-dashboard",
-				"url": "dashboard/dashboard.html",
-				"border": false,
-				"name": "仪表板"
-			}
-		]
-	},
-	{
 		"id": 2,
 		"name": "主控台",
 		"icon": "icon-menu-monitor",
@@ -38,6 +23,9 @@
 					},
 					{
 						"src": "tw/libs/t.js"
+					},
+					{
+					"src":"/echarts/echarts.min.js"
 					}
 				]
 			}

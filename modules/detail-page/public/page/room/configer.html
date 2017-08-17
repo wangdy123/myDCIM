@@ -1,0 +1,47 @@
+<script type="text/javascript">
+	WUI.pageConfiger.init = function(nodeObject, oldConfig) {
+		var objectNodeUrl = 'logicobject/objectNodes/';
+
+		function setImg(imgPath) {
+			$("#room-img-panel").attr("width", $("#room-img-panel").parent().width());
+			$("#room-img-panel").attr("height", $("#room-img-panel").parent().height());
+			$("#room-img-panel").attr("src", "detail/resources/" + imgPath);
+		}
+
+		if (oldConfig) {
+			setImg(oldConfig.img);
+		}
+
+		WUI.pageConfiger.roomPageCfg = oldConfig || {};
+		$('#room-img-select-btn').click(
+				function() {
+					WUI.pageConfiger.selectImg($("#signal-select-dialog"), nodeObject.OBJECT_TYPE,
+							nodeObject.DEVICE_TYPE, function(imgName) {
+								setImg(imgName);
+								WUI.pageConfiger.roomPageCfg.img = imgName;
+							});
+				});
+	}
+	WUI.pageConfiger.pageConfigIsValid = function() {
+		var config = WUI.pageConfiger.roomPageCfg;
+		return config.img;
+	}
+	WUI.pageConfiger.getConfiger = function() {
+		return WUI.pageConfiger.roomPageCfg;
+	}
+</script>
+<table>
+	<tr>
+		<td><p>图片资源:</p>
+			<p>
+				<a id="room-img-select-btn" href="#" class="easyui-linkbutton">选择图片</a>
+			</p></td>
+		<td colspan="2">
+			<div style="height: 150px; width: 200px;" class="easyui-panel" data-options="border:true">
+				<img id="room-img-panel" class="easyui-panel" data-options="border:false,fit:true" />
+			</div>
+		</td>
+	</tr>
+</table>
+<div id="signal-select-dialog"></div>
+

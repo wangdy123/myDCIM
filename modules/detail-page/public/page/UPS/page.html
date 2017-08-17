@@ -1,13 +1,13 @@
-<div class="panel" data-options="border:false,fit:true">
+<div class="easyui-panel"  data-options="border:false">
 	<table>
 		<tr>
-			<td class="UPS-row1">
+			<td style="height: 250px; width: 300px; padding: 0 10px;">
 				<div class="easyui-panel" data-options="border:false,fit:true">
 					<img id="ups-img" class="easyui-panel" data-options="border:false,fit:true" />
 				</div>
 			</td>
-			<td rowspan="2" valign="top">
-				<div class="ups-profile">
+			<td valign="top">
+				<div class="profile">
 					<div class="label">基本信息</div>
 					<div class="value">
 						<p>
@@ -23,13 +23,21 @@
 							型号：<span id="device-model-txt"></span>
 						</p>
 						<p>
-							额定功率：<span id="device-rated-power"></span>kw
+							额定功率：<span id="device-rated-power"></span>W
 						</p>
 					</div>
 				</div>
 			</td>
-			<td rowspan="2" valign="top">
-				<table  class="configer">
+			<td>
+				<table class="configer">
+					<tr>
+						<th colspan="8">
+							<div>
+								通讯状态：<span id="device-link-status"><span class="detail-statusInvalid-icon"></span></span>
+							</div>
+						</th>
+					</tr>
+					<tr><td>&nbsp</td></tr>
 					<tr>
 						<td colspan="8"><label>设备告警统计</label></td>
 					</tr>
@@ -46,22 +54,26 @@
 				</table>
 			</td>
 		</tr>
+
+	</table>
+	<table>
 		<tr>
-			<th align="center">
-				<div>
-					通讯状态：<span id="device-link-status"><span class="detail-statusInvalid-icon"></span></span>
+			<td>
+				<div class="value-block">
+					<div class="label">输入</div>
+					<div id="ups-input-panel" class="value"></div>
 				</div>
-			</th>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<div class="value-block">
+					<div class="label">输出</div>
+					<div id="ups-output-panel" class="value"></div>
+				</div>
+			</td>
 		</tr>
 	</table>
-	<div style="padding: 10px; clear: both;">
-		<div class="ups-item-title">输入</div>
-		<div id="ups-input-panel"></div>
-	</div>
-	<div style="padding: 10px; clear: both;">
-		<div class="ups-item-title">输出</div>
-		<div id="ups-output-panel"></div>
-	</div>
 </div>
-<link rel="stylesheet" type="text/css" href="detail/page/UPS/UPS.css" />
+
 <script type="text/javascript" src="detail/page/UPS/page.js"></script>

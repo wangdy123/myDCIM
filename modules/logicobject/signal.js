@@ -19,7 +19,7 @@ app.get('/signals', function(req, res) {
 });
 
 app.get('/signals/:objectId/:signalId', function(req, res) {
-	var sql = 'select * from config.SIGNAL where where OBJECT_ID=? and SIGNAL_ID=?';
+	var sql = 'select * from config.SIGNAL where OBJECT_ID=? and SIGNAL_ID=?';
 	db.pool.query(sql, [ req.params.objectId,req.params.signalId ], function(error, objects, fields) {
 		if (error) {
 			logger.error(error);

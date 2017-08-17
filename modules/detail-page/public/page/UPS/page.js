@@ -136,11 +136,11 @@ $(function() {
 		var $table = $(document.createElement("table"));
 		$table.addClass("table");
 		$table.attr("cellspacing", "0");
-		$table.css("float", "left");
 		$table.css("margin", "5px");
+		$table.css("display", "inline-block");
 		$table.append($("<caption></caption>").html('<label>第' + (loadNum + 1) + '路</label>'));
-		$table.append('<tr><th class="ups-load-item"></th><th class="ups-load-item">A相</th>'
-				+ '<th class="ups-load-item">B相</th><th class="ups-load-item">C相</th></tr>');
+		$table.append('<tr><th class="detail-table-head"></th><th class="detail-table-head">A相</th>'
+				+ '<th class="detail-table-head">B相</th><th class="detail-table-head">C相</th></tr>');
 		inputs.forEach(function(item) {
 			$table.append(createInputRow(item, loadNum));
 		});
@@ -157,9 +157,9 @@ $(function() {
 	}
 	function createInputRow(item, loadNum) {
 		var $tr = $(document.createElement("tr"));
-		WUI.detail.createTableHead($tr, "ups-load-item", item.name);
+		WUI.detail.createTableHead($tr, "detail-table-head", item.name);
 		var config = {
-			className : "ups-load-value",
+			className : "detail-table-cell",
 			type : item.type,
 			unit : item.unit,
 			fixedNum : item.fixedNum
@@ -182,29 +182,37 @@ $(function() {
 		var $table = $(document.createElement("table"));
 		$table.addClass("table");
 		$table.attr("cellspacing", "0");
-		$table.css("float", "left");
 		$table.css("margin", "5px");
+		$table.css("display", "inline-block");
 		$('#ups-output-panel').append($table);
-		var $tr = $(document.createElement("tr"));
-		$table.append($tr);
-		$tr.append('<th class="ups-load-item"></th>');
-		for (var i = 0; i < outputCount; i++) {
-			$tr.append('<th class="ups-load-item">支路' + (i + 1) + '</th>');
+		var $head = $(document.createElement("tr"));
+		function createRowHead() {
+			$head = $(document.createElement("tr"));
+			$table.append($head);
+			$head.append('<td class="detail-table-head"></td>');
+			pageConfig.outputs.forEach(function(item) {
+				item.$tr = $(document.createElement("tr"));
+				$table.append(item.$tr);
+				item.$tr.append('<th class="detail-table-head">' + item.name + '</th>');
+			});
 		}
-		pageConfig.outputs.forEach(function(item) {
-			var $tr = $(document.createElement("tr"));
-			$table.append($tr);
-			$tr.append('<th class="ups-load-item">' + item.name + '</th>');
-			for (var i = 0; i < outputCount; i++) {
+
+		for (var i = 0; i < outputCount; i++) {
+			if ((i % WUI.maxRowItem) === 0) {
+				createRowHead();
+			}
+			$head.append('<th class="detail-table-head">支路' + (i + 1) + '</th>');
+			pageConfig.outputs.forEach(function(item) {
+				console.log(item);
 				var config = {
-					className : "ups-load-value",
+					className : "detail-table-cell",
 					type : item.type,
 					unit : item.unit,
 					fixedNum : item.fixedNum
 				};
-				createValueItem($tr, item.signalId, i, config);
-			}
-		});
+				createValueItem(item.$tr, item.signalId, i, config);
+			});
+		}
 	}
 
 	function setAlarmCount(alarmCount) {

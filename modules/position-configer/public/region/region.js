@@ -95,10 +95,10 @@ $(document).ready(
 								formatter : function(value, row, index) {
 									return row.LATITUDE.toFixed(6);
 								}
-							}, WUI.pageConfiger.createConfigerColumn() ] ]
+							}, WUI.pageConfiger.createConfigerColumn("region") ] ]
 				});
 			}
-			WUI.pageConfiger.editPage = function(target) {
+			WUI.region.editPage = function(target) {
 				var region = WUI.getDatagridRow($node, target);
 				WUI.pageConfiger.pageDialog(region);
 			};

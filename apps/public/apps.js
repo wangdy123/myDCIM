@@ -1,5 +1,5 @@
 $(function() {
-	var selfDiagnosisUrl = 'alarm/selfDiagnosis';
+	var selfDiagnosisUrl = 'selfDiagnosis';
 
 	var currentLogicObject = null;
 
@@ -99,7 +99,7 @@ $(function() {
 	$("#current-user-panel").click(function() {
 		// TODO::显示当前用户
 	});
-
+	
 	function selfDiagnosis() {
 		if (WUI.selfDiagnosisTimer) {
 			clearTimeout(WUI.selfDiagnosisTimer);
@@ -107,34 +107,21 @@ $(function() {
 		}
 		WUI.ajax.get(selfDiagnosisUrl, {}, function(status) {
 			WUI.selfDiagnosisTimer = setTimeout(selfDiagnosis, WUI.requestInteval.selfDiagnosis);
-			// TODO
+			if(status.length>0){
+				$("#self-diagnosis-content").html(status.join(',')+'，请联系系统管理员。');	
+				$('#self-diagnosis-tooltip').dialog('open');
+			}
+			else{
+				$('#self-diagnosis-tooltip').dialog('close');
+			}
 		}, function() {
 			WUI.selfDiagnosisTimer = setTimeout(selfDiagnosis, WUI.requestInteval.selfDiagnosis);
+			$("#self-diagnosis-content").html('web服务器通讯异常，请联系系统管理员。');	
+			$('#self-diagnosis-tooltip').dialog('open');
 		});
 	}
 
-	function showSelfDiagnosis() {
-		var $dialogNode = $('#self-diagnosis-tooltip');
-		$dialogNode.dialog({
-			iconCls : "icon-self-diagnosis",
-			title : "自诊断状态",
-			left : $(window).width() - 400,
-			top : $(window).height() - 220,
-			width : 200,
-			closed : false,
-			cache : false,
-			href : 'self-diagnosis-status-dialog.html',
-			onLoad : function() {
-				// TODO 显示自诊断
-			},
-			modal : false,
-			onClose : function() {
-				$dialogNode.empty();
-			}
-		});
-	}
 	selfDiagnosis();
-	$("#selfDiagnosis-status").click(showSelfDiagnosis);
 
 	$("#alarm-count-status").click(showAlarmTooltip);
 	$('#sound-icon').click(function() {

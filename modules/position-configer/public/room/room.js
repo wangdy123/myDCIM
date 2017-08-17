@@ -105,9 +105,15 @@ $(document).ready(
 								field : 'DESCRIPTION',
 								title : '描述',
 								width : 200
-							}, WUI.pageConfiger.createConfigerColumn() ] ]
+							}, WUI.pageConfiger.createConfigerColumn("room") ] ]
 				});
 			}
+			
+			WUI.room.editPage = function(target) {
+				var nodeObject = WUI.getDatagridRow($node, target);
+				WUI.pageConfiger.pageDialog(nodeObject);
+			};
+			
 			var tasks = [ function(finishedCbk) {
 				WUI.ajax.get(departmentUrl, {}, function(results) {
 					departments = results;
@@ -129,10 +135,7 @@ $(document).ready(
 					cbk : openObject
 				});
 			});
-			WUI.pageConfiger.editPage = function(target) {
-				var nodeObject = WUI.getDatagridRow($node, target);
-				WUI.pageConfiger.pageDialog(nodeObject);
-			};
+
 			WUI.room.editrow = function(target) {
 				var room = WUI.getDatagridRow($node, target);
 				roomDialog(room, room.PARENT_ID);

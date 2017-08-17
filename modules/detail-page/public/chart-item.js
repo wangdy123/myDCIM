@@ -151,12 +151,12 @@ WUI.initPowerLine = function(nodeId, url) {
 			text : '24小时能耗走势',
 			x : 'center'
 		},
-		tooltip: {
-	        trigger: 'axis',
-	        axisPointer: {
-	            type: 'cross'
-	        }
-	    },
+		tooltip : {
+			trigger : 'axis',
+			axisPointer : {
+				type : 'cross'
+			}
+		},
 		legend : {
 			top : '30',
 			data : []
@@ -186,34 +186,37 @@ WUI.initPowerLine = function(nodeId, url) {
 			series[item.type] = [];
 		});
 
-		energys.sort(function(a, b) {
-			return a.time > b.time;
-		});
-		var xAxis = [];
-		var currentTime = null;
-		var types = {};
+		var valueByTime = [];
 		energys.forEach(function(item) {
 			var time = WUI.timeformat(item.time, "dd日hh时");
-			if (currentTime == time) {
-				if (!types[item.type]) {
-					series[item.type].push(item.value);
-					types[item.type] = true;
-				}
+			var value = WUI.findFromArray(valueByTime, "time", time);
+			if (value) {
+				value[item.type] = item.value;
 			} else {
-				if (currentTime) {
-					WUI.energyConsumptionType.forEach(function(item) {
-						if (!types[item.type]) {
-							series[item.type].push(null);
-						}
-						types[item.type] = false;
-					});
-				}
-				currentTime = time;
-				xAxis.push(time);
-				series[item.type].push(item.value);
-				types[item.type] = true;
+				value = {
+					time : time
+				};
+				value[item.type] = item.value;
+				valueByTime.push(value);
 			}
 		});
+		valueByTime.sort(function(a, b) {
+			return a.time > b.time;
+		});
+
+		var xAxis = [];
+		var types = {};
+		valueByTime.forEach(function(value) {
+			xAxis.push(value.time);
+			WUI.energyConsumptionType.forEach(function(item) {
+				if (value[item.type]) {
+					series[item.type].push(value[item.type]);
+				} else {
+					series[item.type].push(null);
+				}
+			});
+		});
+
 		option.legend.data = legends;
 		option.xAxis.data = xAxis;
 		option.series = [];

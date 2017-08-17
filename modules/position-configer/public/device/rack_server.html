@@ -1,32 +1,39 @@
 <script type="text/javascript">
 	WUI.deviceConfiger = WUI.deviceConfiger || {};
-	WUI.deviceConfiger.UPS = WUI.deviceConfiger.UPS || {};
-	WUI.deviceConfiger.UPS.init = function(device, parentId, deviceType) {
+	WUI.deviceConfiger.rack_server = WUI.deviceConfiger.rack_server || {};
+	WUI.deviceConfiger.rack_server.init = function(device, parentId, deviceType) {
 		if (device) {
-			$('#device-input-txt').numberbox("setValue", WUI.getPropertyValue(device.properties, "inputCount"));
-			$('#device-output-txt').numberbox("setValue", WUI.getPropertyValue(device.properties, "outputCount"));
+			$('#device-ip-txt').textbox("setValue", WUI.getPropertyValue(device.properties, "ip"));
+			$('#device-bmc-txt').textbox("setValue", WUI.getPropertyValue(device.properties, "bmc"));
+			$('#device-cpu-txt').numberbox("setValue", WUI.getPropertyValue(device.properties, "cpu"));
 			$('#device-rated-power-txt').numberbox("setValue", WUI.getPropertyValue(device.properties, "ratedPower"));
 		}
 	};
 
-	WUI.deviceConfiger.UPS.checkValid = function(device) {
-		var isValid = $('#device-input-txt').numberbox("isValid");
-		isValid = isValid && $('#device-output-txt').numberbox("isValid");
+	WUI.deviceConfiger.rack_server.checkValid = function(device) {
+		var isValid = $('#device-ip-txt').textbox("isValid");
+		isValid = isValid && $('#device-bmc-txt').textbox("isValid");
+		isValid = isValid && $('#device-cpu-txt').numberbox("isValid");
 		isValid = isValid && $('#device-rated-power-txt').numberbox("isValid");
 		return isValid;
 	};
 
-	WUI.deviceConfiger.UPS.getExProperties = function() {
+	WUI.deviceConfiger.rack_server.getExProperties = function() {
 		var properties = [];
 		properties.push({
-			PRO_NAME : "inputCount",
-			VALUE_TYPE : WUI.object_ex.typeDef["int"],
-			PRO_VALUE : $('#device-input-txt').numberbox("getValue")
+			PRO_NAME : "ip",
+			VALUE_TYPE : WUI.object_ex.typeDef["string"],
+			PRO_VALUE : $('#device-ip-txt').textbox("getValue")
 		});
 		properties.push({
-			PRO_NAME : "outputCount",
+			PRO_NAME : "bmc",
+			VALUE_TYPE : WUI.object_ex.typeDef["string"],
+			PRO_VALUE : $('#device-bmc-txt').textbox("getValue")
+		});
+		properties.push({
+			PRO_NAME : "cpu",
 			VALUE_TYPE : WUI.object_ex.typeDef["int"],
-			PRO_VALUE : $('#device-output-txt').numberbox("getValue")
+			PRO_VALUE : $('#device-cpu-txt').numberbox("getValue")
 		});
 		properties.push({
 			PRO_NAME : "ratedPower",
@@ -63,19 +70,22 @@
 			<td><input id="device-expect-end-date" class="easyui-datebox" style="width: 100%;"></td>
 		</tr>
 		<tr>
-			<td align="right">输入分路数:</td>
-			<td><input id="device-input-txt" class="easyui-numberbox" type="text" style="width: 100%"
-				data-options="required:true,min:1,precision:0,value:1"></td>
+			<td align="right">IP:</td>
+			<td><input id="device-ip-txt" class="easyui-textbox" type="text" style="width: 100%"
+				data-options="required:true"></td>
 			<td></td>
-			<td align="right">输出支路数:</td>
-			<td><input id="device-output-txt" class="easyui-numberbox" type="text" style="width: 100%"
-				data-options="required:true,min:1,precision:0,value:1"></td>
+			<td align="right">BMC:</td>
+			<td><input id="device-bmc-txt" class="easyui-textbox" type="text" style="width: 100%"
+				data-options="required:true"></td>
 		</tr>
 		<tr>
 			<td align="right">额定功率:</td>
-			<td><input id="device-rated-power-txt" class="easyui-numberbox" type="text"
-				style="width: 100%" data-options="required:true,min:1,precision:0,value:1"></td>
+			<td><input id="device-rated-power-txt" class="easyui-numberbox" type="text" style="width: 100%"
+				data-options="required:true,min:1,precision:0,value:1"></td>
 			<td>W</td>
+			<td align="right">CPU颗数:</td>
+			<td><input id="device-cpu-txt" class="easyui-numberbox" type="text" style="width: 100%"
+				data-options="required:true,min:1,precision:0,value:1"></td>
 		</tr>
 		<tr>
 			<td align="right">描述:</td>

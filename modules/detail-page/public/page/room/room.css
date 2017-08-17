@@ -1,9 +1,3 @@
-.room-row1 {
-	width: 300px;
-	height: 60px;
-	padding: 0 10px 0 0;
-}
-
 .room-row1 .energy {
 	background-color: #729fcf;
 	border-radius: 5px;
@@ -40,11 +34,6 @@
 	height: 100%;
 }
 
-.room-row2 {
-	width: 240px;
-	height: 200px;
-	padding: 0 10px 0 0;
-}
 
 .room-row2 div {
 	border-radius: 5px;
@@ -77,10 +66,4 @@
 	border-radius: 5px;
 	width: 100%;
 	height: 100%;
-}
-
-.room-row3 {
-	min-width: 200px;
-	height: 300px;
-	padding: 10px 10px 0 0;
 }

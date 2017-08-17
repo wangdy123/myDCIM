@@ -6,9 +6,9 @@
 			return object.NAME + "——" + signal.SIGNAL_NAME;
 		}
 		function setImg(imgPath) {
-			$("#station-img-panel").attr("width", $("#station-img-panel").parent().width());
-			$("#station-img-panel").attr("height", $("#station-img-panel").parent().height());
-			$("#station-img-panel").attr("src", "detail/resources/" + imgPath);
+			$("#building-img-panel").attr("width", $("#building-img-panel").parent().width());
+			$("#building-img-panel").attr("height", $("#building-img-panel").parent().height());
+			$("#building-img-panel").attr("src", "detail/resources/" + imgPath);
 		}
 		function requestObjectName(obj, callback) {
 			if (!obj) {
@@ -44,39 +44,39 @@
 				if (err) {
 					oldConfig.temperature = null;
 				} else {
-					$("#station-temperature-signal").html(name);
+					$("#building-temperature-signal").html(name);
 				}
 			});
 			requestObjectName(oldConfig.humidity, function(err, name) {
 				if (err) {
 					oldConfig.humidity = null;
 				} else {
-					$("#station-humidity-signal").html(name);
+					$("#building-humidity-signal").html(name);
 				}
 			});
 		}
 		
-		WUI.pageConfiger.stationPageCfg= oldConfig || {};
-		$('#station-img-select-btn').click(
+		WUI.pageConfiger.buildingPageCfg= oldConfig || {};
+		$('#building-img-select-btn').click(
 				function() {
 					WUI.pageConfiger.selectImg($("#signal-select-dialog"), nodeObject.OBJECT_TYPE,
 							nodeObject.DEVICE_TYPE, function(imgName) {
 								setImg(imgName);
-								WUI.pageConfiger.stationPageCfg.img = imgName;
+								WUI.pageConfiger.buildingPageCfg.img = imgName;
 							});
 				});
 		$('#temperature-signal-select-btn').click(function() {
 			WUI.openSignalSelectDialog($("#signal-select-dialog"), {
 				object : nodeObject,
 				onSelect : function(signal) {
-					WUI.pageConfiger.stationPageCfg.temperature = WUI.pageConfiger.stationPageCfg.temperature || {};
-					WUI.pageConfiger.stationPageCfg.temperature.objectId = signal.OBJECT_ID;
-					WUI.pageConfiger.stationPageCfg.temperature.signalId = signal.SIGNAL_ID;
-					requestObjectName(WUI.pageConfiger.stationPageCfg.temperature, function(err, name) {
+					WUI.pageConfiger.buildingPageCfg.temperature = WUI.pageConfiger.buildingPageCfg.temperature || {};
+					WUI.pageConfiger.buildingPageCfg.temperature.objectId = signal.OBJECT_ID;
+					WUI.pageConfiger.buildingPageCfg.temperature.signalId = signal.SIGNAL_ID;
+					requestObjectName(WUI.pageConfiger.buildingPageCfg.temperature, function(err, name) {
 						if (err) {
-							WUI.pageConfiger.stationPageCfg.temperature = null;
+							WUI.pageConfiger.buildingPageCfg.temperature = null;
 						} else {
-							$("#station-temperature-signal").html(name);
+							$("#building-temperature-signal").html(name);
 						}
 					});
 				}
@@ -86,14 +86,14 @@
 			WUI.openSignalSelectDialog($("#signal-select-dialog"), {
 				object : nodeObject,
 				onSelect : function(signal, object) {
-					WUI.pageConfiger.stationPageCfg.humidity = WUI.pageConfiger.stationPageCfg.humidity || {};
-					WUI.pageConfiger.stationPageCfg.humidity.objectId = signal.OBJECT_ID;
-					WUI.pageConfiger.stationPageCfg.humidity.signalId = signal.SIGNAL_ID;
-					requestObjectName(WUI.pageConfiger.stationPageCfg.humidity, function(err, name) {
+					WUI.pageConfiger.buildingPageCfg.humidity = WUI.pageConfiger.buildingPageCfg.humidity || {};
+					WUI.pageConfiger.buildingPageCfg.humidity.objectId = signal.OBJECT_ID;
+					WUI.pageConfiger.buildingPageCfg.humidity.signalId = signal.SIGNAL_ID;
+					requestObjectName(WUI.pageConfiger.buildingPageCfg.humidity, function(err, name) {
 						if (err) {
-							WUI.pageConfiger.stationPageCfg.humidity = null;
+							WUI.pageConfiger.buildingPageCfg.humidity = null;
 						} else {
-							$("#station-humidity-signal").text(name);
+							$("#building-humidity-signal").text(name);
 						}
 					});
 				}
@@ -101,22 +101,22 @@
 		});
 	}
 	WUI.pageConfiger.pageConfigIsValid = function() {
-		var config=WUI.pageConfiger.stationPageCfg;
+		var config=WUI.pageConfiger.buildingPageCfg;
 		return config.img && config.temperature && config.humidity;
 	}
 	WUI.pageConfiger.getConfiger = function() {
-		return WUI.pageConfiger.stationPageCfg;
+		return WUI.pageConfiger.buildingPageCfg;
 	}
 </script>
 <table>
 	<tr>
 		<td><p>图片资源:</p>
 			<p>
-				<a id="station-img-select-btn" href="#" class="easyui-linkbutton">选择图片</a>
+				<a id="building-img-select-btn" href="#" class="easyui-linkbutton">选择图片</a>
 			</p></td>
 		<td colspan="2">
 			<div style="height: 150px; width: 200px;" class="easyui-panel" data-options="border:true">
-				<img id="station-img-panel" class="easyui-panel" data-options="border:false,fit:true" />
+				<img id="building-img-panel" class="easyui-panel" data-options="border:false,fit:true" />
 			</div>
 		</td>
 	</tr>
@@ -124,12 +124,12 @@
 	<tr>
 		<td>温度信号:</td>
 		<td><a id="temperature-signal-select-btn" href="#" class="easyui-linkbutton">选择信号</a></td>
-		<td id="station-temperature-signal">&nbsp</td>
+		<td id="building-temperature-signal">&nbsp</td>
 	</tr>
 	<tr>
 		<td>湿度信号:</td>
 		<td><a id="humidity-signal-select-btn" href="#" class="easyui-linkbutton">选择信号</a></td>
-		<td id="station-humidity-signal">&nbsp</td>
+		<td id="building-humidity-signal">&nbsp</td>
 	</tr>
 </table>
 <div id="signal-select-dialog"></div>

@@ -73,7 +73,7 @@ $(document).ready(
 								field : 'FLOOR_UNDERGROUND',
 								title : '地下层数',
 								width : 100
-							}, WUI.pageConfiger.createConfigerColumn() ] ]
+							}, WUI.pageConfiger.createConfigerColumn("building") ] ]
 				});
 			}
 			window.WUI.publishEvent('request_current_object', {
@@ -85,7 +85,7 @@ $(document).ready(
 				var building = WUI.getDatagridRow($node, target);
 				buildingDialog(building, building.PARENT_ID);
 			};
-			WUI.pageConfiger.editPage = function(target) {
+			WUI.building.editPage = function(target) {
 				var nodeObject = WUI.getDatagridRow($node, target);
 				WUI.pageConfiger.pageDialog(nodeObject);
 			};

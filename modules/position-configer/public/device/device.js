@@ -141,33 +141,37 @@ $(function() {
 						formatter : function(value, row, index) {
 							return WUI.dateFormat(row.EXPECT_END_DATE);
 						}
-					} ] ]
+					}, WUI.pageConfiger.createConfigerColumn("device") ] ]
 		});
 	}
-
-	function requestVender() {
+	WUI.device.editPage = function(target) {
+		var device = WUI.getDatagridRow($node, target);
+		WUI.pageConfiger.pageDialog(device);
+	};
+	
+	WUI.parallel([ function(cbk) {
 		WUI.ajax.get(deviceVenderUrl, {}, function(results) {
 			deviceVenders = results;
-			requestModel();
+			cbk();
 		}, function() {
 			$.messager.alert('失败', "读取设备厂家失败，请重试！");
+			cbk("fail");
 		});
-	}
-	function requestModel() {
+	}, function(cbk) {
 		WUI.ajax.get(deviceModelUrl, {}, function(results) {
 			deviceModels = results;
-			queryObject();
+			cbk();
 		}, function() {
 			$.messager.alert('失败', "读取设备型号失败，请重试！");
+			cbk("fail");
 		});
-	}
-	function queryObject() {
+	} ], function(err) {
 		window.WUI.publishEvent('request_current_object', {
 			publisher : 'device-configer',
 			cbk : openObject
 		});
-	}
-
+	});
+	
 	WUI.device.editrow = function(target) {
 		var device = WUI.getDatagridRow($node, target);
 		for (var i = 0; i < WUI.deviceTypes.length; i++) {
@@ -189,8 +193,6 @@ $(function() {
 			}
 		});
 	};
-
-	requestVender();
 
 	function deviceDialog(device, parentId, deviceType) {
 		var typeName = deviceType.name;
@@ -258,7 +260,7 @@ $(function() {
 					});
 				}
 
-				function updateTime(model,startTime) {
+				function updateTime(model, startTime) {
 					if (!model || !startTime) {
 						return;
 					}

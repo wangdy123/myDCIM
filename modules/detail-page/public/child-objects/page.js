@@ -4,7 +4,6 @@ $(function() {
 	var publisherName = "detail";
 	WUI.detail = WUI.detail || {};
 	var childObjects = [];
-
 	function openObject(object) {
 		if(!object){
 			return;
@@ -13,6 +12,7 @@ $(function() {
 			id : object.ID
 		}, function(objects) {
 			childObjects = objects;
+			$("#child-object-panel").empty();
 			for ( var i = 0; i < childObjects.length; i++) {
 				WUI.detail.createObjectIcon($("#child-object-panel"), childObjects[i]);
 			}

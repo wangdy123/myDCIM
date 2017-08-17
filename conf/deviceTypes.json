@@ -43,23 +43,23 @@
 }, {
 	"type" : 8,
 	"name" : "机架式服务器",
-	"iconCls" : "icon-devicetype8",
+	"iconCls" : "icon-rack_server",
 	"businessType" : 4,
-	"namespace" : "devicetype8",
+	"namespace" : "rack_server",
 	"parentNodeTypes" : [11]
 }, {
 	"type" : 9,
 	"name" : "刀片式服务器",
-	"iconCls" : "icon-devicetype9",
+	"iconCls" : "icon-blade_server",
 	"businessType" : 4,
-	"namespace" : "devicetype9",
+	"namespace" : "blade_server",
 	"parentNodeTypes" : [11]
 }, {
 	"type" : 10,
 	"name" : "服务器机笼",
-	"iconCls" : "icon-devicetype10",
+	"iconCls" : "icon-server_cage",
 	"businessType" : 4,
-	"namespace" : "devicetype10",
+	"namespace" : "server_cage",
 	"parentNodeTypes" : [11]
 }, {
 	"type" : 11,

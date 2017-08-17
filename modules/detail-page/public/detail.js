@@ -56,18 +56,19 @@ $(function() {
 		}
 	};
 	WUI.detail.initImg = function($node, imgPath, object) {
-		$node.attr("width", $("#station-img").parent().width());
-		$node.attr("height", $("#station-img").parent().height());
-		$node.attr("src", "detail/images/" + imgPath);
-
-		$node.attr("alt", "打开3D");
-		$node.css("cursor", "pointer");
-		$node.click(function() {
-			WUI.publishEvent('open_3D', {
-				publisher : publisherName,
-				object : object
+		$node.attr("width", $node.parent().width());
+		$node.attr("height", $node.parent().height());
+		$node.attr("src", "detail/resources/" + imgPath);
+		if (object) {
+			$node.attr("alt", "打开3D");
+			$node.css("cursor", "pointer");
+			$node.click(function() {
+				WUI.publishEvent('open_3D', {
+					publisher : publisherName,
+					object : object
+				});
 			});
-		});
+		}
 	};
 
 	WUI.detail.createTableHead = function($tr, className, name) {

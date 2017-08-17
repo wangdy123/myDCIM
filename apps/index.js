@@ -1,18 +1,10 @@
-var express = require('express');
-var app = express();
+var app = require('./app');
 var config = require('dcim-config');
 var db = require('dcim-db');
 var permissions = require('dcim-permissions');
 var util = require("dcim-util");
 
-var hbs = require('hbs');
-app.set('views', [ __dirname + '/templates', './templates' ]);
-app.set('view engine', 'html');
-app.engine('.html', hbs.__express);
-
-app.use(express.static(__dirname + '/public', {
-	maxAge : config.config.fileMaxAge * 3600 * 24 * 1000
-}));
+require('./self-diagnosis');
 
 app.use(function(req, res, next) {
 	if (req.url.match("/roadmap/*")) {

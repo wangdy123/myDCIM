@@ -12,15 +12,13 @@ $(document).ready(
 			var pageConfig = {};
 			function openObject(bject) {
 				currentObject = bject;
-				WUI.ajax.get(pageConfigUrl + currentObject.ID, {}, createPage, function() {
-					createPage({
-						img : 'u796.jpg'
-					});
+				WUI.ajax.get(pageConfigUrl + currentObject.ID, {}, createPage, function(s) {
+					$.messager.alert('失败', "未配置页面，请联系业务配置人员！");
 				});
 
 			}
 			function createPage(config) {
-				pageConfig = config;
+				pageConfig = config.CONFIG;
 				WUI.detail.initImg($("#room-img"), pageConfig.img, currentObject);
 				initProfile();
 				puePie = new WUI.PuePie('room-pue-pie');

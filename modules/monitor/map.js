@@ -100,7 +100,7 @@ function getChildObject(pool, object, callback) {
 app.get('/objectLocations', function(req, res) {
 	var pool = db.pool;
 	var sql = baseSql + ' where a.ID=?';
-	pool.query(sql, [ config.config.root_object_id ], function(error, objects, fields) {
+	pool.query(sql, [ config.root_object_id ], function(error, objects, fields) {
 		if (error) {
 			logger.error(error);
 			res.status(500).send(error);

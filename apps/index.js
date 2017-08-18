@@ -147,10 +147,10 @@ app.get('/index.html', function(req, res) {
 		getTheme(account, req, function(theme) {
 			var body = {};
 			body.userName = account.NAME;
-			body.systemName = config.config.systemName;
-			body.copyRightText = config.config.copyRightText;
-			body.company = config.config.company;
-			body.logo = config.config.logo;
+			body.systemName = config.systemName;
+			body.copyRightText = config.copyRightText;
+			body.company = config.company;
+			body.logo = config.logo;
 			body.theme = theme;
 			var homePage = findMenu(account.HOME_PAGE);
 			var page = req.query.page || homePage || "dashboard/dashboard.html";

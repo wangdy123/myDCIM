@@ -2,7 +2,6 @@ var app = require('./app');
 
 var redis = require('dcim-redis');
 var db = require('dcim-db');
-require('dcim-logger');
 var async = require("async");
 
 app.get('/selfDiagnosis', function(req, res) {

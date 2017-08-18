@@ -3,7 +3,7 @@ var util = require("dcim-util");
 
 var app = require('./app');
 var multer = require('multer');
-var config = require('dcim-config').config;
+var config = require('dcim-config');
 
 var path = require('path');
 var fs = require('fs');

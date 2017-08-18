@@ -79,7 +79,7 @@ app.get('/objectNodes', function(req, res) {
 	} else {
 		var sql = 'select o.ID,o.OBJECT_TYPE,o.NAME,o.CODE,p.PARENT_ID from config.OBJECT o '
 				+ 'left join config.POSITION_RELATION p on p.ID=o.ID where o.ID=?';
-		db.pool.query(sql, [ config.config.root_object_id ], function(error, objects, fields) {
+		db.pool.query(sql, [ config.root_object_id ], function(error, objects, fields) {
 			if (error) {
 				logger.error(error);
 				res.status(500).send(error);

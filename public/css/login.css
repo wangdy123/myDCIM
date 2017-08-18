@@ -1,53 +1,49 @@
 @charset "UTF-8";
-body,td,th {
+
+body, td, th {
 	font-size: 12px;
 }
-body{
-	margin-left: 0px;
-	margin-top: 0px;
-	margin-right: 0px;
-	margin-bottom: 0px;
-	overflow:hidden;
+
+html, body {
+	min-height: 300px;
+	width: 100%;
+	min-width: 520px;
+	margin: auto;
+	padding: 0;
+	overflow: hidden;
 	background: url(../images/background.jpg);
 }
-.container-login{
-width:1024px;
-margin:0px auto;
-padding:0px;
-overflow:hidden;
 
+.login-pic {
+	margin: auto;
+	width: 520px;
+	height: 300px;
+	border: 1px solid #008800;
+	padding: 0px;
+	overflow: auto;
+	background: url(../images/loginface.png) no-repeat !important;
 }
-.login-pic{
-position:absolute;
-top:45%;
-left:45%;
-margin:-150px 0 0 -200px;
-width:520px;
-height:300px;
-border:1px solid #008800;
-padding:0px;
-overflow:hidden;
-background:url(../images/loginface.png) no-repeat !important;
+
+#login-form {
+	width: 480px;
+	float: right;
+	margin: 150px auto auto 50px;
+	padding: 0px;
+	overflow: hidden;
+	position: absolute;
 }
-#login-form{
-width:480px;
-float:right;
-margin:150px auto auto 50px;
-padding:0px;
-overflow:hidden;
-position:absolute;
+
+#login-button {
+	text-align: center;
+	height: 48px;
 }
- #login-button{
- text-align: center;
- height:48px;
- 
- }
- .formTitle{
-  height: 24px;
- }
- 
-#user-password{
-    background-color : #FFFFFF;
-    background-image :url("../images/text-bg.gif") !important;
-    border-color : #B5B8C8 !important;
+
+.formTitle {
+	height: 24px;
+}
+
+#user-password {
+	background-color: #FFFFFF;
+	background-image: url("../images/text-bg.gif") !important;
+	border-color: #B5B8C8 !important;
 }

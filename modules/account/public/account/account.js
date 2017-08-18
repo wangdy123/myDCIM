@@ -213,12 +213,15 @@ $(function() {
 				for (var i = 0; i < WUI.menus.length; i++) {
 					var childMenus = WUI.menus[i].childMenus;
 					for (var j = 0; j < childMenus.length; j++) {
+						childMenus[j].group=WUI.menus[i].name;
 						menus.push(childMenus[j]);
 					}
 				}
 				$('#account-home-page').combobox({
 					valueField : 'id',
 					textField : 'name',
+					groupField : "group",
+					singleSelect : true,
 					editable : false,
 					data : menus
 				});

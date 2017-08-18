@@ -14,10 +14,9 @@
 <script type="text/javascript">
 	function doLogin() {
 		var loginInfo = {
-			username : $('#username').val(),
-			password : $('#password').val()
+			username : $('#username').textbox("getValue"),
+			password : $('#password').textbox("getValue")
 		};
-		console.log(window.location);
 		$.ajax({
 			url : "login",
 			type : 'POST',
@@ -33,6 +32,8 @@
 		});
 	}
 	$(function() {
+		$("body").css("height", $(window).height());
+		$(".login-pic").css("margin-top", ($(window).height() - 300) / 2);
 		document.onkeydown = function(e) {
 			var event = e || window.event;
 			var code = event.keyCode || event.which || event.charCode;
@@ -45,31 +46,29 @@
 </script>
 </head>
 <body>
-    <div class="container-login">
-        <div class="login-pic">
-            <div>
-                <img class="panel" title="logo" src="images/logo1.jpg"/>
-            </div>
-            <div>
-                <form id="login-form">
-                    <table style="float: left;">
-                        <tr>
-                            <td>帐号:</td>
-                            <td><input id="username" type="text" name="username" value="" /></td>
-                        </tr>
-                        <tr>
-                            <td>密码:</td>
-                            <td><input id="password" type="password" name="password" value="" /></td>
-                        </tr>
-                    </table>
-                    <div style="float: left; padding: 10px 10px 0; vertical-align: middle;">
-                        <input id="login-button" type="button" name="login" onclick="doLogin()" value="登录" />
-                    </div>
-                    <div style="float: left; width: 100px; padding: 70px 0 0; color: red;">
-                        <label id="error-info"></label>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
+	<div class="login-pic">
+		<div>
+			<img class="panel" title="logo" src="images/logo1.jpg" />
+		</div>
+		<div>
+			<form id="login-form">
+				<table style="float: left;">
+					<tr>
+						<td>帐号:</td>
+						<td><input id="username" class="easyui-textbox" type="text" name="username" value="" data-options="iconCls:'icon-man'"/></td>
+					</tr>
+					<tr>
+						<td>密码:</td>
+						<td><input id="password" class="easyui-textbox" type="password" name="password" value="" data-options="iconCls:'icon-lock'" /></td>
+					</tr>
+				</table>
+				<div style="float: left; padding: 10px 10px 0; vertical-align: middle;">
+					<input id="login-button" type="button" name="login" onclick="doLogin()" value="登录" />
+				</div>
+				<div style="float: left; width: 100px; padding: 70px 0 0; color: red;">
+					<label id="error-info"></label>
+				</div>
+			</form>
+		</div>
+	</div>
 </body>

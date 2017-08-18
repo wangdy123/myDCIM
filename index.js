@@ -8,7 +8,7 @@ app.set('views', 'templates');
 app.set('view engine', 'html');
 app.engine('.html', hbs.__express);
 
-var config = require('dcim-config').config;
+var config = require('dcim-config');
 
 app.use(require('serve-favicon')(require('path').join(__dirname, 'public', 'favicon.ico')));
 var bodyParser = require('body-parser');

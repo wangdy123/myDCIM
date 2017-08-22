@@ -67,7 +67,6 @@
 		"defaultPage": "device",
 		"devicePages": {
 			"1": {
-				"defaultPage": "environment",
 				"pages": [
 					{
 						"name": "机房环境",

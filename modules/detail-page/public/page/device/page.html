@@ -1,5 +1,5 @@
 <div class="easyui-layout" data-options="border:false,fit:true">
-	<div class="easyui-panel"  data-options="region:'north', border:false">
+	<div class="easyui-panel" data-options="region:'north', border:false" style="height: 140px">
 		<table class="configer">
 			<tr>
 				<td align="right" style="width: 120px;">名称：</td>
@@ -38,6 +38,8 @@
 			</tr>
 		</table>
 	</div>
-	<div id="child-signal-panel" class="easyui-panel" data-options="region:'center', border:false" style="width: 100%"></div>
+	<div class="easyui-panel" data-options="region:'center', border:false">
+		<div id="child-signal-panel" class="easyui-datagrid" data-options="border:false,fit:true"></div>
+	</div>
 </div>
 <script type="text/javascript" src="detail/page/device/page.js"></script>

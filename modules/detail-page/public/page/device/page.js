@@ -6,8 +6,9 @@ $(function() {
 	var publisherName = "detail";
 	var currentObject = null;
 	WUI.detail = WUI.detail || {};
-	var signals = [];
+	var requestIds = [];
 
+	var $node = $("#child-signal-panel");
 	function openObject(deviceObject) {
 		currentObject = deviceObject;
 		$('#device-name-txt').text(currentObject.NAME);
@@ -51,27 +52,104 @@ $(function() {
 			$.messager.alert('失败', "读取设备厂家失败，请重试！");
 		});
 
-		WUI.ajax.get(signalUrl, {
-			parentId : currentObject.ID
-		}, function(objects) {
-			signals = objects;
-			for (var i = 0; i < signals.length; i++) {
-				WUI.detail.createSignal($("#child-signal-panel"), signals[i]);
-			}
-			requestStatus();
-		}, function() {
-			$.messager.alert('失败', "读取配置失败！");
+		$node.datagrid({
+			url : signalUrl,
+			queryParams : {
+				parentId : currentObject.ID
+			},
+			fit : true,
+			border : false,
+			method : "get",
+			singleSelect : true,
+			onLoadError : WUI.onLoadError,
+			onLoadSuccess : function(data) {
+				signals = data.rows;
+				signals.forEach(function(item) {
+					requestIds.push({
+						objectId : item.OBJECT_ID,
+						signalId : item.SIGNAL_ID
+					});
+				});
+				requestStatus();
+			},
+			columns : [ [
+					{
+						field : 'icon',
+						align : 'center',
+						width : 40,
+						formatter : function(value, row, index) {
+							var type = WUI.findFromArray(WUI.signalType, 'type', row.SIGNAL_TYPE);
+							if (type) {
+								return '<div class="' + type.iconCls + '" title="' + type.name + '"></div> ';
+							}
+						}
+					},
+					{
+						field : 'SIGNAL_ID',
+						title : '信号编码',
+						align : 'right',
+						width : 80
+					},
+					{
+						field : 'SIGNAL_NAME',
+						title : '名称',
+						width : 120
+					},
+					{
+						field : 'SIGNAL_TYPE',
+						title : '信号类型',
+						align : 'center',
+						width : 60,
+						formatter : function(value, row, index) {
+							var type = WUI.findFromArray(WUI.signalType, 'type', row.SIGNAL_TYPE);
+							if (type) {
+								return type.name;
+							}
+							return "";
+						}
+					},
+					{
+						field : 'value',
+						title : '当前值',
+						width : 120,
+						formatter : function(value, row, index) {
+
+							return "";
+						}
+					},
+					{
+						field : 'status',
+						title : '状态',
+						width : 120,
+						formatter : function(value, row, index) {
+
+							return "";
+						}
+					},
+					{
+						field : 'action',
+						title : '操作',
+						width : 120,
+						align : 'center',
+						formatter : function(value, row, index) {
+							if (row.SIGNAL_TYPE == 3) {
+								return '<a href="#" class="easyui-linkbutton" data-options="iconCls:\'icon-AO\'" '
+										+ 'onclick="WUI.detail.remoteCtrlValue(this)">遥调</a>';
+							}
+							if (row.SIGNAL_TYPE == 4) {
+								return '<a href="#" class="easyui-linkbutton" data-options="iconCls:\'icon-DO\'" '
+										+ 'onclick="WUI.detail.remoteCtrlValue(this)">遥控</a>';
+							}
+						}
+					} ] ]
 		});
 	}
 
-	function findsignal(objectId, signalId) {
-		for (var i = 0; i < signals.length; i++) {
-			if (signals[i].OBJECT_ID === objectId && signals[i].SIGNAL_ID === signalId) {
-				return signals[i];
-			}
-		}
-	}
+	WUI.detail.remoteCtrlValue = function(target) {
+		var signal = WUI.getDatagridRow($node, target);
 
+	};
+	
 	function setAlarmCount(alarmCount) {
 		if (alarmCount) {
 			$("#device-alarmLevel1-count").text(alarmCount.alarmLevel1Count);
@@ -81,27 +159,30 @@ $(function() {
 		}
 	}
 	function setValue(signalValues) {
-		for (var i = 0; i < signalValues.length; i++) {
-			var signal = findsignal(signalValues[i].objectId, signalValues[i].signalId);
-			WUI.detail.setsignalValue(signal, signalValues[i]);
-		}
+		var rows=$node.datagrid('getRows');
+		signalValues.forEach(function(value){
+			for(var i=0;i<rows.length;i++){
+				var row=rows[i];
+				row.value=value;
+				if (row.OBJECT_ID === value.objectId && row.SIGNAL_ID === value.signalId) {
+					$node.datagrid('updateRow',{
+						index: i,
+						row
+					});
+				}
+			}
+		});
 	}
 	function requestStatus() {
 		if (WUI.detail.realtimeValueTimer) {
 			clearTimeout(WUI.detail.realtimeValueTimer);
 			WUI.detail.realtimeValueTimer = null;
 		}
-		if (signals.length <= 0) {
+		if (requestIds.length <= 0) {
 			WUI.detail.realtimeValueTimer = setTimeout(requestStatus, WUI.monitor.REALTIME_VALUE_INTEVAL);
 			return;
 		}
-		var requestIds = [];
-		signals.forEach(function(item) {
-			requestIds.push({
-				objectId : item.OBJECT_ID,
-				signalId : item.SIGNAL_ID
-			});
-		});
+
 		WUI.ajax.post(statusUrl, {
 			objectId : currentObject.ID,
 			requestIds : requestIds

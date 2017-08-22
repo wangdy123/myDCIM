@@ -198,6 +198,19 @@ $(function() {
 		});
 	});
 
+	var $selfDiagnosisSoundBox = $(document.createElement("div"));
+	$("body").append($selfDiagnosisSoundBox);
+
+	function beginSelfDiagnosisSound() {
+		var selfDiagnosisMuted = $.cookie('selfDiagnosisMuted');
+		if (!selfDiagnosisMuted && $selfDiagnosisSoundBox.children().length < 1) {
+			$selfDiagnosisSoundBox.html('<audio autoplay loop><source src="/sounds/off-line.wav'
+					+ '" type="audio/wav" /></audio>');
+		}
+	}
+	function endSelfDiagnosisSound() {
+		$selfDiagnosisSoundBox.empty();
+	}
 	function selfDiagnosis() {
 		if (WUI.selfDiagnosisTimer) {
 			clearTimeout(WUI.selfDiagnosisTimer);
@@ -208,13 +221,16 @@ $(function() {
 			if (status.length > 0) {
 				$("#self-diagnosis-content").html(status.join(',') + '，请联系系统管理员。');
 				$('#self-diagnosis-tooltip').dialog('open');
+				beginSelfDiagnosisSound();
 			} else {
 				$('#self-diagnosis-tooltip').dialog('close');
+				endSelfDiagnosisSound();
 			}
 		}, function() {
 			WUI.selfDiagnosisTimer = setTimeout(selfDiagnosis, WUI.requestInteval.selfDiagnosis);
 			$("#self-diagnosis-content").html('web服务器通讯异常，请联系系统管理员。');
 			$('#self-diagnosis-tooltip').dialog('open');
+			beginSelfDiagnosisSound();
 		});
 	}
 
@@ -225,99 +241,126 @@ $(function() {
 			clearTimeout(WUI.alarmStatusTimer);
 			WUI.alarmStatusTimer = null;
 		}
-		WUI.ajax.get("latestAlarm", {}, function(status) {
-			WUI.alarmStatusTimer = setTimeout(selfDiagnosis, WUI.requestInteval.realtimeValue);
-			if (status.length > 0) {
-				$("#self-diagnosis-content").html(status.join(',') + '，请联系系统管理员。');
-				$('#self-diagnosis-tooltip').dialog('open');
-			} else {
-				$('#self-diagnosis-tooltip').dialog('close');
-			}
+		WUI.ajax.get("alarmStatus", {}, function(status) {
+			WUI.alarmStatusTimer = setTimeout(requestLatestAlarm, WUI.requestInteval.realtimeValue);
+			setAlarmCount(status.activeAlarmCount);
+			checkDialogActive(status.maxSequece);
+			checkAlarmSound(status.unAckActiveAlarmCount);
 		}, function() {
-			WUI.alarmStatusTimer = setTimeout(selfDiagnosis, WUI.requestInteval.realtimeValue);
-			$("#self-diagnosis-content").html('web服务器通讯异常，请联系系统管理员。');
-			$('#self-diagnosis-tooltip').dialog('open');
+			WUI.alarmStatusTimer = setTimeout(requestLatestAlarm, WUI.requestInteval.realtimeValue);
 		});
 	}
-	
-	$("#alarm-count-status").click(showAlarmTooltip);
-	$('#sound-icon').click(function() {
-		setShoundmuted(!isShoundmuted());
+	requestLatestAlarm();
+	$('#alarm-tooltip').dialog({
+		left : $(window).width() - 250,
+		top : $(window).height() - 260,
+		closed : true
+	});
+	function checkDialogActive(maxSequece) {
+		var lastSeq = $.cookie('maxSequece');
+		if (!lastSeq || maxSequece > parseInt(lastSeq, 10)) {
+			$.cookie('maxSequece', maxSequece);
+			$('#alarm-tooltip').dialog('open');
+		}
+	}
+	$("#alarm-count-status").click(function() {
+		$('#alarm-tooltip').dialog('open');
 	});
 
-	var $soundBox = $("#sound-box");
-	var global_shoundFile = $.cookie('shoundFile');
-	var shound_muted = isShoundmuted();
-
-	if (!$soundBox) {
-		$soundBox = $(document.createElement("div"));
-		$("body").append($soundBox);
-	}
-
-	function setShoundmuted(muted) {
-		shound_muted = muted;
-		if (muted) {
-			$('#sound-icon').attr("src", "/images/Sound_off.png");
-			$.cookie('shoundmuted', 1);
-		} else {
-			$('#sound-icon').attr("src", "/images/Sound_on.png");
-			$.removeCookie('shoundmuted', null);
-		}
-	}
-
-	function isShoundmuted() {
-		return $.cookie('shoundmuted');
-	}
-
-	setShoundmuted(isShoundmuted());
-
-	function setSound(shoundFile) {
-		if (global_shoundFile && !shound_muted) {
-			$soundBox.html('<audio autoplay loop><source src="/image' + global_shoundFile
-					+ '" type="audio/wav" /></audio>');
-		} else {
-			$soundBox.empty();
-		}
-	}
-
-	var maxalarmLevel = 0;
-	function setSoundFile() {
-		var shoundFile = null;
-		if (maxalarmLevel > 0) {
-			shoundFile = "/level" + maxalarmLevel + ".wav";
-		} else {
-			shoundFile = null;
-		}
-		if (global_shoundFile === shoundFile) {
-			return;
-		}
-		global_shoundFile = shoundFile;
-		if (shoundFile) {
-			$.cookie('shoundFile', shoundFile);
-		} else {
-			$.removeCookie('shoundFile', null);
-		}
-		setSound();
-	}
-
-	function showAlarmTooltip() {
-		var $dialogNode = $('#alarm-tooltip');
-		$dialogNode.dialog({
-			iconCls : "icon-alarm",
-			title : "告警统计",
-			left : $(window).width() - 200,
-			top : $(window).height() - 220,
-			width : 200,
-			closed : false,
-			cache : false,
-			href : 'alarm-status-dialog.html',
-			onLoad : function() {
-
-			},
-			modal : false,
-			onClose : function() {
-				$dialogNode.empty();
+	function setAlarmCount(activeAlarmCount) {
+		var totalCount = 0;
+		var level1 = 0;
+		var level2 = 0;
+		var level3 = 0;
+		var level4 = 0;
+		activeAlarmCount.forEach(function(item) {
+			totalCount += item.alarmCount;
+			switch (item.alarm_level) {
+			case 1:
+				level1 = item.alarmCount;
+				break;
+			case 2:
+				level2 = item.alarmCount;
+				break;
+			case 3:
+				level3 = item.alarmCount;
+				break;
+			case 4:
+				level4 = item.alarmCount;
+				break;
 			}
 		});
+		$("#st_total_alarm").text(totalCount);
+		$("#st_alarmLevel1").text(level1);
+		$("#st_alarmLevel2").text(level2);
+		$("#st_alarmLevel3").text(level3);
+		$("#st_alarmLevel4").text(level4);
+		$("#alarm-count-status").text("告警计数：" + totalCount);
 	}
+
+	var $alarmSoundBox = $(document.createElement("div"));
+	$("body").append($alarmSoundBox);
+	var g_alarmSoundFile = null;
+	function checkAlarmSound(unAckActiveAlarmCount) {
+		var maxLevel = 0;
+		unAckActiveAlarmCount.forEach(function(item) {
+			var muted = $.cookie('alarm-level-' + item.alarm_level + '-muted');
+			if (!muted && item.alarmCount > 0 && item.alarm_level > maxLevel) {
+				maxLevel = item.alarm_level;
+			}
+		});
+		if (maxLevel <= 0) {
+			$alarmSoundBox.empty();
+			g_alarmSoundFile = null;
+			return;
+		}
+		var shoundFile = "level" + maxLevel + ".wav";
+		if (g_alarmSoundFile == shoundFile) {
+			return;
+		}
+		g_alarmSoundFile = shoundFile;
+		$alarmSoundBox.html('<audio autoplay loop><source src="/sounds/' + shoundFile + '" type="audio/wav" /></audio>');
+	}
+
+	function setMuted($node, muted, key) {
+		if (muted) {
+			$node.addClass("alarm_sound_off_icon");
+			$node.removeClass("alarm_sound_on_icon");
+			$.cookie(key, 1);
+		} else {
+			$node.addClass("alarm_sound_on_icon");
+			$node.removeClass("alarm_sound_off_icon");
+			$.removeCookie(key, null);
+		}
+	}
+	setMuted($('#self-diagnosis-sound'), $.cookie('self-diagnosis-muted'), 'self-diagnosis-muted');
+	setMuted($('#alarm-level-1-sound'), $.cookie('alarm-level-1-muted'), 'alarm-level-1-muted');
+	setMuted($('#alarm-level-2-sound'), $.cookie('alarm-level-2-muted'), 'alarm-level-2-muted');
+	setMuted($('#alarm-level-3-sound'), $.cookie('alarm-level-3-muted'), 'alarm-level-3-muted');
+	setMuted($('#alarm-level-4-sound'), $.cookie('alarm-level-4-muted'), 'alarm-level-4-muted');
+
+	$('#self-diagnosis-sound').click(function() {
+		var muted = !$.cookie('self-diagnosis-muted');
+		if (muted) {
+			if ($selfDiagnosisSoundBox.children().length > 0) {
+				$selfDiagnosisSoundBox.empty();
+			}
+		}
+		setMuted($('#self-diagnosis-sound'), muted, 'self-diagnosis-muted');
+
+	});
+	$('#alarm-level-1-sound').click(function() {
+		setMuted($('#alarm-level-1-sound'), !$.cookie('alarm-level-1-muted'), 'alarm-level-1-muted');
+
+	});
+	$('#alarm-level-2-sound').click(function() {
+		setMuted($('#alarm-level-2-sound'), !$.cookie('alarm-level-2-muted'), 'alarm-level-2-muted');
+
+	});
+	$('#alarm-level-3-sound').click(function() {
+		setMuted($('#alarm-level-3-sound'), !$.cookie('alarm-level-3-muted'), 'alarm-level-3-muted');
+	});
+	$('#alarm-level-4-sound').click(function() {
+		setMuted($('#alarm-level-4-sound'), !$.cookie('alarm-level-4-muted'), 'alarm-level-4-muted');
+	});
 });

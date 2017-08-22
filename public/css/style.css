@@ -27,7 +27,6 @@ select {
 	padding: 0;
 }
 
-
 #system-name {
 	padding: 8px 20px;
 	margin: 0;
@@ -116,13 +115,12 @@ select {
 	cursor: pointer;
 }
 
-.alarm_sound_icon {
-	display: inline-block;
-	width: 18px;
-	height: 16px;
-	padding: 0 5px;
-	margin: 0 2px;
-	cursor: pointer;
+.alarm_sound_off_icon {
+	background: url('../images/Sound_off.png') no-repeat center center;
+}
+
+.alarm_sound_on_icon {
+	background: url('../images/Sound_on.png') no-repeat center center;
 }
 
 .statusInvalid-icon {

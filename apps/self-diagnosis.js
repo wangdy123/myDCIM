@@ -9,23 +9,23 @@ app.get('/selfDiagnosis', function(req, res) {
 
 	var tasks = [ function(cbk) {
 		var client = redis.createRedisConnect();
-		client.on("error", function(err) {
+		client.on("error", function(error) {
 			status.push("缓存服务通讯异常");
-			logger.error(err);
+			logger.error(error);
 			cbk(null);
 		});
-		client.set("link-test", "test string", function(err) {
-			if (err) {
+		client.set("link-test", "test string", function(error) {
+			if (error) {
 				status.push("缓存服务通讯异常");
-				logger.error(err);
+				logger.error(error);
 			}
 			cbk(null);
 		});
 	}, function(cbk) {
-		db.getRecordConnect(function(err, connect) {
-			if (err) {
+		db.getRecordConnect(function(error, connect) {
+			if (error) {
 				status.push("记录数据库通讯异常");
-				logger.error(err);
+				logger.error(error);
 			}
 			cbk(null);
 		});
@@ -33,7 +33,7 @@ app.get('/selfDiagnosis', function(req, res) {
 		db.pool.query('SELECT * FROM config.OBJECT where ID=1', function(error) {
 			if (error) {
 				status.push("配置数据库通讯异常");
-				logger.error(err);
+				logger.error(error);
 			}
 			cbk(null);
 		});

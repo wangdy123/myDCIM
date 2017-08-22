@@ -5,6 +5,7 @@ var permissions = require('dcim-permissions');
 var util = require("dcim-util");
 
 require('./self-diagnosis');
+require('./alarm-status');
 
 app.use(function(req, res, next) {
 	if (req.url.match("/roadmap/*")) {

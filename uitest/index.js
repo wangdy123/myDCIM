@@ -16,7 +16,7 @@ app.engine('.html', hbs.__express);
 app.use(express.static(__dirname + '/public'));
 
 function initTest(test) {
-	logger.log(test);
+	//logger.log(test);
 	app.get("/" + test.url, function(req, res) {
 		res.render(test.target, test);
 	});

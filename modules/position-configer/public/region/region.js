@@ -126,7 +126,7 @@ $(document).ready(
 			};
 			function regionDialog(region, parentId, regionType) {
 				var typeName = WUI.regionTypes[regionType].name;
-				$('#configer-dialog').dialog({
+				var cfg = {
 					iconCls : region ? "icon-edit" : "icon-add",
 					title : (region ? "修改" : "添加") + typeName,
 					left : ($(window).width() - 300) * 0.5,
@@ -139,14 +139,39 @@ $(document).ready(
 						$.messager.alert('失败', "对话框加载失败，请刷新后重试！");
 					},
 					onLoad : function() {
+						var $zipCodeSel = $('#region-zip-code-txt');
+						$zipCodeSel.combobox({
+							url : 'position-configer/regionCode',
+							method : 'get',
+							queryParams : {
+								id : parentId
+							},
+							editable : false,
+							required : true,
+							valueField : 'code',
+							textField : 'name',
+							onSelect : function(rec) {
+								$('#region-name-txt').textbox("setValue", rec.name);
+							},
+							onLoadSuccess : function() {
+								if (region) {
+									$zipCodeSel.combobox("setValue", region.CODE);
+								}
+							},
+							keyHandler : {
+								down : function(e) {
+									$zipCodeSel.combobox("showPanel");
+								}
+							}
+						});
 						if (region) {
 							$('#region-name-txt').textbox("setValue", region.NAME);
-							$('#region-zip-code-txt').textbox("setValue", region.CODE);
+							$zipCodeSel.combobox("setValue", region.CODE);
 							$('#region-ABBREVIATION-txt').textbox("setValue", region.ABBREVIATION);
 							$('#region-LONGITUDE-txt').numberbox("setValue", region.LONGITUDE);
 							$('#region-LATITUDE-txt').numberbox("setValue", region.LATITUDE);
 							$('#region-name-txt').textbox("isValid");
-							$('#region-zip-code-txt').textbox("isValid");
+							$('#region-zip-code-txt').combobox("isValid");
 							$('#region-ABBREVIATION-txt').textbox("isValid");
 						} else {
 							$('#region-LONGITUDE-txt').numberbox("setValue", currentRegionObject.LONGITUDE);
@@ -161,7 +186,7 @@ $(document).ready(
 						text : '保存',
 						handler : function() {
 							var isValid = $('#region-name-txt').textbox("isValid");
-							isValid = isValid && $('#region-zip-code-txt').textbox("isValid");
+							isValid = isValid && $('#region-zip-code-txt').combobox("isValid");
 							isValid = isValid && $('#region-ABBREVIATION-txt').textbox("isValid");
 							if (!isValid) {
 								return;
@@ -170,7 +195,7 @@ $(document).ready(
 							var newRegion = {
 								NAME : $('#region-name-txt').textbox("getValue"),
 								ABBREVIATION : $('#region-ABBREVIATION-txt').textbox("getValue"),
-								CODE : $('#region-zip-code-txt').textbox("getValue"),
+								CODE : $('#region-zip-code-txt').combobox("getValue"),
 								LONGITUDE : parseFloat($('#region-LONGITUDE-txt').numberbox("getValue")),
 								LATITUDE : parseFloat($('#region-LATITUDE-txt').numberbox("getValue")),
 								OBJECT_TYPE : WUI.objectTypeDef.REGION,
@@ -202,6 +227,7 @@ $(document).ready(
 							$('#configer-dialog').dialog("close");
 						}
 					} ]
-				});
+				};
+				$('#configer-dialog').dialog(cfg);
 			}
 		});

@@ -24,33 +24,31 @@ function getChildLocations(pool, id, cbk) {
 function getStatusCount(pool, object, callback) {
 	var tasks = [];
 	tasks.push(function(cbk) {
-		common.getBuildingCount(pool,object.ID, function(err, count) {
+		common.getBuildingCount(pool, object.ID, function(err, count) {
 			if (!err) {
-				object.buildingCount = count;
+				object.buildingCount = count ? count : 0;
 			}
 			cbk(err);
 		});
 	});
 	tasks.push(function(cbk) {
-		common.getRoomCount(pool,object.ID, function(err, count) {
-			logger.error("getRoomCount"+count);
+		common.getRoomCount(pool, object.ID, function(err, count) {
 			if (!err) {
-				object.roomCount = count;
+				object.roomCount = count ? count : 0;
 			}
 			cbk(err);
 		});
 	});
 	tasks.push(function(cbk) {
-		common.getCabinetCount(pool,object.ID, function(err, count) {
-			logger.error("getCabinetCount"+err);
+		common.getCabinetCount(pool, object.ID, function(err, count) {
 			if (!err) {
-				object.cabinetCount = count;
+				object.cabinetCount = count ? count : 0;
 			}
 			cbk(err);
 		});
 	});
 	tasks.push(function(cbk) {
-		common.getAlarmCount(pool,object.ID, function(err, status) {
+		common.getAlarmCount(pool, object.ID, function(err, status) {
 			if (!err) {
 				object.alarmLevel1Count = status.alarmLevel1Count;
 				object.alarmLevel2Count = status.alarmLevel2Count;
@@ -61,7 +59,7 @@ function getStatusCount(pool, object, callback) {
 		});
 	});
 	async.parallel(tasks, function(err, results) {
-		if(err){
+		if (err) {
 			logger.error(err);
 		}
 		callback(null, object);

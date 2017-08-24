@@ -76,6 +76,7 @@
 		"alarmLevels",
 		"alarmTypes",
 		"signalType",
-		"energyConsumptionType"
+		"energyConsumptionType",
+		"reginCode"
 	]
 }

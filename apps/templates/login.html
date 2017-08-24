@@ -52,22 +52,22 @@
 		</div>
 		<div>
 			<form id="login-form">
-				<table style="float: left;">
+				<table>
 					<tr>
-						<td>帐号:</td>
-						<td><input id="username" class="easyui-textbox" type="text" name="username" value="" data-options="iconCls:'icon-man'"/></td>
+						<td><div>
+								帐号:<input id="username" class="easyui-textbox" type="text" name="username" value=""
+									data-options="iconCls:'icon-man'" />
+							</div>
+							<div>
+								密码:<input id="password" class="easyui-textbox" type="password" name="password" value=""
+									data-options="iconCls:'icon-lock'" />
+							</div></td>
+						<td></td>
+						<td valign="middle"><input id="login-button" type="button" name="login" onclick="doLogin()" value="登录" /></td>
+						<td valign="middle"><label id="error-info" style="color: red;"></label></td>
 					</tr>
-					<tr>
-						<td>密码:</td>
-						<td><input id="password" class="easyui-textbox" type="password" name="password" value="" data-options="iconCls:'icon-lock'" /></td>
-					</tr>
+
 				</table>
-				<div style="float: left; padding: 10px 10px 0; vertical-align: middle;">
-					<input id="login-button" type="button" name="login" onclick="doLogin()" value="登录" />
-				</div>
-				<div style="float: left; width: 100px; padding: 70px 0 0; color: red;">
-					<label id="error-info"></label>
-				</div>
 			</form>
 		</div>
 	</div>

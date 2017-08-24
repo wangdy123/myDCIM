@@ -1,12 +1,6 @@
 {
 	"levels": [
 		{
-			"level": 0,
-			"name": "正常",
-			"iconCls": "alarmLevel0-icon",
-			"color": "#00FF00"
-		},
-		{
 			"level": 1,
 			"name": "一级告警",
 			"iconCls": "alarmLevel1-icon",

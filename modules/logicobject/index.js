@@ -224,8 +224,11 @@ function deleteObject(connection,nodeObject,callback){
 		});
 	});
 	
+	objectDao.signal.createDeleteByParentTasks(connection,tasks,nodeObject.ID);
+	
 	var namespace=config.objectTypes[nodeObject.OBJECT_TYPE].namespace;
 	objectDao[namespace].createDeleteTasks(connection,tasks,nodeObject.ID);
+	
 	tasks.push(function(cb) {
 		var sql ='delete from config.OBJECT_EXT where ID=?';
 		connection.query(sql, [ nodeObject.ID], function(err,result){

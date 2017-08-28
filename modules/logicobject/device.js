@@ -4,7 +4,7 @@ var device = require('dcim-object-dao').device;
 
 module.exports.initRequest = function(app) {
 	app.get('/devices', function(req, res) {
-		var parentId = req.query.parentId ? req.query.parentId : config.config.root_object_id;
+		var parentId = req.query.parentId ? req.query.parentId : config.root_object_id;
 		device.getByPositionParent(db.pool, parentId, function(error, devices) {
 			if (error) {
 				logger.error(error);

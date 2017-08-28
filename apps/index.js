@@ -1,18 +1,11 @@
-var express = require('express');
-var app = express();
+var app = require('./app');
 var config = require('dcim-config');
 var db = require('dcim-db');
 var permissions = require('dcim-permissions');
 var util = require("dcim-util");
 
-var hbs = require('hbs');
-app.set('views', [ __dirname + '/templates', './templates' ]);
-app.set('view engine', 'html');
-app.engine('.html', hbs.__express);
-
-app.use(express.static(__dirname + '/public', {
-	maxAge : config.config.fileMaxAge * 3600 * 24 * 1000
-}));
+require('./self-diagnosis');
+require('./alarm-status');
 
 app.use(function(req, res, next) {
 	if (req.url.match("/roadmap/*")) {
@@ -122,7 +115,12 @@ function setMenu(body, account, menus, path, req) {
 			}
 		}
 		menu.childMenus = childMenus;
-		if (childMenus.length > 0) {
+		if (childMenus.length > 1) {
+			mainMenus.push(menu);
+		}else if(childMenus.length === 1){
+			menu.url=childMenus[0].url;
+			menu.name=childMenus[0].name;
+			menu.icon=childMenus[0].icon;
 			mainMenus.push(menu);
 		}
 	}
@@ -150,10 +148,10 @@ app.get('/index.html', function(req, res) {
 		getTheme(account, req, function(theme) {
 			var body = {};
 			body.userName = account.NAME;
-			body.systemName = config.config.systemName;
-			body.copyRightText = config.config.copyRightText;
-			body.company = config.config.company;
-			body.logo = config.config.logo;
+			body.systemName = config.systemName;
+			body.copyRightText = config.copyRightText;
+			body.company = config.company;
+			body.logo = config.logo;
 			body.theme = theme;
 			var homePage = findMenu(account.HOME_PAGE);
 			var page = req.query.page || homePage || "dashboard/dashboard.html";

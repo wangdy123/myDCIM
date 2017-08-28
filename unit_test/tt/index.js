@@ -1,5 +1,7 @@
 var expect = require('chai').expect;
 var supertest = require('supertest');
+require('dcim-logger');
+
 var api = supertest('http://localhost:8080');
 describe('hooks1', function() {
 

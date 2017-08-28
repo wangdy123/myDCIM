@@ -5,8 +5,9 @@
 	},
 	"root_object_id": 1,
 	"fileMaxAge": 30,
-	"httpPort": 8080,
+	"httpPort": 8180,
 	"secure": false,
+	"temp_path":"./temp",
 	"map": {
 		"defaultZoom": 10,
 		"minZoom": 8,
@@ -51,7 +52,8 @@
 		"monitor": "/monitor",
 		"dashboard": "/dashboard",
 		"navigation": "/navigation",
-		"screen-edit": "/screen-edit"
+		"screen-edit": "/screen-edit",
+		"detail-page":"/detail"
 	},
 	"systemName": "DCIM测试平台",
 	"copyRightText": "copyright:wincom",
@@ -72,6 +74,9 @@
 		"regionTypes",
 		"businessTypes",
 		"alarmLevels",
-		"alarmTypes"
+		"alarmTypes",
+		"signalType",
+		"energyConsumptionType",
+		"reginCode"
 	]
 }

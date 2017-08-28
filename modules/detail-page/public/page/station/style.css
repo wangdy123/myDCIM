@@ -1,0 +1,42 @@
+.station .energy {
+	background-color: #729fcf;
+}
+
+.station .energy .label {
+	float: left;
+	border-radius: 5px 0 0 5px;
+	background-color: #3465a4;
+	width: 80px;
+	height: 100%;
+}
+
+
+.station div .value {
+	float: left;
+	padding: 15px 10px;
+	color: white;
+}
+
+.station .environment {
+	background-color: #ad7fa8;
+}
+
+.station .environment .label {
+	float: left;
+	border-radius: 5px 0 0 5px;
+	background-color: #75507b;
+	width: 80px;
+	height: 100%;
+}
+
+.station .extremum {
+	background-color: #8ae234;
+}
+
+.station .extremum .label {
+	float: left;
+	border-radius: 5px 0 0 5px;
+	background-color: #73d216;
+	width: 80px;
+	height: 100%;
+}

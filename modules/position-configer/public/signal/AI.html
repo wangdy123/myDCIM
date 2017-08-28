@@ -1,0 +1,84 @@
+<script type="text/javascript">
+	WUI.signal = WUI.signal || {};
+	WUI.signal.AI = WUI.signal.AI || {};
+	WUI.signal.AI.init = function(signal, parentId, signalType) {
+
+	};
+
+	WUI.signal.AI.checkValid = function() {
+
+		return true;
+	};
+
+	WUI.signal.AI.getValue = function(signal) {
+
+	};
+</script>
+
+<div class="panel" fit="true">
+	<table class="configer">
+		<tr>
+			<td align="right">信号标准:</td>
+			<td style="width: 150px;"><select id="signal-standard-sel" class="easyui-combobox" style="width: 100%"
+				data-options="required:true"></select></td>
+			<td style="width: 20px;"></td>
+			<td align="right">信号编码:</td>
+			<td style="width: 150px;"><input id="signal-id-txt" class="easyui-numberbox" type="text" style="width: 100%"
+				data-options="required:true,readonly:true,precision:0"></td>
+		</tr>
+		<tr>
+			<td align="right">信号名称:</td>
+			<td style="width: 150px;"><input id="signal-name-txt" class="easyui-textbox" type="text" style="width: 100%"
+				data-options="required:true"></td>
+			<td></td>
+			<td align="right">测量单位:</td>
+			<td><input id="signal-unit-txt" class="easyui-textbox" type="text" style="width: 100%;"></td>
+		</tr>
+		<tr>
+			<td align="right">存储周期(S):</td>
+			<td><input id="signal-recordperiod-txt" class="easyui-numberbox" type="text" style="width: 100%"
+				data-options="min:1,precision:0"></td>
+			<td></td>
+			<td align="right">告警级别:</td>
+			<td><select id="signal-alarm-level-sel" style="width: 100%"></select></td>
+		</tr>
+		<tr>
+			<td align="right">告警门限:</td>
+			<td><input id="signal-threshold-txt" class="easyui-numberbox" type="text" style="width: 100%"></td>
+			<td></td>
+			<td align="right">告警回差:</td>
+			<td><input id="signal-dead-area-txt" class="easyui-numberbox" type="text" style="width: 100%"></td>
+		</tr>
+		<tr>
+			<td align="right">告警延时(S):</td>
+			<td><input id="signal-alarm-delay-txt" class="easyui-numberbox" type="text" style="width: 100%"
+				data-options="min:0,precision:0"></td>
+			<td></td>
+			<td align="right">恢复延时(S):</td>
+			<td><input id="signal-recover-delay-txt" class="easyui-numberbox" type="text" style="width: 100%"
+				data-options="min:0,precision:0"></td>
+		</tr>
+		<tr>
+			<td align="right">告警描述:</td>
+			<td><input id="signal-alarm-txt" class="easyui-textbox" type="text" style="width: 100%"></td>
+			<td></td>
+			<td align="right">正常描述:</td>
+			<td><input id="signal-normal-txt" class="easyui-textbox" type="text" style="width: 100%"></td>
+		</tr>
+		<tr>
+			<td align="right">绝对阀值:</td>
+			<td><input id="signal-absolute-val-txt" class="easyui-numberbox" type="text" style="width: 100%"></td>
+			<td></td>
+			<td align="right">百分比阀值:</td>
+			<td><input id="signal-relative-val-txt" class="easyui-numberbox" type="text" style="width: 100%"></td>
+		</tr>
+		<tr>
+			<td align="right">信号说明:</td>
+			<td><input id="signal-discription-txt" class="easyui-textbox" type="text" style="width: 100%"></td>
+			<td></td>
+			<td align="right">信号解释:</td>
+			<td><input id="signal-explanation-txt" class="easyui-textbox" type="text" style="width: 100%"></td>
+		</tr>
+	</table>
+</div>
+

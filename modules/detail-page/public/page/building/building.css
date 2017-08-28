@@ -1,0 +1,43 @@
+
+.building .energy {
+	background-color: #729fcf;
+}
+
+.building .energy .label {
+	float: left;
+	border-radius: 5px 0 0 5px;
+	background-color: #3465a4;
+	width: 80px;
+	height: 100%;
+}
+
+.building div .value {
+	float: left;
+	padding: 15px 10px;
+	color: white;
+}
+
+.building .environment {
+	background-color: #ad7fa8;
+}
+
+.building .environment .label {
+	float: left;
+	border-radius: 5px 5px 0 0;
+	background-color: #75507b;
+	width: 80px;
+	height: 100%;
+}
+
+.building .extremum {
+	background-color: #8ae234;
+}
+
+.building .extremum .label {
+	float: left;
+	border-radius: 5px 5px 0 0;
+	background-color: #73d216;
+	width: 80px;
+	height: 100%;
+}
+

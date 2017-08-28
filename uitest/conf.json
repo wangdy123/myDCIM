@@ -58,4 +58,9 @@
 		}, {
 			"src" : "tw/libs/jquery-ui-1.10.4.custom.min.js"
 		}]
+}, {
+	"url" : "navigation.html",
+	"target" : "nav.html",
+	"publicPath" : "./modules/navigation/public",
+	"name" : "导航树"
 }]

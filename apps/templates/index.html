@@ -7,12 +7,13 @@
 <script type="text/javascript" src="/jquery/jquery.cookie.js"></script>
 <link rel="stylesheet" type="text/css" href="/easyui/themes/{{theme}}/easyui.css">
 <link rel="stylesheet" type="text/css" href="/easyui/themes/icon.css">
+<link rel="stylesheet" type="text/css" href="resources/style.css">
 <script type="text/javascript" src="/easyui/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="/easyui/locale/easyui-lang-zh_CN.js"></script>
 <script type="text/javascript" src="apps.js"></script>
 <script type="text/javascript" src="/util.js"></script>
 <script type="text/javascript" src="static.js"></script>
-<script type="text/javascript" src="/jquery.qrcode.min.js"></script>
+<!-- <script type="text/javascript" src="/jquery.qrcode.min.js"></script> -->
 
 <link rel="stylesheet" type="text/css" href="css/style.css" />
 {{#each scripts}}
@@ -23,57 +24,90 @@
 </head>
 <body>
 	<div class="easyui-panel" data-options="border:false,footer:'#page-footer',header:'#page-header',fit:true">
-		<div class="easyui-layout" data-options="border:false,fit:true">
-			<div style="width: 160px;" data-options="region:'west',split:true">
-				<div id="main-menu" class="easyui-accordion" data-options="fit:true,border:false">
-					{{#each menus}}
-					<div title={{name}} style="padding: 5px;" data-options="selected:{{selected}},iconCls:'{{icon}}'">
-						<ul class="menu-nav-item">
-							{{#each childMenus}}
-							<li class="{{class}}"><a href="index.html?page={{url}}"><div class="{{icon}} nav-menu-icon"></div>{{name}}</a></li>
-							{{/each}}
-						</ul>
-					</div>
-					{{/each}}
-				</div>
-			</div>
-			<div class="easyui-panel" data-options="region:'center',border:{{border}},href:'{{url}}'"></div>
-		</div>
+		<div class="easyui-panel" data-options="border:{{border}},href:'{{url}}',fit:true"></div>
 	</div>
 
-	<div id="page-header" style="border-style: none; padding: 0; margin: 0 0 -5px;">
-		<img class="panel" title="logo" src="{{logo}}"/>
-		<h2 id="system-name" class="panel">{{systemName}}</h2>
-		<div style="float: right; right: 5px; padding: 5px 10px 0;">
-			<div class="header-item panel">
-				<a href="#" id="qrcode-panel"><img class="panel" src="/images/qrcode.png"/></a>
+	<div id="page-header" style="border-style: none; padding: 0; margin: 0 0 -5px; vertical-align: middle;">
+		<img class="panel" title="logo" src="{{logo}}" />
+		<!-- <h2 id="system-name" class="easyui-panel">{{systemName}}</h2> -->
+		<div class="panel" style="display: inline-block; padding: 5px 10px 10px;">
+			{{#each menus}} {{#if url}} <a href="index.html?page={{url}}" class="easyui-linkbutton"
+				data-options="plain:true,iconCls:'{{icon}}'">{{name}}</a> {{else}} <a href="#" class="easyui-menubutton"
+				data-options="menu:'#mm{{id}}',iconCls:'{{icon}}'">{{name}}</a>
+			<div id="mm{{id}}" style="width: 100px;">
+				{{#each childMenus}}
+				<div data-options="iconCls:'{{icon}}',href:'index.html?page={{url}}'">{{name}}</div>
+				{{/each}}
 			</div>
+			{{/if}} {{/each}}
+		</div>
+		<div style="float: right; right: 5px; padding: 10px 10px 0;">
+			<div id="fullscreem-btn" class="fullscreen-tool header-item panel"></div>
 			<div class="header-item panel">
 				<div class="panel">
-					<span style="font-weight: normal; font-size: 12px;">当前用户：</span><a id="current-user-panel" href="#"
-						style="color: SteelBlue;">{{userName}}</a> <a id="change-password-btn" href="#"><img title="修改口令"
-						src="/images/key_16.png"/></a>
+					<a id="current-user-panel" href="#" style="color: SteelBlue;">{{userName}}</a> <a id="change-password-btn" href="#"><img
+						title="修改口令" src="/images/key_16.png" /></a>
 				</div>
 			</div>
 			<div class="header-item panel">
-				<a id="user-logout-btn" href="logout"><img class="panel" title="注销" src="images/power_16.png"/></a>
+				<a id="user-logout-btn" href="logout"><img class="panel" title="注销" src="images/power_16.png" /></a>
 			</div>
 			<div class="header-item panel">
-				<a href="index.html?page=help/help.html"><img class="panel" title="帮助文档" src="images/help_16.png"/></a>
+				<a href="index.html?page=help/help.html"><img class="panel" title="帮助文档" src="images/help_16.png" /></a>
 			</div>
+			<!--<div class="header-item panel">
+				<a href="#" id="qrcode-panel"><img class="easyui-panel" src="/images/qrcode.png" /></a>
+			</div> -->
 		</div>
 	</div>
 	<div id="page-footer" style="border-style: none; vertical-align: middle; text-align: center; padding: 5px;">
 		<div style="position: absolute; left: 5px; display: inline-block;">{{company}}</div>
 		<div style="display: inline-block;">{{copyRightText}}</div>
 		<div style="position: absolute; right: 20px; display: inline-block;">
-			<a style="cursor: pointer;" id="selfDiagnosis-status"  href="#">自诊断状态:</a>
-			<img id="sound-icon" class="alarm_sound_icon" src="/images/Sound_on.png"/>
-			<a style="cursor: pointer;" id="alarm-count-status"  href="#">告警计数：0</a>
+			<a style="cursor: pointer;" id="alarm-count-status" href="#">告警计数：0</a>
 		</div>
 	</div>
 	<div id="change-password-dialog" class="easyui-dialog" data-options="closed:true"></div>
-	<div id="alarm-tooltip" class="easyui-dialog" data-options="closed:true"></div>
-	<div id="self-diagnosis-tooltip" class="easyui-dialog" data-options="closed:true"></div>
+	<div id="alarm-tooltip" class="easyui-dialog" data-options="closed:true" style="width: 250px;" title="告警统计">
+		<div class="easyui-panel" fit="true">
+			<table class="configer">
+				<tr>
+					<td id="self-diagnosis-sound" class="operator-tool alarm_sound_on_icon"></td>
+					<td align="right">自诊断通告允许</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td align="right">告警总数：</td>
+					<td id="st_total_alarm"></td>
+				</tr>
+				<tr>
+					<td id="alarm-level-1-sound" class="operator-tool alarm_sound_on_icon"></td>
+					<td align="right">一级告警：</td>
+					<td id="st_alarmLevel1"></td>
+				</tr>
+				<tr>
+					<td id="alarm-level-2-sound" class="operator-tool alarm_sound_on_icon"></td>
+					<td align="right">二级告警：</td>
+					<td id="st_alarmLevel2"></td>
+				</tr>
+				<tr>
+					<td id="alarm-level-3-sound" class="operator-tool alarm_sound_on_icon"></td>
+					<td align="right">三级告警：</td>
+					<td id="st_alarmLevel3"></td>
+				</tr>
+				<tr>
+					<td id="alarm-level-4-sound" class="operator-tool alarm_sound_on_icon"></td>
+					<td align="right">四级告警：</td>
+					<td id="st_alarmLevel4"></td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	<div id="self-diagnosis-tooltip" class="easyui-dialog" title="自诊断告警"
+		data-options="closed:true,modal:true,iconCls:'icon-self-diagnosis'" style="width: 300px;">
+		<div id="self-diagnosis-content" style="padding: 20px;"></div>
+	</div>
+
 </body>
 </html>

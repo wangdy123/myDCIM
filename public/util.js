@@ -9,10 +9,11 @@ window.WUI.getDatagridRow=function($datagrid,target){
 	return $datagrid.datagrid("getRows")[WUI.getDatagridRowIndex(target)];
 }
 var subscribes = [];
-window.WUI.subscribe = function(evt, fn) {
+window.WUI.subscribe = function(evt, fn,subscriber) {
 	subscribes.push({
 		name : evt,
-		fn : fn
+		fn : fn,
+		subscriber:subscriber
 	});
 };
 // evt:open_object(event),reload_object(event),current_object(cbk(object))
@@ -23,6 +24,7 @@ window.WUI.publishEvent = function(name, event) {
 			subscribes[evt].fn(event);
 		}
 		}catch(e){
+			console.log(subscribes[evt].subscriber);
 			console.log(e);
 		}
 	}
@@ -35,6 +37,16 @@ window.WUI.findFromArray=function(array,key,value){
 		}
 	}
 };
+WUI.getPropertyValue = function(properties, name) {
+	var item = WUI.findFromArray(properties, "PRO_NAME", name);
+	if (item) {
+		return item.PRO_VALUE;
+	}
+};
+window.WUI.hasRight=function(rightId){
+	return WUI.findFromArray(WUI.userRights, "id", rightId);
+};
+
 window.WUI.onLoadError=function(xhr){
 	if(xhr.status===401){
 		$.messager.alert('失败', "登录已超时，请重新登录！");
@@ -174,7 +186,10 @@ window.WUI.makeFloorName=function(floorNum, isUnderground) {
 	}
 	return floorName;
 };
-
+window.WUI.getParameterByName = function(name) {
+	var match = new RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
+	return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
+};
 window.WUI.stringTrim = function(str) {
 	if(!str){
 		return str;
@@ -458,3 +473,44 @@ window.WUI.exitFullscreen=function(){
         // 浏览器不支持全屏API或已被禁用
     }  
 } ; 
+
+window.WUI.waterfall=function(tasks,callback){
+	if(tasks.length<=0){
+		callback();
+	}
+	var i=0;
+	var errs=[];
+	function finishedCbk(err){
+		if(err){
+			errs.push(err);
+		}
+		i++;
+		if(i<tasks.length){
+			tasks[i](finishedCbk);
+		}else{
+			callback();
+		}
+	}
+	tasks[i](finishedCbk);
+};
+window.WUI.parallel=function(tasks,callback){
+	var finishedCount=0;
+	var errs=[];
+	function finishedCbk(err){
+		if(err){
+			errs.push(err);
+		}
+		finishedCount++;
+		if(finishedCount===tasks.length){
+			if(errs.length>0){
+				callback(errs);
+			}else{
+			callback();
+			}
+		}
+	}
+	tasks.forEach(function(item){
+		item(finishedCbk);
+	});
+};
+

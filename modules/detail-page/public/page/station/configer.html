@@ -1,0 +1,136 @@
+<script type="text/javascript">
+	WUI.pageConfiger.init = function(nodeObject, oldConfig) {
+		var objectNodeUrl = 'logicobject/objectNodes/';
+		var signalUrl = 'logicobject/signals/';
+		function makeName(object, signal) {
+			return object.NAME + "——" + signal.SIGNAL_NAME;
+		}
+		function setImg(imgPath) {
+			$("#station-img-panel").attr("width", $("#station-img-panel").parent().width());
+			$("#station-img-panel").attr("height", $("#station-img-panel").parent().height());
+			$("#station-img-panel").attr("src", "detail/resources/" + imgPath);
+		}
+		function requestObjectName(obj, callback) {
+			if (!obj) {
+				return;
+			}
+			var nodeObject = null;
+			var signal = null;
+			WUI.parallel([ function(cbk) {
+				WUI.ajax.get(objectNodeUrl + obj.objectId, {}, function(result) {
+					nodeObject = result;
+					cbk();
+				}, function(err) {
+					cbk(err);
+				});
+			}, function(cbk) {
+				WUI.ajax.get(signalUrl + obj.objectId + "/" + obj.signalId, {}, function(result) {
+					signal = result;
+					cbk();
+				}, function(err) {
+					cbk(err);
+				});
+			} ], function(err) {
+				if (err) {
+					callback(err);
+				} else {
+					callback(null, makeName(nodeObject, signal));
+				}
+			});
+		}
+		if (oldConfig) {
+			setImg(oldConfig.img);
+			requestObjectName(oldConfig.temperature, function(err, name) {
+				if (err) {
+					oldConfig.temperature = null;
+				} else {
+					$("#station-temperature-signal").html(name);
+				}
+			});
+			requestObjectName(oldConfig.humidity, function(err, name) {
+				if (err) {
+					oldConfig.humidity = null;
+				} else {
+					$("#station-humidity-signal").html(name);
+				}
+			});
+		}
+		
+		WUI.pageConfiger.stationPageCfg= oldConfig || {};
+		$('#station-img-select-btn').click(
+				function() {
+					WUI.pageConfiger.selectImg($("#signal-select-dialog"), nodeObject.OBJECT_TYPE,
+							nodeObject.DEVICE_TYPE, function(imgName) {
+								setImg(imgName);
+								WUI.pageConfiger.stationPageCfg.img = imgName;
+							});
+				});
+		$('#temperature-signal-select-btn').click(function() {
+			WUI.openSignalSelectDialog($("#signal-select-dialog"), {
+				object : nodeObject,
+				onSelect : function(signal) {
+					WUI.pageConfiger.stationPageCfg.temperature = WUI.pageConfiger.stationPageCfg.temperature || {};
+					WUI.pageConfiger.stationPageCfg.temperature.objectId = signal.OBJECT_ID;
+					WUI.pageConfiger.stationPageCfg.temperature.signalId = signal.SIGNAL_ID;
+					requestObjectName(WUI.pageConfiger.stationPageCfg.temperature, function(err, name) {
+						if (err) {
+							WUI.pageConfiger.stationPageCfg.temperature = null;
+						} else {
+							$("#station-temperature-signal").html(name);
+						}
+					});
+				}
+			});
+		});
+		$('#humidity-signal-select-btn').click(function() {
+			WUI.openSignalSelectDialog($("#signal-select-dialog"), {
+				object : nodeObject,
+				onSelect : function(signal, object) {
+					WUI.pageConfiger.stationPageCfg.humidity = WUI.pageConfiger.stationPageCfg.humidity || {};
+					WUI.pageConfiger.stationPageCfg.humidity.objectId = signal.OBJECT_ID;
+					WUI.pageConfiger.stationPageCfg.humidity.signalId = signal.SIGNAL_ID;
+					requestObjectName(WUI.pageConfiger.stationPageCfg.humidity, function(err, name) {
+						if (err) {
+							WUI.pageConfiger.stationPageCfg.humidity = null;
+						} else {
+							$("#station-humidity-signal").text(name);
+						}
+					});
+				}
+			});
+		});
+	}
+	WUI.pageConfiger.pageConfigIsValid = function() {
+		var config=WUI.pageConfiger.stationPageCfg;
+		return config.img && config.temperature && config.humidity;
+	}
+	WUI.pageConfiger.getConfiger = function() {
+		return WUI.pageConfiger.stationPageCfg;
+	}
+</script>
+<table>
+	<tr>
+		<td><p>图片资源:</p>
+			<p>
+				<a id="station-img-select-btn" href="#" class="easyui-linkbutton">选择图片</a>
+			</p></td>
+		<td colspan="2">
+			<div style="height: 150px; width: 200px;" class="easyui-panel" data-options="border:true">
+				<img id="station-img-panel" class="easyui-panel" data-options="border:false,fit:true" />
+			</div>
+		</td>
+	</tr>
+
+	<tr>
+		<td>温度信号:</td>
+		<td><a id="temperature-signal-select-btn" href="#" class="easyui-linkbutton">选择信号</a></td>
+		<td id="station-temperature-signal">&nbsp</td>
+	</tr>
+	<tr>
+		<td>湿度信号:</td>
+		<td><a id="humidity-signal-select-btn" href="#" class="easyui-linkbutton">选择信号</a></td>
+		<td id="station-humidity-signal">&nbsp</td>
+	</tr>
+</table>
+<div id="signal-select-dialog"></div>
+

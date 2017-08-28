@@ -71,13 +71,7 @@ $(document).ready(
 			}
 			window.WUI.publishEvent('request_current_object', {
 				publisher : 'position-configer',
-				cbk : function(object) {
-					WUI.ajax.get(objectNodeUrl + "/" + object.ID, {}, function(floorObject) {
-						openObject(floorObject);
-					}, function() {
-						$.messager.alert('失败', "读取" + typeName + "配置失败！");
-					});
-				}
+				cbk : openObject
 			});
 
 			WUI.floor.editrow = function(target) {
@@ -118,10 +112,14 @@ $(document).ready(
 							$('#floor-sel').append(
 									'<option value="' + (0 - j) + '">' + WUI.makeFloorName(j, true) + '</option>');
 						}
+						$('#floor-sel').combobox({
+							editable : false,
+							required : true
+						});
 						if (floor) {
-							$('#floor-sel').val(floor.SEQUENCE);
-							$('#floor-code-txt').val(floor.CODE);
-							$('#floor-code-txt').validatebox("isValid");
+							$('#floor-sel').combobox("setValue",floor.SEQUENCE);
+							$('#floor-code-txt').textbox("setValue",floor.CODE);
+							$('#floor-code-txt').textbox("isValid");
 						}
 					},
 					modal : true,
@@ -132,15 +130,15 @@ $(document).ready(
 						text : '保存',
 						handler : function() {
 							var isValid = $('#floor-sel').val();
-							isValid = isValid && $('#floor-code-txt').validatebox("isValid");
+							isValid = isValid && $('#floor-code-txt').textbox("isValid");
 							if (!isValid) {
 								return;
 							}
 
 							var newfloor = {
-								NAME : $('#floor-sel option:selected').text(),
-								CODE : $('#floor-code-txt').val(),
-								SEQUENCE : $('#floor-sel').val(),
+								NAME : $('#floor-sel option:selected').textbox("getText"),
+								CODE : $('#floor-code-txt').textbox("getValue"),
+								SEQUENCE : $('#floor-sel').combobox("getValue"),
 								OBJECT_TYPE : WUI.objectTypeDef.FLOOR,
 								PARENT_ID : parentId,
 								properties : []

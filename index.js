@@ -8,7 +8,7 @@ app.set('views', 'templates');
 app.set('view engine', 'html');
 app.engine('.html', hbs.__express);
 
-var config = require('dcim-config').config;
+var config = require('dcim-config');
 
 app.use(require('serve-favicon')(require('path').join(__dirname, 'public', 'favicon.ico')));
 var bodyParser = require('body-parser');
@@ -18,6 +18,7 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(require('cookie-parser')());
 
+app.use('', require("./uploads"));
 app.use(express.static(__dirname + '/public', {
 	maxAge : config.fileMaxAge * 3600 * 24 * 1000
 }));
@@ -29,8 +30,9 @@ function getClientIp(req) {
 			|| req.connection.socket.remoteAddress;
 };
 
+
 app.use(function(req, res, next) {
-	logger.accessLog(getClientIp(req) + " " + req.url);
+	logger.accessLog(" "+getClientIp(req) + " " + req.url);
 	next();
 });
 
@@ -55,7 +57,7 @@ for ( var module in config.modules) {
 }
 
 app.use(function(req, res, next) {
-	var err = new Error('Not Found');
+	var err = new Error('Not Found:'+ req.url);
 	err.status = 404;
 	logger.warn("not found: " + req.url);
 	next(err);
@@ -69,8 +71,8 @@ app.use(function(err, req, res) {
 	err.status = err.status || 500;
 	res.status(err.status || 500);
 	err.stack = err.stack || "";
-	var meta = new Date() + ' ' + req.url + '\n';
-	logger.error(meta + err.stack + '\n');
+	err.url= req.url;
+	logger.error(err);
 	res.send(resBody);
 });
 
@@ -90,5 +92,5 @@ if (config.secure) {
 	});
 } else {
 	app.listen(config.httpPort);
-	logger.log('Express server listening on port: ' + config.httpPort);
+	logger.log('HTTP server listening on port: ' + config.httpPort);
 }

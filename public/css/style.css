@@ -1,282 +1,277 @@
 html, body {
- height: 100%;
- min-height: 100%;
- width: 100%;
- margin: 0;
- padding: 0;
- overflow: auto;
- font-size: 0.95em;
+	height: 100%;
+	min-height: 100%;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	overflow: auto;
+	font-size: 0.95em;
 }
 
 a {
- text-decoration: none;
- cursor: pointer;
+	text-decoration: none;
+	cursor: pointer;
 }
 
 label {
- font-weight: bold;
+	font-weight: bold;
 }
 
-select{
-	height:24px;
-	font-size:11px;
+.table tr th, .table tr td {
+	border: 1px solid #babdb6;
+}
+
+select {
+	height: 24px;
+	font-size: 11px;
 	padding: 0;
 }
+
 #system-name {
- padding: 8px 20px;
- margin: 0;
- display: inline-block;
+	padding: 8px 20px;
+	margin: 0;
+	display: inline-block;
 }
 
 #full-workspace {
- margin: 0;
- padding: 0;
- overflow-y: auto;
+	margin: 0;
+	padding: 0;
+	overflow-y: auto;
 }
 
 .header-item {
- font-weight: bold;
- font-size: 14px;
- line-height: 20px;
- padding: 5px 10px;
- margin: 0;
- display: inline-block;
- vertical-align: middle;
+	font-weight: bold;
+	font-size: 14px;
+	line-height: 20px;
+	padding: 5px 10px;
+	margin: 0;
+	display: inline-block;
+	vertical-align: middle;
 }
 
 #node-nav {
- width: 15%;
- margin: 0;
- padding: 0;
+	width: 15%;
+	margin: 0;
+	padding: 0;
 }
 
 .nav-menu-icon {
- display: inline-block;
- width: 18px;
- height: 16px;
- padding: 0;
+	display: inline-block;
+	width: 18px;
+	height: 16px;
+	padding: 0;
 }
 
 #main-workspace {
- margin: 0;
- padding: 0;
- min-width: 400px;
+	margin: 0;
+	padding: 0;
+	min-width: 400px;
 }
 
-
 .title-panel {
- text-align: center;
- vertical-align: middle;
- padding: 10px;
- margin: 0;
+	text-align: center;
+	vertical-align: middle;
+	padding: 10px;
+	margin: 0;
 }
 
 #operator-panel {
- position: absolute;
- width: 128px;
- right: 5px;
- top: 5px;
+	position: absolute;
+	width: 128px;
+	right: 5px;
+	top: 5px;
 }
 
 .separater {
- display: inline-block;
- color: SteelBlue;
- width: 1px;
- height: 16px;
- margin: 0 5px;
- border-left: 1px solid SteelBlue;
+	display: inline-block;
+	color: SteelBlue;
+	width: 1px;
+	height: 16px;
+	margin: 0 5px;
+	border-left: 1px solid SteelBlue;
 }
 
 .operator-tool {
- display: inline-block;
- width: 18px;
- height: 16px;
- padding: 0;
- margin: 0 2px;
- cursor: pointer;
+	display: inline-block;
+	width: 18px;
+	height: 16px;
+	padding: 0;
+	margin: 0 2px;
+	cursor: pointer;
 }
 
 .configer {
- margin: 20px 40px;
+	margin: 20px 40px;
 }
 
 .alarmLevel0-icon {
- background: url('../images/status-small/green_light.png') no-repeat center center;;
- display: inline-block;
- width: 18px;
- height: 16px;
- padding: 0;
- margin: 0 2px;
- cursor: pointer;
+	background: url('../images/status-small/green_light.png') no-repeat
+		center center;;
+	display: inline-block;
+	width: 18px;
+	height: 16px;
+	padding: 0;
+	margin: 0 2px;
+	cursor: pointer;
 }
 
-.alarm_sound_icon {
- display: inline-block;
- width: 18px;
- height: 16px;
- padding: 0 5px;
- margin: 0 2px;
- cursor: pointer;
+.alarm_sound_off_icon {
+	background: url('../images/Sound_off.png') no-repeat center center;
+}
+
+.alarm_sound_on_icon {
+	background: url('../images/Sound_on.png') no-repeat center center;
 }
 
 .statusInvalid-icon {
- background: url('../images/status-small/status_offline.png') no-repeat center center;;
- display: inline-block;
- width: 18px;
- height: 16px;
- padding: 0;
- margin: 0 2px;
+	background: url('../images/status-small/status_offline.png') no-repeat
+		center center;;
+	display: inline-block;
+	width: 18px;
+	height: 16px;
+	padding: 0;
+	margin: 0 2px;
 }
 
 .alarmLevel0-icon {
- background: url('../images/status-small/green_light.png') no-repeat center center;;
- display: inline-block;
- width: 18px;
- height: 16px;
- padding: 0;
- margin: 0 2px;
+	background: url('../images/status-small/green_light.png') no-repeat
+		center center;;
+	display: inline-block;
+	width: 18px;
+	height: 16px;
+	padding: 0;
+	margin: 0 2px;
 }
 
 .alarmLevel1-icon {
- background: url('../images/status-small/blue_light.png') no-repeat center center;;
- display: inline-block;
- width: 18px;
- height: 16px;
- padding: 0;
- margin: 0 2px;
+	background: url('../images/status-small/blue_light.png') no-repeat
+		center center;;
+	display: inline-block;
+	width: 18px;
+	height: 16px;
+	padding: 0;
+	margin: 0 2px;
 }
 
 .alarmLevel2-icon {
- background: url('../images/status-small/yellow_light.png') no-repeat center center;;
- display: inline-block;
- width: 18px;
- height: 16px;
- padding: 0;
- margin: 0 2px;
+	background: url('../images/status-small/yellow_light.png') no-repeat
+		center center;;
+	display: inline-block;
+	width: 18px;
+	height: 16px;
+	padding: 0;
+	margin: 0 2px;
 }
 
 .alarmLevel3-icon {
- background: url('/images/status-small/pink_light.png') no-repeat center center;;
- display: inline-block;
- width: 18px;
- height: 16px;
- padding: 0;
- margin: 0 2px;
+	background: url('/images/status-small/pink_light.png') no-repeat center
+		center;;
+	display: inline-block;
+	width: 18px;
+	height: 16px;
+	padding: 0;
+	margin: 0 2px;
 }
 
-.alarmLevel4 -icon {
- background: url('../images/status-small/red_light.png') no-repeat center center;;
- display: inline-block;
- width: 18px;
- height: 16px;
- padding: 0;
- margin: 0 2px;
+.alarmLevel4-icon {
+	background: url('../images/status-small/red_light.png') no-repeat center
+		center;;
+	display: inline-block;
+	width: 18px;
+	height: 16px;
+	padding: 0;
+	margin: 0 2px;
 }
 
 .required-propertiy {
- color: red;
+	color: red;
 }
 
 .formatNumeric {
- text-align: right;
+	text-align: right;
 }
 
 .readonly-form {
- background-color: #dfdfdf;
+	background-color: #dfdfdf;
+}
+
+.icon-self-diagnosis {
+	background: url('../images/self-diagnosis.png') no-repeat center center;
 }
 
 .icon-use {
- background: url('../images/use.png') no-repeat center center;
+	background: url('../images/use.png') no-repeat center center;
 }
 
 .icon-delete {
- background: url('../images/0_delete.gif') no-repeat center center;
+	background: url('../images/0_delete.gif') no-repeat center center;
 }
 
 .icon-close {
- background: url('../images/close.png') no-repeat center center;
+	background: url('../images/close.png') no-repeat center center;
 }
 
 .icon-key {
- background: url('../images/key_16.png') no-repeat center center;
+	background: url('../images/key_16.png') no-repeat center center;
 }
 
 .icon-csc {
- background: url('../images/csc.gif') no-repeat center center;
+	background: url('../images/csc.gif') no-repeat center center;
 }
 
 .icon-lsc {
- background: url('../images/lsc.gif') no-repeat center center;
+	background: url('../images/lsc.gif') no-repeat center center;
 }
 
 .icon-region {
- background: url('../images/area.gif') no-repeat center center;
+	background: url('../images/area.gif') no-repeat center center;
 }
 
 .icon-station {
- background: url('../images/station.gif') no-repeat center center;
+	background: url('../images/station.gif') no-repeat center center;
 }
 
 .icon-building {
- background: url('../images/building.gif') no-repeat center center;
+	background: url('../images/building.gif') no-repeat center center;
 }
 
 .icon-room {
- background: url('../images/room.gif') no-repeat center center;
+	background: url('../images/room.gif') no-repeat center center;
 }
 
 .icon-floor {
- background: url('../images/floor.gif') no-repeat center center;
+	background: url('../images/floor.gif') no-repeat center center;
 }
 
 .icon-cabinet-model {
- background: url('../images/device.gif') no-repeat center center;
+	background: url('../images/device.gif') no-repeat center center;
 }
 
 .icon-cabinet-row {
- background: url('../images/device.gif') no-repeat center center;
+	background: url('../images/device.gif') no-repeat center center;
 }
 
 .icon-cabinet {
- background: url('../images/device.gif') no-repeat center center;
+	background: url('../images/device.gif') no-repeat center center;
 }
 
 .icon-device {
- background: url('../images/device.gif') no-repeat center center;
+	background: url('../images/device.gif') no-repeat center center;
 }
 
 .icon-devModule {
- background: url('../images/devModule.gif') no-repeat center center;
+	background: url('../images/devModule.gif') no-repeat center center;
 }
 
 .icon-screen {
- background: url('../images/Panel_16.png') no-repeat center center;
+	background: url('../images/Panel_16.png') no-repeat center center;
 }
 
 .icon-detail {
- background: url('../images/detailed_view_16.png') no-repeat center center;
+	background: url('../images/detailed_view_16.png') no-repeat center
+		center;
 }
 
 .icon-map {
- background: url('../images/map_16.png') no-repeat center center;
-}
-
-.menu-nav-item {
- padding: 2px;
- margin: 0;
-}
-
-.menu-nav-item li {
- padding: 5px;
- font-size: 14px;
- line-height: 20px;
- margin: 0;
- list-style-type: none;
- line-height: 20px;
-}
-
-.menu-nav-item li a {
- color: #5b5b5b;
- display: block;
- font-weight: bold;
+	background: url('../images/map_16.png') no-repeat center center;
 }

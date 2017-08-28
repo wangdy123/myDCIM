@@ -48,7 +48,7 @@ $(document).ready(
 				});
 
 				reload(false);
-			});
+			},"configer");
 			$node.datagrid({
 				url : doorUrl,
 				method : "get",

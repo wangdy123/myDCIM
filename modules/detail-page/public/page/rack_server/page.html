@@ -1,0 +1,65 @@
+<div class="panel" data-options="border:false">
+	<table>
+		<tr>
+			<td colspan="2"  style="height: 150px; padding: 0 0 0 10px;">
+				<div class="easyui-panel" data-options="border:false,fit:true">
+					<img id="rack-server-img" class="easyui-panel" data-options="border:false,fit:true" />
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td valign="top">
+				<div class="profile">
+					<div class="label">基本信息</div>
+					<div class="value">
+						<p>
+							设备类型：<span id="device-type-txt"></span>
+						</p>
+						<p>
+							设备编号：<span id="device-code-txt"></span>
+						</p>
+						<p>
+							厂家：<span id="device-vender-txt"></span>
+						</p>
+						<p>
+							型号：<span id="device-model-txt"></span>
+						</p>
+						<p>
+							额定功率：<span id="device-rated-power"></span>W
+						</p>
+						<p>
+							IP：<span id="device-server-ip"></span>
+						</p>
+						<p>
+							BMC：<span id="device-server-bmc"></span>
+						</p>
+					</div>
+				</div>
+			</td>
+			<td valign="top">
+				<div class="value-block">
+					<div class="label">设备运行参数</div>
+					<div id="server-running-status" class="value"></div>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<div class="value-block">
+					<div class="label">核心指标</div>
+					<div id="server-core-indicators" class="value"></div>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<div class="value-block">
+					<div class="label">指标走势</div>
+					<div id="server-trend-indicators" class="value"></div>
+				</div>
+			</td>
+		</tr>
+	</table>
+</div>
+<script type="text/javascript" src="/echarts/jquery.tempgauge.js"></script>
+<script type="text/javascript" src="detail/page/rack_server/page.js"></script>

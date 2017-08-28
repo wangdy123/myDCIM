@@ -57,6 +57,7 @@ $(function() {
 			field : 'rights',
 			title : '权限',
 			resizable : true,
+			width : 300,
 			formatter : function(value, row, index) {
 				if (row.rights) {
 					var rights = [];
@@ -95,9 +96,9 @@ $(function() {
 					{
 						iconCls : role ? "icon-edit" : "icon-add",
 						title : role ? "修改角色" : "添加角色",
-						left : ($(window).width() - 600) * 0.5,
+						left : ($(window).width() - 400) * 0.5,
 						top : ($(window).height() - 300) * 0.5,
-						width : 600,
+						width : 400,
 						closed : false,
 						cache : false,
 						href : 'account/role/role-dialog.html',
@@ -118,19 +119,19 @@ $(function() {
 							}
 							for (var i = 0; i < accountRights.rights.length; i++) {
 								var right = accountRights.rights[i];
-								var item = '<div style="display: inline-block; min-width: 150px;">'
+								var item = '<div style="display: inline-block; min-width: 100px;">'
 										+ '<input type="checkbox" class="role-right-item" '
 										+ (isRoleRight(right) ? "checked" : "") + 'value="' + right.id + '">'
 										+ right.name + '</div>';
 								$('#rights-td').append(item);
 							}
 							if (role) {
-								$('#role-id-txt').val(role.ID);
-								$('#role-name-txt').val(role.NAME);
-								$('#role-description-txt').val(role.DESCRIPTION);
-								$('#role-id-txt').validatebox("isValid");
-								$('#role-name-txt').validatebox("isValid");
-								$('#role-description-txt').validatebox("isValid");
+								$('#role-id-txt').textbox("setValue",role.ID);
+								$('#role-name-txt').textbox("setValue",role.NAME);
+								$('#role-description-txt').textbox("setValue",role.DESCRIPTION);
+								$('#role-id-txt').textbox("isValid");
+								$('#role-name-txt').textbox("isValid");
+								$('#role-description-txt').textbox("isValid");
 							}
 						},
 						modal : true,
@@ -140,7 +141,7 @@ $(function() {
 						buttons : [ {
 							text : '保存',
 							handler : function() {
-								if (!$('#role-name-txt').validatebox("isValid")) {
+								if (!$('#role-name-txt').textbox("isValid")) {
 									return;
 								}
 								var newRole = {

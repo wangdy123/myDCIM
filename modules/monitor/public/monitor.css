@@ -7,13 +7,12 @@
  cursor: pointer;
  background: url('/images/return.png') no-repeat center center;
 }
-
-.fullscreen-tool {
+.bread-separator {
  display: inline-block;
- width: 18px;
- height: 16px;
- padding: 5px;
- margin: 0 2px;
+}
+
+.bread-item {
+ display: inline-block;
  cursor: pointer;
- background: url('/images/fullscreen.png') no-repeat center center;
+  padding: 5px;
 }

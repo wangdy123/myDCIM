@@ -1,0 +1,94 @@
+<div class="easyui-panel" data-options="border:false,fit:true,width:980" style="padding: 10px; overflow: auto;">
+
+	<table style="padding: 0 0 0 -5px;">
+		<tr>
+			<td class="room-row1" style="width: 300px; height: 60px; padding: 0 10px 0 0;"><div class="energy">
+					<div class="label"></div>
+					<div class="value">
+						<div>
+							用电量：<span id="room-totol-energy"></span>kwh
+						</div>
+						<div>
+							IT：<span id="room-it-energy"></span>kwh
+						</div>
+					</div>
+				</div></td>
+			<td class="room-row1" style="width: 300px; height: 60px; padding: 0 10px 0 0;"><div class=extremum>
+					<div class="label"></div>
+					<div class="value">
+						<div>
+							最大功耗：<span id="room-maxPower"></span>kw
+						</div>
+						<div>
+							最小功耗：<span id="room-minPower"></span>kw
+						</div>
+					</div>
+				</div></td>
+			<td style="width: 300px; height: 60px; padding: 0 10px 0 0;">
+				<table>
+					<tr>
+						<td colspan="8"><label>当前活动告警总数：<span id="room-alarm-count"></span></label></td>
+					</tr>
+					<tr>
+						<td><div class="alarmLevel1-icon" title="一级告警"></div></td>
+						<td id="room-alarmLevel1-count"></td>
+						<td align="right" style="width: 30px;"><div class="alarmLevel2-icon" title="二级告警"></div></td>
+						<td id="room-alarmLevel2-count"></td>
+						<td align="right" style="width: 30px;"><div class="alarmLevel3-icon" title="三级告警"></div></td>
+						<td id="room-alarmLevel3-count"></td>
+						<td align="right" style="width: 30px;"><div class="alarmLevel4-icon" title="四级告警"></div></td>
+						<td id="room-alarmLevel4-count"></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2" rowspan="2" style="padding:10px 0 0">
+				<div class="easyui-panel" data-options="border:false,fit:true">
+					<img id="room-img" class="easyui-panel" data-options="border:false,fit:true" />
+				</div>
+			</td>
+			<td>
+				<div class="easyui-panel profile" data-options="border:true">
+					<div class="label">机房概况</div>
+					<div class="value">
+						<div>
+							机房名称：<span id="room-name"></span>
+						</div>
+						<div>
+							机房编号：<span id="room-code"></span>
+						</div>
+						<div>
+							机房类型：<span id="room-type"></span>
+						</div>
+						<div>
+							机架数：<span id="room-cabinet-count"></span>
+						</div>
+						<div>
+							安全责任人：<span id="room-safety-person"></span>
+						</div>
+						<div>
+							所属部门：<span id="room-department"></span>
+						</div>
+					</div>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td class="room-row2" style="height: 200px; width: 240px; padding: 0 0 0 10px;">
+				<div class="easyui-panel" data-options="border:true,fit:true">
+					<div id="room-pue-pie"></div>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="3" style="height: 300px; padding: 10px 10px 0 0;">
+				<div class="easyui-panel" data-options="border:false,fit:true" id="room-power-line"></div>
+			</td>
+		</tr>
+	</table>
+</div>
+
+<script type="text/javascript" src="detail/chart-item.js"></script>
+<script type="text/javascript" src="detail/page/room/page.js"></script>
+<link rel="stylesheet" type="text/css" href="detail/page/room/room.css">

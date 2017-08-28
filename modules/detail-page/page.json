@@ -1,0 +1,115 @@
+{
+	"defaultPage": "default",
+	"1": {
+		"defaultPage": "region",
+		"pages": [
+			{
+				"name": "行政区域",
+				"pageName": "region"
+			}
+		]
+	},
+	"2": {
+		"defaultPage": "station",
+		"pages": [
+			{
+				"name": "园区",
+				"pageName": "station"
+			}
+		]
+	},
+	"3": {
+		"defaultPage": "building",
+		"pages": [
+			{
+				"name": "机楼",
+				"pageName": "building"
+			}
+		]
+	},
+	"4": {
+		"defaultPage": "floor",
+		"pages": [
+			{
+				"name": "楼层",
+				"pageName": "floor"
+			}
+		]
+	},
+	"5": {
+		"defaultPage": "room",
+		"pages": [
+			{
+				"name": "机房",
+				"pageName": "room"
+			}
+		]
+	},
+	"6": {
+		"defaultPage": "cabinetGroup",
+		"pages": [
+			{
+				"name": "机柜分组",
+				"pageName": "cabinetGroup"
+			}
+		]
+	},
+	"11": {
+		"defaultPage": "cabinet",
+		"pages": [
+			{
+				"name": "机柜",
+				"pageName": "cabinet"
+			}
+		]
+	},
+	"21": {
+		"defaultPage": "device",
+		"devicePages": {
+			"1": {
+				"pages": [
+					{
+						"name": "机房环境",
+						"pageName": "environment"
+					}
+				]
+			},
+			"4": {
+			"defaultPage": "UPS",
+				"pages": [
+					{
+						"name": "UPS",
+						"pageName": "UPS"
+					}
+				]
+			},
+			"5": {
+				"defaultPage": "door",
+				"pages": [
+					{
+						"name": "门禁",
+						"pageName": "door"
+					}
+				]
+			},
+			"8": {
+				"defaultPage": "rack_server",
+				"pages": [
+					{
+						"name": "机架服务器",
+						"pageName": "rack_server"
+					}
+				]
+			},
+			"9": {
+				"defaultPage": "blade_server",
+				"pages": [
+					{
+						"name": "机架服务器",
+						"pageName": "blade_server"
+					}
+				]
+			}
+		}
+	}
+}

@@ -50,14 +50,13 @@ $(function() {
 				} ] ]
 	});
 
-
 	WUI.department = {};
 	WUI.department.editrow = function(target) {
-		var department = WUI.getDatagridRow($node,target);
+		var department = WUI.getDatagridRow($node, target);
 		departmentDialog(department);
 	};
 	WUI.department.deleterow = function(target) {
-		var department = WUI.getDatagridRow($node,target);
+		var department = WUI.getDatagridRow($node, target);
 		$.messager.confirm('确认', '确定要删除部门【' + department.NAME + '】吗?', function(r) {
 			if (r) {
 				WUI.ajax.remove(departmentUrl + "/" + department.ID, {}, function() {
@@ -75,21 +74,21 @@ $(function() {
 			title : department ? "修改部门" : "添加部门",
 			left : ($(window).width() - 300) * 0.5,
 			top : ($(window).height() - 300) * 0.5,
-			width : 300,
+			width : 350,
 			closed : false,
 			cache : false,
 			href : 'account/department/department-dialog.html',
 			onLoadError : function() {
 				$.messager.alert('失败', "对话框加载失败，请刷新后重试！");
 			},
-			onLoad:function(){
+			onLoad : function() {
 				if (department) {
-					$('#department-id-txt').val(department.ID);
-					$('#department-name-txt').val(department.NAME);
-					$('#department-description-txt').val(department.DESCRIPTION);
-					$('#department-id-txt').validatebox("isValid");
-					$('#department-name-txt').validatebox("isValid");
-					$('#department-description-txt').validatebox("isValid");
+					$('#department-id-txt').textbox("setValue", department.ID);
+					$('#department-name-txt').textbox("setValue", department.NAME);
+					$('#department-description-txt').textbox("setValue", department.DESCRIPTION);
+					$('#department-id-txt').textbox("isValid");
+					$('#department-name-txt').textbox("isValid");
+					$('#department-description-txt').textbox("isValid");
 				}
 			},
 			modal : true,

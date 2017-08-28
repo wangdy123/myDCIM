@@ -106,14 +106,14 @@ $(function() {
 			},
 			onLoad : function() {
 				if (cabinetModel) {
-					$('#model-name-txt').val(cabinetModel.NAME);
-					$('#model-ABBREVIATION-txt').val(cabinetModel.ABBREVIATION);
-					$('#model-u1_position-txt').val(cabinetModel.U1_POSITION);
+					$('#model-name-txt').textbox("setValue",cabinetModel.NAME);
+					$('#model-ABBREVIATION-txt').textbox("setValue",cabinetModel.ABBREVIATION);
+					$('#model-u1_position-txt').combobox("setValue",cabinetModel.U1_POSITION);
 					$('#model-u-count-txt').numberbox("setValue", cabinetModel.U_COUNT);
 					$('#model-depth-txt').numberbox("setValue", cabinetModel.DEPTH);
 					$('model-max-use-age-txt').numberbox("setValue", cabinetModel.MAX_USE_AGE);
-					$('#model-name-txt').validatebox("isValid");
-					$('#model-ABBREVIATION-txt').validatebox("isValid");
+					$('#model-name-txt').textbox("isValid");
+					$('#model-ABBREVIATION-txt').textbox("isValid");
 				}
 			},
 			modal : true,
@@ -123,7 +123,7 @@ $(function() {
 			buttons : [ {
 				text : '保存',
 				handler : function() {
-					var isValid = $('#model-name-txt').validatebox("isValid");
+					var isValid = $('#model-name-txt').textbox("isValid");
 					isValid = isValid && $('#model-u-count-txt').numberbox("getValue");
 					isValid = isValid && $('#model-depth-txt').numberbox("getValue");
 					isValid = isValid && $('#model-max-use-age-txt').numberbox("getValue");
@@ -131,9 +131,9 @@ $(function() {
 						return;
 					}
 					var newObject = {
-						NAME : $('#model-name-txt').val(),
-						ABBREVIATION : $('#model-ABBREVIATION-txt').val(),
-						U1_POSITION : $('#model-u1_position-txt').val(),
+						NAME : $('#model-name-txt').textbox("getValue"),
+						ABBREVIATION : $('#model-ABBREVIATION-txt').textbox("getValue"),
+						U1_POSITION : $('#model-u1_position-txt').combobox("getValue"),
 						U_COUNT : parseInt($('#model-u-count-txt').numberbox("getValue"), 10),
 						DEPTH : parseFloat($('#model-depth-txt').numberbox("getValue")),
 						MAX_USE_AGE : parseInt($('#model-max-use-age-txt').numberbox("getValue"), 10)

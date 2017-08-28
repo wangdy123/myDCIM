@@ -4,7 +4,7 @@ var cabinetGroup = require('dcim-object-dao').cabinetGroup;
 
 module.exports.initRequest = function(app) {
 	app.get('/cabinetGroups', function(req, res) {
-		var parentId = req.query.parentId ? req.query.parentId : config.config.root_object_id;
+		var parentId = req.query.parentId ? req.query.parentId : config.root_object_id;
 		cabinetGroup.getByPositionParent(db.pool, parentId, function(error, cabinetGroups) {
 			if (error) {
 				logger.error(error);

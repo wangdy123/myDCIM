@@ -95,24 +95,22 @@ $(document).ready(
 								formatter : function(value, row, index) {
 									return row.LATITUDE.toFixed(6);
 								}
-							} ] ]
+							}, WUI.pageConfiger.createConfigerColumn("region") ] ]
 				});
 			}
+			WUI.region.editPage = function(target) {
+				var region = WUI.getDatagridRow($node, target);
+				WUI.pageConfiger.pageDialog(region);
+			};
 			window.WUI.publishEvent('request_current_object', {
 				publisher : 'position-configer',
-				cbk : function(object) {
-					WUI.ajax.get(objectNodeUrl + "/" + object.ID, {}, function(regionObject) {
-						openObject(regionObject);
-					}, function() {
-						$.messager.alert('失败', "读取区域配置失败！");
-					});
-				}
+				cbk : openObject
 			});
 
 			WUI.region.editrow = function(target) {
 				var region = WUI.getDatagridRow($node, target);
 				regionDialog(region, region.PARENT_ID, region.REGION_TYPE);
-			}
+			};
 			WUI.region.deleterow = function(target) {
 				var region = WUI.getDatagridRow($node, target);
 				var typeName = WUI.regionTypes[region.REGION_TYPE].name;
@@ -125,15 +123,15 @@ $(document).ready(
 						});
 					}
 				});
-			}
+			};
 			function regionDialog(region, parentId, regionType) {
 				var typeName = WUI.regionTypes[regionType].name;
-				$('#configer-dialog').dialog({
+				var cfg = {
 					iconCls : region ? "icon-edit" : "icon-add",
 					title : (region ? "修改" : "添加") + typeName,
 					left : ($(window).width() - 300) * 0.5,
 					top : ($(window).height() - 300) * 0.5,
-					width : 550,
+					width : 450,
 					closed : false,
 					cache : false,
 					href : WUI.getConfigerDialogPath(WUI.objectTypes[WUI.objectTypeDef.REGION].namespace),
@@ -141,18 +139,43 @@ $(document).ready(
 						$.messager.alert('失败', "对话框加载失败，请刷新后重试！");
 					},
 					onLoad : function() {
+						var $zipCodeSel = $('#region-zip-code-txt');
+						$zipCodeSel.combobox({
+							url : 'position-configer/regionCode',
+							method : 'get',
+							queryParams : {
+								id : parentId
+							},
+							editable : false,
+							required : true,
+							valueField : 'code',
+							textField : 'name',
+							onSelect : function(rec) {
+								$('#region-name-txt').textbox("setValue", rec.name);
+							},
+							onLoadSuccess : function() {
+								if (region) {
+									$zipCodeSel.combobox("setValue", region.CODE);
+								}
+							},
+							keyHandler : {
+								down : function(e) {
+									$zipCodeSel.combobox("showPanel");
+								}
+							}
+						});
 						if (region) {
-							$('#region-name-txt').val(region.NAME);
-							$('#region-zip-code-txt').val(region.CODE);
-							$('#region-ABBREVIATION-txt').val(region.ABBREVIATION);
+							$('#region-name-txt').textbox("setValue", region.NAME);
+							$zipCodeSel.combobox("setValue", region.CODE);
+							$('#region-ABBREVIATION-txt').textbox("setValue", region.ABBREVIATION);
 							$('#region-LONGITUDE-txt').numberbox("setValue", region.LONGITUDE);
 							$('#region-LATITUDE-txt').numberbox("setValue", region.LATITUDE);
-							$('#region-name-txt').validatebox("isValid");
-							$('#region-zip-code-txt').validatebox("isValid");
-							$('#region-ABBREVIATION-txt').validatebox("isValid");
-						}else{
+							$('#region-name-txt').textbox("isValid");
+							$('#region-zip-code-txt').combobox("isValid");
+							$('#region-ABBREVIATION-txt').textbox("isValid");
+						} else {
 							$('#region-LONGITUDE-txt').numberbox("setValue", currentRegionObject.LONGITUDE);
-							$('#region-LATITUDE-txt').numberbox("setValue", currentRegionObject.LATITUDE);							
+							$('#region-LATITUDE-txt').numberbox("setValue", currentRegionObject.LATITUDE);
 						}
 					},
 					modal : true,
@@ -162,19 +185,19 @@ $(document).ready(
 					buttons : [ {
 						text : '保存',
 						handler : function() {
-							var isValid = $('#region-name-txt').validatebox("isValid");
-							isValid = isValid && $('#region-zip-code-txt').validatebox("isValid");
-							isValid = isValid && $('#region-ABBREVIATION-txt').validatebox("isValid");
+							var isValid = $('#region-name-txt').textbox("isValid");
+							isValid = isValid && $('#region-zip-code-txt').combobox("isValid");
+							isValid = isValid && $('#region-ABBREVIATION-txt').textbox("isValid");
 							if (!isValid) {
 								return;
 							}
 
 							var newRegion = {
-								NAME : $('#region-name-txt').val(),
-								ABBREVIATION : $('#region-ABBREVIATION-txt').val(),
-								CODE : $('#region-zip-code-txt').val(),
-								LONGITUDE : parseFloat($('#region-LONGITUDE-txt').val()),
-								LATITUDE : parseFloat($('#region-LATITUDE-txt').val()),
+								NAME : $('#region-name-txt').textbox("getValue"),
+								ABBREVIATION : $('#region-ABBREVIATION-txt').textbox("getValue"),
+								CODE : $('#region-zip-code-txt').combobox("getValue"),
+								LONGITUDE : parseFloat($('#region-LONGITUDE-txt').numberbox("getValue")),
+								LATITUDE : parseFloat($('#region-LATITUDE-txt').numberbox("getValue")),
 								OBJECT_TYPE : WUI.objectTypeDef.REGION,
 								REGION_TYPE : regionType,
 								PARENT_ID : parentId,
@@ -204,6 +227,7 @@ $(document).ready(
 							$('#configer-dialog').dialog("close");
 						}
 					} ]
-				});
+				};
+				$('#configer-dialog').dialog(cfg);
 			}
 		});

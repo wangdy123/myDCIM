@@ -6,7 +6,7 @@ var app = express();
 var config = require('dcim-config');
 
 app.use(express.static(__dirname + '/public', {
-	maxAge : config.config.fileMaxAge * 3600 * 24 * 1000
+	maxAge : config.fileMaxAge * 3600 * 24 * 1000
 }));
 
 module.exports = app;
@@ -27,9 +27,8 @@ app.post('/deviceModels', function(req, res) {
 	var obj = req.body;
 	db.doTransaction(function(connection) {
 		return [ function(callback) {
-			var sql='INSERT INTO config.DEVICE_MODEL(NAME,CODE,DEVICE_TYPE,VENDER,MAX_USE_AGE,DESCRIPTION)'
-				+'values(?,?,?,?,?,?)';
-			connection.query(sql, [ obj.NAME,obj.CODE,obj.DEVICE_TYPE,obj.VENDER,obj.MAX_USE_AGE,obj.DESCRIPTION], function(err, result) {
+			var sql='INSERT INTO config.DEVICE_MODEL set ?'; 
+			connection.query(sql,obj, function(err, result) {
 				if(err){
 				callback(err);
 				}else{

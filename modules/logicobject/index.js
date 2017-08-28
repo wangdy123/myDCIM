@@ -1,15 +1,39 @@
+var app = require('./app');
+
 var db = require('dcim-db');
 var util = require("dcim-util");
-var objectDao = require('dcim-object-dao')
+var objectDao = require('dcim-object-dao');
+var async = require("async");
 
-var express = require('express');
-var app = express();
 var config = require('dcim-config');
+
+require('./signal');
 
 module.exports = app;
 
 for(var type in config.objectTypes){
 	require("./"+config.objectTypes[type].namespace).initRequest(app);
+}
+
+
+function getCompleteObjects(objects,callback){
+	var tasks = [];
+	function addTask(obj) {
+		tasks.push(function(cb) {
+			var namespace = config.objectTypes[obj.OBJECT_TYPE].namespace;
+			objectDao[namespace].getById(db.pool, obj.ID, function(err,result){
+				if(err){
+					cb(null,obj);
+				}else{
+					cb(null,result);
+				}
+			});
+		});
+	}
+	for (var i = 0; i < objects.length; i++) {
+		addTask(objects[i]);
+	}
+	async.parallel(tasks,callback);
 }
 
 app.get('/seach', function(req, res) {
@@ -21,7 +45,14 @@ app.get('/seach', function(req, res) {
 				logger.error(error);
 				res.status(500).send(error);
 			} else {
-				res.send(objects);
+				getCompleteObjects(objects,function(err,results){
+					if (err) {
+						logger.error(err);
+						res.status(500).send(err);
+					}else{
+						res.send(results);
+					}
+				});
 			}
 		});
 });
@@ -35,18 +66,32 @@ app.get('/objectNodes', function(req, res) {
 				logger.error(error);
 				res.status(500).send(error);
 			} else {
-				res.send(objects);
+				getCompleteObjects(objects,function(err,results){
+					if (err) {
+						logger.error(err);
+						res.status(500).send(err);
+					}else{
+						res.send(results);
+					}
+				});
 			}
 		});
 	} else {
 		var sql = 'select o.ID,o.OBJECT_TYPE,o.NAME,o.CODE,p.PARENT_ID from config.OBJECT o '
 				+ 'left join config.POSITION_RELATION p on p.ID=o.ID where o.ID=?';
-		db.pool.query(sql, [ config.config.root_object_id ], function(error, objects, fields) {
+		db.pool.query(sql, [ config.root_object_id ], function(error, objects, fields) {
 			if (error) {
 				logger.error(error);
 				res.status(500).send(error);
 			} else {
-				res.send(objects);
+				getCompleteObjects(objects,function(err,results){
+					if (err) {
+						logger.error(err);
+						res.status(500).send(err);
+					}else{
+						res.send(results);
+					}
+				});
 			}
 		});
 	}
@@ -66,7 +111,6 @@ app.get('/objectNodes/:id', function(req, res) {
 		}
 
 		var namespace = config.objectTypes[objects[0].OBJECT_TYPE].namespace;
-		
 		objectDao[namespace].getById(db.pool, req.params.id, function(error, result) {
 			if (error) {
 				logger.error(error);
@@ -149,31 +193,83 @@ app.put('/objectNodes/:id', function(req, res) {
 	});
 });
 
+function deleteChild(connection,childObjects,callback){
+	if(childObjects.length<=0){
+		callback();
+		return;
+	}
+	var tasks=[];
+	childObjects.forEach(function(object){
+		tasks.push(function(cb){
+			deleteObject(connection,object, function(err,result){
+				cb(err);
+			});
+		});
+	});
+	async.parallel(tasks, function(err,result){
+		callback(err);
+	});
+}
+function deleteObject(connection,nodeObject,callback){
+	var tasks=[];
+	tasks.push(function(cb) {
+		var sql = 'select o.ID,o.OBJECT_TYPE,o.CODE,o.NAME,p.PARENT_ID from config.OBJECT o '
+			+ 'join config.POSITION_RELATION p on p.ID=o.ID where p.PARENT_ID=?';
+		connection.query(sql, [ nodeObject.ID], function(err, results) {
+			if(err){
+				cb(err);
+			}else{
+				deleteChild(connection,results,cb);
+			}
+		});
+	});
+	
+	objectDao.signal.createDeleteByParentTasks(connection,tasks,nodeObject.ID);
+	
+	var namespace=config.objectTypes[nodeObject.OBJECT_TYPE].namespace;
+	objectDao[namespace].createDeleteTasks(connection,tasks,nodeObject.ID);
+	
+	tasks.push(function(cb) {
+		var sql ='delete from config.OBJECT_EXT where ID=?';
+		connection.query(sql, [ nodeObject.ID], function(err,result){
+			cb(err);
+		});
+	});
+	tasks.push(function(cb) {
+		
+		var sql ='delete from config.POSITION_RELATION where ID=?';
+		connection.query(sql, [ nodeObject.ID], function(err,result){
+			cb(err);
+		});
+	});
+	tasks.push(function(cb) {
+		var sql ='delete from config.OBJECT where ID=?';
+		connection.query(sql, [ nodeObject.ID], function(err,result){
+			cb(err);
+		});
+	});
+	async.waterfall(tasks, function(err,result){
+		callback(err);
+	});
+}
+
 app.delete('/objectNodes/:id', function(req, res) {
 	db.doTransaction(function(connection) {
 		var tasks=[];
+		var nodeObject=null;
 		tasks.push(function(callback) {
-			var sql ='select ID from config.POSITION_RELATION where PARENT_ID=?';
+			var sql = 'select ID,OBJECT_TYPE,NAME,CODE from config.OBJECT where ID=?';
 			connection.query(sql, [ req.params.id], function(err, result) {
 				if(err){
 				callback(err);
 				}else{
-					if(result.length>0){
-						callback("包含子对象，不能删除！");
-					}
-					else{
+					if (result.length === 0) {
 						callback();
+					}else{
+						deleteObject(connection,result[0], function(err,result){
+							callback(err);
+						});
 					}
-				}
-			});
-		});
-		tasks.push(function(callback) {
-			var sql ='delete from config.OBJECT where ID=?';
-			connection.query(sql, [ req.params.id], function(err, result) {
-				if(err){
-				callback(err);
-				}else{
-					callback();
 				}
 			});
 		});

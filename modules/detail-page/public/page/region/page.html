@@ -1,0 +1,46 @@
+
+<div class="easyui-layout" data-options="border:false,fit:true">
+	<div class="easyui-panel" data-options="region:'north', border:false" style="height:140px">
+		<table class="configer">
+			<tr>
+				<td align="right" style="width: 100px;"><label>名称：</label></td>
+				<td id="region-name-txt" style="width: 150px;"></td>
+				<td align="right" style="width: 100px;"><label>经度：</label></td>
+				<td id="region-LONGITUDE-txt" align="right" >
+				<td>度</td>
+				<td style="width: 50px;"></td>
+				<td colspan="8"><label>该区域告警统计</label></td>
+			</tr>
+			<tr>
+				<td align="right"><label>简称：</label></td>
+				<td id="region-ABBREVIATION-txt"></td>
+				<td align="right"><label>纬度：</label></td>
+				<td id="region-LATITUDE-txt" align="right"></td>
+				<td>度</td>
+				<td></td>
+				<td><div class="alarmLevel1-icon" title="一级告警"></div></td>
+				<td id="region-alarmLevel1-count"></td>
+				<td align="right" style="width: 30px;"><div class="alarmLevel2-icon" title="二级告警"></div></td>
+				<td id="region-alarmLevel2-count"></td>
+				<td align="right" style="width: 30px;"><div class="alarmLevel3-icon" title="三级告警"></div></td>
+				<td id="region-alarmLevel3-count"></td>
+				<td align="right" style="width: 30px;"><div class="alarmLevel4-icon" title="四级告警"></div></td>
+				<td id="region-alarmLevel4-count"></td>
+			</tr>
+			<tr>
+				<td align="right"><label>行政编码：</label></td>
+				<td id="region-zip-code-txt"></td>
+				<td align="right"><label>数据中心机楼：</label></td>
+				<td id="region-building-count"></td>
+			</tr>
+			<tr>
+				<td align="right"><label>数据中心机房：</label></td>
+				<td id="region-room-count"></td>
+				<td align="right"><label>总机架数：</label></td>
+				<td id="region-cabinet-count"></td>
+			</tr>
+		</table>
+	</div>
+	<div class="easyui-panel" data-options="region:'center', border:true,href:'detail/child-objects/page.html'"></div>
+</div>
+<script type="text/javascript" src="detail/page/region/page.js"></script>

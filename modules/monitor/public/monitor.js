@@ -1,80 +1,99 @@
-$(document).ready(
-		function() {
-			var objectNodeUrl = 'logicobject/objectNodes/';
-			WUI.monitor = WUI.monitor ? WUI.monitor : {};
-			WUI.monitor.REALTIME_VALUE_INTEVAL=WUI.requestInteval.realtimeValue;
-			
-			if (!WUI.monitor.inited) {
-				WUI.monitor.inited = true;
-				if ($.cookie('enableMap')) {
-					$('#monitor-tabs').tabs('add', {
-						title : '地图导航',
-						href : "monitor/map/map.html",
-						iconCls : "icon-map",
-						index : 0,
-						selected : false
+$(document).ready(function() {
+	var objectNodeUrl = 'logicobject/objectNodes/';
+	WUI.monitor = WUI.monitor ? WUI.monitor : {};
+	WUI.monitor.REALTIME_VALUE_INTEVAL = WUI.requestInteval.realtimeValue;
+
+	if (WUI.monitor.inited) {
+		return;
+	}
+	WUI.monitor.inited = true;
+
+	function openObject(object) {
+		if (!object) {
+			return;
+		}
+		initBreadCrumbs(object);
+
+		$('#screen-panel').panel('close');
+		if (object.OBJECT_TYPE === WUI.objectTypeDef.REGION) {
+			$('#map-panel').panel({
+				fit : true,
+				closed : false
+			});
+			$('#detail-panel').panel("close");
+		} else {
+			$('#map-panel').panel("close");
+			$('#detail-panel').panel('open');
+		}
+	}
+
+	function initBreadCrumbs(object) {
+		var nodes = [ object ];
+		function showBreadCrumbs() {
+			var $panel = $("#bread-crumbs-panel");
+			$panel.empty();
+			function addNode(node) {
+				var $node = $(document.createElement("div"));
+				$panel.prepend($node);
+				$node.text(node.NAME);
+				$node.addClass('bread-item');
+				$node.click(function() {
+					WUI.publishEvent('open_object', {
+						publisher : 'bread-crumbs',
+						object : node
 					});
-				}
-				if ($.cookie('enable3D')) {
-					$('#monitor-tabs').tabs('add', {
-						title : '组态',
-						href : "monitor/screen/screen.html",
-						iconCls : "icon-screen",
-						index : 1,
-						selected : false
-					});
+				});
+				if (i !== 0) {
+					$panel.prepend('<div class="bread-separator">>></div>');
 				}
 			}
-			WUI.subscribe('open_object', function(event) {
-				if (!event.object) {
-					return;
-				}
-				$("#workspace-title").text(event.object.NAME);
-
-				var tab = $('#monitor-tabs').tabs('getSelected');
-				var index = $('#monitor-tabs').tabs('getTabIndex', tab);
-
-				if ($.cookie('enable3D')) {
-					if (event.publisher === "map" && event.object.OBJECT_TYPE === WUI.objectTypeDef.STATION_BASE
-							&& index === 0) {
-						$('#monitor-tabs').tabs('select', 1);
-					}
-					if (event.object.OBJECT_TYPE > WUI.objectTypeDef.STATION_BASE && index === 0) {
-						$('#monitor-tabs').tabs('select', 1);
-					}
-				}
-				if(!event.object.PARENT_ID){
-					$("#return-btn").hide();
-				}else{
-					$("#return-btn").show();				
-				}
-			});
-
-			$("#return-btn").click(function() {
-				WUI.publishEvent('request_current_object', {
-					publisher : "monitor_panel",
-					cbk : function(object) {
-						if(!object){
-							return;
-						}
-						window.WUI.ajax.get(objectNodeUrl + object.PARENT_ID, {}, function(parentObject) {
-							WUI.publishEvent('open_object', {
-								publisher : "monitor_panel",
-								object : parentObject
-							});
-						});
-					}
-				});
-			});
-			var isFullScreen=false;
-			$("#fullscreem-btn").click(function() {
-				var target = $("#main-workspace");
-				if (isFullScreen) {
-					isFullScreen=false;
-					WUI.exitFullscreen();
+			for (var i = nodes.length - 1; i >= 0; i--) {
+				addNode(nodes[i]);
+			}
+		}
+		function requestNode(id) {
+			WUI.ajax.get(objectNodeUrl + id, {}, function(result) {
+				nodes.splice(0, 0, result);
+				if (result.PARENT_ID) {
+					requestNode(result.PARENT_ID);
 				} else {
-					isFullScreen=true;
-					WUI.fullscreen(target[0]);
+					showBreadCrumbs();
 				}
+			}, function(s) {
+				console.log(s);
+				showBreadCrumbs();
 			});
-		});
+		}
+		if (object.PARENT_ID) {
+			requestNode(object.PARENT_ID);
+		} else {
+			showBreadCrumbs();
+		}
+	}
+
+	WUI.subscribe('open_object', function(event) {
+		if (!event.object) {
+			return;
+		}
+		openObject(event.object);
+	}, "monitor");
+
+	WUI.subscribe('open_3D', function(event) {
+		if (!event.object) {
+			return;
+		}
+		$('#map-panel').panel("close");
+		$('#detail-panel').panel("close");
+		$('#screen-panel').panel('open');
+	}, "monitor");
+
+	window.WUI.publishEvent('request_current_object', {
+		publisher : "detail",
+		cbk : function(object) {
+			if (object) {
+				openObject(object);
+			}
+		}
+	});
+
+});

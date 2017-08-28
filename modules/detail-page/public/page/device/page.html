@@ -1,0 +1,45 @@
+<div class="easyui-layout" data-options="border:false,fit:true">
+	<div class="easyui-panel" data-options="region:'north', border:false" style="height: 140px">
+		<table class="configer">
+			<tr>
+				<td align="right" style="width: 120px;">名称：</td>
+				<td id="device-name-txt" style="width: 200px;"></td>
+				<td align="right">编码：</td>
+				<td id="device-code-txt" style="width: 200px;"></td>
+				<td style="width: 50px;"></td>
+				<td colspan="8"><label>设备告警统计</label></td>
+			</tr>
+			<tr>
+				<td align="right">专业类别：</td>
+				<td id="device-business-type-txt"></td>
+				<td align="right">设备类型：</td>
+				<td id="device-type-txt"></td>
+				<td></td>
+				<td><div class="alarmLevel1-icon" title="一级告警"></div></td>
+				<td id="device-alarmLevel1-count"></td>
+				<td align="right" style="width: 30px;"><div class="alarmLevel2-icon" title="二级告警"></div></td>
+				<td id="device-alarmLevel2-count"></td>
+				<td align="right" style="width: 30px;"><div class="alarmLevel3-icon" title="三级告警"></div></td>
+				<td id="device-alarmLevel3-count"></td>
+				<td align="right" style="width: 30px;"><div class="alarmLevel4-icon" title="四级告警"></div></td>
+				<td id="device-alarmLevel4-count"></td>
+			</tr>
+			<tr>
+				<td align="right">设备厂家：</td>
+				<td id="device-vender-txt"></td>
+				<td align="right">设备型号：</td>
+				<td id="device-model-txt"></td>
+			</tr>
+			<tr>
+				<td align="right">投产日期：</td>
+				<td id="device-start-use-date"></td>
+				<td align="right">预计报废日期：</td>
+				<td id="device-expect-end-date"></td>
+			</tr>
+		</table>
+	</div>
+	<div class="easyui-panel" data-options="region:'center', border:false">
+		<div id="child-signal-panel" class="easyui-datagrid" data-options="border:false,fit:true"></div>
+	</div>
+</div>
+<script type="text/javascript" src="detail/page/device/page.js"></script>

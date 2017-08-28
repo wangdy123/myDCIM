@@ -1,0 +1,18 @@
+create database detail_page character set utf8 collate utf8_bin;
+
+
+CREATE TABLE detail_page.IMG (
+	NAME varchar(128) NOT NULL,
+	OBJECT_TYPE INT NOT NULL,
+	DEVICE_TYPE INT,
+	IMG LONGBLOB NOT NULL,
+  	PRIMARY KEY (NAME)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE detail_page.NODE_PAGE(
+	ID BIGINT(16)  NOT NULL,
+	PAGE_NAME varchar(128) NOT NULL,
+  	CONFIG TEXT,
+  PRIMARY KEY (ID),
+  FOREIGN KEY (ID) REFERENCES config.OBJECT (ID) on delete CASCADE
+)ENGINE = InnoDB  DEFAULT CHARSET=utf8;

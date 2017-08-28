@@ -85,13 +85,13 @@ $(function() {
 			},
 			onLoad : function() {
 				if (deviceVender) {
-					$('#vender-name-txt').val(deviceVender.NAME);
-					$('#vender-code-txt').val(deviceVender.CODE);
-					$('#vender-ABBREVIATION-txt').val(deviceVender.ABBREVIATION);
+					$('#vender-name-txt').textbox("setValue", deviceVender.NAME);
+					$('#vender-code-txt').textbox("setValue", deviceVender.CODE);
+					$('#vender-ABBREVIATION-txt').textbox("setValue", deviceVender.ABBREVIATION);
 					$('#vender-desc-txt').textbox("setValue", deviceVender.DESCRIPTION);
-					$('#model-name-txt').validatebox("isValid");
-					$('#model-ABBREVIATION-txt').validatebox("isValid");
-					$('#vender-code-txt').validatebox("isValid");
+					$('#model-name-txt').textbox("isValid");
+					$('#model-ABBREVIATION-txt').textbox("isValid");
+					$('#vender-code-txt').textbox("isValid");
 				}
 			},
 			modal : true,
@@ -101,16 +101,16 @@ $(function() {
 			buttons : [ {
 				text : '保存',
 				handler : function() {
-					var isValid = $('#vender-name-txt').validatebox("isValid");
-					isValid = isValid && $('#vender-code-txt').validatebox("isValid");
-					isValid = isValid && $('#vender-ABBREVIATION-txt').validatebox("isValid");
+					var isValid = $('#vender-name-txt').textbox("isValid");
+					isValid = isValid && $('#vender-code-txt').textbox("isValid");
+					isValid = isValid && $('#vender-ABBREVIATION-txt').textbox("isValid");
 					if (!isValid) {
 						return;
 					}
 					var newObject = {
-						NAME : $('#vender-name-txt').val(),
-						CODE : $('#vender-code-txt').val(),
-						ABBREVIATION : $('#vender-ABBREVIATION-txt').val(),
+						NAME : $('#vender-name-txt').textbox("getValue"),
+						CODE : $('#vender-code-txt').textbox("getValue"),
+						ABBREVIATION : $('#vender-ABBREVIATION-txt').textbox("getValue"),
 						DESCRIPTION : $('#vender-desc-txt').textbox("getValue")
 					};
 

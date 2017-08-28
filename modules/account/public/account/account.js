@@ -1,5 +1,6 @@
 $(function() {
 	var accountUrl = "account/accounts";
+	var personnelUrl = "account/personnels";
 	var departmentUrl = "account/departments";
 	var personnelsNotAccountUrl = "account/personnelsNotAccount";
 	var roleUrl = "account/roles";
@@ -66,7 +67,7 @@ $(function() {
 			resizable : true,
 			formatter : function(value, row, index) {
 				var roleNames = [];
-				for ( var i = 0; i < row.roles.length; i++) {
+				for (var i = 0; i < row.roles.length; i++) {
 					roleNames.push(row.roles[i].NAME);
 				}
 				return roleNames.join('，');
@@ -91,9 +92,9 @@ $(function() {
 			title : '主页',
 			width : 150,
 			formatter : function(value, row, index) {
-				for ( var i = 0; i < WUI.menus.length; i++) {
+				for (var i = 0; i < WUI.menus.length; i++) {
 					var childMenus = WUI.menus[i].childMenus;
-					for ( var j = 0; j < childMenus.length; j++) {
+					for (var j = 0; j < childMenus.length; j++) {
 						if (childMenus[j].id === row.HOME_PAGE) {
 							return childMenus[j].name;
 						}
@@ -139,206 +140,215 @@ $(function() {
 	};
 
 	function accountDialog(account) {
-		$('#account-dialog')
-				.dialog(
-						{
-							iconCls : account ? "icon-edit" : "icon-add",
-							title : account ? "修改帐号" : "添加帐号",
-							left : ($(window).width() - 500) * 0.5,
-							top : ($(window).height() - 300) * 0.5,
-							width : 650,
-							closed : false,
-							cache : false,
-							href : 'account/account/account-dialog.html',
-							onLoadError : function() {
-								$.messager.alert('失败', "对话框加载失败，请刷新后重试！");
-							},
-							onLoad : function() {
-								$('#account-department-sel').combobox({
-									url : departmentUrl,
-									editable : false,
-									method : 'get',
-									valueField : 'ID',
-									textField : 'NAME',
-									onSelect : function(rec) {
-										var url = personnelsNotAccountUrl + '?departmentId=' + rec.ID;
-										$('#account-personnel-sel').combobox('reload', url);
-									},
-									onLoadSuccess : function() {
-										if (account) {
-											$('#account-department-sel').combobox("setValue", account.DEPARTMENT);
-											$('#account-department-sel').combobox('disable');
-										} else {
-											var departments = $('#account-department-sel').combobox("getData");
-											if (departments.length > 0) {
-												$('#account-department-sel').combobox("setValue", departments[0].ID);
-											} else {
-												$('#account-department-sel').combobox("clear");
-											}
-										}
-									},
-									keyHandler : {
-										down : function(e) {
-											$('#account-department-sel').combobox("showPanel");
-										}
-									}
+		var cfg = {
+			iconCls : account ? "icon-edit" : "icon-add",
+			title : account ? "修改帐号" : "添加帐号",
+			left : ($(window).width() - 500) * 0.5,
+			top : ($(window).height() - 300) * 0.5,
+			width : 650,
+			closed : false,
+			cache : false,
+			href : 'account/account/account-dialog.html',
+			onLoadError : function() {
+				$.messager.alert('失败', "对话框加载失败，请刷新后重试！");
+			},
+			onLoad : function() {
+				$('#account-department-sel').combobox({
+					url : departmentUrl,
+					editable : false,
+					method : 'get',
+					disabled : account ? true : false,
+					valueField : 'ID',
+					textField : 'NAME',
+					onSelect : function(rec) {
+						var url = account ? personnelUrl : (personnelsNotAccountUrl + '?departmentId=' + rec.ID);
+						$('#account-personnel-sel').combobox('reload', url);
+					},
+					onLoadSuccess : function() {
+						if (account) {
+							$('#account-department-sel').combobox("setValue", account.DEPARTMENT);
+						} else {
+							var departments = $('#account-department-sel').combobox("getData");
+							if (departments.length > 0) {
+								$('#account-department-sel').combobox("setValue", departments[0].ID);
+							} else {
+								$('#account-department-sel').combobox("clear");
+							}
+						}
+					},
+					keyHandler : {
+						down : function(e) {
+							$('#account-department-sel').combobox("showPanel");
+						}
+					}
 
-								});
-								$('#account-personnel-sel').combobox({
-									editable : false,
-									keyHandler : {
-										down : function(e) {
-											$('#account-personnel-sel').combobox("showPanel");
-										}
-									},
-									method : 'get',
-									valueField : 'ID',
-									textField : 'NAME',
-									onLoadSuccess : function() {
-										if (account) {
-											$('#account-personnel-sel').combobox("setValue", account.ID);
-											$('#account-personnel-sel').combobox('disable');
-										} else {
-											var personnels = $('#account-personnel-sel').combobox("getData");
-											if (personnels.length > 0) {
-												$('#account-personnel-sel').combobox("setValue", personnels[0].ID);
-											} else {
-												$('#account-personnel-sel').combobox("clear");
-											}
-										}
-									}
-								});
+				});
+				$('#account-personnel-sel').combobox({
+					url : account ? personnelUrl : personnelsNotAccountUrl,
+					editable : false,
+					keyHandler : {
+						down : function(e) {
+							$('#account-personnel-sel').combobox("showPanel");
+						}
+					},
+					disabled : account ? true : false,
+					method : 'get',
+					valueField : 'ID',
+					textField : 'NAME',
+					onLoadSuccess : function() {
+						if (account) {
+							$('#account-personnel-sel').combobox("setValue", account.ID);
+						} else {
+							var personnels = $('#account-personnel-sel').combobox("getData");
+							if (personnels.length > 0) {
+								$('#account-personnel-sel').combobox("setValue", personnels[0].ID);
+							} else {
+								$('#account-personnel-sel').combobox("clear");
+							}
+						}
+					}
+				});
 
-								for ( var i = 0; i < WUI.menus.length; i++) {
-									var childMenus = WUI.menus[i].childMenus;
-									for ( var j = 0; j < childMenus.length; j++) {
-										$('#account-home-page').append(
-												'<option value="' + childMenus[j].id + '">' + childMenus[j].name
-														+ '</option>');
-									}
-								}
+				var menus = [];
+				for (var i = 0; i < WUI.menus.length; i++) {
+					var childMenus = WUI.menus[i].childMenus;
+					for (var j = 0; j < childMenus.length; j++) {
+						childMenus[j].group=WUI.menus[i].name;
+						menus.push(childMenus[j]);
+					}
+				}
+				$('#account-home-page').combobox({
+					valueField : 'id',
+					textField : 'name',
+					groupField : "group",
+					singleSelect : true,
+					editable : false,
+					data : menus
+				});
 
-								WUI.ajax.get(roleUrl, {}, function(roloes) {
-									function isAccountRole(role) {
-										if (!account) {
-											return false;
-										}
-										for ( var i = 0; i < account.roles.length; i++) {
-											if (role.ID === account.roles[i].ROLE_ID) {
-												return true;
-											}
-										}
-										return false;
-									}
-									for ( var i = 0; i < roloes.length; i++) {
-										var role = roloes[i];
-										var item = '<div style="display: inline-block; min-width: 150px;">'
-												+ '<input type="checkbox" class="account-role-item" '
-												+ (isAccountRole(role) ? "checked" : "") + ' value="' + role.ID + '">'
-												+ role.NAME + '</div>';
-										$('#account-roles-td').append(item);
-									}
-								});
+				WUI.ajax.get(roleUrl, {}, function(roloes) {
+					function isAccountRole(role) {
+						if (!account) {
+							return false;
+						}
+						for (var i = 0; i < account.roles.length; i++) {
+							if (role.ID === account.roles[i].ROLE_ID) {
+								return true;
+							}
+						}
+						return false;
+					}
+					for (var i = 0; i < roloes.length; i++) {
+						var role = roloes[i];
+						var item = '<div style="display: inline-block; min-width: 150px;">'
+								+ '<input type="checkbox" class="account-role-item" '
+								+ (isAccountRole(role) ? "checked" : "") + ' value="' + role.ID + '">' + role.NAME
+								+ '</div>';
+						$('#account-roles-td').append(item);
+					}
+				});
 
-								$('#account-theme').combobox({
-									url : themesUrl,
-									method : 'get',
-									valueField : 'type',
-									textField : 'name',
-									onLoadSuccess : function() {
-										if (account) {
-											$('#account-theme').combobox("setValue", account.DEFAULT_THEME);
-										} else {
-											$('#account-theme').combobox("setValue", 'default');
-										}
-									}
-								});
-								if (account) {
-									$('#account-txt').val(account.ACCOUNT);
-									$('#account-home-page').val(account.HOME_PAGE);
-									$('#account-txt').validatebox({
-										disabled : true
-									});
-									$('#account-password').validatebox({
-										disabled : true
-									});
-									$('#account-password-confirm').validatebox({
-										disabled : true
-									});
-								} else {
-									$('#account-txt').validatebox({
-										validType : 'username'
-									});
-									$('#account-password').validatebox({
-										required : true,
-										validType : 'password'
-									});
-									$('#account-password-confirm').validatebox({
-										required : true,
-										validType : "equalTo['#account-password']",
-										invalidMessage : "两次输入密码不匹配"
-									});
-								}
-							},
-							modal : true,
-							onClose : function() {
-								$("#account-dialog").empty();
-							},
-							buttons : [ {
-								text : '保存',
-								handler : function() {
-									var isValid = $('#account-txt').val();
-									isValid = isValid && $("#account-personnel-sel").combobox("getValue");
-									isValid = isValid && $('#account-theme').combobox("getValue");
-									isValid = isValid && $('#account-personnel-sel').combobox('getValue');
-									if (!account) {
-										isValid = isValid && $('#account-password').validatebox("isValid");
-										isValid = isValid && $('#account-password-confirm').validatebox("isValid");
-										if ($('#account-password').val() !== $('#account-password-confirm').val()) {
-											isValid = false;
-										}
-									}
-									if (!isValid) {
-										return;
-									}
+				$('#account-theme').combobox({
+					url : themesUrl,
+					method : 'get',
+					valueField : 'type',
+					textField : 'name',
+					onLoadSuccess : function() {
+						if (account) {
+							$('#account-theme').combobox("setValue", account.DEFAULT_THEME);
+						} else {
+							$('#account-theme').combobox("setValue", 'default');
+						}
+					}
+				});
+				if (account) {
+					$('#account-txt').textbox("setValue", account.ACCOUNT);
+					$('#account-home-page').combobox("setValue", account.HOME_PAGE);
+					$('#account-txt').textbox({
+						disabled : true
+					});
+					$('#account-password').textbox({
+						disabled : true
+					});
+					$('#account-password-confirm').textbox({
+						disabled : true
+					});
+				} else {
+					$('#account-txt').textbox({
+						validType : 'username'
+					});
+					$('#account-password').textbox({
+						required : true,
+						validType : 'password'
+					});
+					$('#account-password-confirm').textbox({
+						required : true,
+						validType : "equalTo['#account-password']",
+						invalidMessage : "两次输入密码不匹配"
+					});
+				}
+			},
+			modal : true,
+			onClose : function() {
+				$("#account-dialog").empty();
+			},
+			buttons : [ {
+				text : '保存',
+				handler : function() {
+					var isValid = $('#account-txt').val();
+					isValid = isValid && $("#account-personnel-sel").combobox("getValue");
+					isValid = isValid && $('#account-theme').combobox("getValue");
+					isValid = isValid && $('#account-personnel-sel').combobox('getValue');
+					if (!account) {
+						isValid = isValid && $('#account-password').textbox("isValid");
+						isValid = isValid && $('#account-password-confirm').textbox("isValid");
+						if ($('#account-password').val() !== $('#account-password-confirm').val()) {
+							isValid = false;
+						}
+					}
+					if (!isValid) {
+						return;
+					}
 
-									var newAccount = {
-										DEFAULT_THEME : $('#account-theme').combobox("getValue"),
-										ID : $("#account-personnel-sel").combobox("getValue"),
-										HOME_PAGE:$('#account-home-page').val(),
-										roles : []
-									};
-									var roleItems = $(".account-role-item");
-									for ( var i = 0; i < roleItems.length; i++) {
-										if ($(roleItems[i]).prop('checked')) {
-											newAccount.roles.push({
-												ROLE_ID : parseInt($(roleItems[i]).val(), 10)
-											});
-										}
-									}
-									if (account) {
-										WUI.ajax.put(accountUrl, newAccount, function() {
-											$node.datagrid("reload");
-										}, function() {
-											$.messager.alert('失败', "修改帐号失败！");
-										});
-									} else {
-										newAccount.ACCOUNT = $('#account-txt').val();
-										newAccount.LOGIN_PASSWORD = $('#account-password').val();
-										WUI.ajax.post(accountUrl, newAccount, function() {
-											$node.datagrid("reload");
-										}, function() {
-											$.messager.alert('失败', "添加帐号失败！");
-										});
-									}
-									$('#account-dialog').dialog("close");
-								}
-							}, {
-								text : '取消',
-								handler : function() {
-									$('#account-dialog').dialog("close");
-								}
-							} ]
+					var newAccount = {
+						DEFAULT_THEME : $('#account-theme').combobox("getValue"),
+						ID : parseInt($("#account-personnel-sel").combobox("getValue"), 10),
+						HOME_PAGE : parseInt($('#account-home-page').combobox("getValue")),
+						roles : []
+					};
+					var roleItems = $(".account-role-item");
+					for (var i = 0; i < roleItems.length; i++) {
+						if ($(roleItems[i]).prop('checked')) {
+							newAccount.roles.push({
+								ROLE_ID : parseInt($(roleItems[i]).val(), 10)
+							});
+						}
+					}
+					if (account) {
+						WUI.ajax.put(accountUrl, newAccount, function() {
+							$('#account-dialog').dialog("close");
+							$node.datagrid("reload");
+						}, function() {
+							$.messager.alert('失败', "修改帐号失败！");
 						});
+					} else {
+						newAccount.ACCOUNT = $('#account-txt').val();
+						newAccount.LOGIN_PASSWORD = $('#account-password').val();
+						WUI.ajax.post(accountUrl, newAccount, function() {
+							$('#account-dialog').dialog("close");
+							$node.datagrid("reload");
+						}, function() {
+							$.messager.alert('失败', "添加帐号失败！");
+						});
+					}
+				}
+			}, {
+				text : '取消',
+				handler : function() {
+					$('#account-dialog').dialog("close");
+				}
+			} ]
+		};
+		$('#account-dialog').dialog(cfg);
 	}
 });

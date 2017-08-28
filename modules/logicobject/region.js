@@ -4,7 +4,7 @@ var region = require('dcim-object-dao').region;
 
 module.exports.initRequest = function(app) {
 	app.get('/regions', function(req, res) {
-		var parentId = req.query.parentId ? req.query.parentId : config.config.root_object_id;
+		var parentId = req.query.parentId ? req.query.parentId : config.root_object_id;
 		region.getByPositionParent(db.pool, parentId, function(error, regions) {
 			if (error) {
 				logger.error(error);

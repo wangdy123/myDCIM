@@ -74,6 +74,10 @@ $(document).ready(
 									return WUI.stationTypes[row.STATION_TYPE];
 								}
 							}, {
+								field : 'AREA',
+								title : '占地面积(m²)',
+								width : 100
+							}, {
 								field : 'LONGITUDE',
 								title : '经度(度)',
 								width : 100,
@@ -91,25 +95,21 @@ $(document).ready(
 								field : 'ADDRESS',
 								title : '详细地址',
 								width : 200
-							} ] ]
+							}, WUI.pageConfiger.createConfigerColumn("station") ] ]
 				});
 			}
 			window.WUI.publishEvent('request_current_object', {
 				publisher : 'station-configer',
-				cbk : function(object) {
-					WUI.ajax.get(objectNodeUrl + "/" + object.ID, {}, function(stationObject) {
-						openObject(stationObject);
-					}, function() {
-						var typeName = WUI.objectTypes[WUI.objectTypeDef.STATION_BASE].name;
-						$.messager.alert('失败', "读取" + typeName + "配置失败！");
-					});
-				}
+				cbk : openObject
 			});
-
+			WUI.station.editPage = function(target) {
+				var station = WUI.getDatagridRow($node, target);
+				WUI.pageConfiger.pageDialog(station);
+			};
 			WUI.station.editrow = function(target) {
 				var station = WUI.getDatagridRow($node, target);
 				stationDialog(station, currentObject);
-			}
+			};
 			WUI.station.deleterow = function(target) {
 				var station = WUI.getDatagridRow($node, target);
 				$.messager.confirm('确认', '确定要删除' + typeName + '【' + station.NAME + '】吗?', function(r) {
@@ -121,7 +121,7 @@ $(document).ready(
 						});
 					}
 				});
-			}
+			};
 			function stationDialog(station, parentObject) {
 				var cfg = {
 					iconCls : station ? "icon-edit" : "icon-add",
@@ -140,21 +140,26 @@ $(document).ready(
 							$('#station-type-txt').append(
 									'<option value="' + key + '">' + WUI.stationTypes[key] + '</option>');
 						}
+						$('#station-type-txt').combobox({
+							editable : false,
+							required : true
+						});
 						if (station) {
-							$('#station-name-txt').val(station.NAME);
-							$('#station-code-txt').val(station.CODE);
+							$('#station-name-txt').textbox("setValue", station.NAME);
+							$('#station-code-txt').textbox("setValue", station.CODE);
 							$('#station-LONGITUDE-txt').numberbox("setValue", station.LONGITUDE);
 							$('#station-LATITUDE-txt').numberbox("setValue", station.LATITUDE);
+							$('#station-AREA-txt').numberbox("setValue", station.AREA);
 							$('#station-address-txt').textbox("setValue", station.ADDRESS);
 							$('#station-desc-txt').textbox("setValue", station.DESCRIPTION);
-							$('#station-type-txt').val(station.STATION_TYPE);
+							$('#station-type-txt').combobox("setValue", station.STATION_TYPE);
 
-							$('#station-name-txt').validatebox("isValid");
-							$('#station-code-txt').validatebox("isValid");
+							$('#station-name-txt').textbox("isValid");
+							$('#station-code-txt').textbox("isValid");
 
-						}else{
-								$('#station-LONGITUDE-txt').numberbox("setValue", parentObject.LONGITUDE);
-								$('#station-LATITUDE-txt').numberbox("setValue", parentObject.LATITUDE);							
+						} else {
+							$('#station-LONGITUDE-txt').numberbox("setValue", parentObject.LONGITUDE);
+							$('#station-LATITUDE-txt').numberbox("setValue", parentObject.LATITUDE);
 						}
 					},
 					modal : true,
@@ -164,21 +169,22 @@ $(document).ready(
 					buttons : [ {
 						text : '保存',
 						handler : function() {
-							var isValid = $('#station-name-txt').validatebox("isValid");
-							isValid = isValid && $('#station-code-txt').validatebox("isValid");
-							isValid = isValid && $('#station-type-txt').val();
+							var isValid = $('#station-name-txt').textbox("isValid");
+							isValid = isValid && $('#station-code-txt').textbox("isValid");
+							isValid = isValid && $('#station-type-txt').combobox("getValue");
 							if (!isValid) {
 								return;
 							}
 
 							var newstation = {
-								NAME : $('#station-name-txt').val(),
-								CODE : $('#station-code-txt').val(),
-								LONGITUDE : parseFloat($('#station-LONGITUDE-txt').val()),
-								LATITUDE : parseFloat($('#station-LATITUDE-txt').val()),
-								STATION_TYPE : parseInt($('#station-type-txt').val(), 10),
+								NAME : $('#station-name-txt').textbox("getValue"),
+								CODE : $('#station-code-txt').textbox("getValue"),
+								LONGITUDE : parseFloat($('#station-LONGITUDE-txt').numberbox("getValue")),
+								LATITUDE : parseFloat($('#station-LATITUDE-txt').numberbox("getValue")),
+								AREA : parseInt($('#station-AREA-txt').numberbox("getValue"), 10),
+								STATION_TYPE : parseInt($('#station-type-txt').combobox("getValue"), 10),
 								OBJECT_TYPE : window.WUI.objectTypeDef.STATION_BASE,
-								ADDRESS : $('#station-address-txt').val(),
+								ADDRESS : $('#station-address-txt').textbox("getValue"),
 								DESCRIPTION : $('#station-desc-txt').textbox("getValue"),
 								PARENT_ID : parentObject.ID,
 								properties : []

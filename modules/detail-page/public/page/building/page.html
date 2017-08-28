@@ -1,0 +1,104 @@
+<style>
+.building .box {
+	margin: 0 10px 10px 0;
+	display: inline-block;
+	border-radius: 5px;
+}
+
+.building .energy {
+	width: 300px;
+	height: 60px;
+}
+
+.building .environment {
+	width: 300px;
+	height: 60px;
+}
+
+.building .extremum {
+	width: 300px;
+	height: 60px;
+}
+</style>
+<div class="easyui-panel" data-options="border:false,fit:true" style="padding: 10px;">
+	<div class="easyui-panel" data-options="border:true" style="padding: 10px; margin: 0 0 10px 0; max-width: 980px;">
+		<div style="font-size: 18px; lineheight: 24px;">机楼概况</div>
+		<p id="id-building-profile"></p>
+	</div>
+	<div class="building">
+		<div class="energy box">
+			<div class="label"></div>
+			<div class="value">
+				<div>
+					用电量：<span id="building-totol-energy"></span>kwh
+				</div>
+				<div>
+					IT：<span id="building-it-energy"></span>kwh
+				</div>
+			</div>
+		</div>
+		<div class="environment box">
+			<div class="label"></div>
+			<div class="value">
+				<div>
+					温度：<span id="building-temperature"></span>℃
+				</div>
+				<div>
+					湿度：<span id="building-humidity"></span>%RH
+				</div>
+			</div>
+		</div>
+		<div class="extremum box">
+			<div class="label"></div>
+			<div class="value">
+				<div>
+					最大功耗：<span id="building-maxPower"></span>kw
+				</div>
+				<div>
+					最小功耗：<span id="building-minPower"></span>kw
+				</div>
+			</div>
+		</div>
+		<div class="box">
+			<table>
+				<tr>
+					<td colspan="8"><label>当前活动告警总数：<span id="building-alarm-count"></span></label></td>
+				</tr>
+				<tr>
+					<td><div class="alarmLevel1-icon" title="一级告警"></div></td>
+					<td id="building-alarmLevel1-count"></td>
+					<td align="right" style="width: 30px;"><div class="alarmLevel2-icon" title="二级告警"></div></td>
+					<td id="building-alarmLevel2-count"></td>
+					<td align="right" style="width: 30px;"><div class="alarmLevel3-icon" title="三级告警"></div></td>
+					<td id="building-alarmLevel3-count"></td>
+					<td align="right" style="width: 30px;"><div class="alarmLevel4-icon" title="四级告警"></div></td>
+					<td id="building-alarmLevel4-count"></td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	<div class="building">
+		<div style="width: 300px; height: 250px;" class="box">
+			<div class="easyui-panel" data-options="border:true,fit:true" id="building-power-pie"></div>
+		</div>
+		<div style="width: 300px; height: 250px;" class="box">
+			<div class="easyui-panel" data-options="border:true,fit:true" id="building-pue-pie"></div>
+		</div>
+		<div style="width: 600px; height: 250px;" class="box">
+			<div class="easyui-panel" data-options="border:true,fit:true" id="building-power-top-axis"></div>
+		</div>
+	</div>
+	<div>
+		<div style="margin: 0 0 10px 10px; display: inline-block; width: 600px; height: 300px;">
+			<div class="easyui-panel" data-options="border:false,fit:true">
+				<img id="building-img" class="easyui-panel" data-options="border:false,fit:true" />
+			</div>
+		</div>
+		<div style="margin: 0 0 10px 10px; display: inline-block; width: 600px; height: 300px;">
+			<div class="easyui-panel" data-options="border:false,fit:true" id="building-power-line"></div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript" src="detail/chart-item.js"></script>
+<script type="text/javascript" src="detail/page/building/page.js"></script>
+<link rel="stylesheet" type="text/css" href="detail/page/building/building.css">

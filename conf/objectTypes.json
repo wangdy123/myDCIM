@@ -44,6 +44,7 @@
 		"name" : "设备",
 		"iconCls" : "icon-device",
 		"childTypes" : [  ],
+		"hasSignal":true,
 		"namespace" : "device"
 	}
 }

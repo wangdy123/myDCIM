@@ -14,10 +14,10 @@
 			<tr>
 				<td align="right" style="width: 100px;">告警站点:</td>
 				<td style="width: 150px;"><select id="alarm-filter-object" class="easyui-combotree" style="width: 100%"></select></td>
-				<td align="right" style="width: 100px;">告警级别:</td>
-				<td style="width: 150px;"><select id="alarm-filter-level" class="easyui-combobox" style="width: 100%;"></select></td>
 				<td align="right" style="width: 100px;">设备类型:</td>
 				<td style="width: 150px;"><select id="alarm-filter-device-type" class="easyui-combobox" style="width: 100%"></select></td>
+				<td align="right" style="width: 100px;">告警级别:</td>
+				<td style="width: 300px;"><select id="alarm-filter-level" class="easyui-combobox" style="width: 100%;"></select></td>
 			</tr>
 			<tr>
 				<td align="center"><a id="alarm-filter-search-btn" href="#" class="easyui-linkbutton"
@@ -25,11 +25,11 @@
 				<td align="center"><a id="alarm-filter-export-btn" href="#" class="easyui-linkbutton"
 					data-options="iconCls:'icon-export'">导出告警</a></td>
 				<td align="center"><a id="alarm-filter-ack-btn" href="#" class="easyui-linkbutton"
-					data-options="iconCls:'icon-use'">处理告警</a></td>
-				<td align="center"><a id="alarm-filter-reason-btn" href="#" class="easyui-linkbutton"
-					data-options="iconCls:'icon-edit'">设置原因</a></td>
+					data-options="iconCls:'icon-use'">确认告警</a></td>
 				<td align="center"><a id="alarm-filter-cancel-btn" href="#" class="easyui-linkbutton"
-					data-options="iconCls:'icon-cancel'">取消告警</a></td>
+					data-options="iconCls:'icon-cancel'">强制结束告警</a></td>
+				  <td align="center"><a id="alarm-filter-reason-btn" href="#" class="easyui-linkbutton"
+					data-options="iconCls:'icon-edit'" style="display:none">设置原因</a></td>
 			</tr>
 		</table>
 	</div>

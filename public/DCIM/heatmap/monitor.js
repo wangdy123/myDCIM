@@ -42,5 +42,5 @@ $(document).ready(function() {
 		}
 		$("#workspace-title").text(event.object.NAME);
 
-	});
+	},"heatmap");
 });

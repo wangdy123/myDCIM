@@ -13,12 +13,17 @@ module.exports = function(req, res) {
 	str = str + 'window.WUI.deviceTypes=' + JSON.stringify(config.deviceTypes) + ';';
 	str = str + 'window.WUI.regionTypes=' + JSON.stringify(config.regionTypes) + ';';
 	str = str + 'window.WUI.businessTypes=' + JSON.stringify(config.businessTypes) + ';';
-	str = str + 'window.WUI.mapCfg=' + JSON.stringify(config.config.map) + ';';
+	str = str + 'window.WUI.mapCfg=' + JSON.stringify(config.map) + ';';
 	str = str + 'window.WUI.menus=' + JSON.stringify(config.menus) + ';';
-	str = str + 'window.WUI.root_object_id=' + config.config.root_object_id + ';';
-	str = str + 'window.WUI.requestInteval=' + JSON.stringify(config.config.requestInteval) + ';';
+	str = str + 'window.WUI.root_object_id=' + config.root_object_id + ';';
+	str = str + 'window.WUI.requestInteval=' + JSON.stringify(config.requestInteval) + ';';
 	str = str + 'window.WUI.alarmLevels=' + JSON.stringify(config.alarmLevels) + ';';
 	str = str + 'window.WUI.alarmTypes=' + JSON.stringify(config.alarmTypes) + ';';
+	str = str + 'window.WUI.signalType=' + JSON.stringify(config.signalType) + ';';
+	str = str + 'window.WUI.object_ex=' + JSON.stringify(config.object_ex) + ';';
+	str = str + 'window.WUI.energyConsumptionType=' + JSON.stringify(config.energyConsumptionType) + ';';
+	str = str + 'window.WUI.maxRowItem=12;';
+
 	permissions.getCurrentUser(req, res, function(err, account) {
 		if (err) {
 			res.send(str);

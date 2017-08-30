@@ -80,7 +80,7 @@ $(function() {
 						formatter : function(value, row, index) {
 							var type = WUI.findFromArray(WUI.signalType, 'type', row.SIGNAL_TYPE);
 							if (type) {
-								return '<div class="' + type.iconCls + '" title="' + type.name + '"></div> ';
+								return '<div class="' + type.iconCls + ' icon-tool" title="' + type.name + '"></div> ';
 							}
 						}
 					},

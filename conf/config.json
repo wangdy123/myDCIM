@@ -53,7 +53,8 @@
 		"dashboard": "/dashboard",
 		"navigation": "/navigation",
 		"screen-edit": "/screen-edit",
-		"detail-page":"/detail"
+		"detail-page":"/detail",
+		"proxy":"/proxy"
 	},
 	"systemName": "DCIM测试平台",
 	"copyRightText": "copyright:wincom",

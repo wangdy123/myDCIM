@@ -21,6 +21,21 @@ label {
 	border: 1px solid #babdb6;
 }
 
+.grid-detail{
+	margin: 10px 40px;
+}
+.grid-detail tr th {
+	border: 0;
+	padding: 3px 0;
+	font-size: 12px;
+}
+
+.grid-detail tr td {
+	border: 0;
+	padding: 3px 20px 3px 5px;
+	font-size: 12px;
+}
+
 select {
 	height: 24px;
 	font-size: 11px;
@@ -99,7 +114,12 @@ select {
 	margin: 0 2px;
 	cursor: pointer;
 }
-
+.icon-tool {
+	display: inline-block;
+	width: 18px;
+	height: 16px;
+	padding: 0;
+}
 .configer {
 	margin: 20px 40px;
 }
@@ -199,6 +219,21 @@ select {
 	background: url('../images/self-diagnosis.png') no-repeat center center;
 }
 
+.icon-AI {
+	background: url('../images/Ai.png') no-repeat center center;
+}
+.icon-AO {
+	background: url('../images/Ao.png') no-repeat center center;
+}
+.icon-DI {
+	background: url('../images/Di.png') no-repeat center center;
+}
+.icon-DO {
+	background: url('../images/Do.png') no-repeat center center;
+}
+.icon-ALARM {
+	background: url('../images/Alarm.gif') no-repeat center center;
+}
 .icon-use {
 	background: url('../images/use.png') no-repeat center center;
 }

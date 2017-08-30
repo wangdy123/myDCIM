@@ -24,5 +24,15 @@ create index on alarm(object_id);
 create index on alarm(alarm_begin);
 create index on alarm(alarm_level);
 
-
+CREATE TABLE login_log (
+	sequence bigint,
+	account_id int,
+	login_time bigint,
+	logout_time bigint
+	ssid varchar,
+	PRIMARY KEY (sequence) );
+create index on login_log(account_id);
+create index on login_log(login_time);
+	
+	
 SELECT * FROM alarm WHERE object_id = 1 AND alarm_level > 2 ALLOW FILTERING; 

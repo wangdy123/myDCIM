@@ -47,7 +47,8 @@ function queryActiveAlarm(querys,callback){
 	function query(params,filters,orderBy){
 		var sql="select sequence,object_id,signal_id,alarm_type,alarm_begin,alarm_level,end_time," +
 		"object_name,alarm_name,alarm_value,alarm_desc,alarm_status,ack_time,reason,ack_user " +
-		"from record.alarm where end_time is null or ack_time is null " +(filters.length>0?("and "+filters.join(" and ")):"")+orderBy;
+		"from record.alarm where (end_time is null or ack_time is null) " +(filters.length>0?("and "+filters.join(" and ")):"")+orderBy;
+		console.log(sql);
 		db.pool.query(sql, params, callback);
 	}
 	if(querys.objectId){

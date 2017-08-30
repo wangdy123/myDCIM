@@ -19,6 +19,7 @@ app.get('/selfDiagnosis', function(req, res) {
 				status.push("缓存服务通讯异常");
 				logger.error(error);
 			}
+			client.quit();
 			cbk(null);
 		});
 	}, function(cbk) {

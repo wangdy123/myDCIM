@@ -170,7 +170,7 @@
 			{
 				"id": 902,
 				"title": "历史告警查询",
-				"url": "history/alarm/wokspace.html",
+				"url": "alarm/history-alarm/workspace.html",
 				"border": false,
 				"name": "历史告警查询"
 			},

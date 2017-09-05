@@ -1,71 +1,173 @@
-[ {
-	"type" : 1,
-	"name" : "机房环境",
-	"iconCls" : "icon-environment",
-	"businessType" : 1,
-	"namespace" : "environment",
-	"parentNodeTypes" : [5]
-}, {
-	"type" : 3,
-	"name" : "开关电源",
-	"iconCls" : "icon-devicetype3",
-	"businessType" : 1,
-	"namespace" : "devicetype3",
-	"parentNodeTypes" : [5]
-}, {
-	"type" : 4,
-	"name" : "UPS",
-	"iconCls" : "icon-UPS",
-	"businessType" : 1,
-	"namespace" : "UPS",
-	"parentNodeTypes" : [5]
-}, {
-	"type" : 5,
-	"name" : "门禁",
-	"iconCls" : "icon-door",
-	"businessType" : 1,
-	"namespace" : "door",
-	"parentNodeTypes" : [5]
-}, {
-	"type" : 6,
-	"name" : "视频监控",
-	"iconCls" : "icon-devicetype6",
-	"businessType" : 1,
-	"namespace" : "devicetype6",
-	"parentNodeTypes" : [5]
-}, {
-	"type" : 7,
-	"name" : "红外",
-	"iconCls" : "icon-devicetype7",
-	"businessType" : 1,
-	"namespace" : "devicetype7",
-	"parentNodeTypes" : [5]
-}, {
-	"type" : 8,
-	"name" : "机架式服务器",
-	"iconCls" : "icon-rack_server",
-	"businessType" : 4,
-	"namespace" : "rack_server",
-	"parentNodeTypes" : [11]
-}, {
-	"type" : 9,
-	"name" : "刀片式服务器",
-	"iconCls" : "icon-blade_server",
-	"businessType" : 4,
-	"namespace" : "blade_server",
-	"parentNodeTypes" : [11]
-}, {
-	"type" : 10,
-	"name" : "服务器机笼",
-	"iconCls" : "icon-server_cage",
-	"businessType" : 4,
-	"namespace" : "server_cage",
-	"parentNodeTypes" : [11]
-}, {
-	"type" : 11,
-	"name" : "交换机",
-	"iconCls" : "icon-devicetype11",
-	"businessType" :4,
-	"namespace" : "devicetype11",
-	"parentNodeTypes" : [11]
-} ]
+[
+	{
+		"type": 1001,
+		"name": "高压配电",
+		"iconCls": "icon-devicetype1001",
+		"businessType": 1,
+		"namespace": "devicetype",
+		"parentNodeTypes": [
+			5
+		]
+	},
+	{
+		"type": 1002,
+		"name": "高压配电",
+		"iconCls": "icon-devicetype1002",
+		"businessType": 1,
+		"namespace": "devicetype",
+		"parentNodeTypes": [
+			5
+		]
+	},
+	{
+		"type": 1003,
+		"name": "变压器",
+		"iconCls": "icon-devicetype1003",
+		"businessType": 1,
+		"namespace": "devicetype",
+		"parentNodeTypes": [
+			5
+		]
+	},
+	{
+		"type": 1005,
+		"name": "发电机组",
+		"iconCls": "icon-devicetype1005",
+		"businessType": 1,
+		"namespace": "devicetype",
+		"parentNodeTypes": [
+			5
+		]
+	},
+	{
+		"type": 1006,
+		"name": "开关电源",
+		"iconCls": "icon-devicetype1006",
+		"businessType": 1,
+		"namespace": "devicetype1006",
+		"parentNodeTypes": [
+			5
+		]
+	},
+	{
+		"type": 1007,
+		"name": "铅酸蓄电池组",
+		"iconCls": "icon-devicetype1007",
+		"businessType": 1,
+		"namespace": "devicetype1007",
+		"parentNodeTypes": [
+			5
+		]
+	},
+	{
+		"type": 1008,
+		"name": "UPS设备",
+		"iconCls": "icon-UPS",
+		"businessType": 1,
+		"namespace": "UPS",
+		"parentNodeTypes": [
+			5
+		]
+	},
+	{
+		"type": 1009,
+		"name": "UPS配电屏",
+		"iconCls": "icon-devicetype1009",
+		"businessType": 1,
+		"namespace": "devicetype1009",
+		"parentNodeTypes": [
+			5
+		]
+	},
+	{
+		"type": 1010,
+		"name": "高压直流电源",
+		"iconCls": "icon-devicetype1010",
+		"businessType": 1,
+		"namespace": "devicetype",
+		"parentNodeTypes": [
+			5
+		]
+	},
+	{
+		"type": 1012,
+		"name": "机房专用空调",
+		"iconCls": "icon-devicetype1012",
+		"businessType": 1,
+		"namespace": "devicetype",
+		"parentNodeTypes": [
+			5
+		]
+	},
+	{
+		"type": 1013,
+		"name": "中央空调末端",
+		"iconCls": "icon-devicetype1013",
+		"businessType": 1,
+		"namespace": "devicetype",
+		"parentNodeTypes": [
+			5
+		]
+	},
+	{
+		"type": 1014,
+		"name": "中央空调主机",
+		"iconCls": "icon-devicetype1014",
+		"businessType": 1,
+		"namespace": "devicetype",
+		"parentNodeTypes": [
+			5
+		]
+	},
+	{
+		"type": 1015,
+		"name": "普通空调",
+		"iconCls": "icon-devicetype1015",
+		"businessType": 1,
+		"namespace": "devicetype",
+		"parentNodeTypes": [
+			5
+		]
+	},
+	{
+		"type": 1016,
+		"name": "智能电表",
+		"iconCls": "icon-devicetype1016",
+		"businessType": 1,
+		"namespace": "devicetype",
+		"parentNodeTypes": [
+			5
+		]
+	},
+	{
+		"type": 1018,
+		"name": "机房环境",
+		"iconCls": "icon-environment",
+		"businessType": 1,
+		"namespace": "environment",
+		"parentNodeTypes": [
+			5
+		]
+	},
+	{
+		"type": 2002,
+		"name": "机架式服务器",
+		"iconCls": "icon-rack_server",
+		"businessType": 2,
+		"namespace": "rack_server",
+		"parentNodeTypes": [
+			11
+		]
+	},
+	{
+		"type": 2001,
+		"name": "机柜",
+		"iconCls": "icon-devicetype2001",
+		"businessType": 2,
+		"namespace": "devicetype2001",
+		"parentNodeTypes": [
+			5,
+			6
+		]
+	}
+]

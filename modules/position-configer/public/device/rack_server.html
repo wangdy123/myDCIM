@@ -7,6 +7,12 @@
 			$('#device-bmc-txt').textbox("setValue", WUI.getPropertyValue(device.properties, "bmc"));
 			$('#device-cpu-txt').numberbox("setValue", WUI.getPropertyValue(device.properties, "cpu"));
 			$('#device-rated-power-txt').numberbox("setValue", WUI.getPropertyValue(device.properties, "ratedPower"));
+			$('#device-mem-txt').numberbox("setValue", WUI.getPropertyValue(device.properties, "mem"));
+			$('#device-disk-txt').numberbox("setValue", WUI.getPropertyValue(device.properties, "disk"));
+			$('#device-power-txt').numberbox("setValue", WUI.getPropertyValue(device.properties, "power"));
+			$('#device-fun-txt').numberbox("setValue", WUI.getPropertyValue(device.properties, "fun"));
+			$('#device-gpu-txt').numberbox("setValue", WUI.getPropertyValue(device.properties, "gpu"));
+			$('#device-mic-txt').numberbox("setValue", WUI.getPropertyValue(device.properties, "mic"));
 		}
 	};
 
@@ -15,6 +21,12 @@
 		isValid = isValid && $('#device-bmc-txt').textbox("isValid");
 		isValid = isValid && $('#device-cpu-txt').numberbox("isValid");
 		isValid = isValid && $('#device-rated-power-txt').numberbox("isValid");
+		isValid = isValid && $('#device-mem-txt').numberbox("isValid");
+		isValid = isValid && $('#device-disk-txt').numberbox("isValid");
+		isValid = isValid && $('#device-power-txt').numberbox("isValid");
+		isValid = isValid && $('#device-fun-txt').numberbox("isValid");
+		isValid = isValid && $('#device-gpu-txt').numberbox("isValid");
+		isValid = isValid && $('#device-mic-txt').numberbox("isValid");
 		return isValid;
 	};
 
@@ -40,6 +52,42 @@
 			VALUE_TYPE : WUI.object_ex.typeDef["int"],
 			PRO_VALUE : $('#device-rated-power-txt').numberbox("getValue")
 		});
+		properties.push({
+			PRO_NAME : "mem",
+			VALUE_TYPE : WUI.object_ex.typeDef["int"],
+			PRO_VALUE : $('#device-mem-txt').numberbox("getValue")
+		});
+
+		properties.push({
+			PRO_NAME : "disk",
+			VALUE_TYPE : WUI.object_ex.typeDef["int"],
+			PRO_VALUE : $('#device-disk-txt').numberbox("getValue")
+		});
+
+		properties.push({
+			PRO_NAME : "power",
+			VALUE_TYPE : WUI.object_ex.typeDef["int"],
+			PRO_VALUE : $('#device-power-txt').numberbox("getValue")
+		});
+
+		properties.push({
+			PRO_NAME : "fun",
+			VALUE_TYPE : WUI.object_ex.typeDef["int"],
+			PRO_VALUE : $('#device-fun-txt').numberbox("getValue")
+		});
+
+		properties.push({
+			PRO_NAME : "gpu",
+			VALUE_TYPE : WUI.object_ex.typeDef["int"],
+			PRO_VALUE : $('#device-gpu-txt').numberbox("getValue")
+		});
+
+		properties.push({
+			PRO_NAME : "mic",
+			VALUE_TYPE : WUI.object_ex.typeDef["int"],
+			PRO_VALUE : $('#device-mic-txt').numberbox("getValue")
+		});
+
 		return properties;
 	};
 </script>
@@ -85,6 +133,33 @@
 			<td>W</td>
 			<td align="right">CPU颗数:</td>
 			<td><input id="device-cpu-txt" class="easyui-numberbox" type="text" style="width: 100%"
+				data-options="required:true,min:1,precision:0,value:1"></td>
+		</tr>
+		<tr>
+			<td align="right">内存条数:</td>
+			<td><input id="device-mem-txt" class="easyui-numberbox" type="text" style="width: 100%"
+				data-options="required:true,min:1,precision:0,value:1"></td>
+			<td></td>
+			<td align="right">硬盘个数:</td>
+			<td><input id="device-disk-txt" class="easyui-numberbox" type="text" style="width: 100%"
+				data-options="required:true,min:1,precision:0,value:1"></td>
+		</tr>
+		<tr>
+			<td align="right">电源个数:</td>
+			<td><input id="device-power-txt" class="easyui-numberbox" type="text" style="width: 100%"
+				data-options="required:true,min:1,precision:0,value:1"></td>
+			<td></td>
+			<td align="right">风扇个数:</td>
+			<td><input id="device-fun-txt" class="easyui-numberbox" type="text" style="width: 100%"
+				data-options="required:true,min:1,precision:0,value:1"></td>
+		</tr>
+		<tr>
+			<td align="right">GPU个数:</td>
+			<td><input id="device-gpu-txt" class="easyui-numberbox" type="text" style="width: 100%"
+				data-options="required:true,min:1,precision:0,value:1"></td>
+			<td></td>
+			<td align="right">MIC个数:</td>
+			<td><input id="device-mic-txt" class="easyui-numberbox" type="text" style="width: 100%"
 				data-options="required:true,min:1,precision:0,value:1"></td>
 		</tr>
 		<tr>

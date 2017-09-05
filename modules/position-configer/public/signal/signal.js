@@ -551,6 +551,24 @@ $(function() {
 						}
 					}
 				});
+				$('#signal-id-txt').numberbox({
+					groupSeparator:' ',
+					onChange : function(newValue) {
+						newValue = parseInt(newValue, 10);
+						if (isNaN(newValue)) {
+							return;
+						}
+						var seq = newValue % 1000;
+						var data=$('#signal-standard-sel').combobox("getData");
+						var defaultId=Math.floor(newValue/1000)*1000+1;
+						data.forEach(function(signal){
+							if(signal.SIGNAL_ID==defaultId){
+								var newName = signal.SIGNAL_NAME.replace('XX', seq);
+							$('#signal-name-txt').textbox("setValue", newName);
+							}
+						});
+					}
+				});
 
 				initConditionTable();
 				if (signal) {

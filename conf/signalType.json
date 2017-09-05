@@ -4,7 +4,7 @@
 	"iconCls" : "icon-AI",
 	"namespace" : "AI"
 }, {
-	"type" : 2,
+	"type" : 0,
 	"name" : "DI",
 	"iconCls" : "icon-DI",
 	"namespace" : "DI"
@@ -14,12 +14,12 @@
 	"iconCls" : "icon-AO",
 	"namespace" : "AO"
 }, {
-	"type" : 4,
+	"type" : 2,
 	"name" : "DO",
 	"iconCls" : "icon-DO",
 	"namespace" : "DO"
 }, {
-	"type" : 5,
+	"type" : 4,
 	"name" : "ALARM",
 	"iconCls" : "icon-ALARM",
 	"namespace" : "ALARM"

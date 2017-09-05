@@ -1,0 +1,93 @@
+[
+	{
+		"OBJECT_ID": 28,
+		"SIGNAL_ID": 4101001,
+		"SIGNAL_TYPE": 0,
+		"SIGNAL_NAME": "线电压Uab",
+		"RECORD_RERIOD": 600,
+		"RECOVER_DELAY": 0,
+		"NORMAL_DESC": "",
+		"UNIT": "V",
+		"EXPLANATION": "",
+		"DESCRIPTION": "",
+		"VALUE_SRC": {
+			"DRIVER_ID": 12,
+			"NAME": "voltage.ab.1",
+			"type": "float"
+		},
+		"conditions": [
+			{
+				"COND": "greateThen",
+				"ALARM_DELAY": 0,
+				"ALARM_DESC": "电压过高",
+				"THRESHOLD": 240,
+				"DEAD_AREA": 5,
+				"ALARM_LEVEL": 1,
+				"RELATIVE_VAL": null,
+				"ABSOLUTE_VAL": null
+			},
+			{
+				"COND": "lessThen",
+				"ALARM_DELAY": 0,
+				"ALARM_DESC": "电压过低",
+				"THRESHOLD": 180,
+				"DEAD_AREA": 5,
+				"ALARM_LEVEL": 1,
+				"RELATIVE_VAL": null,
+				"ABSOLUTE_VAL": null
+			}
+		]
+	},
+	{
+		"OBJECT_ID": 28,
+		"SIGNAL_ID": 4001001,
+		"SIGNAL_TYPE": 1,
+		"SIGNAL_NAME": "停电状态",
+		"RECORD_RERIOD": 0,
+		"RECOVER_DELAY": 0,
+		"NORMAL_DESC": "正常",
+		"UNIT": "V",
+		"EXPLANATION": "",
+		"DESCRIPTION": "",
+		"SRC_SIGNAL": {
+			"DRIVER_ID": 12,
+			"NAME": "powerOff",
+			"type": "bit"
+		},
+		"conditions": [
+			{
+				"COND": "value.on",
+				"ALARM_DELAY": 0,
+				"ALARM_DESC": "停电",
+				"ALARM_LEVEL": 1
+			}
+		]
+	},
+	{
+		"OBJECT_ID": 28,
+		"SIGNAL_ID": 4201001,
+		"SIGNAL_TYPE": 2,
+		"SIGNAL_NAME": "浮充电压",
+		"UNIT": "",
+		"EXPLANATION": "",
+		"DESCRIPTION": "",
+		"SRC_SIGNAL": {
+			"DRIVER_ID": 12,
+			"NAME": "charge",
+			"type": "float"
+		}
+	},
+	{
+		"OBJECT_ID": 28,
+		"SIGNAL_ID": 4301001,
+		"SIGNAL_TYPE": 3,
+		"SIGNAL_NAME": "模块开机",
+		"EXPLANATION": "",
+		"DESCRIPTION": "",
+		"SRC_SIGNAL": {
+			"DRIVER_ID": 12,
+			"NAME": "module.on",
+			"type": "bit"
+		}
+	}
+]

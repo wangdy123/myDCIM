@@ -1,0 +1,37 @@
+[
+	{
+		"type": "overload",
+		"signalType": [
+			0
+		],
+		"name": "高于门限",
+		"params": [
+			{
+				"key": "threshold",
+				"label": "告警门限",
+				"required": true,
+				"type": "Float"
+			},
+			{
+				"key": "deadarea",
+				"label": "告警死区",
+				"required": true,
+				"type": "Float"
+			}
+		]
+	},
+	{
+		"type": "highLevelAlarm",
+		"signalType": [
+			1
+		],
+		"name": "高电平告警"
+	},
+	{
+		"type": "lowLevelAlarm",
+		"signalType": [
+			1
+		],
+		"name": "低电平告警"
+	}
+]

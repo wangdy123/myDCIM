@@ -1,0 +1,22 @@
+
+<table class="configer">
+	<tr>
+		<td align="right">告警条件:</td>
+		<td><select id="signal-condition-sel" style="width: 100%" class="easyui-combobox" data-options="required:true"></select></td>
+	</tr>
+	<tr>
+		<td align="right">告警描述:</td>
+		<td><input id="signal-alarm-txt" class="easyui-textbox" type="text" style="width: 100%"
+			data-options="required:true"></td>
+	</tr>
+	<tr>
+		<td align="right">告警级别:</td>
+		<td><select id="signal-alarm-level-sel" style="width: 100%" class="easyui-combobox" data-options="required:true"></select></td>
+	</tr>
+	<tr>
+		<td align="right">告警延时(S):</td>
+		<td><input id="signal-alarm-delay-txt" class="easyui-numberbox" type="text" style="width: 100%"
+			data-options="min:0,precision:0,required:true,value:0"></td>
+	</tr>
+</table>
+<table class="configer" id="condition-prop-table"></table>

@@ -10,8 +10,8 @@ $(function() {
 		$node.datagrid("reload");
 	}
 
-	function openObject(deviceObject) {
-		currentObject = deviceObject;
+	function openObject(nodeObject) {
+		currentObject = nodeObject;
 		$node
 				.datagrid({
 					url : signalUrl,
@@ -27,7 +27,7 @@ $(function() {
 						iconCls : 'icon-add',
 						text : '添加信号',
 						handler : function() {
-							signalDialog(null, currentObject.ID, currentObject.DEVICE_TYPE);
+							signalDialog(null, currentObject);
 						}
 					}, '-', {
 						iconCls : 'icon-reload',
@@ -120,7 +120,7 @@ $(function() {
 	WUI.signal.editrow = function(target) {
 		var signal = WUI.getDatagridRow($node, target);
 		if (signal) {
-			signalDialog(signal, signal.OBJECT_ID, currentObject.DEVICE_TYPE);
+			signalDialog(signal, currentObject);
 		}
 	};
 	WUI.signal.deleterow = function(target) {
@@ -198,7 +198,7 @@ $(function() {
 						formatter : function(value, row, index) {
 							var desc = [];
 							var condition = WUI.findFromArray(WUI.conditionTypes, 'type', row.CONDITION_TYPE);
-							if (!condition) {
+							if (!condition || !condition.params) {
 								return "";
 							}
 							condition.params.forEach(function(param) {
@@ -420,9 +420,11 @@ $(function() {
 						$('#signal-alarm-txt').textbox("setValue", conditionType.name);
 						$("#condition-prop-table").empty();
 						properties = [];
-						conditionType.params.forEach(function(param) {
-							properties.push(createProperty($("#condition-prop-table"), param));
-						});
+						if (conditionType.params) {
+							conditionType.params.forEach(function(param) {
+								properties.push(createProperty($("#condition-prop-table"), param));
+							});
+						}
 						if (condition) {
 							setPropertiesValue(condition);
 						}
@@ -473,7 +475,7 @@ $(function() {
 		};
 		dialogNode.dialog(cfg);
 	}
-	function signalDialog(signal, parentId, deviceType) {
+	function signalDialog(signal, nodeObject) {
 		var dialogNode = $("#configer-dialog");
 		var cfg = {
 			iconCls : signal ? "icon-edit" : "icon-add",
@@ -499,7 +501,8 @@ $(function() {
 							url : standardSignalUrl,
 							method : 'get',
 							queryParams : {
-								deviceType : deviceType
+								nodeType : nodeObject.OBJECT_TYPE,
+								deviceType : nodeObject.DEVICE_TYPE
 							},
 							loadFilter : function(data) {
 								var results = [];
@@ -523,9 +526,6 @@ $(function() {
 					disabled : signal ? true : false,
 					onSelect : function(record) {
 						if (!signal) {
-							$('#signal-id-txt').numberbox({
-								readonly : false
-							});
 							$('#signal-name-txt').textbox("setValue", record.SIGNAL_NAME);
 							$('#signal-id-txt').numberbox("setValue", record.SIGNAL_ID);
 							$('#signal-unit-txt').textbox("setValue", record.UNIT);
@@ -552,19 +552,19 @@ $(function() {
 					}
 				});
 				$('#signal-id-txt').numberbox({
-					groupSeparator:' ',
+					groupSeparator : ' ',
 					onChange : function(newValue) {
 						newValue = parseInt(newValue, 10);
 						if (isNaN(newValue)) {
 							return;
 						}
 						var seq = newValue % 1000;
-						var data=$('#signal-standard-sel').combobox("getData");
-						var defaultId=Math.floor(newValue/1000)*1000+1;
-						data.forEach(function(signal){
-							if(signal.SIGNAL_ID==defaultId){
+						var data = $('#signal-standard-sel').combobox("getData");
+						var defaultId = Math.floor(newValue / 1000) * 1000 + 1;
+						data.forEach(function(signal) {
+							if (signal.SIGNAL_ID == defaultId) {
 								var newName = signal.SIGNAL_NAME.replace('XX', seq);
-							$('#signal-name-txt').textbox("setValue", newName);
+								$('#signal-name-txt').textbox("setValue", newName);
 							}
 						});
 					}
@@ -583,9 +583,7 @@ $(function() {
 					$('#signal-explanation-txt').textbox("setValue", signal.EXPLANATION);
 					$("#condition-table").datagrid("loadData", signal.conditions ? signal.conditions : []);
 					$('#signal-name-txt').textbox("isValid");
-					$('#signal-id-txt').numberbox({
-						disabled : true
-					});
+					$('#signal-id-txt').numberbox("disable");
 				}
 			},
 			modal : true,
@@ -612,7 +610,7 @@ $(function() {
 								RECORD_RERIOD : parseInt($('#signal-recordperiod-txt').numberbox("getValue"), 10),
 								DESCRIPTION : $('#signal-discription-txt').textbox("getValue"),
 								EXPLANATION : $('#signal-explanation-txt').textbox("getValue"),
-								OBJECT_ID : parentId,
+								OBJECT_ID : nodeObject.ID,
 								conditions : $("#condition-table").datagrid("getData").rows
 							};
 							newSignal.SIGNAL_TYPE = newSignal.SIGNAL_TYPE ? newSignal.SIGNAL_TYPE : 0;

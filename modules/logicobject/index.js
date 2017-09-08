@@ -36,6 +36,21 @@ function getCompleteObjects(objects,callback){
 	async.parallel(tasks,callback);
 }
 
+var common = require('dcim-common');
+
+function getObjectFullname(objects,callback){
+	var tasks = [];
+	objects.forEach(function(obj){
+		tasks.push(function(cb) {
+			common.getObjectPathName(0,obj.ID,function(err,fullname){
+				obj.FULL_NAME=fullname;
+				cb();
+			});
+		});
+	});
+
+	async.parallel(tasks,callback);
+}
 app.get('/seach', function(req, res) {
 		var sql = 'select o.ID,o.OBJECT_TYPE,o.NAME,o.CODE,p.PARENT_ID from config.OBJECT o '
 				+ 'left join config.POSITION_RELATION p on p.ID=o.ID where o.NAME like(?) or o.CODE like(?)';
@@ -50,7 +65,9 @@ app.get('/seach', function(req, res) {
 						logger.error(err);
 						res.status(500).send(err);
 					}else{
-						res.send(results);
+						getObjectFullname(results,function(err){
+							res.send(results);
+						});
 					}
 				});
 			}

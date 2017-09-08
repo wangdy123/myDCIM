@@ -1,13 +1,15 @@
 WUI.pageConfiger = WUI.pageConfiger || {};
 WUI.pageConfiger.pageDialog = function(nodeObject) {
 	var pageConfigUrl = 'detail/pageConfig/';
+	var pageTamplateUrl = 'detail/pageTamplate/';
 	var $dialog = $('#page-configer-dialog');
 	var oldConfig = null;
+	var top = ($(window).height() - 600) * 0.5;
 	var cfg = {
 		title : "显示页面配置",
 		left : ($(window).width() - 400) * 0.5,
-		top : ($(window).height() - 300) * 0.5,
-		width : 500,
+		top : top > 0 ? top : 100,
+		width : 650,
 		closed : false,
 		cache : false,
 		href : "detail/page-configer-dialog.html",
@@ -39,11 +41,22 @@ WUI.pageConfiger.pageDialog = function(nodeObject) {
 					$('#page-configer-panel').panel({
 						href : 'detail/page/' + rec.pageName + '/configer.html',
 						onLoad : function() {
-							WUI.pageConfiger.init(nodeObject, oldConfig ? oldConfig.CONFIG : null);
-							$dialog.dialog("resize", {
-								width : $('#page-configer-panel').parent().width(),
-								height : $('#page-configer-panel').parent().height() + 120
-							});
+							function loadPageConfiger(pageConfig) {
+								WUI.pageConfiger.init(nodeObject, pageConfig);
+								$dialog.dialog("resize", {
+									width : 650,
+									height : $('#page-configer-panel').parent().height() + 120
+								});
+							}
+							if (!oldConfig || !oldConfig.CONFIG) {
+								WUI.ajax.get(pageTamplateUrl + rec.pageName, {}, function(result) {
+									loadPageConfiger(result);
+								}, function() {
+									loadPageConfiger(null);
+								});
+							} else {
+								loadPageConfiger(oldConfig.CONFIG);
+							}
 						}
 					});
 				}
@@ -54,6 +67,26 @@ WUI.pageConfiger.pageDialog = function(nodeObject) {
 			$dialog.empty();
 		},
 		buttons : [ {
+			text : '设为模板',
+			handler : function() {
+				var isValid = $('#node-page-sel').combobox("getValue");
+				isValid = isValid && WUI.pageConfiger.pageConfigIsValid();
+				if (!isValid) {
+					return;
+				}
+
+				var config = {
+					PAGE_NAME : $('#node-page-sel').combobox("getValue"),
+					CONFIG : WUI.pageConfiger.getConfiger()
+				};
+
+				WUI.ajax.put(pageTamplateUrl + config.PAGE_NAME, config.CONFIG, function() {
+					$.messager.alert('成功', "模板保存成功！");
+				}, function() {
+					$.messager.alert('失败', "模板保存失败！");
+				});
+			}
+		}, {
 			text : '保存',
 			handler : function() {
 				var isValid = $('#node-page-sel').combobox("getValue");
@@ -163,7 +196,7 @@ WUI.pageConfiger.selectImg = function($node, objectType, deviceType, callback) {
 				$("#img-list-panel").append($div);
 				$div.css("display", "inline-block");
 				$div.css("margin", "5px");
-				//$div.css("text-align", "center");
+				// $div.css("text-align", "center");
 				var $div1 = $(document.createElement("div"));
 				var $img = $(document.createElement("img"));
 				$div.append($div1);
@@ -206,7 +239,7 @@ WUI.pageConfiger.selectImg = function($node, objectType, deviceType, callback) {
 			text : '确定',
 			handler : function() {
 				var $selected = $("#img-list-panel").find(".img-selected");
-				if ($selected.length!==1) {
+				if ($selected.length !== 1) {
 					$.messager.alert('失败', "请选择图片！");
 					return;
 				}

@@ -79,7 +79,10 @@ app.get('/regionCode', function(req, res) {
 
 var path = require('path');
 app.get('/defaultSignals', function(req, res) {
-	var fileName = path.join(process.cwd(), 'conf', 'signal', req.query.deviceType + '.json');
+	var fileName=path.join(process.cwd(), 'conf', 'signal', 'nodeType'+req.query.nodeType + '.json');
+	if(req.query.deviceType){
+		fileName = path.join(process.cwd(), 'conf', 'signal', req.query.deviceType + '.json');
+	}
 	res.sendFile(fileName);
 });
 

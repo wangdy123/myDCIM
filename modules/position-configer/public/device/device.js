@@ -20,31 +20,8 @@ $(function() {
 		}
 	}
 
-	function openObject(deviceObject) {
-		currentObject = deviceObject;
-		var toobar = [];
-		function createAddTool(deviceType) {
-			if (deviceType.parentNodeTypes.indexOf(deviceObject.OBJECT_TYPE) >= 0) {
-				toobar.push({
-					iconCls : 'icon-add',
-					text : '添加【' + deviceType.name + '】',
-					handler : function() {
-						deviceDialog(null, currentObject.ID, deviceType);
-					}
-				});
-			}
-		}
-		for (var i = 0; i < WUI.deviceTypes.length; i++) {
-			createAddTool(WUI.deviceTypes[i]);
-		}
-		toobar.push('-');
-		toobar.push({
-			iconCls : 'icon-reload',
-			text : '刷新',
-			handler : function() {
-				reload(true);
-			}
-		});
+	function openObject(object) {
+		currentObject = object;
 		$node.datagrid({
 			url : deviceUrl,
 			queryParams : {
@@ -55,7 +32,19 @@ $(function() {
 			method : "get",
 			singleSelect : true,
 			onLoadError : WUI.onLoadError,
-			toolbar : toobar,
+			toolbar : [ {
+				iconCls : 'icon-add',
+				text : '添加设备',
+				handler : function() {
+					deviceDialog(null, currentObject);
+				}
+			}, '-', {
+				iconCls : 'icon-reload',
+				text : '刷新',
+				handler : function() {
+					reload(true);
+				}
+			} ],
 			columns : [ [
 					{
 						field : 'action',
@@ -148,7 +137,7 @@ $(function() {
 		var device = WUI.getDatagridRow($node, target);
 		WUI.pageConfiger.pageDialog(device);
 	};
-	
+
 	WUI.parallel([ function(cbk) {
 		WUI.ajax.get(deviceVenderUrl, {}, function(results) {
 			deviceVenders = results;
@@ -171,14 +160,10 @@ $(function() {
 			cbk : openObject
 		});
 	});
-	
+
 	WUI.device.editrow = function(target) {
 		var device = WUI.getDatagridRow($node, target);
-		for (var i = 0; i < WUI.deviceTypes.length; i++) {
-			if (WUI.deviceTypes[i].type === device.DEVICE_TYPE) {
-				deviceDialog(device, device.PARENT_ID, WUI.deviceTypes[i]);
-			}
-		}
+		deviceDialog(device, currentObject);
 	};
 	WUI.device.deleterow = function(target) {
 		var device = WUI.getDatagridRow($node, target);
@@ -194,70 +179,78 @@ $(function() {
 		});
 	};
 
-	function deviceDialog(device, parentId, deviceType) {
-		var typeName = deviceType.name;
+	function deviceDialog(device, parentObject) {
+		var typeName = "设备";
+		var selectedDeviceType = null;
 		var dialogNode = $("#configer-dialog");
 		var cfg = {
 			iconCls : device ? "icon-edit" : "icon-add",
-			title : (device ? "修改" : "添加") + typeName,
+			title : (device ? "修改" : "添加") + "设备",
 			left : ($(window).width() - 600) * 0.5,
-			top : ($(window).height() - 400) * 0.5,
+			top : ($(window).height() - 500) * 0.5,
 			width : 620,
 			closed : false,
 			cache : false,
-			href : "position-configer/device/" + deviceType.namespace + ".html",
+			href : "position-configer/device/dialog.html",
 			onLoadError : function() {
 				$.messager.alert('失败', "对话框加载失败，请刷新后重试！");
 			},
 			onLoad : function() {
+				$('#device-type-sel').combobox({
+					data : WUI.deviceTypes,
+					loadFilter : function(data) {
+						var result = [];
+						data.forEach(function(item) {
+							if (item.parentNodeTypes.indexOf(parentObject.OBJECT_TYPE) >= 0) {
+								result.push(item);
+							}
+						});
+						return result;
+					},
+					onSelect : function(rec) {
+						var venderId = $('#device-vender-sel').combobox("getValue");
+						updateModel(rec.type, parseInt(venderId));
+						typeName = rec.name;
+						selectedDeviceType = rec;
+						$('#device-extprop-panel').panel({
+							href : 'position-configer/device/' + rec.namespace + '.html',
+							onLoad : function() {
+								WUI.deviceConfiger[rec.namespace].init(device, parentObject, rec);
+							}
+						});
+					}
+				});
+
 				$('#device-vender-sel').combobox({
-					editable : false,
-					required : true,
-					valueField : 'ID',
-					textField : 'NAME',
 					data : deviceVenders,
 					onSelect : function(rec) {
-						updateModel(rec.ID);
-					},
-					keyHandler : {
-						down : function(e) {
-							$('#device-vender-sel').combobox("showPanel");
-						}
+						var deviceType = $('#device-type-sel').combobox("getValue");
+						updateModel(parseInt(deviceType), rec.ID);
 					}
 				});
 				$('#device-model-sel').combobox({
-					editable : false,
-					required : true,
-					valueField : 'ID',
-					textField : 'NAME',
 					data : [],
 					onSelect : function(rec) {
 						var startTime = $('#device-start-use-date').datebox("getValue");
 						updateTime(rec.ID, startTime);
-					},
-					keyHandler : {
-						down : function(e) {
-							$('#device-model-sel').combobox("showPanel");
-						}
 					}
 				});
-				function updateModel(vender) {
-					$('#device-model-sel').combobox({
-						data : []
-					});
-					var type = parseInt(deviceType.type, 10);
+				function updateModel(deviceType, vender) {
 					$('#device-model-sel').combobox({
 						data : deviceModels,
 						loadFilter : function(data) {
 							var result = [];
 							data.forEach(function(item) {
-								if (item.VENDER === vender && item.DEVICE_TYPE === type) {
+								if (item.VENDER === vender && item.DEVICE_TYPE === deviceType) {
 									result.push(item);
 								}
 							});
 							return result;
 						}
 					});
+					if (device) {
+						$('#device-model-sel').combobox("setValue", device.MODEL);
+					}
 				}
 
 				function updateTime(model, startTime) {
@@ -290,6 +283,7 @@ $(function() {
 
 				if (device) {
 					$('#device-name-txt').textbox("setValue", device.NAME);
+					$('#device-type-sel').combobox("setValue", device.DEVICE_TYPE);
 					$('#device-code-txt').textbox("setValue", device.CODE);
 					$('#device-vender-sel').combobox("setValue", device.VENDER);
 					$('#device-model-sel').combobox("setValue", device.MODEL);
@@ -298,8 +292,8 @@ $(function() {
 					$('#device-desc-txt').textbox("setValue", device.DESCRIPTION);
 					$('#device-name-txt').textbox("isValid");
 					$('#device-code-txt').textbox("isValid");
+					$('#device-type-sel').combobox("disable");
 				}
-				WUI.deviceConfiger[deviceType.namespace].init(device, parentId, deviceType);
 			},
 			modal : true,
 			onClose : function() {
@@ -312,7 +306,8 @@ $(function() {
 					isValid = isValid && $('#device-code-txt').textbox("isValid");
 					isValid = isValid && $('#device-model-sel').combobox("isValid");
 					isValid = isValid && $('#device-vender-sel').combobox("isValid");
-					isValid = isValid && WUI.deviceConfiger[deviceType.namespace].checkValid();
+					isValid = isValid && $('#device-type-sel').combobox("isValid");
+					isValid = isValid && WUI.deviceConfiger[selectedDeviceType.namespace].checkValid();
 					if (!isValid) {
 						return;
 					}
@@ -320,18 +315,18 @@ $(function() {
 					var newdevice = {
 						NAME : $('#device-name-txt').textbox("getValue"),
 						CODE : $('#device-code-txt').textbox("getValue"),
-						BUSINESS_TYPE : deviceType.businessType,
-						DEVICE_TYPE : deviceType.type,
+						BUSINESS_TYPE : selectedDeviceType.businessType,
+						DEVICE_TYPE : parseInt($('#device-type-sel').combobox("getValue"), 10),
 						VENDER : parseInt($('#device-vender-sel').combobox("getValue"), 10),
 						MODEL : parseInt($('#device-model-sel').combobox("getValue"), 10),
 						START_USE_DATE : WUI.timeformat_t($('#device-start-use-date').datebox("getValue")),
 						EXPECT_END_DATE : WUI.timeformat_t($('#device-expect-end-date').datebox("getValue")),
 						DESCRIPTION : $('#device-desc-txt').textbox("getValue"),
 						OBJECT_TYPE : WUI.objectTypeDef.DEVICE,
-						PARENT_ID : parentId,
+						PARENT_ID : parentObject.ID,
 						properties : []
 					};
-					newdevice.properties = WUI.deviceConfiger[deviceType.namespace].getExProperties();
+					newdevice.properties = WUI.deviceConfiger[selectedDeviceType.namespace].getExProperties();
 					if (device) {
 						newdevice.ID = device.ID;
 						WUI.ajax.put(objectNodeUrl + "/" + newdevice.ID, newdevice, function() {

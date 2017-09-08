@@ -75,31 +75,124 @@ $(function() {
 		$tr.append('<th class="' + className + '">' + name + '</th>');
 	};
 
-	WUI.detail.createTableItem = function($tr, signalId, config) {
+	WUI.detail.createSignalItem = function($node, signalId, config, showName) {
+		config.unit = config.unit || '';
+		config.fixedNum = config.fixedNum || 0;
+		var $div = $(document.createElement("div"));
+		$div.addClass(config.className);
+		var item = {
+			signalId : signalId,
+			type : config.type,
+			unit : config.unit,
+			fixedNum : config.fixedNum
+		};
+		$node.append($div);
+		switch (config.type) {
+		case WUI.signalTypeDef.AI:
+			if (showName) {
+				var $span = $(document.createElement("span"));
+				$span.text(config.unit);
+				$div.append(config.name + "：", $span);
+				item.$node = $span;
+			} else {
+				$td.text(config.unit);
+				item.$node = $div;
+			}
+			break;
+		case WUI.signalTypeDef.DI:
+		case WUI.signalTypeDef.ALARM:
+			if (showName) {
+				var $span = $(document.createElement("span"));
+				$span.html('<div class="detail-statusInvalid-icon"></div>');
+				$div.append(config.name + "：", $span);
+				item.$node = $span;
+			} else {
+				$td.html('<div class="detail-statusInvalid-icon"></div>');
+				item.$node = $div;
+			}
+			break;
+		case WUI.signalTypeDef.AO:
+		case WUI.signalTypeDef.DO: {
+			var $btn = $(document.createElement("a"));
+			$btn.addClass("easyui-linkbutton");
+			$btn.linkbutton({
+				text : config.name
+			});
+			$btn.linkbutton("onClick", function() {
+				// TODO::add remote control operate
+			});
+			$div.append($btn);
+			item.$node = $btn;
+		}
+		default:
+			item.$node = $div;
+			break;
+		}
+		return item;
+	};
+
+	WUI.detail.createTableItem = function($tr, signalId, config, showName) {
 		config.unit = config.unit || '';
 		config.fixedNum = config.fixedNum || 0;
 		var $td = $(document.createElement("td"));
 		$td.addClass(config.className);
 		var item = {
-			$node : $td,
 			signalId : signalId,
 			type : config.type,
 			unit : config.unit,
 			fixedNum : config.fixedNum
 		};
 		$tr.append($td);
-		if (config.type) {
-			$td.text(config.unit);
-		} else {
-			$td.html('<div class="detail-statusInvalid-icon"></div>');
+		switch (config.type) {
+		case WUI.signalTypeDef.AI:
+			if (showName) {
+				var $span = $(document.createElement("span"));
+				$span.text(config.unit);
+				$td.append(config.name + "：", $span);
+				item.$node = $span;
+			} else {
+				$td.text(config.unit);
+				item.$node = $td;
+			}
+			break;
+		case WUI.signalTypeDef.DI:
+		case WUI.signalTypeDef.ALARM:
+			if (showName) {
+				var $span = $(document.createElement("span"));
+				$span.html('<div class="detail-statusInvalid-icon"></div>');
+				$td.append(config.name + "：", $span);
+				item.$node = $span;
+			} else {
+				$td.html('<div class="detail-statusInvalid-icon"></div>');
+				item.$node = $td;
+			}
+			break;
+		case WUI.signalTypeDef.AO:
+		case WUI.signalTypeDef.DO: {
+			var $btn = $(document.createElement("a"));
+			$btn.addClass("easyui-linkbutton");
+			$btn.linkbutton({
+				text : config.name
+			});
+			$btn.linkbutton("onClick", function() {
+				// TODO::add remote control operate
+			});
+		}
+		default:
+			item.$node = $td;
+			break;
 		}
 		return item;
 	};
 	WUI.detail.setTableItemValue = function(item, value) {
-		if (item.type) {
+		switch (config.type) {
+		case WUI.signalTypeDef.AI:
 			item.$node.text(value.value.toFixed(item.fixedNum) + unit);
-		} else {
+			break;
+		case WUI.signalTypeDef.DI:
+		case WUI.signalTypeDef.ALARM:
 			item.$node.html('<div class="' + (value.value ? "detail-on-icon" : "detail-off-icon") + '"></div>');
+			break;
 		}
 	};
 	WUI.detail.findValue = function(objectId, signalId, values) {

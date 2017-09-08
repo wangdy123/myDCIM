@@ -20,6 +20,7 @@ module.exports = function(req, res) {
 	str = str + 'window.WUI.alarmLevels=' + JSON.stringify(config.alarmLevels) + ';';
 	str = str + 'window.WUI.alarmTypes=' + JSON.stringify(config.alarmTypes) + ';';
 	str = str + 'window.WUI.signalType=' + JSON.stringify(config.signalType) + ';';
+	str = str + 'window.WUI.signalTypeDef=' + JSON.stringify(config.signalTypeDef) + ';';	
 	str = str + 'window.WUI.object_ex=' + JSON.stringify(config.object_ex) + ';';
 	str = str + 'window.WUI.energyConsumptionType=' + JSON.stringify(config.energyConsumptionType) + ';';
 	str = str + 'window.WUI.conditionTypes=' + JSON.stringify(config.conditionTypes) + ';';

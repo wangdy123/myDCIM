@@ -18,7 +18,7 @@ app.get('/signals', function(req, res) {
 });
 
 app.get('/signals/:objectId/:signalId', function(req, res) {
-	objectDao.signal.getByParent(db.pool,req.params.objectId,req.params.signalId,function(error,signal){
+	objectDao.signal.getByKey(db.pool,req.params.objectId,req.params.signalId,function(error,signal){
 		if (error) {
 			logger.error(error);
 			res.status(500).send(error);

@@ -55,8 +55,8 @@
 				}
 			});
 		}
-		
-		WUI.pageConfiger.stationPageCfg= oldConfig || {};
+
+		WUI.pageConfiger.stationPageCfg = oldConfig || {};
 		$('#station-img-select-btn').click(
 				function() {
 					WUI.pageConfiger.selectImg($("#signal-select-dialog"), nodeObject.OBJECT_TYPE,
@@ -101,7 +101,7 @@
 		});
 	}
 	WUI.pageConfiger.pageConfigIsValid = function() {
-		var config=WUI.pageConfiger.stationPageCfg;
+		var config = WUI.pageConfiger.stationPageCfg;
 		return config.img && config.temperature && config.humidity;
 	}
 	WUI.pageConfiger.getConfiger = function() {

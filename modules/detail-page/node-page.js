@@ -51,6 +51,7 @@ function getDefaultPage(objectType, deviceType, callback) {
 			callback(null, page);
 		});
 	} catch (e) {
+		logger.error(e);
 		callback(e);
 	}
 }
@@ -82,6 +83,50 @@ app.get('/detailPage/:id', function(req, res) {
 				res.send({
 					page : objects[0].PAGE_NAME
 				});
+			}
+		}
+	});
+});
+
+app.put('/pageTamplate/:pageName', function(req, res) {
+	var config = JSON.stringify(req.body);
+	db.doTransaction(function(connection) {
+		return [ function(callback) {
+			var sql = 'REPLACE INTO detail_page.PAGE_TAMPLATE(PAGE_NAME,CONFIG)values(?,?)';
+			connection.query(sql, [ req.params.pageName, config ], function(err, result) {
+				callback(err);
+			});
+		} ];
+	}, function(error, result) {
+		if (error) {
+			logger.error(error);
+			res.status(500).send(error);
+		} else {
+			res.status(204).end();
+		}
+	});
+});
+app.get('/pageTamplate/:pageName', function(req, res) {
+	var sql = 'select CONFIG from detail_page.PAGE_TAMPLATE WHERE PAGE_NAME=?';
+	db.pool.query(sql, [ req.params.pageName ], function(error, objects) {
+		if (error) {
+			logger.error(error);
+			res.status(500).send(error);
+		} else {
+			if (objects.length === 0) {
+				res.send({});
+			} else {
+				try {
+					if (objects[0].CONFIG) {
+						objects[0].CONFIG = JSON.parse(objects[0].CONFIG);
+						if ((typeof objects[0].CONFIG) == 'string') {
+							objects[0].CONFIG = JSON.parse(objects[0].CONFIG);
+						}
+					}
+				} catch (e) {
+					objects[0].CONFIG = {};
+				}
+				res.send(objects[0].CONFIG);
 			}
 		}
 	});
@@ -145,14 +190,23 @@ app.get('/detailPage', function(req, res) {
 			}
 			var pages = JSON.parse(data);
 			var objectPage = pages[req.query.objectType];
-			if (!req.body.deviceType) {
+
+			if (!req.query.deviceType) {
 				res.send(objectPage.pages);
 			} else {
-				res.send(objectPage.deviceType[req.body.deviceType].pages);
+
+				res.send(objectPage.devicePages[req.query.deviceType].pages);
 			}
 		});
 	} catch (e) {
 		logger.error(e);
 		res.status(500).send(e);
 	}
+});
+
+var path = require('path');
+var fs = require('fs');
+app.get('/defaultSignals/:deviceType', function(req, res) {
+	var fileName = path.join(process.cwd(), 'conf', 'signal', req.params.deviceType + '.json');
+	res.sendFile(fileName);
 });

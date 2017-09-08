@@ -196,14 +196,14 @@ $(function() {
 				field : 'CODE',
 				title : '编码'
 			}, {
-				field : 'NAME',
-				title : '名称',
-			}, {
 				field : 'OBJECT_TYPE',
 				title : '类型',
 				formatter : function(value, row, index) {
 					return WUI.objectTypes[row.OBJECT_TYPE].name;
 				}
+			}, {
+				field : 'FULL_NAME',
+				title : '名称',
 			} ] ],
 			onDblClickRow : function(index, row) {
 				config.selectChange(row);
@@ -363,8 +363,7 @@ $(function() {
 			buttons : [ {
 				text : '确定',
 				handler : function() {
-					var signal=$('#signal-select-list').datalist("getSelected");
-					console.log(signal);
+					var signal = $('#signal-select-list').datalist("getSelected");
 					if (signal) {
 						$dialogNode.dialog("close");
 						config.onSelect(signal);

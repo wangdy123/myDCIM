@@ -1,4 +1,5 @@
 $(function() {
+	var pageTamplateUrl = 'detail/pageTamplate/UPS';
 	var objectNodeUrl = 'logicobject/objectNodes';
 	var deviceModelUrl = "device-model/deviceModels";
 	var deviceVenderUrl = "device-vender/deviceVenders";
@@ -46,71 +47,13 @@ $(function() {
 
 		$('#device-rated-power').text(WUI.getPropertyValue(currentObject.properties, "ratedPower"));
 
-		WUI.ajax.get(pageConfigUrl + currentObject.ID, {}, createPage, function() {
-			createPage({
-				img : 'u941.jpg',
-				inputs : [ {
-					name : '电流',
-					type : 1,
-					fixedNum : 1,
-					idA : 121001,
-					idB : 121001,
-					idC : 121001,
-					unit : 'A'
-				}, {
-					name : '电压',
-					type : 1,
-					fixedNum : 1,
-					idA : 121001,
-					idB : 121001,
-					idC : 121001,
-					unit : 'V'
-				}, {
-					name : '功率因素',
-					type : 1,
-					fixedNum : 3,
-					idA : 121001,
-					idB : 121001,
-					idC : 121001,
-					unit : ''
-				}, {
-					name : '功率',
-					type : 1,
-					fixedNum : 2,
-					idA : 121001,
-					idB : 121001,
-					idC : 121001,
-					unit : 'KW'
-				} ],
-				outputs : [ {
-					name : '工作状态',
-					type : 0,
-					signalId : 025001,
-				}, {
-					name : '交流A',
-					type : 1,
-					fixedNum : 1,
-					signalId : 125001,
-					unit : 'A'
-				}, {
-					name : '交流B',
-					type : 1,
-					fixedNum : 1,
-					signalId : 126001,
-					unit : 'A'
-				}, {
-					name : '交流C',
-					type : 1,
-					fixedNum : 1,
-					signalId : 127001,
-					unit : 'A'
-				}, {
-					name : '功率',
-					type : 1,
-					fixedNum : 2,
-					signalId : 128001,
-					unit : 'KW'
-				} ]
+		WUI.ajax.get(pageConfigUrl + currentObject.ID, {}, function(config) {
+			createPage(config.CONFIG);
+		}, function() {
+			WUI.ajax.get(pageTamplateUrl, {}, function(result) {
+				createPage(result);
+			}, function() {
+				$.messager.alert('失败', "读取页面配置失败，请重试！");
 			});
 		});
 
@@ -118,6 +61,7 @@ $(function() {
 	function createPage(pageConfig) {
 		createInputPanel(pageConfig);
 		createOutputPanel(pageConfig);
+		createSystemPanel(pageConfig);
 		requestStatus();
 		WUI.detail.initImg($("#ups-img"), pageConfig.img, currentObject);
 	}
@@ -168,10 +112,31 @@ $(function() {
 		createValueItem($tr, item.idA, loadNum, config);
 		createValueItem($tr, item.idB, loadNum, config);
 		createValueItem($tr, item.idC, loadNum, config);
-
 		return $tr;
 	}
 
+	function createSystemPanel(pageConfig) {
+		$('#ups-system-panel').empty();
+		pageConfig.defaults.sort(function(a, b) {
+			return a.signalId > b.signalId;
+		});
+
+		for (var i = 0; i < pageConfig.defaults.length; i++) {
+			var item = pageConfig.defaults[i];
+			var config = {
+				className : "profile-table-cell",
+				type : item.type,
+				unit : item.unit,
+				name : item.name,
+				fixedNum : item.fixedNum
+			};
+			signalObjects.push(WUI.detail.createTableItem($('#ups-system-panel'), item.signalId, config, true));
+			requestIds.push({
+				objectId : currentObject.ID,
+				signalId : item.signalId
+			});
+		}
+	}
 	function createOutputPanel(pageConfig) {
 		$('#ups-output-panel').empty();
 		var outputCount = WUI.getPropertyValue(currentObject.properties, "outputCount");
@@ -203,11 +168,11 @@ $(function() {
 			}
 			$head.append('<th class="detail-table-head">支路' + (i + 1) + '</th>');
 			pageConfig.outputs.forEach(function(item) {
-				console.log(item);
 				var config = {
 					className : "detail-table-cell",
 					type : item.type,
 					unit : item.unit,
+					name : item.name,
 					fixedNum : item.fixedNum
 				};
 				createValueItem(item.$tr, item.signalId, i, config);

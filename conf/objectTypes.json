@@ -39,6 +39,7 @@
 		"name" : "机柜",
 		"iconCls" : "icon-cabinet",
 		"childTypes" : [ 21 ],
+		"hasSignal":true,
 		"namespace" : "cabinet"
 	},"21" : {
 		"name" : "设备",

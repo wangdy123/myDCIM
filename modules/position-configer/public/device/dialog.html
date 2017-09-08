@@ -1,0 +1,47 @@
+
+<table class="configer">
+	<tr>
+		<td align="right" style="width: 100px;">编码:</td>
+		<td style="width: 150px;"><input id="device-code-txt" class="easyui-textbox" type="text" style="width: 100%"
+			data-options="required:true"></td>
+		<td style="width: 20px;"></td>
+		<td align="right" style="width: 100px;">名称:</td>
+		<td style="width: 150px;"><input id="device-name-txt" class="easyui-textbox" type="text" style="width: 100%"
+			data-options="required:true"></td>
+	</tr>
+	<tr>
+		<td align="right">设备类型:</td>
+		<td><select id="device-type-sel" style="width: 100%" class="easyui-combobox"
+			data-options="required:true,editable:true,valueField : 'type',textField : 'name'"></select></td>
+		<td></td>
+	</tr>
+	<tr>
+		<td align="right">设备厂家:</td>
+		<td><select id="device-vender-sel" style="width: 100%" class="easyui-combobox"
+			data-options="required:true,editable:true,valueField : 'ID',textField : 'NAME'"></select></td>
+		<td></td>
+		<td align="right">设备型号:</td>
+		<td><select id="device-model-sel" style="width: 100%" class="easyui-combobox"
+			data-options="required:true,editable:true,valueField : 'ID',textField : 'NAME'"></select></td>
+	</tr>
+	<tr>
+		<td align="right">投产日期:</td>
+		<td><input id="device-start-use-date" class="easyui-datebox" style="width: 100%;"></td>
+		<td></td>
+		<td align="right">预计报废日期:</td>
+		<td><input id="device-expect-end-date" class="easyui-datebox" style="width: 100%;"></td>
+	</tr>
+	<tr>
+		<td colspan="5">
+			<div id="device-extprop-panel" class="easyui-panel" data-options="border:false"></div>
+		</td>
+	</tr>
+	<tr>
+		<td align="right">描述:</td>
+	</tr>
+	<tr>
+		<td colspan="5"><input id="device-desc-txt" class="easyui-textbox" data-options="multiline:true"
+			style="width: 100%; height: 120px;" /></td>
+	</tr>
+</table>
+

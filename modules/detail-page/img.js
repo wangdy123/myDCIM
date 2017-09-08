@@ -47,7 +47,7 @@ app.post('/resources', [ multer({
 
 app.get('/resources', function(req, res) {
 	var objectType = parseInt(req.query.objectType, 10);
-	var deviceType = req.body.deviceType ? parseInt(req.body.deviceType, 10) : 0;
+	var deviceType = req.query.deviceType ? parseInt(req.query.deviceType, 10) : 0;
 	var sql = 'select NAME, OBJECT_TYPE,DEVICE_TYPE,DEVICE_TYPE from detail_page.IMG '
 			+ 'where OBJECT_TYPE=? and DEVICE_TYPE=?';
 	db.pool.query(sql, [ objectType, deviceType ], function(error, objects, fields) {

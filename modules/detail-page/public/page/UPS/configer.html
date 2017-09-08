@@ -1,0 +1,638 @@
+<script type="text/javascript">
+	WUI.pageConfiger.init = function(nodeObject, oldConfig) {
+		var objectNodeUrl = 'logicobject/objectNodes/';
+		var standardSignalUrl = 'position-configer/defaultSignals';
+
+		function setImg(imgPath) {
+			$("#device-img-panel").attr("width", $("#device-img-panel").parent().width());
+			$("#device-img-panel").attr("height", $("#device-img-panel").parent().height());
+			$("#device-img-panel").attr("src", "detail/resources/" + imgPath);
+		}
+
+		if (oldConfig) {
+			setImg(oldConfig.img);
+		}
+
+		WUI.pageConfiger.devicePageCfg = oldConfig || {
+			inputs : [],
+			outputs : [],
+			defaults : []
+		};
+
+		$('#device-img-select-btn').click(
+				function() {
+					WUI.pageConfiger.selectImg($("#signal-select-dialog"), nodeObject.OBJECT_TYPE,
+							nodeObject.DEVICE_TYPE, function(imgName) {
+								setImg(imgName);
+								WUI.pageConfiger.devicePageCfg.img = imgName;
+							});
+				});
+		function initInputs(standardInputs, inputs) {
+			if (!standardInputs) {
+				return;
+			}
+			$("#device-inputs-signal").datagrid(
+					{
+						data : inputs,
+						border : false,
+						singleSelect : true,
+						toolbar : [ {
+							iconCls : 'icon-add',
+							text : '添加分路信号',
+							handler : function() {
+								inputSelectDialog(null, standardInputs, function(row) {
+									$("#device-inputs-signal").datagrid("appendRow", row);
+								});
+							}
+						} ],
+						columns : [ [
+								{
+									field : 'action',
+									title : '操作',
+									width : 80,
+									align : 'center',
+									formatter : function(value, row, index) {
+										var e = '<div class="icon-edit operator-tool" title="修改" '
+												+ ' onclick="WUI.pageConfiger.editUpsInputs(this)"></div> ';
+										var s = '<div class="separater"></div> ';
+										var d = '<div class="icon-remove operator-tool" title="删除" '
+												+ ' onclick="WUI.pageConfiger.deleteUpsInputs(this)"></div>';
+										return e + s + d;
+									}
+								}, {
+									field : 'name',
+									title : '名称',
+									align : 'right',
+									width : 60
+								}, {
+									field : 'unit',
+									title : '单位',
+									width : 60
+								}, {
+									field : 'idA',
+									title : 'A相',
+									width : 80,
+									formatter : function(value, row, index) {
+										if (standardInputs) {
+											var signal = WUI.findFromArray(standardInputs, "SIGNAL_ID", value);
+											if (signal) {
+												return signal.SIGNAL_NAME;
+											}
+										}
+										return value;
+									}
+								}, {
+									field : 'idB',
+									title : 'B相',
+									width : 80,
+									formatter : function(value, row, index) {
+										if (standardInputs) {
+											var signal = WUI.findFromArray(standardInputs, "SIGNAL_ID", value);
+											if (signal) {
+												return signal.SIGNAL_NAME;
+											}
+										}
+										return value;
+									}
+								}, {
+									field : 'idC',
+									title : 'C相',
+									width : 80,
+									formatter : function(value, row, index) {
+										if (standardInputs) {
+											var signal = WUI.findFromArray(standardInputs, "SIGNAL_ID", value);
+											if (signal) {
+												return signal.SIGNAL_NAME;
+											}
+										}
+										return value;
+									}
+								} ] ]
+					});
+			WUI.pageConfiger.editUpsInputs = function(target) {
+				var row = WUI.getDatagridRow($("#device-inputs-signal"), target);
+				if (row) {
+					inputSelectDialog(row, standardInputs, function(newRow) {
+						$("#device-inputs-signal").datagrid("updateRow", {
+							index : WUI.getDatagridRowIndex(target),
+							row : newRow
+						});
+					});
+				}
+			}
+			WUI.pageConfiger.deleteUpsInputs = function(target) {
+				$("#device-inputs-signal").datagrid("deleteRow", WUI.getDatagridRowIndex(target));
+			};
+			function inputSelectDialog(row, signals, callback) {
+				var dialogNode = $("#signal-select-dialog");
+				var cfg = {
+					iconCls : row ? "icon-edit" : "icon-add",
+					title : "选择分路信号",
+					left : ($(window).width() - 400) * 0.5,
+					top : ($(window).height() - 400) * 0.5,
+					width : 400,
+					closed : false,
+					cache : false,
+					href : "detail/page/UPS/inputs-dialog.html",
+					onLoadError : function() {
+						$.messager.alert('失败', "对话框加载失败，请刷新后重试！");
+					},
+					onLoad : function() {
+						$('#input-type-sel').combobox({
+							valueField : 'type',
+							textField : 'name',
+							editable : false,
+							//disabled : row ? true : false,
+							data : WUI.signalType,
+							onSelect : function(type) {
+								$('#input-A-sel').combobox({
+									loadFilter : function(data) {
+										var results = [];
+										data.forEach(function(item) {
+											if (item.SIGNAL_TYPE == type.type) {
+												results.push(item);
+											}
+										});
+										return results;
+									}
+								});
+
+								$('#input-B-sel').combobox({
+									loadFilter : function(data) {
+										var results = [];
+										data.forEach(function(item) {
+											if (item.SIGNAL_TYPE == type.type) {
+												results.push(item);
+											}
+										});
+										return results;
+									}
+								});
+								$('#input-C-sel').combobox({
+									loadFilter : function(data) {
+										var results = [];
+										data.forEach(function(item) {
+											if (item.SIGNAL_TYPE == type.type) {
+												results.push(item);
+											}
+										});
+										return results;
+									}
+								});
+							}
+						});
+						$('#input-A-sel').combobox({
+							valueField : 'SIGNAL_ID',
+							textField : 'SIGNAL_NAME',
+							editable : false,
+							data : signals,
+							iconWidth : 22,
+							icons : [ {
+								iconCls : 'icon-delete',
+								handler : function() {
+									$('#input-A-sel').combobox("clear");
+								}
+							} ]
+						});
+						$('#input-B-sel').combobox({
+							valueField : 'SIGNAL_ID',
+							textField : 'SIGNAL_NAME',
+							editable : false,
+							data : signals,
+							iconWidth : 22,
+							icons : [ {
+								iconCls : 'icon-delete',
+								handler : function() {
+									$('#input-B-sel').combobox("clear");
+								}
+							} ]
+						});
+						$('#input-C-sel').combobox({
+							valueField : 'SIGNAL_ID',
+							textField : 'SIGNAL_NAME',
+							editable : false,
+							data : signals,
+							iconWidth : 22,
+							icons : [ {
+								iconCls : 'icon-delete',
+								handler : function() {
+									$('#input-C-sel').combobox("clear");
+								}
+							} ]
+						});
+						if (row) {
+							$('#input-name-txt').textbox("setValue", row.name);
+							$('#input-type-sel').combobox("setValue", row.type);
+							$('#input-fix-txt').numberbox("setValue", row.fixedNum);
+							$('#input-unit-txt').textbox("setValue", row.unit);
+							$('#input-A-sel').combobox("setValue", row.idA);
+							$('#input-B-sel').combobox("setValue", row.idB);
+							$('#input-C-sel').combobox("setValue", row.idC);
+						}
+					},
+					modal : true,
+					onClose : function() {
+						dialogNode.empty();
+					},
+					buttons : [ {
+						text : '保存',
+						handler : function() {
+							var isValid = $('#input-name-txt').textbox("isValid");
+							isValid = isValid && $('#input-unit-txt').textbox("isValid");
+							isValid = isValid && $('#input-type-sel').combobox("isValid");
+							isValid = isValid && $('#input-A-sel').combobox("isValid");
+							isValid = isValid && $('#input-B-sel').combobox("isValid");
+							isValid = isValid && $('#input-C-sel').combobox("isValid");
+							isValid = isValid && $('#input-fix-txt').numberbox("isValid");
+							if (!isValid) {
+								return;
+							}
+
+							var newRow = {
+								name : $('#input-name-txt').textbox("getValue"),
+								type : parseInt($('#input-type-sel').combobox("getValue"), 10),
+								fixedNum : $('#input-fix-txt').textbox("getValue"),
+								idA : parseInt($('#input-A-sel').combobox("getValue"), 10),
+								idB : parseInt($('#input-B-sel').combobox("getValue"), 10),
+								idC : parseInt($('#input-C-sel').combobox("getValue"), 10),
+								unit : $('#input-unit-txt').textbox("getValue")
+							};
+							callback(newRow);
+							dialogNode.dialog("close");
+						}
+					}, {
+						text : '取消',
+						handler : function() {
+							dialogNode.dialog("close");
+						}
+					} ]
+				};
+				dialogNode.dialog(cfg);
+			}
+		}
+		function initOutputs(standardOutputs, outputs) {
+			if (!standardOutputs) {
+				return;
+			}
+			$("#device-outputs-signal").datagrid(
+					{
+						data : outputs,
+						border : false,
+						singleSelect : true,
+						toolbar : [ {
+							iconCls : 'icon-add',
+							text : '添加输出支路信号',
+							handler : function() {
+								outputSelectDialog(null, standardOutputs, function(row) {
+									$("#device-outputs-signal").datagrid("appendRow", row);
+								});
+							}
+						} ],
+						columns : [ [
+								{
+									field : 'action',
+									title : '操作',
+									width : 100,
+									align : 'center',
+									formatter : function(value, row, index) {
+										var e = '<div class="icon-edit operator-tool" title="修改" '
+												+ ' onclick="WUI.pageConfiger.editUpsOutput(this)"></div> ';
+										var s = '<div class="separater"></div> ';
+										var d = '<div class="icon-remove operator-tool" title="删除" '
+												+ ' onclick="WUI.pageConfiger.deleteUpsOutput(this)"></div>';
+										return e + s + d;
+									}
+								}, {
+									field : 'name',
+									title : '名称',
+									align : 'right',
+									width : 80
+								}, {
+									field : 'unit',
+									title : '单位',
+									width : 60
+								}, {
+									field : 'signalId',
+									title : '信号',
+									width : 100,
+									formatter : function(value, row, index) {
+										if (standardOutputs) {
+											var signal = WUI.findFromArray(standardOutputs, "SIGNAL_ID", value);
+											if (signal) {
+												return signal.SIGNAL_NAME;
+											}
+										}
+										return value;
+									}
+								} ] ]
+					});
+			WUI.pageConfiger.editUpsOutput = function(target) {
+				var row = WUI.getDatagridRow($("#device-outputs-signal"), target);
+				if (row) {
+					outputSelectDialog(row, standardOutputs, function(newRow) {
+						$("#device-outputs-signal").datagrid("updateRow", {
+							index : WUI.getDatagridRowIndex(target),
+							row : newRow
+						});
+					});
+				}
+			}
+			WUI.pageConfiger.deleteUpsOutput = function(target) {
+				$("#device-inputs-signal").datagrid("deleteRow", WUI.getDatagridRowIndex(target));
+			};
+			function outputSelectDialog(row, signals, callback) {
+				var dialogNode = $("#signal-select-dialog");
+				var cfg = {
+					iconCls : row ? "icon-edit" : "icon-add",
+					title : "选择分路信号",
+					left : ($(window).width() - 400) * 0.5,
+					top : ($(window).height() - 400) * 0.5,
+					width : 400,
+					closed : false,
+					cache : false,
+					href : "detail/page/UPS/outputs-dialog.html",
+					onLoadError : function(e) {
+						console.log(e);
+						$.messager.alert('失败', "对话框加载失败，请刷新后重试！");
+					},
+					onLoad : function() {
+						$('#input-type-sel').combobox({
+							valueField : 'type',
+							textField : 'name',
+							editable : false,
+							disabled : row ? true : false,
+							data : WUI.signalType,
+							onSelect : function(type) {
+								$('#input-signal-sel').combobox({
+									loadFilter : function(data) {
+										var results = [];
+										data.forEach(function(item) {
+											if (item.SIGNAL_TYPE == type.type) {
+												results.push(item);
+											}
+										});
+										return results;
+									}
+								});
+							}
+						});
+						$('#input-signal-sel').combobox({
+							valueField : 'SIGNAL_ID',
+							textField : 'SIGNAL_NAME',
+							editable : false,
+							data : signals
+						});
+
+						if (row) {
+							$('#input-name-txt').textbox("setValue", row.name);
+							$('#input-type-sel').combobox("setValue", row.type);
+							$('#input-fix-txt').numberbox("setValue", row.fixedNum);
+							$('#input-unit-txt').textbox("setValue", row.unit);
+							$('#input-signal-sel').combobox("setValue", row.signalId);
+						}
+					},
+					modal : true,
+					onClose : function() {
+						dialogNode.empty();
+					},
+					buttons : [ {
+						text : '保存',
+						handler : function() {
+							var isValid = $('#input-name-txt').textbox("isValid");
+							isValid = isValid && $('#input-unit-txt').textbox("isValid");
+							isValid = isValid && $('#input-type-sel').combobox("isValid");
+							isValid = isValid && $('#input-signal-sel').combobox("isValid");
+							isValid = isValid && $('#input-fix-txt').numberbox("isValid");
+							if (!isValid) {
+								return;
+							}
+
+							var newRow = {
+								name : $('#input-name-txt').textbox("getValue"),
+								type : parseInt($('#input-type-sel').combobox("getValue"), 10),
+								fixedNum : $('#input-fix-txt').textbox("getValue"),
+								signalId : parseInt($('#input-signal-sel').combobox("getValue"), 10),
+								unit : $('#input-unit-txt').textbox("getValue")
+							};
+							callback(newRow);
+							dialogNode.dialog("close");
+						}
+					}, {
+						text : '取消',
+						handler : function() {
+							dialogNode.dialog("close");
+						}
+					} ]
+				};
+				dialogNode.dialog(cfg);
+			}
+		}
+		function initDefaults(standardDefaults, defaults) {
+			if (!standardDefaults) {
+				return;
+			}
+			$("#device-defaults-signal").datagrid(
+					{
+						data : defaults,
+						border : false,
+						singleSelect : true,
+						toolbar : [ {
+							iconCls : 'icon-add',
+							text : '添加系统参数信号',
+							handler : function() {
+								defaultSelectDialog(null, standardDefaults, function(row) {
+									$("#device-defaults-signal").datagrid("appendRow", row);
+								});
+							}
+						} ],
+						columns : [ [
+								{
+									field : 'action',
+									title : '操作',
+									width : 100,
+									align : 'center',
+									formatter : function(value, row, index) {
+										var e = '<div class="icon-edit operator-tool" title="修改" '
+												+ ' onclick="WUI.pageConfiger.editUpsDefault(this)"></div> ';
+										var s = '<div class="separater"></div> ';
+										var d = '<div class="icon-remove operator-tool" title="删除" '
+												+ ' onclick="WUI.pageConfiger.deleteUpsDefault(this)"></div>';
+										return e + s + d;
+									}
+								}, {
+									field : 'name',
+									title : '名称',
+									align : 'right',
+									width : 80
+								}, {
+									field : 'unit',
+									title : '单位',
+									width : 60
+								}, {
+									field : 'signalId',
+									title : '信号',
+									width : 100,
+									formatter : function(value, row, index) {
+										if (standardDefaults) {
+											var signal = WUI.findFromArray(standardDefaults, "SIGNAL_ID", value);
+											if (signal) {
+												return signal.SIGNAL_NAME;
+											}
+										}
+										return value;
+									}
+								} ] ]
+					});
+			WUI.pageConfiger.editUpsDefault = function(target) {
+				var row = WUI.getDatagridRow($("#device-defaults-signal"), target);
+				if (row) {
+					defaultSelectDialog(row, standardDefaults, function(newRow) {
+						$("#device-defaults-signal").datagrid("updateRow", {
+							index : WUI.getDatagridRowIndex(target),
+							row : newRow
+						});
+					});
+				}
+			}
+			WUI.pageConfiger.deleteUpsDefault = function(target) {
+				$("#device-defaults-signal").datagrid("deleteRow", WUI.getDatagridRowIndex(target));
+			};
+			function defaultSelectDialog(row, signals, callback) {
+				var dialogNode = $("#signal-select-dialog");
+				var cfg = {
+					iconCls : row ? "icon-edit" : "icon-add",
+					title : "选择分路信号",
+					left : ($(window).width() - 400) * 0.5,
+					top : ($(window).height() - 400) * 0.5,
+					width : 400,
+					closed : false,
+					cache : false,
+					href : "detail/page/UPS/defaults-dialog.html",
+					onLoadError : function(e) {
+						console.log(e);
+						$.messager.alert('失败', "对话框加载失败，请刷新后重试！");
+					},
+					onLoad : function() {
+						$('#input-type-sel').combobox({
+							valueField : 'type',
+							textField : 'name',
+							editable : false,
+							disabled : row ? true : false,
+							data : WUI.signalType,
+							onSelect : function(type) {
+								$('#input-signal-sel').combobox({
+									loadFilter : function(data) {
+										var results = [];
+										data.forEach(function(item) {
+											if (item.SIGNAL_TYPE == type.type) {
+												results.push(item);
+											}
+										});
+										return results;
+									}
+								});
+							}
+						});
+						$('#input-signal-sel').combobox({
+							valueField : 'SIGNAL_ID',
+							textField : 'SIGNAL_NAME',
+							editable : false,
+							data : signals,
+							onSelect : function(signal) {
+								if (!row) {
+									$('#input-name-txt').textbox("setValue", signal.SIGNAL_NAME);
+									$('#input-unit-txt').textbox("setValue", signal.UNIT);
+									$('#input-fix-txt').textbox("setValue", 3);
+								}
+							}
+						});
+
+						if (row) {
+							$('#input-name-txt').textbox("setValue", row.name);
+							$('#input-type-sel').combobox("setValue", row.type);
+							$('#input-fix-txt').numberbox("setValue", row.fixedNum);
+							$('#input-unit-txt').textbox("setValue", row.unit);
+							$('#input-signal-sel').combobox("setValue", row.signalId);
+						}
+					},
+					modal : true,
+					onClose : function() {
+						dialogNode.empty();
+					},
+					buttons : [ {
+						text : '保存',
+						handler : function() {
+							var isValid = $('#input-name-txt').textbox("isValid");
+							isValid = isValid && $('#input-unit-txt').textbox("isValid");
+							isValid = isValid && $('#input-type-sel').combobox("isValid");
+							isValid = isValid && $('#input-signal-sel').combobox("isValid");
+							isValid = isValid && $('#input-fix-txt').numberbox("isValid");
+							if (!isValid) {
+								return;
+							}
+
+							var newRow = {
+								name : $('#input-name-txt').textbox("getValue"),
+								type : parseInt($('#input-type-sel').combobox("getValue"), 10),
+								fixedNum : $('#input-fix-txt').textbox("getValue"),
+								signalId : parseInt($('#input-signal-sel').combobox("getValue"), 10),
+								unit : $('#input-unit-txt').textbox("getValue")
+							};
+							callback(newRow);
+							dialogNode.dialog("close");
+						}
+					}, {
+						text : '取消',
+						handler : function() {
+							dialogNode.dialog("close");
+						}
+					} ]
+				};
+				dialogNode.dialog(cfg);
+			}
+		}
+		WUI.ajax.get(standardSignalUrl, {
+			nodeType : nodeObject.OBJECT_TYPE,
+			deviceType : nodeObject.DEVICE_TYPE
+		}, function(defaultSignal) {
+			initOutputs(defaultSignal.outputs, WUI.pageConfiger.devicePageCfg.outputs);
+			initInputs(defaultSignal.inputs, WUI.pageConfiger.devicePageCfg.inputs);
+			initDefaults(defaultSignal.defaults, WUI.pageConfiger.devicePageCfg.defaults);
+		}, function() {
+			$.messager.alert('失败', "读取标准信号失败！");
+		});
+	};
+
+	WUI.pageConfiger.pageConfigIsValid = function() {
+		WUI.pageConfiger.devicePageCfg.inputs = $("#device-inputs-signal").datagrid("getData").rows;
+		WUI.pageConfiger.devicePageCfg.outputs = $("#device-outputs-signal").datagrid("getData").rows;
+		WUI.pageConfiger.devicePageCfg.defaults = $("#device-defaults-signal").datagrid("getData").rows;
+		var config = WUI.pageConfiger.devicePageCfg;
+		return config.img && config.inputs && config.outputs && config.defaults;
+	};
+	WUI.pageConfiger.getConfiger = function() {
+		return WUI.pageConfiger.devicePageCfg;
+	};
+</script>
+<table>
+	<tr>
+		<td><p>图片资源:</p>
+			<p>
+				<a id="device-img-select-btn" href="#" class="easyui-linkbutton">选择图片</a>
+			</p></td>
+		<td>
+			<div style="height: 150px; width: 200px;" class="easyui-panel" data-options="border:true">
+				<img id="device-img-panel" class="easyui-panel" data-options="border:false,fit:true" />
+			</div>
+		</td>
+	</tr>
+</table>
+
+<div>系统信号:</div>
+<div id="device-defaults-signal" style="height: 120px;"></div>
+<div>输入分路:</div>
+<div id="device-inputs-signal" style="height: 120px;"></div>
+<div>输出支路:</div>
+<div id="device-outputs-signal" style="height: 120px;"></div>
+<div id="signal-select-dialog"></div>
+

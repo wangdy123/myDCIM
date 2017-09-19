@@ -1,27 +1,27 @@
 $(document).ready(
 		function() {
 			var objectNodeUrl = 'logicobject/objectNodes';
-			var cabinetGroupUrl = "logicobject/cabinetGroups";
-			var $node = $('#cabinetGroup-datagrid');
-			var typeName = WUI.objectTypes[WUI.objectTypeDef.CABINNET_GROUP].name;
+			var rackGroupUrl = "logicobject/rackGroups";
+			var $node = $('#rackGroup-datagrid');
+			var typeName = WUI.objectTypes[WUI.objectTypeDef.RACK_GROUP].name;
 
-			WUI.cabinetGroup = WUI.cabinetGroup || {};
+			WUI.rackGroup = WUI.rackGroup || {};
 
 			var currentObject = null;
 			function reload(publish) {
 				$node.datagrid("reload");
 				if (publish) {
 					WUI.publishEvent('reload_object', {
-						publisher : "cabinetGroup-configer",
+						publisher : "rackGroup-configer",
 						object : currentObject
 					});
 				}
 			}
 
-			function openObject(cabinetGroupObject) {
-				currentObject = cabinetGroupObject;
+			function openObject(rackGroupObject) {
+				currentObject = rackGroupObject;
 				$node.datagrid({
-					url : cabinetGroupUrl,
+					url : rackGroupUrl,
 					queryParams : {
 						parentId : currentObject.ID
 					},
@@ -34,7 +34,7 @@ $(document).ready(
 						iconCls : 'icon-add',
 						text : '添加【' + typeName + '】',
 						handler : function() {
-							cabinetGroupDialog(null, currentObject.ID);
+							rackGroupDialog(null, currentObject.ID);
 						}
 					}, '-', {
 						iconCls : 'icon-reload',
@@ -51,10 +51,10 @@ $(document).ready(
 								align : 'center',
 								formatter : function(value, row, index) {
 									var e = '<div class="icon-edit operator-tool" title="修改" '
-											+ ' onclick="WUI.cabinetGroup.editrow(this)"></div> ';
+											+ ' onclick="WUI.rackGroup.editrow(this)"></div> ';
 									var s = '<div class="separater"></div> ';
 									var d = '<div class="icon-remove operator-tool" title="删除" '
-											+ ' onclick="WUI.cabinetGroup.deleterow(this)"></div>';
+											+ ' onclick="WUI.rackGroup.deleterow(this)"></div>';
 									return e + s + d;
 								}
 							}, {
@@ -67,12 +67,12 @@ $(document).ready(
 								title : '名称',
 								width : 150
 							}, {
-								field : 'CABINET_COUNT',
+								field : 'RACK_COUNT',
 								title : '机柜数',
 								align : 'right',
 								width : 100
 							}, {
-								field : 'CABINET_DEPTH',
+								field : 'RACK_DEPTH',
 								title : '机柜深度(米)',
 								align : 'right',
 								width : 100
@@ -84,15 +84,15 @@ $(document).ready(
 				cbk : openObject
 			});
 
-			WUI.cabinetGroup.editrow = function(target) {
-				var cabinetGroup = WUI.getDatagridRow($node, target);
-				cabinetGroupDialog(cabinetGroup, cabinetGroup.PARENT_ID);
+			WUI.rackGroup.editrow = function(target) {
+				var rackGroup = WUI.getDatagridRow($node, target);
+				rackGroupDialog(rackGroup, rackGroup.PARENT_ID);
 			}
-			WUI.cabinetGroup.deleterow = function(target) {
-				var cabinetGroup = WUI.getDatagridRow($node, target);
-				$.messager.confirm('确认', '确定要删除' + typeName + '【' + cabinetGroup.NAME + '】吗?', function(r) {
+			WUI.rackGroup.deleterow = function(target) {
+				var rackGroup = WUI.getDatagridRow($node, target);
+				$.messager.confirm('确认', '确定要删除' + typeName + '【' + rackGroup.NAME + '】吗?', function(r) {
 					if (r) {
-						WUI.ajax.remove(objectNodeUrl + "/" + cabinetGroup.ID, {}, function() {
+						WUI.ajax.remove(objectNodeUrl + "/" + rackGroup.ID, {}, function() {
 							reload(true);
 						}, function() {
 							$.messager.alert('失败', "删除" + typeName + "失败！");
@@ -100,27 +100,27 @@ $(document).ready(
 					}
 				});
 			}
-			function cabinetGroupDialog(cabinetGroup, parentId) {
+			function rackGroupDialog(rackGroup, parentId) {
 				$('#configer-dialog').dialog({
-					iconCls : cabinetGroup ? "icon-edit" : "icon-add",
-					title : (cabinetGroup ? "修改" : "添加") + typeName,
+					iconCls : rackGroup ? "icon-edit" : "icon-add",
+					title : (rackGroup ? "修改" : "添加") + typeName,
 					left : ($(window).width() - 300) * 0.5,
 					top : ($(window).height() - 300) * 0.5,
-					width : 450,
+					width : 400,
 					closed : false,
 					cache : false,
-					href : WUI.getConfigerDialogPath(WUI.objectTypes[WUI.objectTypeDef.CABINNET_GROUP].namespace),
+					href : WUI.getConfigerDialogPath(WUI.objectTypes[WUI.objectTypeDef.RACK_GROUP].namespace),
 					onLoadError : function() {
 						$.messager.alert('失败', "对话框加载失败，请刷新后重试！");
 					},
 					onLoad : function() {
-						if (cabinetGroup) {
-							$('#cabinetGroup-name-txt').textbox("setValue", cabinetGroup.NAME);
-							$('#cabinetGroup-code-txt').textbox("setValue", cabinetGroup.CODE);
-							$('#cabinetGroup-count-txt').numberbox("setValue", cabinetGroup.CABINET_COUNT);
-							$('#cabinetGroup-depth-txt').numberbox("setValue", cabinetGroup.CABINET_DEPTH);
-							$('#cabinetGroup-name-txt').textbox("isValid");
-							$('#cabinetGroup-code-txt').textbox("isValid");
+						if (rackGroup) {
+							$('#rackGroup-name-txt').textbox("setValue", rackGroup.NAME);
+							$('#rackGroup-code-txt').textbox("setValue", rackGroup.CODE);
+							$('#rackGroup-count-txt').numberbox("setValue", rackGroup.RACK_COUNT);
+							$('#rackGroup-depth-txt').numberbox("setValue", rackGroup.RACK_DEPTH);
+							$('#rackGroup-name-txt').textbox("isValid");
+							$('#rackGroup-code-txt').textbox("isValid");
 						}
 					},
 					modal : true,
@@ -130,34 +130,34 @@ $(document).ready(
 					buttons : [ {
 						text : '保存',
 						handler : function() {
-							var isValid = $('#cabinetGroup-name-txt').textbox("isValid");
-							isValid = isValid && $('#cabinetGroup-code-txt').textbox("isValid");
-							isValid = isValid && $('#cabinetGroup-count-txt').numberbox("isValid");
-							isValid = isValid && $('#cabinetGroup-depth-txt').numberbox("isValid");
+							var isValid = $('#rackGroup-name-txt').textbox("isValid");
+							isValid = isValid && $('#rackGroup-code-txt').textbox("isValid");
+							isValid = isValid && $('#rackGroup-count-txt').numberbox("isValid");
+							isValid = isValid && $('#rackGroup-depth-txt').numberbox("isValid");
 							if (!isValid) {
 								return;
 							}
 
-							var newcabinetGroup = {
-								NAME : $('#cabinetGroup-name-txt').textbox("getValue"),
-								CODE : $('#cabinetGroup-code-txt').textbox("getValue"),
-								CABINET_COUNT : parseFloat($('#cabinetGroup-count-txt').numberbox("getValue")),
-								CABINET_DEPTH : parseFloat($('#cabinetGroup-depth-txt').numberbox("getValue")),
-								OBJECT_TYPE : WUI.objectTypeDef.CABINNET_GROUP,
+							var newRackGroup = {
+								NAME : $('#rackGroup-name-txt').textbox("getValue"),
+								CODE : $('#rackGroup-code-txt').textbox("getValue"),
+								RACK_COUNT : parseFloat($('#rackGroup-count-txt').numberbox("getValue")),
+								RACK_DEPTH : parseFloat($('#rackGroup-depth-txt').numberbox("getValue")),
+								OBJECT_TYPE : WUI.objectTypeDef.RACK_GROUP,
 								PARENT_ID : parentId,
 								params : {}
 							};
 
-							if (cabinetGroup) {
-								newcabinetGroup.ID = cabinetGroup.ID;
-								WUI.ajax.put(objectNodeUrl + "/" + newcabinetGroup.ID, newcabinetGroup, function() {
+							if (rackGroup) {
+								newRackGroup.ID = rackGroup.ID;
+								WUI.ajax.put(objectNodeUrl + "/" + newRackGroup.ID, newRackGroup, function() {
 									$('#configer-dialog').dialog("close");
 									reload(true);
 								}, function() {
 									$.messager.alert('失败', "修改" + typeName + "失败！");
 								});
 							} else {
-								WUI.ajax.post(objectNodeUrl, newcabinetGroup, function() {
+								WUI.ajax.post(objectNodeUrl, newRackGroup, function() {
 									$('#configer-dialog').dialog("close");
 									reload(true);
 								}, function() {

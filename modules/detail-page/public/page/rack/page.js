@@ -1,27 +1,27 @@
 $(function() {
 	var objectNodeUrl = 'logicobject/objectNodes';
-	var cabinetModelUrl = "cabinet-model/cabinetModels";
+	var rackModelUrl = "rack-model/rackModels";
 	var statusUrl = 'monitor/status';
 	var publisherName = "detail";
 	var currentObject = null;
 	WUI.detail = WUI.detail || {};
 
-	function openObject(cabinetObject) {
-		currentObject = cabinetObject;
-		$('#cabinet-name-txt').text(currentObject.NAME);
-		$('#cabinet-code-txt').text(currentObject.CODE);
-		$('#cabinet-sequence-txt').text(currentObject.SEQUENCE);
-		$('#cabinet-depth-txt').text(currentObject.CABINET_DEPTH.toFixed(3) + " 米");
-		$('#cabinet-start-use-date').text(WUI.dateFormat(currentObject.START_USE_DATE));
-		$('#cabinet-expect-end-date').text(WUI.dateFormat(currentObject.EXPECT_END_DATE));
+	function openObject(rackObject) {
+		currentObject = rackObject;
+		$('#rack-name-txt').text(currentObject.NAME);
+		$('#rack-code-txt').text(currentObject.CODE);
+		$('#rack-sequence-txt').text(currentObject.SEQUENCE);
+		$('#rack-depth-txt').text(currentObject.RACK_DEPTH.toFixed(3) + " 米");
+		$('#rack-start-use-date').text(WUI.dateFormat(currentObject.START_USE_DATE));
+		$('#rack-expect-end-date').text(WUI.dateFormat(currentObject.EXPECT_END_DATE));
 
-		WUI.ajax.get(cabinetModelUrl, {}, function(results) {
+		WUI.ajax.get(rackModelUrl, {}, function(results) {
 			for (var i = 0; i < results.length; i++) {
-				if (results[i].ID === currentObject.CABINET_MODEL) {
+				if (results[i].ID === currentObject.RACK_MODEL) {
 					var model = results[i];
-					$('#cabinet-model-txt').html(model.NAME);
-					$('#cabinet-u1_position-txt').html(model.U1_POSITION === 0 ? "顶部" : "底部");
-					$('#cabinet-u-count-txt').html(model.U_COUNT);
+					$('#rack-model-txt').html(model.NAME);
+					$('#rack-u1_position-txt').html(model.U1_POSITION === 0 ? "顶部" : "底部");
+					$('#rack-u-count-txt').html(model.U_COUNT);
 					break;
 				}
 			}
@@ -41,8 +41,8 @@ $(function() {
 			if (status.ID !== currentObject.ID) {
 				return;
 			}
-			$("#cabinet-alarm-count-txt").html('<label>' + status.alarmCount + '</label>');
-			$("#cabinet-status-txt").html('<label class="alarmLevel' + status.maxAlarmLevel + '-icon"></label>');
+			$("#rack-alarm-count-txt").html('<label>' + status.alarmCount + '</label>');
+			$("#rack-status-txt").html('<label class="alarmLevel' + status.maxAlarmLevel + '-icon"></label>');
 		}, function() {
 			WUI.detail.realtimeValueTimer = setTimeout(requestStatus, WUI.monitor.REALTIME_VALUE_INTEVAL);
 		});
@@ -50,8 +50,8 @@ $(function() {
 	window.WUI.publishEvent('request_current_object', {
 		publisher : publisherName,
 		cbk : function(object) {
-			WUI.ajax.get(objectNodeUrl + "/" + object.ID, {}, function(cabinetObject) {
-				openObject(cabinetObject);
+			WUI.ajax.get(objectNodeUrl + "/" + object.ID, {}, function(rackObject) {
+				openObject(rackObject);
 			}, function() {
 				var typeName = WUI.objectTypes[WUI.objectTypeDef.CABINNET].name;
 				$.messager.alert('失败', "读取" + typeName + "失败！");

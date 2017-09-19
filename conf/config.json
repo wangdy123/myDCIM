@@ -47,7 +47,7 @@
 		"position-configer": "/position-configer",
 		"fsu-configer": "/fsu-configer",
 		"driver-configer": "/driver-configer",
-		"cabinet-model": "/cabinet-model",
+		"rack-model": "/rack-model",
 		"device-model": "/device-model",
 		"device-vender": "/device-vender",
 		"door": "/door",

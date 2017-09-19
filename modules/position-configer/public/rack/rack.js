@@ -1,29 +1,29 @@
 $(document).ready(
 		function() {
 			var objectNodeUrl = 'logicobject/objectNodes';
-			var cabinetModelUrl = "cabinet-model/cabinetModels";
-			var cabinetUrl = "logicobject/cabinets";
-			var $node = $('#cabinet-datagrid');
-			var typeName = WUI.objectTypes[WUI.objectTypeDef.CABINNET].name;
+			var rackModelUrl = "rack-model/rackModels";
+			var rackUrl = "logicobject/racks";
+			var $node = $('#rack-datagrid');
+			var typeName = WUI.objectTypes[WUI.objectTypeDef.RACK].name;
 
-			var cabinetModels = [];
-			WUI.cabinet = WUI.cabinet || {};
+			var rackModels = [];
+			WUI.rack = WUI.rack || {};
 
 			var currentObject = null;
 			function reload(publish) {
 				$node.datagrid("reload");
 				if (publish) {
 					WUI.publishEvent('reload_object', {
-						publisher : "cabinet-configer",
+						publisher : "rack-configer",
 						object : currentObject
 					});
 				}
 			}
 
-			function openObject(cabinetObject) {
-				currentObject = cabinetObject;
+			function openObject(rackObject) {
+				currentObject = rackObject;
 				$node.datagrid({
-					url : cabinetUrl,
+					url : rackUrl,
 					queryParams : {
 						parentId : currentObject.ID
 					},
@@ -36,7 +36,7 @@ $(document).ready(
 						iconCls : 'icon-add',
 						text : '添加【' + typeName + '】',
 						handler : function() {
-							cabinetDialog(null, currentObject.ID);
+							rackDialog(null, currentObject.ID);
 						}
 					}, '-', {
 						iconCls : 'icon-reload',
@@ -53,10 +53,10 @@ $(document).ready(
 								align : 'center',
 								formatter : function(value, row, index) {
 									var e = '<div class="icon-edit operator-tool" title="修改" '
-											+ ' onclick="WUI.cabinet.editrow(this)"></div> ';
+											+ ' onclick="WUI.rack.editrow(this)"></div> ';
 									var s = '<div class="separater"></div> ';
 									var d = '<div class="icon-remove operator-tool" title="删除" '
-											+ ' onclick="WUI.cabinet.deleterow(this)"></div>';
+											+ ' onclick="WUI.rack.deleterow(this)"></div>';
 									return e + s + d;
 								}
 							}, {
@@ -74,23 +74,23 @@ $(document).ready(
 								align : 'right',
 								width : 100
 							}, {
-								field : 'CABINET_MODEL',
+								field : 'RACK_MODEL',
 								title : '机柜型号',
 								width : 100,
 								formatter : function(value, row, index) {
-									for (var i = 0; i < cabinetModels.length; i++) {
-										if (cabinetModels[i].ID === row.CABINET_MODEL) {
-											return cabinetModels[i].NAME;
+									for (var i = 0; i < rackModels.length; i++) {
+										if (rackModels[i].ID === row.RACK_MODEL) {
+											return rackModels[i].NAME;
 										}
 									}
 									return "";
 								}
 							}, {
-								field : 'CABINET_DEPTH',
+								field : 'RACK_DEPTH',
 								title : '机柜深度',
 								align : 'right',
 								formatter : function(value, row, index) {
-									return row.CABINET_DEPTH.toFixed(3) + " 米";
+									return row.RACK_DEPTH.toFixed(3) + " 米";
 								}
 							}, {
 								field : 'START_USE_DATE',
@@ -109,8 +109,8 @@ $(document).ready(
 							} ] ]
 				});
 			}
-			WUI.ajax.get(cabinetModelUrl, {}, function(results) {
-				cabinetModels = results;
+			WUI.ajax.get(rackModelUrl, {}, function(results) {
+				rackModels = results;
 				window.WUI.publishEvent('request_current_object', {
 					publisher : 'position-configer',
 					cbk : openObject
@@ -118,15 +118,15 @@ $(document).ready(
 			}, function() {
 				$.messager.alert('失败', "读取机柜型号失败，请重试！");
 			});
-			WUI.cabinet.editrow = function(target) {
-				var cabinet = WUI.getDatagridRow($node, target);
-				cabinetDialog(cabinet, cabinet.PARENT_ID);
+			WUI.rack.editrow = function(target) {
+				var rack = WUI.getDatagridRow($node, target);
+				rackDialog(rack, rack.PARENT_ID);
 			}
-			WUI.cabinet.deleterow = function(target) {
-				var cabinet = WUI.getDatagridRow($node, target);
-				$.messager.confirm('确认', '确定要删除' + typeName + '【' + cabinet.NAME + '】吗?', function(r) {
+			WUI.rack.deleterow = function(target) {
+				var rack = WUI.getDatagridRow($node, target);
+				$.messager.confirm('确认', '确定要删除' + typeName + '【' + rack.NAME + '】吗?', function(r) {
 					if (r) {
-						WUI.ajax.remove(objectNodeUrl + "/" + cabinet.ID, {}, function() {
+						WUI.ajax.remove(objectNodeUrl + "/" + rack.ID, {}, function() {
 							reload(true);
 						}, function() {
 							$.messager.alert('失败', "删除" + typeName + "失败！");
@@ -134,34 +134,34 @@ $(document).ready(
 					}
 				});
 			}
-			function cabinetDialog(cabinet, parentId) {
+			function rackDialog(rack, parentId) {
 				var dialogNode = $("#configer-dialog");
 				var cfg = {
-					iconCls : cabinet ? "icon-edit" : "icon-add",
-					title : (cabinet ? "修改" : "添加") + typeName,
+					iconCls : rack ? "icon-edit" : "icon-add",
+					title : (rack ? "修改" : "添加") + typeName,
 					left : ($(window).width() - 300) * 0.5,
 					top : ($(window).height() - 300) * 0.5,
 					width : 450,
 					closed : false,
 					cache : false,
-					href : WUI.getConfigerDialogPath(WUI.objectTypes[WUI.objectTypeDef.CABINNET].namespace),
+					href : WUI.getConfigerDialogPath(WUI.objectTypes[WUI.objectTypeDef.RACK].namespace),
 					onLoadError : function() {
 						$.messager.alert('失败', "对话框加载失败，请刷新后重试！");
 					},
 					onLoad : function() {
-						$('#cabinet-model-sel').combobox({
+						$('#rack-model-sel').combobox({
 							editable : false,
 							required : true,
 							valueField : 'ID',
 							textField : 'NAME',
-							data : cabinetModels,
+							data : rackModels,
 							onSelect : function(rec) {
-								var startTime = $('#cabinet-start-use-date').datebox("getValue");
+								var startTime = $('#rack-start-use-date').datebox("getValue");
 								updateTime(rec.ID, startTime);
 							},
 							keyHandler : {
 								down : function(e) {
-									$('#cabinet-model-sel').combobox("showPanel");
+									$('#rack-model-sel').combobox("showPanel");
 								}
 							}
 						});
@@ -170,40 +170,40 @@ $(document).ready(
 								return;
 							}
 							var model = parseInt(model, 10);
-							for (var i = 0; i < cabinetModels.length; i++) {
-								if (cabinetModels[i].ID === model) {
-									$('#cabinet-depth-txt').numberbox("setValue", cabinetModels[i].DEPTH);
+							for (var i = 0; i < rackModels.length; i++) {
+								if (rackModels[i].ID === model) {
+									$('#rack-depth-txt').numberbox("setValue", rackModels[i].DEPTH);
 									var endDate = new Date(startTime);
-									endDate.setFullYear(endDate.getFullYear() + cabinetModels[i].MAX_USE_AGE);
-									$('#cabinet-expect-end-date').datebox("setValue", WUI.dateFormat(endDate));
+									endDate.setFullYear(endDate.getFullYear() + rackModels[i].MAX_USE_AGE);
+									$('#rack-expect-end-date').datebox("setValue", WUI.dateFormat(endDate));
 								}
 							}
 						}
 
-						$('#cabinet-start-use-date').datebox({
+						$('#rack-start-use-date').datebox({
 							required : true,
 							parser : WUI.date_parse,
 							formatter : WUI.dateFormat,
 							onSelect : function(date) {
-								updateTime($('#cabinet-model-sel').combobox("getValue"), date);
+								updateTime($('#rack-model-sel').combobox("getValue"), date);
 							}
 						});
-						$('#cabinet-expect-end-date').datebox({
+						$('#rack-expect-end-date').datebox({
 							required : true,
 							parser : WUI.date_parse,
 							formatter : WUI.dateFormat
 						});
-						$('#cabinet-start-use-date').datebox("setValue", WUI.dateFormat(new Date()));
-						if (cabinet) {
-							$('#cabinet-name-txt').textbox("setValue", cabinet.NAME);
-							$('#cabinet-code-txt').textbox("setValue", cabinet.CODE);
-							$('#cabinet-model-sel').combobox("setValue", cabinet.CABINET_MODEL);
-							$('#cabinet-sequence-txt').numberbox("setValue", cabinet.SEQUENCE);
-							$('#cabinet-depth-txt').numberbox("setValue", cabinet.CABINET_DEPTH);
-							$('#cabinet-start-use-date').datebox("setValue", cabinet.START_USE_DATE);
-							$('#cabinet-expect-end-date').datebox("setValue", cabinet.EXPECT_END_DATE);
-							$('#cabinet-name-txt').textbox("isValid");
-							$('#cabinet-code-txt').textbox("isValid");
+						$('#rack-start-use-date').datebox("setValue", WUI.dateFormat(new Date()));
+						if (rack) {
+							$('#rack-name-txt').textbox("setValue", rack.NAME);
+							$('#rack-code-txt').textbox("setValue", rack.CODE);
+							$('#rack-model-sel').combobox("setValue", rack.RACK_MODEL);
+							$('#rack-sequence-txt').numberbox("setValue", rack.SEQUENCE);
+							$('#rack-depth-txt').numberbox("setValue", rack.RACK_DEPTH);
+							$('#rack-start-use-date').datebox("setValue", rack.START_USE_DATE);
+							$('#rack-expect-end-date').datebox("setValue", rack.EXPECT_END_DATE);
+							$('#rack-name-txt').textbox("isValid");
+							$('#rack-code-txt').textbox("isValid");
 						}
 					},
 					modal : true,
@@ -213,38 +213,38 @@ $(document).ready(
 					buttons : [ {
 						text : '保存',
 						handler : function() {
-							var isValid = $('#cabinet-name-txt').textbox("isValid");
-							isValid = isValid && $('#cabinet-code-txt').textbox("isValid");
-							isValid = isValid && $('#cabinet-model-sel').combobox("isValid");
-							isValid = isValid && $('#cabinet-sequence-txt').numberbox("isValid");
-							isValid = isValid && $('#cabinet-depth-txt').numberbox("isValid");
+							var isValid = $('#rack-name-txt').textbox("isValid");
+							isValid = isValid && $('#rack-code-txt').textbox("isValid");
+							isValid = isValid && $('#rack-model-sel').combobox("isValid");
+							isValid = isValid && $('#rack-sequence-txt').numberbox("isValid");
+							isValid = isValid && $('#rack-depth-txt').numberbox("isValid");
 							if (!isValid) {
 								return;
 							}
 
-							var newcabinet = {
-								NAME : $('#cabinet-name-txt').textbox("getValue"),
-								CODE : $('#cabinet-code-txt').textbox("getValue"),
-								CABINET_MODEL : parseInt($('#cabinet-model-sel').combobox("getValue"), 10),
-								SEQUENCE : parseInt($('#cabinet-sequence-txt').numberbox("getValue"), 10),
-								CABINET_DEPTH : parseFloat($('#cabinet-depth-txt').numberbox("getValue")),
-								START_USE_DATE : WUI.timeformat_t($('#cabinet-start-use-date').datebox("getValue")),
-								EXPECT_END_DATE : WUI.timeformat_t($('#cabinet-expect-end-date').datebox("getValue")),
-								OBJECT_TYPE : WUI.objectTypeDef.CABINNET,
+							var newrack = {
+								NAME : $('#rack-name-txt').textbox("getValue"),
+								CODE : $('#rack-code-txt').textbox("getValue"),
+								RACK_MODEL : parseInt($('#rack-model-sel').combobox("getValue"), 10),
+								SEQUENCE : parseInt($('#rack-sequence-txt').numberbox("getValue"), 10),
+								RACK_DEPTH : parseFloat($('#rack-depth-txt').numberbox("getValue")),
+								START_USE_DATE : WUI.timeformat_t($('#rack-start-use-date').datebox("getValue")),
+								EXPECT_END_DATE : WUI.timeformat_t($('#rack-expect-end-date').datebox("getValue")),
+								OBJECT_TYPE : WUI.objectTypeDef.RACK,
 								PARENT_ID : parentId,
 								params : {}
 							};
 
-							if (cabinet) {
-								newcabinet.ID = cabinet.ID;
-								WUI.ajax.put(objectNodeUrl + "/" + newcabinet.ID, newcabinet, function() {
+							if (rack) {
+								newrack.ID = rack.ID;
+								WUI.ajax.put(objectNodeUrl + "/" + newrack.ID, newrack, function() {
 									dialogNode.dialog("close");
 									reload(true);
 								}, function() {
 									$.messager.alert('失败', "修改" + typeName + "失败！");
 								});
 							} else {
-								WUI.ajax.post(objectNodeUrl, newcabinet, function() {
+								WUI.ajax.post(objectNodeUrl, newrack, function() {
 									dialogNode.dialog("close");
 									reload(true);
 								}, function() {

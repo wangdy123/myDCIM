@@ -1,16 +1,16 @@
 var db = require('dcim-db');
 var config = require('dcim-config');
-var cabinetGroup = require('dcim-object-dao').cabinetGroup;
+var rackGroup = require('dcim-object-dao').rackGroup;
 
 module.exports.initRequest = function(app) {
-	app.get('/cabinetGroups', function(req, res) {
+	app.get('/rackGroups', function(req, res) {
 		var parentId = req.query.parentId ? req.query.parentId : config.root_object_id;
-		cabinetGroup.getByPositionParent(db.pool, parentId, function(error, cabinetGroups) {
+		rackGroup.getByPositionParent(db.pool, parentId, function(error, rackGroups) {
 			if (error) {
 				logger.error(error);
 				res.status(500).send(error);
 			} else {
-				res.send(cabinetGroups);
+				res.send(rackGroups);
 			}
 		});
 	});

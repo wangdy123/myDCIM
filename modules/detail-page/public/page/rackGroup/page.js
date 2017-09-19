@@ -5,12 +5,12 @@ $(function() {
 	var currentObject = null;
 	WUI.detail = WUI.detail || {};
 
-	function openObject(cabinetGroupObject) {
-		currentObject = cabinetGroupObject;
-		$('#cabinetGroup-name-txt').text(currentObject.NAME);
-		$('#cabinetGroup-code-txt').text(currentObject.CODE);
-		$('#cabinetGroup-count-txt').text(currentObject.CABINET_COUNT);
-		$('#cabinetGroup-depth-txt').text(currentObject.CABINET_DEPTH.toFixed(3)+" 米");
+	function openObject(rackGroupObject) {
+		currentObject = rackGroupObject;
+		$('#rackGroup-name-txt').text(currentObject.NAME);
+		$('#rackGroup-code-txt').text(currentObject.CODE);
+		$('#rackGroup-count-txt').text(currentObject.RACK_COUNT);
+		$('#rackGroup-depth-txt').text(currentObject.RACK_DEPTH.toFixed(3)+" 米");
 	}
 
 	function requestStatus() {
@@ -23,8 +23,8 @@ $(function() {
 			if (status.ID !== currentObject.ID) {
 				return;
 			}
-			$("#cabinetGroup-alarm-count-txt").html('<label>' + status.alarmCount + '</label>');
-			$("#cabinetGroup-status-txt").html('<label class="alarmLevel' + status.maxAlarmLevel + '-icon"></label>');
+			$("#rackGroup-alarm-count-txt").html('<label>' + status.alarmCount + '</label>');
+			$("#rackGroup-status-txt").html('<label class="alarmLevel' + status.maxAlarmLevel + '-icon"></label>');
 		}, function() {
 			WUI.detail.realtimeValueTimer = setTimeout(requestStatus, WUI.monitor.REALTIME_VALUE_INTEVAL);
 		});
@@ -33,10 +33,10 @@ $(function() {
 	window.WUI.publishEvent('request_current_object', {
 		publisher : publisherName,
 		cbk : function(object) {
-			WUI.ajax.get(objectNodeUrl + "/" + object.ID, {}, function(cabinetGroupObject) {
-				openObject(cabinetGroupObject);
+			WUI.ajax.get(objectNodeUrl + "/" + object.ID, {}, function(rackGroupObject) {
+				openObject(rackGroupObject);
 			}, function() {
-				var typeName = WUI.objectTypes[WUI.objectTypeDef.CABINNET_GROUP].name;
+				var typeName = WUI.objectTypes[WUI.objectTypeDef.RACK_GROUP].name;
 				$.messager.alert('失败', "读取" + typeName + "失败！");
 			});
 		}

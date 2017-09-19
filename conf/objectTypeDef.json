@@ -4,7 +4,7 @@
 	"BUILDDING" : 3,
 	"FLOOR" : 4,
 	"ROOM" : 5,
-	"CABINNET_GROUP" : 6,
-	"CABINNET" : 11,
+	"RACK_GROUP" : 6,
+	"RACK" : 11,
 	"DEVICE" : 21
 }

@@ -31,16 +31,16 @@
 	},
 	"6" : {
 		"name" : "机柜分组",
-		"iconCls" : "icon-cabinet-group",
+		"iconCls" : "icon-rack-group",
 		"childTypes" : [ 11 ],
-		"namespace" : "cabinetGroup"
+		"namespace" : "rackGroup"
 	},
 	"11" : {
 		"name" : "机柜",
-		"iconCls" : "icon-cabinet",
+		"iconCls" : "icon-rack",
 		"childTypes" : [ 21 ],
 		"hasSignal":true,
-		"namespace" : "cabinet"
+		"namespace" : "rack"
 	},"21" : {
 		"name" : "设备",
 		"iconCls" : "icon-device",

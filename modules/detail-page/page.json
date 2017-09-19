@@ -45,7 +45,7 @@
 		"pages": [
 			{
 				"name": "机柜分组",
-				"pageName": "cabinetGroup"
+				"pageName": "rackGroup"
 			}
 		]
 	},
@@ -53,7 +53,7 @@
 		"pages": [
 			{
 				"name": "机柜",
-				"pageName": "cabinet"
+				"pageName": "rack"
 			}
 		]
 	},

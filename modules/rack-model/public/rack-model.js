@@ -1,16 +1,16 @@
 $(function() {
-	var cabinetModelUrl = "cabinet-model/cabinetModels";
-	$node = $('#cabinet-model-grid');
+	var rackModelUrl = "rack-model/rackModels";
+	$node = $('#rack-model-grid');
 
 	$node.datagrid({
-		url : cabinetModelUrl,
+		url : rackModelUrl,
 		method : "get",
 		singleSelect : true,
 		onLoadError : WUI.onLoadError,
 		toolbar : [ {
 			iconCls : 'icon-add',
 			handler : function() {
-				cabinetModelDialog();
+				rackModelDialog();
 			}
 		}, '-', {
 			iconCls : 'icon-reload',
@@ -26,10 +26,10 @@ $(function() {
 					align : 'center',
 					formatter : function(value, row, index) {
 						var e = '<div class="icon-edit operator-tool" title="修改" '
-								+ ' onclick="WUI.cabinetModel.editrow(this)"></div> ';
+								+ ' onclick="WUI.rackModel.editrow(this)"></div> ';
 						var s = '<div class="separater"></div> ';
 						var d = '<div class="icon-remove operator-tool" title="删除" '
-								+ ' onclick="WUI.cabinetModel.deleterow(this)"></div>';
+								+ ' onclick="WUI.rackModel.deleterow(this)"></div>';
 						return e + s + d;
 					}
 				}, {
@@ -72,16 +72,16 @@ $(function() {
 				} ] ]
 	});
 
-	WUI.cabinetModel = {};
-	WUI.cabinetModel.editrow = function(target) {
-		var cabinetModel = WUI.getDatagridRow($node, target);
-		cabinetModelDialog(cabinetModel);
+	WUI.rackModel = {};
+	WUI.rackModel.editrow = function(target) {
+		var rackModel = WUI.getDatagridRow($node, target);
+		rackModelDialog(rackModel);
 	};
-	WUI.cabinetModel.deleterow = function(target) {
-		var cabinetModel = WUI.getDatagridRow($node, target);
-		$.messager.confirm('确认', '确定要删除机柜型号【' + cabinetModel.NAME + '】吗?', function(r) {
+	WUI.rackModel.deleterow = function(target) {
+		var rackModel = WUI.getDatagridRow($node, target);
+		$.messager.confirm('确认', '确定要删除机柜型号【' + rackModel.NAME + '】吗?', function(r) {
 			if (r) {
-				WUI.ajax.remove(cabinetModelUrl + "/" + cabinetModel.ID, {}, function() {
+				WUI.ajax.remove(rackModelUrl + "/" + rackModel.ID, {}, function() {
 					$node.datagrid("reload");
 				}, function() {
 					$.messager.alert('失败', "删除机柜型号失败！");
@@ -90,28 +90,28 @@ $(function() {
 		});
 	};
 
-	function cabinetModelDialog(cabinetModel) {
-		var dialogNode = $('#cabinet-model-dialog');
+	function rackModelDialog(rackModel) {
+		var dialogNode = $('#rack-model-dialog');
 		dialogNode.dialog({
-			iconCls : cabinetModel ? "icon-edit" : "icon-add",
-			title : cabinetModel ? "修改机柜型号" : "添加机柜型号",
+			iconCls : rackModel ? "icon-edit" : "icon-add",
+			title : rackModel ? "修改机柜型号" : "添加机柜型号",
 			left : ($(window).width() - 400) * 0.5,
 			top : ($(window).height() - 300) * 0.5,
 			width : 450,
 			closed : false,
 			cache : false,
-			href : 'cabinet-model/dialog.html',
+			href : 'rack-model/dialog.html',
 			onLoadError : function() {
 				$.messager.alert('失败', "对话框加载失败，请刷新后重试！");
 			},
 			onLoad : function() {
-				if (cabinetModel) {
-					$('#model-name-txt').textbox("setValue",cabinetModel.NAME);
-					$('#model-ABBREVIATION-txt').textbox("setValue",cabinetModel.ABBREVIATION);
-					$('#model-u1_position-txt').combobox("setValue",cabinetModel.U1_POSITION);
-					$('#model-u-count-txt').numberbox("setValue", cabinetModel.U_COUNT);
-					$('#model-depth-txt').numberbox("setValue", cabinetModel.DEPTH);
-					$('model-max-use-age-txt').numberbox("setValue", cabinetModel.MAX_USE_AGE);
+				if (rackModel) {
+					$('#model-name-txt').textbox("setValue",rackModel.NAME);
+					$('#model-ABBREVIATION-txt').textbox("setValue",rackModel.ABBREVIATION);
+					$('#model-u1_position-txt').combobox("setValue",rackModel.U1_POSITION);
+					$('#model-u-count-txt').numberbox("setValue", rackModel.U_COUNT);
+					$('#model-depth-txt').numberbox("setValue", rackModel.DEPTH);
+					$('model-max-use-age-txt').numberbox("setValue", rackModel.MAX_USE_AGE);
 					$('#model-name-txt').textbox("isValid");
 					$('#model-ABBREVIATION-txt').textbox("isValid");
 				}
@@ -139,16 +139,16 @@ $(function() {
 						MAX_USE_AGE : parseInt($('#model-max-use-age-txt').numberbox("getValue"), 10)
 					};
 
-					if (cabinetModel) {
-						var ID = cabinetModel.ID;
-						WUI.ajax.put(cabinetModelUrl + "/" + ID, newObject, function() {
+					if (rackModel) {
+						var ID = rackModel.ID;
+						WUI.ajax.put(rackModelUrl + "/" + ID, newObject, function() {
 							$node.datagrid("reload");
 							dialogNode.dialog("close");
 						}, function() {
 							$.messager.alert('失败', "修改机柜型号失败！");
 						});
 					} else {
-						WUI.ajax.post(cabinetModelUrl, newObject, function() {
+						WUI.ajax.post(rackModelUrl, newObject, function() {
 							$node.datagrid("reload");
 							dialogNode.dialog("close");
 						}, function() {

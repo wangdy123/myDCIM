@@ -162,8 +162,23 @@ app.post('/objectNodes', function(req, res) {
 		} ];
 		var namespace=config.objectTypes[req.body.OBJECT_TYPE].namespace;
 		objectDao[namespace].createInsertTasks(connection,tasks,req.body);
-		objectDao.objectExt.createInsertTasks(connection,tasks,req.body.properties);
-		
+		objectDao.objectExt.createInsertTasks(connection,tasks,req.body.params);
+		if(req.body.DEVICE_TYPE){
+			tasks.push(function(nodeId,callback){
+				objectDao.signal.createSignalByTemplate(req.body.DEVICE_TYPE,nodeId,req.body.DRIVER_ID,req.body.params,function(err,signals){
+					if(err){
+						callback(err);
+						}else{
+							var signalTask=[];
+							createInsertSignalsTasks(connection,signalTask,signals);
+							async.waterfall(signalTask, function(err,result){
+								callback(nodeId,err);
+							});
+						}
+				});
+				
+			});
+		}
 		tasks.push(function(nodeId,callback){
 			callback();
 		});
@@ -194,7 +209,7 @@ app.put('/objectNodes/:id', function(req, res) {
 		var namespace=config.objectTypes[req.body.OBJECT_TYPE].namespace;
 		objectDao[namespace].createUpdateTasks(connection,tasks,req.body);
 		objectDao.objectExt.createDeleteTasks(connection,tasks,req.params.id);
-		objectDao.objectExt.createInsertTasks(connection,tasks,req.body.properties);
+		objectDao.objectExt.createInsertTasks(connection,tasks,req.body.params);
 		
 		tasks.push(function(nodeId,callback){
 			callback();
@@ -246,6 +261,18 @@ function deleteObject(connection,nodeObject,callback){
 	var namespace=config.objectTypes[nodeObject.OBJECT_TYPE].namespace;
 	objectDao[namespace].createDeleteTasks(connection,tasks,nodeObject.ID);
 	
+	tasks.push(function(cb) {
+		var sql ='delete from config.FSU where POSTION=?';
+		connection.query(sql, [ nodeObject.ID], function(err,result){
+			cb(err);
+		});
+	});
+	tasks.push(function(cb) {
+		var sql ='delete from config.DRIVER where POSTION=?';
+		connection.query(sql, [ nodeObject.ID], function(err,result){
+			cb(err);
+		});
+	});
 	tasks.push(function(cb) {
 		var sql ='delete from config.OBJECT_EXT where ID=?';
 		connection.query(sql, [ nodeObject.ID], function(err,result){

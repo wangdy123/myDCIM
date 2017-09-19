@@ -78,8 +78,11 @@ $(function() {
 	WUI.detail.createSignalItem = function($node, signalId, config, showName) {
 		config.unit = config.unit || '';
 		config.fixedNum = config.fixedNum || 0;
-		var $div = $(document.createElement("div"));
-		$div.addClass(config.className);
+		var elementName=config.elementName||"div";
+		var $div = $(document.createElement(elementName));
+		if (config.className) {
+			$div.addClass(config.className);
+		}
 		var item = {
 			signalId : signalId,
 			type : config.type,
@@ -135,7 +138,9 @@ $(function() {
 		config.unit = config.unit || '';
 		config.fixedNum = config.fixedNum || 0;
 		var $td = $(document.createElement("td"));
-		$td.addClass(config.className);
+		if (config.className) {
+			$td.addClass(config.className);
+		}
 		var item = {
 			signalId : signalId,
 			type : config.type,

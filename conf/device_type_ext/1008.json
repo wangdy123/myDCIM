@@ -1,0 +1,24 @@
+[
+	{
+		"key": "inputCount",
+		"label": "输入分路数",
+		"required": true,
+		"default": 2,
+		"type": "Integer"
+	},
+	{
+		"key": "outputCount",
+		"label": "输出支路数",
+		"required": true,
+		"default": 8,
+		"type": "Integer"
+	},
+	{
+		"key": "ratedPower",
+		"label": "额定功率",
+		"required": true,
+		"default": 11000,
+		"type": "Integer",
+		"unit": "VA"
+	}
+]

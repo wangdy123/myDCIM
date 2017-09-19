@@ -1,10 +1,23 @@
 $(function() {
 	var selfDiagnosisUrl = 'selfDiagnosis';
+	var objectNodeUrl = 'logicobject/objectNodes/';
 
 	var currentLogicObject = null;
 
+	$("sys-workspace").panel({
+		onLoadError : function(err) {
+			location.reload();
+		}
+	});
 	WUI.subscribe('request_current_object', function(event) {
-		event.cbk(currentLogicObject);
+		if (!currentLogicObject) {
+			WUI.ajax.get(objectNodeUrl + WUI.root_object_id,{}, function(object) {
+				event.cbk(object);
+				currentLogicObject = object;
+			});
+		} else {
+			event.cbk(currentLogicObject);
+		}
 	}, "apps");
 
 	WUI.subscribe('open_object', function(event) {
@@ -45,7 +58,7 @@ $(function() {
 			iconCls : "icon-key",
 			title : "修改当前用户口令",
 			left : ($(window).width() - 300) * 0.5,
-			top : ($(window).height() - 300) * 0.5,
+			top : ($(window).height() - 400) * 0.5,
 			width : 350,
 			closed : false,
 			cache : false,
@@ -103,7 +116,7 @@ $(function() {
 			$('#change-password-dialog').dialog({
 				iconCls : "icon-man",
 				title : "修改当前用户信息",
-				left : ($(window).width() - 300) * 0.5,
+				left : ($(window).width() - 500) * 0.5,
 				top : ($(window).height() - 300) * 0.5,
 				width : 380,
 				closed : false,
@@ -319,7 +332,8 @@ $(function() {
 			return;
 		}
 		g_alarmSoundFile = shoundFile;
-		$alarmSoundBox.html('<audio autoplay loop><source src="/sounds/' + shoundFile + '" type="audio/wav" /></audio>');
+		$alarmSoundBox
+				.html('<audio autoplay loop><source src="/sounds/' + shoundFile + '" type="audio/wav" /></audio>');
 	}
 
 	function setMuted($node, muted, key) {

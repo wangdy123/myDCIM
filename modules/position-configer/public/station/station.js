@@ -187,7 +187,7 @@ $(document).ready(
 								ADDRESS : $('#station-address-txt').textbox("getValue"),
 								DESCRIPTION : $('#station-desc-txt').textbox("getValue"),
 								PARENT_ID : parentObject.ID,
-								properties : []
+								params : {}
 							};
 
 							if (station) {

@@ -192,10 +192,18 @@ app.get('/detailPage', function(req, res) {
 			var objectPage = pages[req.query.objectType];
 
 			if (!req.query.deviceType) {
-				res.send(objectPage.pages);
+				pages = objectPage.pages;
 			} else {
-
-				res.send(objectPage.devicePages[req.query.deviceType].pages);
+				if (objectPage.devicePages[req.query.deviceType]) {
+					pages = objectPage.devicePages[req.query.deviceType].pages;
+				} else {
+					pages = [];
+				}
+			}
+			if (pages) {
+				res.send(pages);
+			} else {
+				res.send([]);
 			}
 		});
 	} catch (e) {

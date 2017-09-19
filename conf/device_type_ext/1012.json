@@ -1,0 +1,18 @@
+[
+	{
+		"key": "inputPower",
+		"label": "输入功率",
+		"required": true,
+		"default": 600,
+		"type": "Integer",
+		"unit": "W"
+	},
+	{
+		"key": "coolingCapacity",
+		"label": "制冷量",
+		"required": true,
+		"default": 3000,
+		"type": "Integer",
+		"unit": "W"
+	}
+]

@@ -159,7 +159,7 @@ $(document).ready(
 										OBJECT_TYPE : window.WUI.objectTypeDef.BUILDDING,
 										DESCRIPTION : $('#building-desc-txt').textbox("getValue"),
 										PARENT_ID : parentId,
-										properties : []
+										params : {}
 									};
 
 									if (building) {

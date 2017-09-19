@@ -2,7 +2,7 @@
 	{
 		"type": "overload",
 		"signalType": [
-			0
+			1
 		],
 		"name": "高于门限",
 		"params": [
@@ -23,14 +23,14 @@
 	{
 		"type": "highLevelAlarm",
 		"signalType": [
-			1
+			2
 		],
 		"name": "高电平告警"
 	},
 	{
 		"type": "lowLevelAlarm",
 		"signalType": [
-			1
+			2
 		],
 		"name": "低电平告警"
 	}

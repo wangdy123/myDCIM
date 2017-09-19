@@ -201,7 +201,7 @@ $(document).ready(
 								OBJECT_TYPE : WUI.objectTypeDef.REGION,
 								REGION_TYPE : regionType,
 								PARENT_ID : parentId,
-								properties : []
+								params : {}
 							};
 
 							if (region) {

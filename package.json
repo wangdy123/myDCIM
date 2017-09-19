@@ -36,6 +36,7 @@
   },
   "contributors": [],
   "scripts": {
+    "compile": "./install.sh",
     "start": "pm2 start ./index.js",
     "test": "mocha --recursive unit_test"
   }

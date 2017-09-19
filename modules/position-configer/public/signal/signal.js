@@ -1,6 +1,8 @@
 $(function() {
 	var signalUrl = 'logicobject/signals/';
 	var standardSignalUrl = 'position-configer/defaultSignals';
+	var driverUrl = "driver-configer/drivers";
+	var driverSignalUrl = "driver-configer/driverSignals";
 	var $node = $('#signal-datagrid');
 
 	WUI.signal = WUI.signal || {};
@@ -9,7 +11,16 @@ $(function() {
 	function reload() {
 		$node.datagrid("reload");
 	}
-
+	var valueSrcs = [ {
+		type : 1,
+		name : "固定值"
+	}, {
+		type : 2,
+		name : "驱动采集"
+	}, {
+		type : 3,
+		name : "其他信号"
+	} ];
 	function openObject(nodeObject) {
 		currentObject = nodeObject;
 		$node
@@ -83,6 +94,17 @@ $(function() {
 									return "";
 								}
 							}, {
+								field : 'VALUE_SRC',
+								title : '数值来源',
+								width : 80,
+								formatter : function(value, row, index) {
+									var type = WUI.findFromArray(valueSrcs, 'type', row.VALUE_SRC);
+									if (type) {
+										return type.name;
+									}
+									return "";
+								}
+							}, {
 								field : 'RECORD_RERIOD',
 								title : '存储周期(S)',
 								align : 'right',
@@ -138,7 +160,7 @@ $(function() {
 
 	function initConditionTable() {
 		var cfg = {
-			fit : true,
+			height : 150,
 			border : true,
 			singleSelect : true,
 			data : [],
@@ -194,7 +216,7 @@ $(function() {
 					}, {
 						field : 'ext_desc',
 						title : '告警条件描述',
-						width : 200,
+						width : 150,
 						formatter : function(value, row, index) {
 							var desc = [];
 							var condition = WUI.findFromArray(WUI.conditionTypes, 'type', row.CONDITION_TYPE);
@@ -226,164 +248,10 @@ $(function() {
 		$("#condition-table").datagrid("deleteRow", WUI.getDatagridRowIndex(target));
 	};
 
-	function createProperty($parentNode, param) {
-		var $tr = $(document.createElement("tr"));
-		$parentNode.append($tr);
-		var $td = $(document.createElement("td"));
-		$tr.append('<td align="right">' + param.label + ':</td>', $td);
-		var property = {
-			key : param.key
-		};
-
-		switch (param.type) {
-		case "Float": {
-			property.$node = $(document.createElement("input"));
-			property.$node.addClass("easyui-numberbox");
-			$td.append(property.$node);
-			property.$node.css("width", "100%");
-			property.$node.numberbox({
-				precision : 2,
-				required : param.required
-			});
-			property.setValue = function(value) {
-				property.$node.numberbox('setValue', value);
-			};
-			property.isValid = function() {
-				return property.$node.numberbox('isValid');
-			};
-			property.getValue = function() {
-				return parseFloat(property.$node.numberbox('getValue'));
-			};
-		}
-			break;
-		case "Intger": {
-			property.$node = $(document.createElement("input"));
-			property.$node.addClass("easyui-numberbox");
-			$td.append(property.$node);
-			property.$node.css("width", "100%");
-			property.$node.numberbox({
-				precision : 0,
-				required : param.required
-			});
-			property.setValue = function(value) {
-				property.$node.numberbox('setValue', value);
-			};
-			property.isValid = function() {
-				return property.$node.numberbox('isValid');
-			};
-			property.getValue = function() {
-				return parseInt(property.$node.numberbox('getValue'), 10);
-			};
-		}
-			break;
-		case "Option": {
-			property.$node = $(document.createElement("input"));
-			property.$node.addClass("easyui-combobox");
-			$td.append(property.$node);
-			property.$node.css("width", "100%");
-			property.$node.combobox({
-				valueField : param.valueField,
-				textField : param.textField,
-				editable : false,
-				data : param.options,
-				required : param.required
-			});
-
-			property.setValue = function(value) {
-				property.$node.combobox('setValue', value);
-			};
-			property.isValid = function() {
-				return property.$node.combobox('isValid');
-			};
-			property.getValue = function() {
-				return property.$node.combobox('getValue');
-			};
-		}
-			break;
-		case "Date": {
-			property.$node = $(document.createElement("input"));
-			property.$node.addClass("easyui-datebox");
-			$td.append(property.$node);
-			property.$node.css("width", "100%");
-			property.$node.datebox({
-				parser : WUI.date_parse,
-				formatter : WUI.dateFormat,
-				required : param.required
-			});
-			property.setValue = function(value) {
-				property.$node.datebox('setValue', value);
-			};
-			property.isValid = function() {
-				return property.$node.datebox('isValid');
-			};
-			property.getValue = function() {
-				return property.$node.datebox('getValue');
-			};
-		}
-			break;
-		case "Datetime": {
-			property.$node = $(document.createElement("input"));
-			property.$node.addClass("easyui-datetimebox");
-			$td.append(property.$node);
-			property.$node.css("width", "100%");
-			property.$node.datetimebox({
-				parser : WUI.date_parse,
-				formatter : WUI.timeformat,
-				required : param.required
-			});
-			property.setValue = function(value) {
-				property.$node.datetimebox('setValue', value);
-			};
-			property.isValid = function() {
-				return property.$node.datetimebox('isValid');
-			};
-			property.getValue = function() {
-				return property.$node.datetimebox('getValue');
-			};
-		}
-			break;
-		default: {
-			property.$node = $(document.createElement("input"));
-			property.$node.addClass("easyui-textbox");
-			$td.append(property.$node);
-			property.$node.css("width", "100%");
-			property.$node.textbox({
-				required : param.required
-			});
-			property.setValue = function(value) {
-				property.$node.textbox('setValue', value);
-			};
-			property.isValid = function() {
-				return property.$node.textbox('isValid');
-			};
-			property.getValue = function() {
-				return property.$node.textbox('getValue');
-			};
-		}
-			break;
-		}
-		return property;
-	}
 	function conditionDialog(condition, callback) {
 		var dialogNode = $("#condition-dialog");
 		var properties = [];
-		function setPropertiesValue(condition) {
-			properties.forEach(function(property) {
-				property.setValue(condition[property.key]);
-			});
-		}
-		function isPropertiesValueValid() {
-			var isValid = true;
-			properties.forEach(function(property) {
-				isValid = isValid && property.isValid();
-			});
-			return isValid;
-		}
-		function getPropertiesValue(condition) {
-			properties.forEach(function(property) {
-				condition[property.key] = property.getValue();
-			});
-		}
+
 		var cfg = {
 			iconCls : condition ? "icon-edit" : "icon-add",
 			title : (condition ? "修改" : "添加") + "告警条件",
@@ -421,12 +289,15 @@ $(function() {
 						$("#condition-prop-table").empty();
 						properties = [];
 						if (conditionType.params) {
+							var $propTable = $("#condition-prop-table");
 							conditionType.params.forEach(function(param) {
-								properties.push(createProperty($("#condition-prop-table"), param));
+								var $tr = $(document.createElement("tr"));
+								$propTable.append($tr);
+								properties.push(WUI.createProperty($tr, param, 80, 150));
 							});
 						}
 						if (condition) {
-							setPropertiesValue(condition);
+							WUI.setPropertiesValue(properties, condition.params);
 						}
 					}
 				});
@@ -436,7 +307,7 @@ $(function() {
 					$('#signal-alarm-level-sel').combobox("setValue", condition.ALARM_LEVEL);
 					$('#signal-condition-sel').combobox("setValue", condition.CONDITION_TYPE);
 					$('#signal-alarm-delay-txt').numberbox("setValue", condition.ALARM_DELAY);
-					setPropertiesValue(condition);
+					WUI.setPropertiesValue(properties, condition.params);
 					$('#signal-alarm-txt').textbox("isValid");
 				}
 			},
@@ -451,7 +322,7 @@ $(function() {
 					isValid = isValid && $('#signal-alarm-level-sel').combobox("isValid");
 					isValid = isValid && $('#signal-condition-sel').combobox("isValid");
 					isValid = isValid && $('#signal-alarm-delay-txt').numberbox("isValid");
-					isValid = isValid && isPropertiesValueValid();
+					isValid = isValid && WUI.isPropertiesValueValid(properties);
 					if (!isValid) {
 						return;
 					}
@@ -462,7 +333,7 @@ $(function() {
 						CONDITION_TYPE : $('#signal-condition-sel').combobox("getValue"),
 						ALARM_DELAY : parseInt($('#signal-alarm-delay-txt').numberbox("getValue"), 10)
 					};
-					getPropertiesValue(newCondition);
+					newCondition.params = getPropertiesValue(properties);
 					callback(newCondition);
 					dialogNode.dialog("close");
 				}
@@ -477,11 +348,12 @@ $(function() {
 	}
 	function signalDialog(signal, nodeObject) {
 		var dialogNode = $("#configer-dialog");
+		var transProperties = [];
 		var cfg = {
 			iconCls : signal ? "icon-edit" : "icon-add",
 			title : (signal ? "修改" : "添加") + "信号",
 			left : ($(window).width() - 600) * 0.5,
-			top : ($(window).height() - 400) * 0.5,
+			top : ($(window).height() - 600) * 0.5,
 			width : 650,
 			closed : false,
 			cache : false,
@@ -542,12 +414,137 @@ $(function() {
 								max : Math.floor(record.SIGNAL_ID / 1000) * 1000 + 999
 							});
 							$("#condition-table").datagrid("loadData", record.conditions ? record.conditions : []);
+							if (record.SRC_SIGNAL_ID) {
+								$('#signal-src-type-sel').combobox("setValue", 2);
+							} else {
+								$('#signal-src-type-sel').combobox("setValue", 1);
+							}
 						}
 					},
 					onLoadSuccess : function() {
 						if (signal) {
 							var stdId = Math.floor(signal.SIGNAL_ID / 1000) * 1000 + 1;
 							$('#signal-standard-sel').combobox("setValue", stdId);
+						}
+					}
+				});
+				$('#signal-src-type-sel').combobox({
+					data : [ {
+						type : 1,
+						name : "驱动"
+					}, {
+						type : 2,
+						name : "其他信号"
+					} ],
+					valueField : 'type',
+					textField : 'name',
+					editable : false,
+					onSelect : function(record) {
+						if (record.type==1) {
+							$("#from-driver-signal-panel").show();
+							$("#from-other-signal-panel").hide();
+							$('#signal-src-sel').combobox({required:true});
+							$('#signal-name-of-driver-sel').combobox({required:true});
+							$('#signal-src-sel').combobox({required:false});
+						} else {
+							$("#from-driver-signal-panel").hide();
+							$("#from-other-signal-panel").show();
+							$('#signal-src-sel').combobox({required:false});
+							$('#signal-name-of-driver-sel').combobox({required:false});
+							$('#signal-src-sel').combobox({required:true});
+						}
+					},
+					onLoadSuccess : function() {
+						if (signal) {
+							if (signal.SRC_SIGNAL_ID) {
+								$('#signal-src-type-sel').combobox("setValue", 2);
+							} else {
+								$('#signal-src-type-sel').combobox("setValue", 1);
+							}
+						}
+					}
+				});
+				$('#signal-src-sel').combobox({
+					data : $node.datagrid("getData").rows,
+					valueField : 'SIGNAL_ID',
+					textField : 'SIGNAL_NAME',
+					editable : false,
+					onLoadSuccess : function() {
+						if (signal) {
+							$('#signal-src-sel').combobox("setValue", signal.SRC_SIGNAL_ID);
+						}
+					}
+				});
+				var positionSel = new WUI.createLogicObjectCombotree({
+					$node : $('#signal-driver-position'),
+					onChange : function(newValue) {
+						$('#signal-driver-sel').combobox({
+							url : driverUrl,
+							method : "get",
+							queryParams : {
+								position : newValue
+							}
+						});
+					}
+				});
+
+				$('#signal-driver-sel').combobox({
+					data : [],
+					valueField : 'ID',
+					textField : 'NAME',
+					editable : false,
+					onSelect : function(driver) {
+						$('#signal-name-of-driver-sel').combobox({
+							url : driverSignalUrl,
+							method : "get",
+							queryParams : {
+								driverId : driver.ID
+							}
+						});
+					},
+					onLoadSuccess : function() {
+						if (signal) {
+							$('#signal-driver-sel').combobox("setValue", signal.DRIVER_ID);
+						}
+					}
+				});
+				$('#signal-name-of-driver-sel').combobox({
+					data : [],
+					valueField : 'driver_key',
+					textField : 'name',
+					editable : false,
+					onLoadSuccess : function() {
+						if (signal) {
+							$('#signal-name-of-driver-sel').combobox("setValue", signal.DRIVER_KEY);
+						}
+					}
+				});
+				$('#signal-trans-func-sel').combobox({
+					data : WUI.trans_func,
+					valueField : 'type',
+					textField : 'name',
+					editable : false,
+					onSelect : function(transFunc) {
+						var $propTable = $("#signal-trans-func-params");
+						$propTable.empty();
+						transProperties = [];
+						if (signal && signal.funcs) {
+							var $tr = $(document.createElement("tr"));
+							var i = 0;
+							transFunc.params.forEach(function(param) {
+								if (i % 2 === 0) {
+									$tr = $(document.createElement("tr"));
+									$propTable.append($tr);
+								}
+								i++;
+								transProperties.push(WUI.createProperty($tr, param, 80, 150));
+							});
+							WUI.setPropertiesValue(transProperties, signal.funcs.params);
+						}
+					},
+					onLoadSuccess : function() {
+						if (signal && signal.funcs) {
+							$('#signal-trans-func-sel').combobox("setValue", signal.funcs.FUNC_NAME);
 						}
 					}
 				});
@@ -584,6 +581,16 @@ $(function() {
 					$("#condition-table").datagrid("loadData", signal.conditions ? signal.conditions : []);
 					$('#signal-name-txt').textbox("isValid");
 					$('#signal-id-txt').numberbox("disable");
+					if (!signal.SRC_SIGNAL_ID && signal.DRIVER_ID) {
+						WUI.ajax.get(driverUrl + "/" + signal.DRIVER_ID, {}, function(driver) {
+							positionSel.setValue(driver.POSTION);
+						});
+						$('#signal-driver-sel').combobox("setValue", signal.DRIVER_ID);
+						$('#signal-name-of-driver-sel').combobox("setValue", signal.DRIVER_KEY);
+						if (signal.funcs) {
+							$('#signal-trans-func-sel').combobox("setValue", signal.funcs.FUNC_NAME);
+						}
+					}
 				}
 			},
 			modal : true,
@@ -593,10 +600,22 @@ $(function() {
 			buttons : [
 					{
 						text : '保存',
+						width : 100,
 						handler : function() {
 							var isValid = $('#signal-name-txt').textbox("isValid");
 							isValid = isValid && $('#signal-type-sel').combobox("isValid");
 							isValid = isValid && $('#signal-id-txt').numberbox("isValid");
+							isValid = isValid && $('#signal-src-type-sel').combobox("isValid");
+							isValid = isValid && $('#signal-id-txt').combobox("isValid");
+							if (parseInt($('#signal-src-type-sel').combobox("getValue"), 10) === 1) {
+								isValid = isValid && $('#signal-driver-sel').combobox("isValid");
+								isValid = isValid && $('#signal-name-of-driver-sel').combobox("isValid");
+								isValid = isValid && $('#signal-trans-func-sel').combobox("isValid");
+								isValid = isValid && WUI.setPropertiesValue(transProperties);
+							} else {
+								isValid = isValid && $('#signal-src-sel').combobox("isValid");
+							}
+
 							if (!isValid) {
 								return;
 							}
@@ -614,7 +633,19 @@ $(function() {
 								conditions : $("#condition-table").datagrid("getData").rows
 							};
 							newSignal.SIGNAL_TYPE = newSignal.SIGNAL_TYPE ? newSignal.SIGNAL_TYPE : 0;
-
+							if (parseInt($('#signal-src-type-sel').combobox("getValue"), 10) === 1) {
+								newSignal.DRIVER_ID = $('#signal-driver-sel').combobox("getValue");
+								newSignal.DRIVER_KEY = $('#signal-name-of-driver-sel').combobox("getValue");
+								var transName = $('#signal-trans-func-sel').combobox("getValue");
+								if (transName) {
+									newSignal.funcs = {
+										name : transName,
+										params : WUI.getPropertiesValue(transProperties)
+									}
+								}
+							} else {
+								newSignal.SRC_SIGNAL_ID = $('#signal-src-sel').combobox("getValue");
+							}
 							var i = 1;
 							newSignal.conditions.forEach(function(condition) {
 								condition.CONDITION_NUM = i;
@@ -642,6 +673,7 @@ $(function() {
 						}
 					}, {
 						text : '取消',
+						width : 100,
 						handler : function() {
 							dialogNode.dialog("close");
 						}

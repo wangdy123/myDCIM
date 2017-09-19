@@ -4,17 +4,15 @@
 		"name": "高压配电",
 		"iconCls": "icon-devicetype1001",
 		"businessType": 1,
-		"namespace": "devicetype",
 		"parentNodeTypes": [
 			5
 		]
 	},
 	{
 		"type": 1002,
-		"name": "高压配电",
+		"name": "低压交流配电",
 		"iconCls": "icon-devicetype1002",
 		"businessType": 1,
-		"namespace": "devicetype",
 		"parentNodeTypes": [
 			5
 		]
@@ -24,7 +22,6 @@
 		"name": "变压器",
 		"iconCls": "icon-devicetype1003",
 		"businessType": 1,
-		"namespace": "devicetype",
 		"parentNodeTypes": [
 			5
 		]
@@ -34,7 +31,6 @@
 		"name": "发电机组",
 		"iconCls": "icon-devicetype1005",
 		"businessType": 1,
-		"namespace": "devicetype",
 		"parentNodeTypes": [
 			5
 		]
@@ -44,7 +40,6 @@
 		"name": "开关电源",
 		"iconCls": "icon-devicetype1006",
 		"businessType": 1,
-		"namespace": "devicetype1006",
 		"parentNodeTypes": [
 			5
 		]
@@ -54,7 +49,6 @@
 		"name": "铅酸蓄电池组",
 		"iconCls": "icon-devicetype1007",
 		"businessType": 1,
-		"namespace": "devicetype1007",
 		"parentNodeTypes": [
 			5
 		]
@@ -64,7 +58,6 @@
 		"name": "UPS设备",
 		"iconCls": "icon-UPS",
 		"businessType": 1,
-		"namespace": "UPS",
 		"parentNodeTypes": [
 			5
 		]
@@ -74,7 +67,6 @@
 		"name": "UPS配电屏",
 		"iconCls": "icon-devicetype1009",
 		"businessType": 1,
-		"namespace": "devicetype1009",
 		"parentNodeTypes": [
 			5
 		]
@@ -84,7 +76,6 @@
 		"name": "高压直流电源",
 		"iconCls": "icon-devicetype1010",
 		"businessType": 1,
-		"namespace": "devicetype",
 		"parentNodeTypes": [
 			5
 		]
@@ -94,7 +85,6 @@
 		"name": "机房专用空调",
 		"iconCls": "icon-devicetype1012",
 		"businessType": 1,
-		"namespace": "devicetype",
 		"parentNodeTypes": [
 			5
 		]
@@ -104,7 +94,6 @@
 		"name": "中央空调末端",
 		"iconCls": "icon-devicetype1013",
 		"businessType": 1,
-		"namespace": "devicetype",
 		"parentNodeTypes": [
 			5
 		]
@@ -114,7 +103,6 @@
 		"name": "中央空调主机",
 		"iconCls": "icon-devicetype1014",
 		"businessType": 1,
-		"namespace": "devicetype",
 		"parentNodeTypes": [
 			5
 		]
@@ -124,7 +112,6 @@
 		"name": "普通空调",
 		"iconCls": "icon-devicetype1015",
 		"businessType": 1,
-		"namespace": "devicetype",
 		"parentNodeTypes": [
 			5
 		]
@@ -134,7 +121,6 @@
 		"name": "智能电表",
 		"iconCls": "icon-devicetype1016",
 		"businessType": 1,
-		"namespace": "devicetype",
 		"parentNodeTypes": [
 			5
 		]
@@ -144,7 +130,6 @@
 		"name": "机房环境",
 		"iconCls": "icon-environment",
 		"businessType": 1,
-		"namespace": "environment",
 		"parentNodeTypes": [
 			5
 		]
@@ -154,7 +139,6 @@
 		"name": "机架式服务器",
 		"iconCls": "icon-rack_server",
 		"businessType": 2,
-		"namespace": "rack_server",
 		"parentNodeTypes": [
 			11
 		]
@@ -164,7 +148,6 @@
 		"name": "机柜",
 		"iconCls": "icon-devicetype2001",
 		"businessType": 2,
-		"namespace": "devicetype2001",
 		"parentNodeTypes": [
 			5,
 			6

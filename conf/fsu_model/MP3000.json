@@ -1,0 +1,23 @@
+[
+	{
+		"key": "IP",
+		"label": "IP地址",
+		"required": true,
+		"default":"127.0.0.1",
+		"type": "String"
+	},
+	{
+		"key": "port",
+		"label": "端口",
+		"required": true,
+		"default":8080,
+		"type": "Integer"
+	},
+	{
+		"key": "commCount",
+		"label": "串口数",
+		"required": true,
+		"default":8,
+		"type": "Integer"
+	}
+]

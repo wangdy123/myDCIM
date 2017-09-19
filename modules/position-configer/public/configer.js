@@ -21,14 +21,15 @@ $(document).ready(function() {
 	};
 
 	function openObject(object) {
-		if(!object){
+		if (!object) {
 			return;
 		}
 		if (currentObject && currentObject.ID === object.ID) {
 			return;
 		}
 		currentObject = object;
-		initBreadCrumbs(object);
+		var $panel = $("#bread-crumbs-panel");
+		WUI.initBreadCrumbs($panel, objectNodeUrl, object);
 
 		while ($('#configer-tabs').tabs("tabs").length > 0) {
 			var onetab = $('#configer-tabs').tabs("tabs")[0];
@@ -61,47 +62,4 @@ $(document).ready(function() {
 		$('#configer-tabs').tabs('select', 0);
 	}
 
-	function initBreadCrumbs(object) {
-		var nodes = [ object ];
-		function showBreadCrumbs() {
-			var $panel = $("#bread-crumbs-panel");
-			$panel.empty();
-			function addNode(node) {
-				var $node = $(document.createElement("div"));
-				$panel.prepend($node);
-				$node.text(node.NAME);
-				$node.addClass('bread-item');
-				$node.click(function() {
-					WUI.publishEvent('open_object', {
-						publisher : 'bread-crumbs',
-						object : node
-					});
-				});
-				if (i !== 0) {
-					$panel.prepend('<div class="bread-separator">>></div>');
-				}
-			}
-			for (var i = nodes.length - 1; i >= 0; i--) {
-				addNode(nodes[i]);
-			}
-		}
-		function requestNode(id) {
-			WUI.ajax.get(objectNodeUrl + id, {}, function(result) {
-				nodes.splice(0, 0, result);
-				if (result.PARENT_ID) {
-					requestNode(result.PARENT_ID);
-				} else {
-					showBreadCrumbs();
-				}
-			}, function(s) {
-				console.log(s);
-				showBreadCrumbs();
-			});
-		}
-		if (object.PARENT_ID) {
-			requestNode(object.PARENT_ID);
-		} else {
-			showBreadCrumbs();
-		}
-	}
 });

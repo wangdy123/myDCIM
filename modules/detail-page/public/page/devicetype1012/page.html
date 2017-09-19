@@ -1,0 +1,80 @@
+
+<table>
+	<tr>
+		<td style="height: 400px; width: 150px; padding: 0 10px;">
+			<div class="easyui-panel" data-options="border:false,fit:true">
+				<img id="device-img" class="easyui-panel" data-options="border:false,fit:true" />
+			</div>
+		</td>
+		<td valign="top">>
+			<table class="configer">
+				<tr>
+					<th colspan="8">
+						<div>
+							风机状态：<span id="device-fun-status"><span class="detail-statusInvalid-icon"></span></span>
+						</div>
+					</th>
+				</tr>
+				<tr>
+					<td> </td>
+				</tr>
+				<tr>
+					<th colspan="8">
+						<div>
+							通讯状态：<span id="device-link-status"><span class="detail-statusInvalid-icon"></span></span>
+						</div>
+					</th>
+				</tr>
+				<tr>
+					<td> </td>
+				</tr>
+				<tr>
+					<td colspan="8"><label>设备告警统计</label></td>
+				</tr>
+				<tr>
+					<td><div class="alarmLevel1-icon" title="一级告警"></div></td>
+					<td id="device-alarmLevel1-count"></td>
+					<td align="right" style="width: 30px;"><div class="alarmLevel2-icon" title="二级告警"></div></td>
+					<td id="device-alarmLevel2-count"></td>
+					<td align="right" style="width: 30px;"><div class="alarmLevel3-icon" title="三级告警"></div></td>
+					<td id="device-alarmLevel3-count"></td>
+					<td align="right" style="width: 30px;"><div class="alarmLevel4-icon" title="四级告警"></div></td>
+					<td id="device-alarmLevel4-count"></td>
+				</tr>
+			</table>
+		</td>
+		<td valign="top">
+			<div class="profile">
+				<div class="label">基本信息</div>
+				<div class="value">
+					<p>
+						设备类型：<span id="device-type-txt"></span>
+					</p>
+					<p>
+						设备编号：<span id="device-code-txt"></span>
+					</p>
+					<p>
+						厂家：<span id="device-vender-txt"></span>
+					</p>
+					<p>
+						型号：<span id="device-model-txt"></span>
+					</p>
+					<p>
+						输入功率：<span id="device-inputPower"></span>W
+					</p>
+					<p>
+						制冷量：<span id="device-coolingCapacity"></span>W
+					</p>
+				</div>
+			</div>
+		</td>
+		<td valign="top">
+			<div class="profile">
+				<div class="label">设备运行参数</div>
+				<div class="value" id="device-run-params"></div>
+			</div>
+		</td>
+	</tr>
+</table>
+
+<script type="text/javascript" src="detail/page/devicetype1012/page.js"></script>

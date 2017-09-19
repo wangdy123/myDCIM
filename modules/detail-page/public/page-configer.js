@@ -10,6 +10,7 @@ WUI.pageConfiger.pageDialog = function(nodeObject) {
 		left : ($(window).width() - 400) * 0.5,
 		top : top > 0 ? top : 100,
 		width : 650,
+		height : 240,
 		closed : false,
 		cache : false,
 		href : "detail/page-configer-dialog.html",

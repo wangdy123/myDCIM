@@ -116,6 +116,7 @@ $(function() {
 	}
 
 	function createSystemPanel(pageConfig) {
+		//TODO 添加通讯状态显示
 		$('#ups-system-panel').empty();
 		pageConfig.defaults.sort(function(a, b) {
 			return a.signalId > b.signalId;
@@ -130,7 +131,7 @@ $(function() {
 				name : item.name,
 				fixedNum : item.fixedNum
 			};
-			signalObjects.push(WUI.detail.createTableItem($('#ups-system-panel'), item.signalId, config, true));
+			signalObjects.push(WUI.detail.createSignalItem($('#ups-system-panel'), item.signalId, config, true));
 			requestIds.push({
 				objectId : currentObject.ID,
 				signalId : item.signalId

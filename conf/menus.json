@@ -208,6 +208,18 @@
 		"name": "配置",
 		"childMenus": [
 			{
+				"id": 2105,
+				"title": "FSU配置",
+				"url": "fsu-configer/wokspace.html",
+				"border": false,
+				"name": "FSU配置"
+			},{
+				"id": 2106,
+				"title": "驱动配置",
+				"url": "driver-configer/wokspace.html",
+				"border": false,
+				"name": "驱动配置"
+			},{
 				"id": 2101,
 				"title": "业务配置",
 				"url": "position-configer/wokspace.html",

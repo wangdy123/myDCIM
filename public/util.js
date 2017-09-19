@@ -133,6 +133,7 @@ window.WUI.ajax.get=function(url,args,success,fail,longtime){
 	    type:'GET', //
 	    data:args,
 	    timeout:30000,    // 超时时间
+	    cache:false,
 	    success:function(data,textStatus,jqXHR){
 	    	if(longtime){
 	    		$.messager.progress('close');
@@ -512,5 +513,239 @@ window.WUI.parallel=function(tasks,callback){
 	tasks.forEach(function(item){
 		item(finishedCbk);
 	});
+};
+
+window.WUI.createProperty=function($tr, param,labelWidth,valueWidth) {
+	var $td = $(document.createElement("td"));
+	if(valueWidth){
+		$td.css("width",valueWidth+"px");
+	}
+	var $unitTd=$('<td style="width:40px;"></td>');
+	if(param.unit){
+		$unitTd=$('<td style="width:40px;">'+param.unit+'</td>');
+	}
+	$tr.append('<td align="right" '+(labelWidth?'style="width:'+labelWidth+'px;"':'')+'>' + param.label + ':</td>', $td,$unitTd);
+	var property = {
+		key : param.key
+	};
+
+	switch (param.type) {
+	case "Float": {
+		property.$node = $(document.createElement("input"));
+		property.$node.addClass("easyui-numberbox");
+		$td.append(property.$node);
+		// property.$node.css("width", "100%");
+		property.$node.numberbox({
+			width:valueWidth,
+			precision : 2,
+			required : param.required
+		});
+		if(param["default"]){
+			property.$node.numberbox('setValue', param["default"]);			
+		}
+		property.setValue = function(value) {
+			property.$node.numberbox('setValue', value);
+		};
+		property.isValid = function() {
+			return property.$node.numberbox('isValid');
+		};
+		property.getValue = function() {
+			return parseFloat(property.$node.numberbox('getValue'));
+		};
+	}
+		break;
+	case "Integer": {
+		property.$node = $(document.createElement("input"));
+		property.$node.addClass("easyui-numberbox");
+		$td.append(property.$node);
+		property.$node.numberbox({
+			width:valueWidth,
+			precision : 0,
+			required : param.required
+		});
+		if(param["default"]){
+			property.$node.numberbox('setValue', param["default"]);			
+		}
+		property.setValue = function(value) {
+			property.$node.numberbox('setValue', value);
+		};
+		property.isValid = function() {
+			return property.$node.numberbox('isValid');
+		};
+		property.getValue = function() {
+			return parseInt(property.$node.numberbox('getValue'), 10);
+		};
+	}
+		break;
+	case "Option": {
+		property.$node = $(document.createElement("select"));
+		property.$node.addClass("easyui-combobox");
+		$td.append(property.$node);
+		var params=[];
+		for(key in param.options){
+			params.push({
+				key:key,
+				value:param.options[key]
+			});
+		}
+		
+		property.$node.combobox({
+			width:valueWidth,
+			valueField :"key",
+			textField : "value",
+			editable : false,
+			data : params,
+			required : param.required
+		});
+		if(param["default"]){
+			property.$node.combobox('setValue', param["default"]);			
+		}
+		property.setValue = function(value) {
+			property.$node.combobox('setValue', value);
+		};
+		property.isValid = function() {
+			return property.$node.combobox('isValid');
+		};
+		property.getValue = function() {
+			return property.$node.combobox('getValue');
+		};
+	}
+		break;
+	case "Date": {
+		property.$node = $(document.createElement("input"));
+		property.$node.addClass("easyui-datebox");
+		$td.append(property.$node);
+		property.$node.datebox({
+			width:valueWidth,
+			parser : WUI.date_parse,
+			formatter : WUI.dateFormat,
+			required : param.required
+		});
+		if(param["default"]){
+			property.$node.datebox('setValue', param["default"]);			
+		}
+		property.setValue = function(value) {
+			property.$node.datebox('setValue', value);
+		};
+		property.isValid = function() {
+			return property.$node.datebox('isValid');
+		};
+		property.getValue = function() {
+			return property.$node.datebox('getValue');
+		};
+	}
+		break;
+	case "Datetime": {
+		property.$node = $(document.createElement("input"));
+		property.$node.addClass("easyui-datetimebox");
+		$td.append(property.$node);
+		property.$node.datetimebox({
+			width:valueWidth,
+			parser : WUI.date_parse,
+			formatter : WUI.timeformat,
+			required : param.required
+		});
+		if(param["default"]){
+			property.$node.datetimebox('setValue', param["default"]);			
+		}
+		property.setValue = function(value) {
+			property.$node.datetimebox('setValue', value);
+		};
+		property.isValid = function() {
+			return property.$node.datetimebox('isValid');
+		};
+		property.getValue = function() {
+			return property.$node.datetimebox('getValue');
+		};
+	}
+		break;
+	default: {
+		property.$node = $(document.createElement("input"));
+		property.$node.addClass("easyui-textbox");
+		$td.append(property.$node);
+		property.$node.textbox({
+			width:valueWidth,
+			required : param.required
+		});
+		if(param["default"]){
+			property.$node.textbox('setValue', param["default"]);			
+		}
+		property.setValue = function(value) {
+			property.$node.textbox('setValue', value);
+		};
+		property.isValid = function() {
+			return property.$node.textbox('isValid');
+		};
+		property.getValue = function() {
+			return property.$node.textbox('getValue');
+		};
+	}
+		break;
+	}
+
+	return property;
+};
+
+WUI.setPropertiesValue=function(properties,paramValues) {
+	properties.forEach(function(property) {
+		property.setValue(paramValues[property.key]);
+	});
+};
+WUI.isPropertiesValueValid=function(properties) {
+	var isValid = true;
+	properties.forEach(function(property) {
+		isValid = isValid && property.isValid();
+	});
+	return isValid;
+};
+WUI.getPropertiesValue=function(properties) {
+	var params = {};
+	properties.forEach(function(property) {
+		params[property.key] = property.getValue();
+	});
+	return params;
+};
+
+WUI.initBreadCrumbs=function($panel,objectNodeUrl,object) {
+	var nodes = [ object ];
+	function showBreadCrumbs() {
+		$panel.empty();
+		function addNode(node) {
+			var $node = $(document.createElement("div"));
+			$panel.prepend($node);
+			$node.text(node.NAME);
+			$node.addClass('bread-item');
+			$node.click(function() {
+				WUI.publishEvent('open_object', {
+					publisher : 'bread-crumbs',
+					object : node
+				});
+			});
+			if (i !== 0) {
+				$panel.prepend('<div class="bread-separator">>></div>');
+			}
+		}
+		for (var i = nodes.length - 1; i >= 0; i--) {
+			addNode(nodes[i]);
+		}
+	}
+	function requestNode(id) {
+		WUI.ajax.get(objectNodeUrl + id, {}, function(result) {
+			nodes.splice(0, 0, result);
+			if (result.PARENT_ID) {
+				requestNode(result.PARENT_ID);
+			} else {
+				showBreadCrumbs();
+			}
+		}, function(s) {
+			console.log(s);
+			showBreadCrumbs();
+		});
+	}
+	if (object.PARENT_ID) {
+		requestNode(object.PARENT_ID);
+	} else {
+		showBreadCrumbs();
+	}
 };
 

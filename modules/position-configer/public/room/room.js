@@ -260,7 +260,7 @@ $(document).ready(
 								SAFETY_PERSON : $("#room-safety-person").combobox("getValue"),
 								OBJECT_TYPE : WUI.objectTypeDef.ROOM,
 								PARENT_ID : parentId,
-								properties : []
+								params : {}
 							};
 
 							if (room) {

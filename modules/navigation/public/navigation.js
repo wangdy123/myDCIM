@@ -164,6 +164,96 @@ $(function() {
 			}, "navigation");
 		}
 	};
+	window.WUI.createLogicObjectCombotree = function(config) {
+		var objectNodeUrl = 'logicobject/objectNodes';
+		var tree = config.$node.combotree("tree");
+		function isLeaf(data) {
+			try {
+				if (!WUI.objectTypes[data.OBJECT_TYPE].childTypes
+						|| WUI.objectTypes[data.OBJECT_TYPE].childTypes.length === 0) {
+					return true;
+				}
+				return false;
+			} catch (e) {
+				console.log(e);
+				return false;
+			}
+		}
+		var cfg = {
+			url : objectNodeUrl,
+			method : 'get',
+			lines : true,
+			dnd : true,
+			animate : true,
+			loadFilter : function(datas, parent) {
+				var objects = [];
+				for (var i = 0; i < datas.length; i++) {
+					var data = datas[i];
+					objects.push({
+						id : data.ID,
+						text : data.NAME,
+						state : isLeaf(data) ? "open" : "closed",
+						iconCls : WUI.objectTypes[data.OBJECT_TYPE].iconCls,
+						attributes : {
+							data : data
+						}
+					});
+				}
+				return objects;
+			}
+		};
+		if (config.onChange) {
+			cfg.onChange = config.onChange;
+		}
+		config.$node.combotree(cfg);
+		this.getValue = function() {
+			return config.$node.combotree("getValue");
+		};
+		function loadParentTree(obj, callback) {
+			var node = tree('find', obj.ID);
+			if (node) {
+				tree('append', {
+					parent : node.target,
+					data : obj.children
+				});
+				appendChildren(obj.children);
+				callback();
+				return;
+			}
+			WUI.ajax.get(objectNodeUrl + "/" + obj.PARENT_ID, {}, function(parent) {
+				WUI.ajax.get(objectNodeUrl, {
+					id : parent.ID
+				}, function(results) {
+					parent.children = results;
+					for (var i = 0; i < results.length; i++) {
+						var result = results[i];
+						var children = [];
+						if (result.ID === obj.ID) {
+							children = obj.children || [];
+						}
+						result.children = children;
+					}
+					loadParentTree(parent, callback);
+				});
+			});
+		}
+
+		this.setValue = function(objectId) {
+			var node = tree('find', objectId);
+			if (node) {
+				config.$node.combotree('setValue', objectId);
+			} else {
+				WUI.ajax.get(objectNodeUrl + "/" + objectId, {}, function(obj) {
+					loadParentTree(obj, function() {
+						var node = tree('find', objectId);
+						if (node) {
+							config.$node.combotree('setValue', objectId);
+						}
+					});
+				});
+			}
+		};
+	};
 	window.WUI.createLogicObjectSeachBox = function(config) {
 		config.seachBox.searchbox({
 			searcher : function(value) {

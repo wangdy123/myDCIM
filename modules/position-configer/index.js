@@ -86,3 +86,15 @@ app.get('/defaultSignals', function(req, res) {
 	res.sendFile(fileName);
 });
 
+var fs = require('fs');
+app.get('/device/params/:deviceType', function(req, res) {
+	var fileName = path.join(process.cwd(), 'conf', 'device_type_ext', req.params.deviceType + '.json');
+	fs.exists(fileName, function(exists){
+		if(exists){
+			res.sendFile(fileName);			
+		}else{
+			res.send([]);
+		}
+	});
+});
+

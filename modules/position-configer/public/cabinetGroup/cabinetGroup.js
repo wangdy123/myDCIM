@@ -145,7 +145,7 @@ $(document).ready(
 								CABINET_DEPTH : parseFloat($('#cabinetGroup-depth-txt').numberbox("getValue")),
 								OBJECT_TYPE : WUI.objectTypeDef.CABINNET_GROUP,
 								PARENT_ID : parentId,
-								properties : []
+								params : {}
 							};
 
 							if (cabinetGroup) {

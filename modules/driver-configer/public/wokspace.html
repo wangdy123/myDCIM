@@ -1,0 +1,18 @@
+<div class="easyui-layout" data-options="fit:true">
+	<div id="node-nav" data-options="region:'west', split:true,href:'navigation/nav.html'" style="width: 200px;"></div>
+	<div id="main-workspace" class="easyui-panel" data-options="region:'center'">
+		<div class="easyui-layout" data-options="fit:true">
+			<div class="panel" data-options="region:'north', border:false" style="height: 30px;">
+				<div style="padding: 2px 20px;">
+					<label>当前位置：</label><span id="bread-crumbs-panel"></span>
+				</div>
+			</div>
+			<div class="panel" data-options="region:'center', border:false">
+				<table id="driver-grid" class="easyui-datagrid" fit="true" title="驱动管理" iconCls="icon-driver">
+				</table>
+				<div id="driver-dialog"></div>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript" src="driver-configer/driver.js"></script>

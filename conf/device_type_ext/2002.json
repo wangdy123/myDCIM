@@ -1,0 +1,73 @@
+[
+	{
+		"key": "ip",
+		"label": "IP",
+		"required": true,
+		"default": "127.0.0.1",
+		"type": "String"
+	},
+	{
+		"key": "bmc",
+		"label": "BMC",
+		"required": false,
+		"default": "",
+		"type": "String"
+	},
+	{
+		"key": "cpu",
+		"label": "CPU颗数",
+		"required": true,
+		"default": 1,
+		"type": "Integer"
+	},
+	{
+		"key": "ratedPower",
+		"label": "额定功率",
+		"required": true,
+		"default": 600,
+		"type": "Integer",
+		"unit": "W"
+	},
+	{
+		"key": "mem",
+		"label": "内存条数",
+		"required": true,
+		"default": 2,
+		"type": "Integer"
+	},
+	{
+		"key": "disk",
+		"label": "硬盘个数",
+		"required": true,
+		"default": 4,
+		"type": "Integer"
+	},
+	{
+		"key": "power",
+		"label": "电源个数",
+		"required": true,
+		"default": 1,
+		"type": "Integer"
+	},
+	{
+		"key": "fun",
+		"label": "风扇个数",
+		"required": true,
+		"default": 8,
+		"type": "Integer"
+	},
+	{
+		"key": "gpu",
+		"label": "GPU个数",
+		"required": true,
+		"default": 1,
+		"type": "Integer"
+	},
+	{
+		"key": "mic",
+		"label": "MIC个数",
+		"required": true,
+		"default": 1,
+		"type": "Integer"
+	}
+]

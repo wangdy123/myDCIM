@@ -157,9 +157,9 @@ $(function() {
 				text : '保存',
 				handler : function() {
 					var isValid = $('#model-name-txt').textbox("isValid");
-					isValid = isValid && $('#model-device-type-sel').combobox("getValue");
-					isValid = isValid && $('#model-vender-sel').combobox("getValue");
-					isValid = isValid && $('#model-max-use-age-txt').numberbox("getValue");
+					isValid = isValid && $('#model-device-type-sel').combobox("isValid");
+					isValid = isValid && $('#model-vender-sel').combobox("isValid");
+					isValid = isValid && $('#model-max-use-age-txt').numberbox("isValid");
 					if (!isValid) {
 						return;
 					}

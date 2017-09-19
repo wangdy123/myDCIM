@@ -232,7 +232,7 @@ $(document).ready(
 								EXPECT_END_DATE : WUI.timeformat_t($('#cabinet-expect-end-date').datebox("getValue")),
 								OBJECT_TYPE : WUI.objectTypeDef.CABINNET,
 								PARENT_ID : parentId,
-								properties : []
+								params : {}
 							};
 
 							if (cabinet) {

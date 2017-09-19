@@ -45,6 +45,8 @@
 		"logicobject": "/logicobject",
 		"alarm": "/alarm",
 		"position-configer": "/position-configer",
+		"fsu-configer": "/fsu-configer",
+		"driver-configer": "/driver-configer",
 		"cabinet-model": "/cabinet-model",
 		"device-model": "/device-model",
 		"device-vender": "/device-vender",
@@ -71,7 +73,6 @@
 		"roomTypes",
 		"powerTypes",
 		"deviceTypes",
-		"object_ex",
 		"regionTypes",
 		"businessTypes",
 		"alarmLevels",
@@ -80,6 +81,7 @@
 		"signalTypeDef",
 		"energyConsumptionType",
 		"reginCode",
-		"conditionTypes"
+		"conditionTypes",
+		"trans_func"
 	]
 }

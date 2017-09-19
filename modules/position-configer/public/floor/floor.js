@@ -94,9 +94,9 @@ $(document).ready(
 				var cfg = {
 					iconCls : floor ? "icon-edit" : "icon-add",
 					title : (floor ? "修改" : "添加") + typeName,
-					left : ($(window).width() - 500) * 0.5,
+					left : ($(window).width() - 300) * 0.5,
 					top : ($(window).height() - 300) * 0.5,
-					width : 500,
+					width : 300,
 					closed : false,
 					cache : false,
 					href : WUI.getConfigerDialogPath(WUI.objectTypes[WUI.objectTypeDef.FLOOR].namespace),
@@ -129,19 +129,19 @@ $(document).ready(
 					buttons : [ {
 						text : '保存',
 						handler : function() {
-							var isValid = $('#floor-sel').val();
+							var isValid = $('#floor-sel').combobox("isValid");
 							isValid = isValid && $('#floor-code-txt').textbox("isValid");
 							if (!isValid) {
 								return;
 							}
 
 							var newfloor = {
-								NAME : $('#floor-sel option:selected').textbox("getText"),
+								NAME : $('#floor-sel').combobox("getText"),
 								CODE : $('#floor-code-txt').textbox("getValue"),
 								SEQUENCE : $('#floor-sel').combobox("getValue"),
 								OBJECT_TYPE : WUI.objectTypeDef.FLOOR,
 								PARENT_ID : parentId,
-								properties : []
+								params : {}
 							};
 
 							if (floor) {

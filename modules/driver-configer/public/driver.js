@@ -1,26 +1,20 @@
 $(function() {
 	var objectNodeUrl = 'logicobject/objectNodes/';
 	var driverUrl = "driver-configer/drivers";
+	var restartDriverUrl = "driver-configer/restartDriver";
 	var fsuUrl = "fsu-configer/fsus";
 	var driverModelUrl = "driver-configer/models";
 	var driverParamUrl = "driver-configer/params/";
 	$node = $('#driver-grid');
 
-	var driverModels = [];
 	var fsus = [];
 	var currentObject = null;
 	WUI.subscribe('open_object', function(event) {
 		reloadFsu(event.object);
 	}, "driver-configer");
-
-	WUI.ajax.get(driverModelUrl, {}, function(results) {
-		driverModels = results;
-		WUI.publishEvent('request_current_object', {
-			publisher : 'driver-configer',
-			cbk : reloadFsu
-		});
-	}, function() {
-		$.messager.alert('失败', "读取驱动型号失败，请重试！");
+	WUI.publishEvent('request_current_object', {
+		publisher : 'driver-configer',
+		cbk : reloadFsu
 	});
 
 	function reloadFsu(object) {
@@ -83,21 +77,21 @@ $(function() {
 							return e + s + d;
 						}
 					}, {
+						field : 'restart',
+						title : '重启驱动',
+						width : 80,
+						align : 'center',
+						formatter : function(value, row, index) {
+							return '<a  href="#" class="easyui-linkbutton" onclick="WUI.driver.restart(this)">重启</a> ';
+						}
+					}, {
 						field : 'NAME',
 						title : '驱动名称',
 						width : 150
 					}, {
 						field : 'MODEL',
 						title : '驱动模块',
-						width : 100,
-						formatter : function(value, row, index) {
-							for (var i = 0; i < driverModels.length; i++) {
-								if (driverModels[i].model === row.MODEL) {
-									return driverModels[i].name;
-								}
-							}
-							return "";
-						}
+						width : 150
 					}, {
 						field : 'FSU',
 						title : '所属FSU',
@@ -110,11 +104,29 @@ $(function() {
 							}
 							return "";
 						}
+					}, {
+						field : 'params',
+						title : '参数',
+						formatter : function(value, row, index) {
+							return JSON.stringify(row.params);
+						}
 					} ] ]
 		});
 	}
 
 	WUI.driver = {};
+	WUI.driver.restart = function(target) {
+		var driver = WUI.getDatagridRow($node, target);
+		$.messager.confirm('确认', '确定要重启驱动【' + driver.NAME + '】吗?', function(r) {
+			if (r) {
+				WUI.ajax.put(restartDriverUrl + driver.ID, {}, function() {
+					$.messager.alert('成功', "重启驱动成功！");
+				}, function() {
+					$.messager.alert('失败', "重启驱动失败！");
+				});
+			}
+		});
+	};
 	WUI.driver.editrow = function(target) {
 		var driver = WUI.getDatagridRow($node, target);
 		driverDialog(driver);
@@ -160,12 +172,14 @@ $(function() {
 						}
 					}
 				});
+
 				$('#driver-model-sel').combobox({
 					valueField : 'model',
 					textField : 'name',
 					editable : false,
 					required : true,
-					data : driverModels,
+					url : driverModelUrl,
+					method : 'get',
 					keyHandler : {
 						down : function(e) {
 							$('#driver-model-sel').combobox("showPanel");
@@ -217,7 +231,7 @@ $(function() {
 						params : WUI.getPropertiesValue(properties)
 					};
 					if (!newObject.FSU) {
-						newObject.FSU = null;
+						newObject.FSU = 0;
 					}
 					if (driver) {
 						var ID = driver.ID;

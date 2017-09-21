@@ -1,25 +1,15 @@
 $(function() {
 	var objectNodeUrl = 'logicobject/objectNodes/';
 	var fsuUrl = "fsu-configer/fsus";
+	var restartFsuUrl = "fsu-configer/restartFsu/";
 	var fsuModelUrl = "fsu-configer/models";
 	var fsuParamUrl = "fsu-configer/params/";
 	$node = $('#fsu-grid');
 
-	var fsuModels = [];
 	var currentObject = null;
 	WUI.subscribe('open_object', function(event) {
 		openObject(event.object);
 	}, "fsu-configer");
-
-	WUI.ajax.get(fsuModelUrl, {}, function(results) {
-		fsuModels = results;
-		WUI.publishEvent('request_current_object', {
-			publisher : 'fsu-configer',
-			cbk : openObject
-		});
-	}, function() {
-		$.messager.alert('失败', "读取FSU型号失败，请重试！");
-	});
 
 	function openObject(object) {
 		if (!object) {
@@ -31,7 +21,6 @@ $(function() {
 		currentObject = object;
 		var $panel = $("#bread-crumbs-panel");
 		WUI.initBreadCrumbs($panel, objectNodeUrl, object);
-
 
 		$node.datagrid({
 			url : fsuUrl,
@@ -67,6 +56,14 @@ $(function() {
 							return e + s + d;
 						}
 					}, {
+						field : 'restart',
+						title : '重启FSU',
+						width : 80,
+						align : 'center',
+						formatter : function(value, row, index) {
+							return '<a  href="#" class="easyui-linkbutton" onclick="WUI.fsu.restart(this)">重启</a> ';
+						}
+					}, {
 						field : 'CODE',
 						title : '编码',
 						width : 100
@@ -77,20 +74,30 @@ $(function() {
 					}, {
 						field : 'MODEL',
 						title : 'FSU型号',
-						width : 100,
+						width : 150
+					}, {
+						field : 'params',
+						title : '参数',
 						formatter : function(value, row, index) {
-							for (var i = 0; i < fsuModels.length; i++) {
-								if (fsuModels[i].model === row.MODEL) {
-									return fsuModels[i].name;
-								}
-							}
-							return "";
+							return JSON.stringify(row.params);
 						}
 					} ] ]
 		});
 	}
 
 	WUI.fsu = {};
+	WUI.fsu.restart = function(target) {
+		var fsu = WUI.getDatagridRow($node, target);
+		$.messager.confirm('确认', '确定要重启FSU【' + fsu.NAME + '】吗?', function(r) {
+			if (r) {
+				WUI.ajax.put(restartFsuUrl + fsu.ID, {}, function() {
+					$.messager.alert('成功', "重启FSU成功！");
+				}, function() {
+					$.messager.alert('失败', "重启FSU失败！");
+				});
+			}
+		});
+	};
 	WUI.fsu.editrow = function(target) {
 		var fsu = WUI.getDatagridRow($node, target);
 		fsuDialog(fsu);
@@ -129,7 +136,8 @@ $(function() {
 					textField : 'name',
 					editable : false,
 					required : true,
-					data : fsuModels,
+					url : fsuModelUrl,
+					method : 'get',
 					onSelect : function(rec) {
 						var $propTable = $("#fsu-extprop-panel");
 						properties = [];
@@ -140,7 +148,7 @@ $(function() {
 								properties.push(WUI.createProperty($tr, param, 100, 200));
 							});
 							if (fsu) {
-								WUI.setPropertiesValue(properties,fsu.params);
+								WUI.setPropertiesValue(properties, fsu.params);
 							}
 						}, function() {
 							$.messager.alert('失败', "读取FSU运行参数失败，请重试！");
@@ -174,7 +182,7 @@ $(function() {
 						NAME : $('#fsu-name-txt').textbox("getValue"),
 						CODE : $('#fsu-code-txt').textbox("getValue"),
 						MODEL : $('#fsu-model-sel').combobox("getValue"),
-						POSTION:currentObject.ID,
+						POSTION : currentObject.ID,
 						params : WUI.getPropertiesValue(properties)
 					};
 

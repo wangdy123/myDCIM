@@ -7,13 +7,18 @@
 	"fileMaxAge": 30,
 	"httpPort": 8180,
 	"secure": false,
-	"temp_path":"./temp",
+	"temp_path": "./temp",
 	"map": {
 		"defaultZoom": 10,
 		"minZoom": 8,
 		"maxZoom": 16,
 		"LATITUDE": 23.146984,
 		"LONGITUDE": 113.30735
+	},
+	"scCluster":{
+		"host":"localhost",
+		"httpPort": 8080,
+		"rootPath": ""
 	},
 	"db": {
 		"host": "localhost",
@@ -55,8 +60,8 @@
 		"dashboard": "/dashboard",
 		"navigation": "/navigation",
 		"screen-edit": "/screen-edit",
-		"detail-page":"/detail",
-		"proxy":"/proxy"
+		"detail-page": "/detail",
+		"proxy": "/proxy"
 	},
 	"systemName": "DCIM测试平台",
 	"copyRightText": "copyright:wincom",

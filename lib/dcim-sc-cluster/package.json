@@ -1,0 +1,13 @@
+{
+  "name": "dcim-sc-cluster",
+  "version": "0.0.1",
+  "description": "wincom DCIM sc cluster client",
+  "main": "./index.js",
+  "dependencies": {
+  },
+  "repository": {
+  },
+  "author": {
+	    "name":"wang sx"
+	  }
+}

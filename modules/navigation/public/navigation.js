@@ -166,7 +166,6 @@ $(function() {
 	};
 	window.WUI.createLogicObjectCombotree = function(config) {
 		var objectNodeUrl = 'logicobject/objectNodes';
-		var tree = config.$node.combotree("tree");
 		function isLeaf(data) {
 			try {
 				if (!WUI.objectTypes[data.OBJECT_TYPE].childTypes
@@ -209,49 +208,12 @@ $(function() {
 		this.getValue = function() {
 			return config.$node.combotree("getValue");
 		};
-		function loadParentTree(obj, callback) {
-			var node = tree('find', obj.ID);
-			if (node) {
-				tree('append', {
-					parent : node.target,
-					data : obj.children
-				});
-				appendChildren(obj.children);
-				callback();
-				return;
-			}
-			WUI.ajax.get(objectNodeUrl + "/" + obj.PARENT_ID, {}, function(parent) {
-				WUI.ajax.get(objectNodeUrl, {
-					id : parent.ID
-				}, function(results) {
-					parent.children = results;
-					for (var i = 0; i < results.length; i++) {
-						var result = results[i];
-						var children = [];
-						if (result.ID === obj.ID) {
-							children = obj.children || [];
-						}
-						result.children = children;
-					}
-					loadParentTree(parent, callback);
-				});
-			});
-		}
 
 		this.setValue = function(objectId) {
-			var node = tree('find', objectId);
-			if (node) {
-				config.$node.combotree('setValue', objectId);
-			} else {
-				WUI.ajax.get(objectNodeUrl + "/" + objectId, {}, function(obj) {
-					loadParentTree(obj, function() {
-						var node = tree('find', objectId);
-						if (node) {
-							config.$node.combotree('setValue', objectId);
-						}
-					});
-				});
-			}
+			config.$node.combotree('setValue', objectId);
+			WUI.ajax.get(objectNodeUrl + "/" + objectId, {}, function(obj) {
+				config.$node.combotree('setText', obj.NAME);
+			});
 		};
 	};
 	window.WUI.createLogicObjectSeachBox = function(config) {

@@ -3,6 +3,10 @@ $(function() {
 	var standardSignalUrl = 'position-configer/defaultSignals';
 	var driverUrl = "driver-configer/drivers";
 	var driverSignalUrl = "driver-configer/driverSignals";
+	var funcsModelUrl = "position-configer/signalFuncModel";
+	var funcsParamUrl = "position-configer/signalFuncParams/";
+	var conditionModelUrl = "position-configer/signalConditionModel";
+	var conditionParamUrl = "position-configer/signalConditionParams/";
 	var $node = $('#signal-datagrid');
 
 	WUI.signal = WUI.signal || {};
@@ -23,115 +27,113 @@ $(function() {
 	} ];
 	function openObject(nodeObject) {
 		currentObject = nodeObject;
-		$node
-				.datagrid({
-					url : signalUrl,
-					queryParams : {
-						parentId : currentObject.ID
+		$node.datagrid({
+			url : signalUrl,
+			queryParams : {
+				parentId : currentObject.ID
+			},
+			fit : true,
+			border : false,
+			method : "get",
+			singleSelect : true,
+			onLoadError : WUI.onLoadError,
+			toolbar : [ {
+				iconCls : 'icon-add',
+				text : '添加信号',
+				handler : function() {
+					signalDialog(null, currentObject);
+				}
+			}, '-', {
+				iconCls : 'icon-reload',
+				text : '刷新',
+				handler : function() {
+					reload();
+				}
+			} ],
+			columns : [ [
+					{
+						field : 'icon',
+						align : 'center',
+						width : 40,
+						formatter : function(value, row, index) {
+							var type = WUI.findFromArray(WUI.signalType, 'type', row.SIGNAL_TYPE);
+							if (type) {
+								return '<div class="' + type.iconCls + ' icon-tool" title="' + type.name + '"></div> ';
+							}
+						}
 					},
-					fit : true,
-					border : false,
-					method : "get",
-					singleSelect : true,
-					onLoadError : WUI.onLoadError,
-					toolbar : [ {
-						iconCls : 'icon-add',
-						text : '添加信号',
-						handler : function() {
-							signalDialog(null, currentObject);
+					{
+						field : 'action',
+						title : '操作',
+						width : 80,
+						align : 'center',
+						formatter : function(value, row, index) {
+							var e = '<div class="icon-edit operator-tool" title="修改" '
+									+ ' onclick="WUI.signal.editrow(this)"></div> ';
+							var s = '<div class="separater"></div> ';
+							var d = '<div class="icon-remove operator-tool" title="删除" '
+									+ ' onclick="WUI.signal.deleterow(this)"></div>';
+							return e + s + d;
 						}
-					}, '-', {
-						iconCls : 'icon-reload',
-						text : '刷新',
-						handler : function() {
-							reload();
+					}, {
+						field : 'SIGNAL_ID',
+						title : '信号编码',
+						align : 'right',
+						width : 80
+					}, {
+						field : 'SIGNAL_NAME',
+						title : '名称',
+						width : 200
+					}, {
+						field : 'SIGNAL_TYPE',
+						title : '信号类型',
+						width : 60,
+						formatter : function(value, row, index) {
+							var type = WUI.findFromArray(WUI.signalType, 'type', row.SIGNAL_TYPE);
+							if (type) {
+								return type.name;
+							}
+							return "";
 						}
-					} ],
-					columns : [ [
-							{
-								field : 'icon',
-								align : 'center',
-								width : 40,
-								formatter : function(value, row, index) {
-									var type = WUI.findFromArray(WUI.signalType, 'type', row.SIGNAL_TYPE);
-									if (type) {
-										return '<div class="' + type.iconCls + ' icon-tool " title="' + type.name
-												+ '"></div> ';
-									}
-								}
-							},
-							{
-								field : 'action',
-								title : '操作',
-								width : 80,
-								align : 'center',
-								formatter : function(value, row, index) {
-									var e = '<div class="icon-edit operator-tool" title="修改" '
-											+ ' onclick="WUI.signal.editrow(this)"></div> ';
-									var s = '<div class="separater"></div> ';
-									var d = '<div class="icon-remove operator-tool" title="删除" '
-											+ ' onclick="WUI.signal.deleterow(this)"></div>';
-									return e + s + d;
-								}
-							}, {
-								field : 'SIGNAL_ID',
-								title : '信号编码',
-								align : 'right',
-								width : 80
-							}, {
-								field : 'SIGNAL_NAME',
-								title : '名称',
-								width : 200
-							}, {
-								field : 'SIGNAL_TYPE',
-								title : '信号类型',
-								width : 60,
-								formatter : function(value, row, index) {
-									var type = WUI.findFromArray(WUI.signalType, 'type', row.SIGNAL_TYPE);
-									if (type) {
-										return type.name;
-									}
-									return "";
-								}
-							}, {
-								field : 'VALUE_SRC',
-								title : '数值来源',
-								width : 80,
-								formatter : function(value, row, index) {
-									var type = WUI.findFromArray(valueSrcs, 'type', row.VALUE_SRC);
-									if (type) {
-										return type.name;
-									}
-									return "";
-								}
-							}, {
-								field : 'RECORD_RERIOD',
-								title : '存储周期(S)',
-								align : 'right',
-								width : 80
-							}, {
-								field : 'UNIT',
-								title : '测量单位',
-								width : 60
-							}, {
-								field : 'NORMAL_DESC',
-								title : '正常描述',
-								width : 60
-							}, {
-								field : 'RECOVER_DELAY',
-								title : '恢复延时(S)',
-								align : 'right',
-								width : 80
-							}, {
-								field : 'DESCRIPTION',
-								title : '信号说明',
-								width : 200
-							}, {
-								field : 'EXPLANATION',
-								title : '信号解释',
-								width : 200
-							} ] ]
-				});
+					}, {
+						field : 'VALUE_SRC',
+						title : '数值来源',
+						width : 80,
+						formatter : function(value, row, index) {
+							var type = WUI.findFromArray(valueSrcs, 'type', row.VALUE_SRC);
+							if (type) {
+								return type.name;
+							}
+							return "";
+						}
+					}, {
+						field : 'RECORD_RERIOD',
+						title : '存储周期(S)',
+						align : 'right',
+						width : 80
+					}, {
+						field : 'UNIT',
+						title : '测量单位',
+						width : 60
+					}, {
+						field : 'NORMAL_DESC',
+						title : '正常描述',
+						width : 60
+					}, {
+						field : 'RECOVER_DELAY',
+						title : '恢复延时(S)',
+						align : 'right',
+						width : 80
+					}, {
+						field : 'DESCRIPTION',
+						title : '信号说明',
+						width : 200
+					}, {
+						field : 'EXPLANATION',
+						title : '信号解释',
+						width : 200
+					} ] ]
+		});
 	}
 
 	window.WUI.publishEvent('request_current_object', {
@@ -205,28 +207,13 @@ $(function() {
 						align : 'right'
 					}, {
 						field : 'CONDITION_TYPE',
-						title : '告警条件名称',
-						formatter : function(value, row, index) {
-							var condition = WUI.findFromArray(WUI.conditionTypes, 'type', row.CONDITION_TYPE);
-							if (!condition) {
-								return "";
-							}
-							return condition.name;
-						}
+						title : '告警条件名称'
 					}, {
-						field : 'ext_desc',
+						field : 'params',
 						title : '告警条件描述',
 						width : 150,
 						formatter : function(value, row, index) {
-							var desc = [];
-							var condition = WUI.findFromArray(WUI.conditionTypes, 'type', row.CONDITION_TYPE);
-							if (!condition || !condition.params) {
-								return "";
-							}
-							condition.params.forEach(function(param) {
-								desc.push(param["label"] + ":" + row[param["key"]]);
-							});
-							return desc.join(",");
+							return JSON.stringify(row.params);
 						}
 					} ] ]
 		};
@@ -280,25 +267,28 @@ $(function() {
 				});
 
 				$('#signal-condition-sel').combobox({
-					valueField : 'type',
+					valueField : 'model',
 					textField : 'name',
 					editable : false,
-					data : WUI.conditionTypes,
-					onSelect : function(conditionType) {
-						$('#signal-alarm-txt').textbox("setValue", conditionType.name);
-						$("#condition-prop-table").empty();
+					url : conditionModelUrl,
+					method : 'get',
+					onSelect : function(rec) {
+						$('#signal-alarm-txt').textbox("setValue", rec.name);
+						var $propTable = $("#condition-prop-table");
+						$propTable.empty();
 						properties = [];
-						if (conditionType.params) {
-							var $propTable = $("#condition-prop-table");
-							conditionType.params.forEach(function(param) {
+						WUI.ajax.get(conditionParamUrl + rec.model, {}, function(results) {
+							results.forEach(function(param) {
 								var $tr = $(document.createElement("tr"));
 								$propTable.append($tr);
 								properties.push(WUI.createProperty($tr, param, 80, 150));
 							});
-						}
-						if (condition) {
-							WUI.setPropertiesValue(properties, condition.params);
-						}
+							if (condition) {
+								WUI.setPropertiesValue(properties, condition.params);
+							}
+						}, function() {
+							$.messager.alert('失败', "读取门限参数失败，请重试！");
+						});
 					}
 				});
 
@@ -333,7 +323,7 @@ $(function() {
 						CONDITION_TYPE : $('#signal-condition-sel').combobox("getValue"),
 						ALARM_DELAY : parseInt($('#signal-alarm-delay-txt').numberbox("getValue"), 10)
 					};
-					newCondition.params = getPropertiesValue(properties);
+					newCondition.params = WUI.getPropertiesValue(properties);
 					callback(newCondition);
 					dialogNode.dialog("close");
 				}
@@ -388,6 +378,29 @@ $(function() {
 								return results;
 							}
 						});
+						if (type.enable_other_signal) {
+							$('#signal-src-type-sel').combobox({
+								data : [ {
+									type : 1,
+									name : "驱动"
+								}, {
+									type : 2,
+									name : "其他信号"
+								} ]
+							});
+						} else {
+							$('#signal-src-type-sel').combobox({
+								data : [ {
+									type : 1,
+									name : "驱动"
+								} ]
+							});
+						}
+						if (type.enable_condition) {
+							$("#condition-panel").show();
+						} else {
+							$("#condition-panel").hide();
+						}
 					}
 				});
 				$('#signal-standard-sel').combobox({
@@ -432,26 +445,35 @@ $(function() {
 					data : [ {
 						type : 1,
 						name : "驱动"
-					}, {
-						type : 2,
-						name : "其他信号"
 					} ],
 					valueField : 'type',
 					textField : 'name',
 					editable : false,
 					onSelect : function(record) {
-						if (record.type==1) {
+						if (record.type == 1) {
 							$("#from-driver-signal-panel").show();
 							$("#from-other-signal-panel").hide();
-							$('#signal-src-sel').combobox({required:true});
-							$('#signal-name-of-driver-sel').combobox({required:true});
-							$('#signal-src-sel').combobox({required:false});
+							$('#signal-src-sel').combobox({
+								required : true
+							});
+							$('#signal-name-of-driver-sel').combobox({
+								required : true
+							});
+							$('#signal-src-sel').combobox({
+								required : false
+							});
 						} else {
 							$("#from-driver-signal-panel").hide();
 							$("#from-other-signal-panel").show();
-							$('#signal-src-sel').combobox({required:false});
-							$('#signal-name-of-driver-sel').combobox({required:false});
-							$('#signal-src-sel').combobox({required:true});
+							$('#signal-src-sel').combobox({
+								required : false
+							});
+							$('#signal-name-of-driver-sel').combobox({
+								required : false
+							});
+							$('#signal-src-sel').combobox({
+								required : true
+							});
 						}
 					},
 					onLoadSuccess : function() {
@@ -483,7 +505,8 @@ $(function() {
 							method : "get",
 							queryParams : {
 								position : newValue
-							}
+							},
+							required : true
 						});
 					}
 				});
@@ -510,8 +533,8 @@ $(function() {
 				});
 				$('#signal-name-of-driver-sel').combobox({
 					data : [],
-					valueField : 'driver_key',
-					textField : 'name',
+					valueField : 'key',
+					textField : 'name',//signalType
 					editable : false,
 					onLoadSuccess : function() {
 						if (signal) {
@@ -519,28 +542,31 @@ $(function() {
 						}
 					}
 				});
+
 				$('#signal-trans-func-sel').combobox({
-					data : WUI.trans_func,
-					valueField : 'type',
+					valueField : 'model',
 					textField : 'name',
 					editable : false,
-					onSelect : function(transFunc) {
+					url : funcsModelUrl,
+					method : 'get',
+					onSelect : function(rec) {
 						var $propTable = $("#signal-trans-func-params");
 						$propTable.empty();
 						transProperties = [];
-						if (signal && signal.funcs) {
-							var $tr = $(document.createElement("tr"));
-							var i = 0;
-							transFunc.params.forEach(function(param) {
+						WUI.ajax.get(funcsParamUrl + rec.model, {}, function(results) {
+							results.forEach(function(param, i) {
 								if (i % 2 === 0) {
 									$tr = $(document.createElement("tr"));
 									$propTable.append($tr);
 								}
-								i++;
 								transProperties.push(WUI.createProperty($tr, param, 80, 150));
 							});
-							WUI.setPropertiesValue(transProperties, signal.funcs.params);
-						}
+							if (signal && signal.funcs) {
+								WUI.setPropertiesValue(transProperties, signal.funcs.params);
+							}
+						}, function() {
+							$.messager.alert('失败', "读取转换参数失败，请重试！");
+						});
 					},
 					onLoadSuccess : function() {
 						if (signal && signal.funcs) {
@@ -611,7 +637,7 @@ $(function() {
 								isValid = isValid && $('#signal-driver-sel').combobox("isValid");
 								isValid = isValid && $('#signal-name-of-driver-sel').combobox("isValid");
 								isValid = isValid && $('#signal-trans-func-sel').combobox("isValid");
-								isValid = isValid && WUI.setPropertiesValue(transProperties);
+								isValid = isValid && WUI.isPropertiesValueValid(transProperties);
 							} else {
 								isValid = isValid && $('#signal-src-sel').combobox("isValid");
 							}
@@ -639,7 +665,7 @@ $(function() {
 								var transName = $('#signal-trans-func-sel').combobox("getValue");
 								if (transName) {
 									newSignal.funcs = {
-										name : transName,
+										FUNC_NAME : transName,
 										params : WUI.getPropertiesValue(transProperties)
 									}
 								}

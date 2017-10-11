@@ -1,73 +1,73 @@
 [
 	{
-		"key": "ip",
-		"label": "IP",
+		"name": "ip",
+		"displayName": "IP",
 		"required": true,
-		"default": "127.0.0.1",
-		"type": "String"
+		"defaultValue": "127.0.0.1",
+		"paramType": "String"
 	},
 	{
-		"key": "bmc",
-		"label": "BMC",
+		"name": "bmc",
+		"displayName": "BMC",
 		"required": false,
-		"default": "",
-		"type": "String"
+		"defaultValue": "",
+		"paramType": "String"
 	},
 	{
-		"key": "cpu",
-		"label": "CPU颗数",
+		"name": "cpu",
+		"displayName": "CPU颗数",
 		"required": true,
-		"default": 1,
-		"type": "Integer"
+		"defaultValue": 1,
+		"paramType": "INTEGER"
 	},
 	{
-		"key": "ratedPower",
-		"label": "额定功率",
+		"name": "ratedPower",
+		"displayName": "额定功率",
 		"required": true,
-		"default": 600,
-		"type": "Integer",
+		"defaultValue": 600,
+		"paramType": "INTEGER",
 		"unit": "W"
 	},
 	{
-		"key": "mem",
-		"label": "内存条数",
+		"name": "mem",
+		"displayName": "内存条数",
 		"required": true,
-		"default": 2,
-		"type": "Integer"
+		"defaultValue": 2,
+		"paramType": "INTEGER"
 	},
 	{
-		"key": "disk",
-		"label": "硬盘个数",
+		"name": "disk",
+		"displayName": "硬盘个数",
 		"required": true,
-		"default": 4,
-		"type": "Integer"
+		"defaultValue": 4,
+		"paramType": "INTEGER"
 	},
 	{
-		"key": "power",
-		"label": "电源个数",
+		"name": "power",
+		"displayName": "电源个数",
 		"required": true,
-		"default": 1,
-		"type": "Integer"
+		"defaultValue": 1,
+		"paramType": "INTEGER"
 	},
 	{
-		"key": "fun",
-		"label": "风扇个数",
+		"name": "fun",
+		"displayName": "风扇个数",
 		"required": true,
-		"default": 8,
-		"type": "Integer"
+		"defaultValue": 8,
+		"paramType": "INTEGER"
 	},
 	{
-		"key": "gpu",
-		"label": "GPU个数",
+		"name": "gpu",
+		"displayName": "GPU个数",
 		"required": true,
-		"default": 1,
-		"type": "Integer"
+		"defaultValue": 1,
+		"paramType": "INTEGER"
 	},
 	{
-		"key": "mic",
-		"label": "MIC个数",
+		"name": "mic",
+		"displayName": "MIC个数",
 		"required": true,
-		"default": 1,
-		"type": "Integer"
+		"defaultValue": 1,
+		"paramType": "INTEGER"
 	}
 ]

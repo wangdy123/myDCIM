@@ -1,24 +1,24 @@
 [
 	{
-		"key": "inputCount",
-		"label": "输入分路数",
+		"name": "inputCount",
+		"displayName": "输入分路数",
 		"required": true,
-		"default": 2,
-		"type": "Integer"
+		"defaultValue": 2,
+		"paramparamType": "INTEGER"
 	},
 	{
-		"key": "outputCount",
-		"label": "输出支路数",
+		"name": "outputCount",
+		"displayName": "输出支路数",
 		"required": true,
-		"default": 8,
-		"type": "Integer"
+		"defaultValue": 8,
+		"paramType": "INTEGER"
 	},
 	{
-		"key": "ratedPower",
-		"label": "额定功率",
+		"name": "ratedPower",
+		"displayName": "额定功率",
 		"required": true,
-		"default": 11000,
-		"type": "Integer",
+		"defaultValue": 11000,
+		"paramType": "INTEGER",
 		"unit": "VA"
 	}
 ]

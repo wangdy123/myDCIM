@@ -1,9 +1,10 @@
 $(function() {
 	var objectNodeUrl = 'logicobject/objectNodes/';
 	var driverUrl = "driver-configer/drivers";
-	var restartDriverUrl = "driver-configer/restartDriver";
+	var restartDriverUrl = "driver-configer/restartDriver/";
 	var fsuUrl = "fsu-configer/fsus";
 	var driverModelUrl = "driver-configer/models";
+	var driverSignalUrl = "driver-configer/signals";
 	var driverParamUrl = "driver-configer/params/";
 	$node = $('#driver-grid');
 
@@ -76,13 +77,24 @@ $(function() {
 									+ ' onclick="WUI.driver.deleterow(this)"></div>';
 							return e + s + d;
 						}
-					}, {
+					},
+					{
 						field : 'restart',
 						title : '重启驱动',
 						width : 80,
 						align : 'center',
 						formatter : function(value, row, index) {
 							return '<a  href="#" class="easyui-linkbutton" onclick="WUI.driver.restart(this)">重启</a> ';
+						}
+					},
+					{
+						field : 'view_signal',
+						title : '查看信号',
+						width : 80,
+						align : 'center',
+						formatter : function(value, row, index) {
+							return '<a  href="#" class="easyui-linkbutton" '
+									+ 'onclick="WUI.driver.viewSignals(this)">查看信号</a> ';
 						}
 					}, {
 						field : 'NAME',
@@ -125,6 +137,44 @@ $(function() {
 					$.messager.alert('失败', "重启驱动失败！");
 				});
 			}
+		});
+	};
+	WUI.driver.viewSignals = function(target) {
+		var driver = WUI.getDatagridRow($node, target);
+		$('#driver-signal-dialog').dialog('open');
+		$("#driver-signal-content").datagrid({
+			url : driverSignalUrl,
+			method : "get",
+			singleSelect : true,
+			queryParams : {
+				driverId : driver.ID
+			},
+			onLoadError : WUI.onLoadError,
+			columns : [ [ {
+				field : 'OBJECT_NAME',
+				title : '所属设备',
+				width : 200
+			}, {
+				field : 'SIGNAL_ID',
+				title : '信号编码',
+				align : 'right',
+				width : 80
+			}, {
+				field : 'SIGNAL_NAME',
+				title : '名称',
+				width : 200
+			}, {
+				field : 'SIGNAL_TYPE',
+				title : '信号类型',
+				width : 60,
+				formatter : function(value, row, index) {
+					var type = WUI.findFromArray(WUI.signalType, 'type', row.SIGNAL_TYPE);
+					if (type) {
+						return type.name;
+					}
+					return "";
+				}
+			} ] ]
 		});
 	};
 	WUI.driver.editrow = function(target) {
@@ -187,6 +237,7 @@ $(function() {
 					},
 					onSelect : function(rec) {
 						var $propTable = $("#driver-extprop-panel");
+						$propTable.empty();
 						properties = [];
 						WUI.ajax.get(driverParamUrl + rec.model, {}, function(results) {
 							results.forEach(function(param) {

@@ -1,26 +1,42 @@
-[ {
-	"type" : 1,
-	"name" : "AI",
-	"iconCls" : "icon-AI",
-	"namespace" : "AI"
-}, {
-	"type" : 2,
-	"name" : "DI",
-	"iconCls" : "icon-DI",
-	"namespace" : "DI"
-}, {
-	"type" : 3,
-	"name" : "AO",
-	"iconCls" : "icon-AO",
-	"namespace" : "AO"
-}, {
-	"type" : 4,
-	"name" : "DO",
-	"iconCls" : "icon-DO",
-	"namespace" : "DO"
-}, {
-	"type" : 5,
-	"name" : "ALARM",
-	"iconCls" : "icon-ALARM",
-	"namespace" : "ALARM"
-} ]
+[
+	{
+		"type": 1,
+		"name": "AI",
+		"iconCls": "icon-AI",
+		"enable_other_signal": false,
+		"enable_condition": true,
+		"namespace": "AI"
+	},
+	{
+		"type": 2,
+		"name": "DI",
+		"iconCls": "icon-DI",
+		"enable_other_signal": false,
+		"enable_condition": false,
+		"namespace": "DI"
+	},
+	{
+		"type": 3,
+		"name": "AO",
+		"iconCls": "icon-AO",
+		"enable_other_signal": false,
+		"enable_condition": false,
+		"namespace": "AO"
+	},
+	{
+		"type": 4,
+		"name": "DO",
+		"iconCls": "icon-DO",
+		"enable_other_signal": false,
+		"enable_condition": false,
+		"namespace": "DO"
+	},
+	{
+		"type": 5,
+		"name": "ALARM",
+		"iconCls": "icon-ALARM",
+		"enable_other_signal": true,
+		"enable_condition": true,
+		"namespace": "ALARM"
+	}
+]

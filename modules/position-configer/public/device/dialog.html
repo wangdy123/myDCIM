@@ -24,6 +24,7 @@
 		<td align="right">设备型号:</td>
 		<td><select id="device-model-sel" style="width: 100%" class="easyui-combobox"
 			data-options="required:true,editable:true,valueField : 'ID',textField : 'NAME'"></select></td>
+		<td></td>
 	</tr>
 	<tr>
 		<td align="right">投产日期:</td>
@@ -31,6 +32,15 @@
 		<td></td>
 		<td align="right">预计报废日期:</td>
 		<td><input id="device-expect-end-date" class="easyui-datebox" style="width: 100%;"></td>
+		<td></td>
+	</tr>
+	<tr id="device-driver-panel">
+		<td align="right">驱动位置:</td>
+		<td><select id="device-driver-position" class="easyui-combotree" style="width: 100%"></select></td>
+		<td></td>
+		<td align="right">驱动:</td>
+		<td><select id="device-driver-sel" class="easyui-combobox" style="width: 100%"></select></td>
+		<td></td>
 	</tr>
 	<tr>
 		<td colspan="6">

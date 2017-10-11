@@ -1,9 +1,9 @@
 [
 	{
-		"key": "inputs",
-		"label": "输入路数",
+		"name": "inputs",
+		"displayName": "输入路数",
 		"required": true,
-		"default": 1,
-		"type": "Integer"
+		"defaultValue": 1,
+		"paramType": "INTEGER"
 	}
 ]

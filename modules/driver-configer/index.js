@@ -7,12 +7,25 @@ var config = require('dcim-config');
 
 var scCluster = require('dcim-sc-cluster');
 var operateLogger = require('dcim-operate-logger');
+var common = require('dcim-common');
+var async = require("async");
 
 app.use(express.static(__dirname + '/public', {
 	maxAge : config.fileMaxAge * 3600 * 24 * 1000
 }));
 
 module.exports = app;
+
+app.get('/driverSignals', function(req, res) {
+	scCluster.driver.getDriverKey(req,req.query.driverId, function(err,result){
+		if (err) {
+			logger.error(err);
+			res.status(500).send(err);
+		} else{
+			res.send(result);
+		}
+	});
+});
 
 function makeDrivers(objects) {
 	var drivers=[];
@@ -48,6 +61,26 @@ app.get('/drivers', function(req, res) {
 		}
 	});
 });
+
+app.get('/drivers/:id', function(req, res) {
+	var sql = "select d.ID,d.NAME,d.MODEL,d.POSTION,d.FSU,p.PROP_NAME,p.PROP_VALUE " +
+			"from config.DRIVER d left join config.DRIVER_PARAM p on d.ID=p.ID where d.ID=?";
+	db.pool.query(sql,[req.params.id], function(error, objects) {
+		if (error) {
+			logger.error(error);
+			res.status(500).send(error);
+		} else {
+			var drivers=makeDrivers(objects);
+			if(drivers.length>0){
+				res.send(drivers[0]);
+			}
+			else{
+				res.status(404).send("not found driver:"+req.params.id);
+			}
+		}
+	});
+});
+
 app.get('/models', function(req, res) {
 	scCluster.driver.getModels(req, function(err,result){
 		if (err) {
@@ -55,12 +88,12 @@ app.get('/models', function(req, res) {
 			res.status(500).send(err);
 		} else{
 			var models = [];
-			result.forEach(function(item) {
+			for(key in result){
 				models.push({
-					model : item,
-					name : item
+					model : key,
+					name : result[key]
 				});
-			});
+			}
 			res.send(models);
 		}
 	});
@@ -72,6 +105,33 @@ app.get('/params/:model', function(req, res) {
 			res.status(500).send(err);
 		} else{
 			res.send(result);
+		}
+	});
+});
+
+app.get('/signals', function(req, res) {
+	var driverId=parseInt(req.query.driverId,10);
+	var sql = "select * from config.SIGNAL where DRIVER_ID=?";
+	db.pool.query(sql, [ driverId ], function(error, objects) {
+		if (error) {
+			logger.error(error);
+			res.status(500).send(error);
+		} else{
+			var tasks = [];
+			tasks.push(function(callback){
+				objects.forEach(function(signal){
+					common.getObjectPathName(0,signal.OBJECT_ID,function(err,name){
+						if(!err){
+							signal.OBJECT_NAME=name;
+						}
+						callback();
+					});
+			});
+			});
+			async.parallel(tasks, function(err, results) {
+				res.send(objects);
+			});
+			
 		}
 	});
 });
@@ -131,6 +191,7 @@ app.post('/drivers', function(req, res) {
 			logger.error(error);
 			res.status(500).send(error);
 		} else {
+			operateLogger.driver.createDriver(req.user,obj);
 			res.status(201).end();
 		}
 	});
@@ -172,12 +233,16 @@ app.put('/drivers/:id', function(req, res) {
 	var old=null;
 	db.doTransaction(function(connection) {
 		var tasks= [function(callback){
-			getDriverById(connection,driverId,function(err,reslut){
+			var sql='select count(*) as ct from config.SIGNAL where DRIVER_ID=?';
+			connection.query(sql, [driverId], function(err, result) {
 				if(err){
-					callback(err);
+				callback(err);
 				}else{
-					old=reslut;
-					callback();
+					if(result[0].ct>0){
+						callback("has signal cannot delete");
+					}else{
+						callback();
+					}
 				}
 			});
 		}, function(callback) {
@@ -224,6 +289,15 @@ app.delete('/drivers/:id', function(req, res) {
 					callback();
 				}
 			});
+		},function(callback){
+			getDriverById(connection,driverId,function(err,reslut){
+				if(err){
+					callback(err);
+				}else{
+					old=reslut;
+					callback();
+				}
+			});
 		}];
 		createDeleteTasks(connection,tasks,driverId);
 		tasks.push( function(callback) {
@@ -235,6 +309,9 @@ app.delete('/drivers/:id', function(req, res) {
 					callback();
 				}
 			});
+		});
+		tasks.push(function(callback){
+			scCluster.driver.removeDriver(req,old,callback);
 		});
 		return tasks;
 	}, function(error, result) {

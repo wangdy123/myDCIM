@@ -52,7 +52,6 @@
 		"position-configer": "/position-configer",
 		"fsu-configer": "/fsu-configer",
 		"driver-configer": "/driver-configer",
-		"rack-model": "/rack-model",
 		"device-model": "/device-model",
 		"device-vender": "/device-vender",
 		"door": "/door",
@@ -85,8 +84,6 @@
 		"signalType",
 		"signalTypeDef",
 		"energyConsumptionType",
-		"reginCode",
-		"conditionTypes",
-		"trans_func"
+		"reginCode"
 	]
 }

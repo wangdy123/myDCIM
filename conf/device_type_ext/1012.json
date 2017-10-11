@@ -1,18 +1,18 @@
 [
 	{
-		"key": "inputPower",
-		"label": "输入功率",
+		"name": "inputPower",
+		"displayName": "输入功率",
 		"required": true,
-		"default": 600,
-		"type": "Integer",
+		"defaultValue": 600,
+		"paramType": "INTEGER",
 		"unit": "W"
 	},
 	{
-		"key": "coolingCapacity",
-		"label": "制冷量",
+		"name": "coolingCapacity",
+		"displayName": "制冷量",
 		"required": true,
-		"default": 3000,
-		"type": "Integer",
+		"defaultValue": 3000,
+		"paramType": "INTEGER",
 		"unit": "W"
 	}
 ]

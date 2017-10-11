@@ -2,6 +2,7 @@ $(function() {
 	var objectNodeUrl = 'logicobject/objectNodes/';
 	var fsuUrl = "fsu-configer/fsus";
 	var restartFsuUrl = "fsu-configer/restartFsu/";
+	var fsuDriverUrl = "fsu-configer/fsuDrivers/";
 	var fsuModelUrl = "fsu-configer/models";
 	var fsuParamUrl = "fsu-configer/params/";
 	$node = $('#fsu-grid');
@@ -55,13 +56,24 @@ $(function() {
 									+ ' onclick="WUI.fsu.deleterow(this)"></div>';
 							return e + s + d;
 						}
-					}, {
+					},
+					{
 						field : 'restart',
 						title : '重启FSU',
 						width : 80,
 						align : 'center',
 						formatter : function(value, row, index) {
 							return '<a  href="#" class="easyui-linkbutton" onclick="WUI.fsu.restart(this)">重启</a> ';
+						}
+					},
+					{
+						field : 'view_driver',
+						title : '查看驱动',
+						width : 80,
+						align : 'center',
+						formatter : function(value, row, index) {
+							return '<a  href="#" class="easyui-linkbutton" '
+									+ 'onclick="WUI.fsu.viewDrivers(this)">查看驱动</a> ';
 						}
 					}, {
 						field : 'CODE',
@@ -96,6 +108,35 @@ $(function() {
 					$.messager.alert('失败', "重启FSU失败！");
 				});
 			}
+		});
+	};
+	WUI.fsu.viewDrivers = function(target) {
+		var fsu = WUI.getDatagridRow($node, target);
+		$('#fsu-driver-dialog').dialog('open');
+		$("#fsu-driver-content").datagrid({
+			url : fsuDriverUrl,
+			method : "get",
+			singleSelect : true,
+			queryParams : {
+				fsuId : fsu.ID
+			},
+			onLoadError : WUI.onLoadError,
+			columns : [ [ {
+				field : 'NAME',
+				title : '驱动名称',
+				width : 150
+			}, {
+				field : 'MODEL',
+				title : '驱动模块',
+				width : 150
+			}, {
+				field : 'params',
+				title : '参数',
+				width : 250,
+				formatter : function(value, row, index) {
+					return JSON.stringify(row.params);
+				}
+			} ] ]
 		});
 	};
 	WUI.fsu.editrow = function(target) {
@@ -140,6 +181,7 @@ $(function() {
 					method : 'get',
 					onSelect : function(rec) {
 						var $propTable = $("#fsu-extprop-panel");
+						$propTable.empty();
 						properties = [];
 						WUI.ajax.get(fsuParamUrl + rec.model, {}, function(results) {
 							results.forEach(function(param) {

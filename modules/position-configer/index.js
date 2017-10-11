@@ -2,6 +2,7 @@ var config = require('dcim-config');
 
 var express = require('express');
 var app = express();
+var scCluster = require('dcim-sc-cluster');
 
 app.use(express.static(__dirname + '/public', {
 	maxAge : config.fileMaxAge * 3600 * 24 * 1000
@@ -97,4 +98,64 @@ app.get('/device/params/:deviceType', function(req, res) {
 		}
 	});
 });
+
+app.get('/signalFuncModel', function(req, res) {
+	scCluster.signal.getFuncModels(req, function(err,result){
+		if (err) {
+			logger.error(err);
+			res.status(500).send(err);
+		} else{
+			var models = [];
+			for(key in result){
+				models.push({
+					model : key,
+					name : result[key]
+				});
+			}
+			res.send(models);
+		}
+	});
+});
+
+app.get('/signalFuncParams/:model', function(req, res) {
+	scCluster.signal.getFuncParams(req,req.params.model, function(err,result){
+		if (err) {
+			logger.error(err);
+			res.status(500).send(err);
+		} else{
+			res.send(result);
+		}
+	});
+});
+
+app.get('/signalConditionModel', function(req, res) {
+	scCluster.signal.getConditionModels(req, function(err,result){
+		if (err) {
+			logger.error(err);
+			res.status(500).send(err);
+		} else{
+			var models = [];
+			for(key in result){
+				models.push({
+					model : key,
+					name : result[key]
+				});
+			}
+			res.send(models);
+		}
+	});
+});
+app.get('/signalConditionParams/:model', function(req, res) {
+	scCluster.signal.getConditionParams(req,req.params.model, function(err,result){
+		if (err) {
+			logger.error(err);
+			res.status(500).send(err);
+		} else{
+			res.send(result);
+		}
+	});
+});
+
+
+
 

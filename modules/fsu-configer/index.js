@@ -55,12 +55,12 @@ app.get('/models', function(req, res) {
 			res.status(500).send(err);
 		} else{
 			var models = [];
-			result.forEach(function(item) {
+			for(key in result){
 				models.push({
-					model : item,
-					name : item
+					model : key,
+					name : result[key]
 				});
-			});
+			}
 			res.send(models);
 		}
 	});
@@ -75,7 +75,18 @@ app.get('/params/:model', function(req, res) {
 		}
 	});
 });
-
+app.get('/fsuDrivers', function(req, res) {
+	var fsuId=parseInt(req.query.fsuId,10);
+	var sql='select * from config.DRIVER where FSU=?'; 
+	connection.query(sql,[fsuId], function(err, result) {
+		if (err) {
+			logger.error(err);
+			res.status(500).send(err);
+		}else{
+			res.send(result);
+		}
+	});
+});
 app.put('/restartFsu/:id', function(req, res) {
 	var fsuId=parseInt(req.params.id,10);
 	scCluster.fsu.restartFsu(req,fsuId,function(error, result) {

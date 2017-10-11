@@ -227,13 +227,6 @@
 				"name": "业务配置"
 			},
 			{
-				"id": 2102,
-				"title": "机柜型号管理",
-				"url": "rack-model/wokspace.html",
-				"border": false,
-				"name": "机柜型号管理"
-			},
-			{
 				"id": 2103,
 				"title": "设备厂家管理",
 				"url": "device-vender/wokspace.html",

@@ -18,6 +18,9 @@ $(document).ready(
 			}
 
 			function openObject(regionObject) {
+				if (!WUI.regionTypes[regionObject.REGION_TYPE]) {
+					return;
+				}
 				currentRegionObject = regionObject;
 				var toobar = [];
 				for (var i = 0; i < WUI.regionTypes[regionObject.REGION_TYPE].childTypes.length; i++) {
@@ -67,7 +70,10 @@ $(document).ready(
 							}, {
 								field : 'REGION_TYPE',
 								title : '区域级别',
-								width : 80
+								width : 80,
+								formatter : function(value, row, index) {
+									return WUI.regionTypes[row.REGION_TYPE].name;
+								}
 							}, {
 								field : 'CODE',
 								title : '行政编码',

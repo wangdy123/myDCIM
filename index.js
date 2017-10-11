@@ -1,3 +1,4 @@
+'use strict'
 require('dcim-logger');
 var express = require('express');
 

@@ -1,6 +1,7 @@
 $(function() {
 	var deviceModelUrl = "device-model/deviceModels";
 	var deviceVenderUrl = "device-vender/deviceVenders";
+	var modelParamUrl = "device-model/params/";
 	$node = $('#device-model-grid');
 	var venders = [];
 
@@ -110,12 +111,13 @@ $(function() {
 
 	function deviceModelDialog(deviceModel) {
 		var dialogNode = $('#device-model-dialog');
+		var properties = [];
 		var cfg = {
 			iconCls : deviceModel ? "icon-edit" : "icon-add",
 			title : deviceModel ? "修改设备型号" : "添加设备型号",
-			left : ($(window).width() - 400) * 0.5,
+			left : ($(window).width() - 650) * 0.5,
 			top : ($(window).height() - 400) * 0.5,
-			width : 550,
+			width : 650,
 			closed : false,
 			cache : false,
 			href : 'device-model/dialog.html',
@@ -128,7 +130,27 @@ $(function() {
 					textField : 'name',
 					editable : false,
 					required : true,
-					data : WUI.deviceTypes
+					data : WUI.deviceTypes,
+					onSelect : function(rec) {
+						var $propTable = $("#model-extprop-panel");
+						$propTable.empty();
+						properties = [];
+						WUI.ajax.get(modelParamUrl + rec.type, {}, function(results) {
+							var $tr = $(document.createElement("tr"));
+							results.forEach(function(param, i) {
+								if (i % 2 === 0) {
+									$tr = $(document.createElement("tr"));
+									$propTable.append($tr);
+								}
+								properties.push(WUI.createProperty($tr, param, 100, 150));
+							});
+							if (deviceModel) {
+								WUI.setPropertiesValue(properties, deviceModel.params);
+							}
+						}, function() {
+							$.messager.alert('失败', "读取型号参数失败，请重试！");
+						});
+					}
 				});
 				$('#model-vender-sel').combobox({
 					valueField : 'ID',
@@ -160,6 +182,7 @@ $(function() {
 					isValid = isValid && $('#model-device-type-sel').combobox("isValid");
 					isValid = isValid && $('#model-vender-sel').combobox("isValid");
 					isValid = isValid && $('#model-max-use-age-txt').numberbox("isValid");
+					isValid = isValid && WUI.isPropertiesValueValid(properties);
 					if (!isValid) {
 						return;
 					}
@@ -169,7 +192,8 @@ $(function() {
 						DEVICE_TYPE : parseInt($('#model-device-type-sel').combobox("getValue"), 10),
 						VENDER : parseInt($('#model-vender-sel').combobox("getValue"), 10),
 						MAX_USE_AGE : parseInt($('#model-max-use-age-txt').numberbox("getValue"), 10),
-						DESCRIPTION : $('#model-desc-txt').textbox("getValue")
+						DESCRIPTION : $('#model-desc-txt').textbox("getValue"),
+						params : WUI.getPropertiesValue(properties)
 					};
 
 					if (deviceModel) {

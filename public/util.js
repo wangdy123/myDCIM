@@ -524,24 +524,48 @@ window.WUI.createProperty=function($tr, param,labelWidth,valueWidth) {
 	if(param.unit){
 		$unitTd=$('<td style="width:40px;">'+param.unit+'</td>');
 	}
-	$tr.append('<td align="right" '+(labelWidth?'style="width:'+labelWidth+'px;"':'')+'>' + param.label + ':</td>', $td,$unitTd);
+	$tr.append('<td align="right" '+(labelWidth?'style="width:'+labelWidth+'px;"':'')+'>' + param.displayName + ':</td>', $td,$unitTd);
 	var property = {
-		key : param.key
+		key : param.name
 	};
 
-	switch (param.type) {
-	case "Float": {
+	switch (param.paramType) {
+	case "BOOL": {
+		property.$node = $(document.createElement("input"));
+		property.$node.addClass("easyui-switchbutton");
+		$td.append(property.$node);
+		property.$node.switchbutton({
+			width:valueWidth,
+			onText : "是",
+			offText : "否"
+		});
+		if(param.defaultValue){
+			property.$node.switchbutton('setValue', param.defaultValue);			
+		}
+		property.setValue = function(value) {
+			property.$node.switchbutton('setValue', value);
+		};
+		property.isValid = function() {
+			return true;
+		};
+		property.getValue = function() {
+			return property.$node.switchbutton('getValue');
+		};
+	}
+		break;
+	case "FLOAT": {
 		property.$node = $(document.createElement("input"));
 		property.$node.addClass("easyui-numberbox");
 		$td.append(property.$node);
-		// property.$node.css("width", "100%");
 		property.$node.numberbox({
 			width:valueWidth,
-			precision : 2,
-			required : param.required
+			precision : 3,
+			required : param.required,
+			min:(param.range &&param.range.lowerBound)?parseFloat(param.range.lowerBound):null,
+			max:(param.range &&param.range.upperBound)?parseFloat(param.range.upperBound):null
 		});
-		if(param["default"]){
-			property.$node.numberbox('setValue', param["default"]);			
+		if(param.defaultValue){
+			property.$node.numberbox('setValue', param.defaultValue);			
 		}
 		property.setValue = function(value) {
 			property.$node.numberbox('setValue', value);
@@ -554,17 +578,19 @@ window.WUI.createProperty=function($tr, param,labelWidth,valueWidth) {
 		};
 	}
 		break;
-	case "Integer": {
+	case "INTEGER": {
 		property.$node = $(document.createElement("input"));
 		property.$node.addClass("easyui-numberbox");
 		$td.append(property.$node);
 		property.$node.numberbox({
 			width:valueWidth,
 			precision : 0,
-			required : param.required
+			required : param.required,
+			min:(param.range &&param.range.lowerBound)?parseInt(param.range.lowerBound,10):null,
+			max:(param.range &&param.range.upperBound)?parseInt(param.range.upperBound,10):null
 		});
-		if(param["default"]){
-			property.$node.numberbox('setValue', param["default"]);			
+		if(param.defaultValue){
+			property.$node.numberbox('setValue', param.defaultValue);			
 		}
 		property.setValue = function(value) {
 			property.$node.numberbox('setValue', value);
@@ -577,15 +603,15 @@ window.WUI.createProperty=function($tr, param,labelWidth,valueWidth) {
 		};
 	}
 		break;
-	case "Option": {
+	case "ENUMERATION": {
 		property.$node = $(document.createElement("select"));
 		property.$node.addClass("easyui-combobox");
 		$td.append(property.$node);
 		var params=[];
-		for(key in param.options){
+		for(key in param.enumOptions){
 			params.push({
 				key:key,
-				value:param.options[key]
+				value:param.enumOptions[key]
 			});
 		}
 		
@@ -597,8 +623,8 @@ window.WUI.createProperty=function($tr, param,labelWidth,valueWidth) {
 			data : params,
 			required : param.required
 		});
-		if(param["default"]){
-			property.$node.combobox('setValue', param["default"]);			
+		if(param.defaultValue){
+			property.$node.combobox('setValue', param.defaultValue);			
 		}
 		property.setValue = function(value) {
 			property.$node.combobox('setValue', value);
@@ -611,7 +637,7 @@ window.WUI.createProperty=function($tr, param,labelWidth,valueWidth) {
 		};
 	}
 		break;
-	case "Date": {
+	case "DATE": {
 		property.$node = $(document.createElement("input"));
 		property.$node.addClass("easyui-datebox");
 		$td.append(property.$node);
@@ -621,8 +647,8 @@ window.WUI.createProperty=function($tr, param,labelWidth,valueWidth) {
 			formatter : WUI.dateFormat,
 			required : param.required
 		});
-		if(param["default"]){
-			property.$node.datebox('setValue', param["default"]);			
+		if(param.defaultValue){
+			property.$node.datebox('setValue', param.defaultValue);			
 		}
 		property.setValue = function(value) {
 			property.$node.datebox('setValue', value);
@@ -635,7 +661,7 @@ window.WUI.createProperty=function($tr, param,labelWidth,valueWidth) {
 		};
 	}
 		break;
-	case "Datetime": {
+	case "DATETIME": {
 		property.$node = $(document.createElement("input"));
 		property.$node.addClass("easyui-datetimebox");
 		$td.append(property.$node);
@@ -645,8 +671,8 @@ window.WUI.createProperty=function($tr, param,labelWidth,valueWidth) {
 			formatter : WUI.timeformat,
 			required : param.required
 		});
-		if(param["default"]){
-			property.$node.datetimebox('setValue', param["default"]);			
+		if(param.defaultValue){
+			property.$node.datetimebox('setValue', param.defaultValue);			
 		}
 		property.setValue = function(value) {
 			property.$node.datetimebox('setValue', value);
@@ -667,8 +693,8 @@ window.WUI.createProperty=function($tr, param,labelWidth,valueWidth) {
 			width:valueWidth,
 			required : param.required
 		});
-		if(param["default"]){
-			property.$node.textbox('setValue', param["default"]);			
+		if(param.defaultValue){
+			property.$node.textbox('setValue', param.defaultValue);			
 		}
 		property.setValue = function(value) {
 			property.$node.textbox('setValue', value);

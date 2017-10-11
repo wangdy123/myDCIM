@@ -5,6 +5,5 @@
 	"FLOOR" : 4,
 	"ROOM" : 5,
 	"RACK_GROUP" : 6,
-	"RACK" : 11,
 	"DEVICE" : 21
 }

@@ -3,6 +3,7 @@ $(function() {
 	var deviceModelUrl = "device-model/deviceModels";
 	var deviceVenderUrl = "device-vender/deviceVenders";
 	var deviceParamUrl = "position-configer/device/params/";
+	var driverUrl = "driver-configer/drivers";
 	var deviceUrl = "logicobject/devices";
 	var $node = $('#device-datagrid');
 	var typeName = WUI.objectTypes[WUI.objectTypeDef.DEVICE].name;
@@ -198,43 +199,49 @@ $(function() {
 				$.messager.alert('失败', "对话框加载失败，请刷新后重试！");
 			},
 			onLoad : function() {
-				$('#device-type-sel').combobox({
-					data : WUI.deviceTypes,
-					loadFilter : function(data) {
-						var result = [];
-						data.forEach(function(item) {
-							if (item.parentNodeTypes.indexOf(parentObject.OBJECT_TYPE) >= 0) {
-								result.push(item);
+				$('#device-type-sel').combobox(
+						{
+							data : WUI.deviceTypes,
+							loadFilter : function(data) {
+								var result = [];
+								data.forEach(function(item) {
+									if (item.parentNodeTypes && item.parentNodeTypes.length > 0
+											&& (item.parentNodeTypes.indexOf(parentObject.OBJECT_TYPE) < 0)) {
+										return;
+									}
+									if (item.parentDeviceTypes && item.parentDeviceTypes.length > 0
+											&& (item.parentDeviceTypes.indexOf(parentObject.DEVICE_TYPE) < 0)) {
+										return;
+									}
+									result.push(item);
+								});
+								return result;
+							},
+							onSelect : function(rec) {
+								var venderId = $('#device-vender-sel').combobox("getValue");
+								updateModel(rec.type, parseInt(venderId));
+								typeName = rec.name;
+								selectedDeviceType = rec;
+								var $propTable = $("#device-extprop-panel");
+								$propTable.empty();
+								properties = [];
+								WUI.ajax.get(deviceParamUrl + rec.type, {}, function(results) {
+									var $tr = $(document.createElement("tr"));
+									results.forEach(function(param, i) {
+										if (i % 2 === 0) {
+											$tr = $(document.createElement("tr"));
+											$propTable.append($tr);
+										}
+										properties.push(WUI.createProperty($tr, param, 100, 150));
+									});
+									if (device) {
+										WUI.setPropertiesValue(properties, device.params);
+									}
+								}, function() {
+									$.messager.alert('失败', "读取设备运行参数失败，请重试！");
+								});
 							}
 						});
-						return result;
-					},
-					onSelect : function(rec) {
-						var venderId = $('#device-vender-sel').combobox("getValue");
-						updateModel(rec.type, parseInt(venderId));
-						typeName = rec.name;
-						selectedDeviceType = rec;
-						var $propTable = $("#device-extprop-panel");
-						properties = [];
-						WUI.ajax.get(deviceParamUrl + rec.type, {}, function(results) {
-							var $tr = $(document.createElement("tr"));
-							var i = 0;
-							results.forEach(function(param) {
-								if (i % 2 === 0) {
-									$tr = $(document.createElement("tr"));
-									$propTable.append($tr);
-								}
-								i++;
-								properties.push(WUI.createProperty($tr, param, 100, 150));
-							});
-							if (device) {
-								WUI.setPropertiesValue(properties, device.params);
-							}
-						}, function() {
-							$.messager.alert('失败', "读取设备运行参数失败，请重试！");
-						});
-					}
-				});
 
 				$('#device-vender-sel').combobox({
 					data : deviceVenders,
@@ -297,6 +304,7 @@ $(function() {
 				$('#device-start-use-date').datebox("setValue", WUI.dateFormat(new Date()));
 
 				if (device) {
+					$('#device-driver-panel').hide();
 					$('#device-name-txt').textbox("setValue", device.NAME);
 					$('#device-type-sel').combobox("setValue", device.DEVICE_TYPE);
 					$('#device-code-txt').textbox("setValue", device.CODE);
@@ -308,6 +316,28 @@ $(function() {
 					$('#device-name-txt').textbox("isValid");
 					$('#device-code-txt').textbox("isValid");
 					$('#device-type-sel').combobox("disable");
+				} else {
+					$('#device-driver-panel').show();
+					var positionSel = new WUI.createLogicObjectCombotree({
+						$node : $('#device-driver-position'),
+						onChange : function(newValue) {
+							$('#device-driver-sel').combobox({
+								url : driverUrl,
+								method : "get",
+								queryParams : {
+									position : newValue
+								}
+							});
+						}
+					});
+					positionSel.setValue(parentObject.ID);
+					$('#device-driver-sel').combobox({
+						data : [],
+						valueField : 'ID',
+						textField : 'NAME',
+						editable : false,
+						required : true,
+					});
 				}
 			},
 			modal : true,
@@ -322,6 +352,7 @@ $(function() {
 					isValid = isValid && $('#device-model-sel').combobox("isValid");
 					isValid = isValid && $('#device-vender-sel').combobox("isValid");
 					isValid = isValid && $('#device-type-sel').combobox("isValid");
+					isValid = isValid && $('#device-driver-sel').combobox("isValid");
 					isValid = isValid && WUI.isPropertiesValueValid(properties);
 					if (!isValid) {
 						return;
@@ -350,6 +381,7 @@ $(function() {
 							$.messager.alert('失败', "修改" + typeName + "失败！");
 						});
 					} else {
+						newdevice.DRIVER_ID = $('#device-driver-sel').combobox("getValue");
 						WUI.ajax.post(objectNodeUrl, newdevice, function() {
 							dialogNode.dialog("close");
 							reload(true);

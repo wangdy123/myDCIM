@@ -1,0 +1,28 @@
+[
+	{
+		"name": "U1Position",
+		"displayName": "U1位置",
+		"required": true,
+		"defaultValue": "1",
+		"paramType": "ENUMERATION",
+		"enumOptions":{
+		"0":"顶部",
+		"1":"底部"
+		}
+	},
+	{
+		"name": "rackCount",
+		"displayName": "总U数",
+		"required": true,
+		"defaultValue": 42,
+		"paramType": "INTEGER"
+	},
+	{
+		"name": "depth",
+		"displayName": "机柜深度",
+		"required": true,
+		"defaultValue": 1.2,
+		"paramType": "FLOAT",
+		"unit": "米"
+	}
+]

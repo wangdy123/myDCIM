@@ -4,143 +4,129 @@
 		"name": "高压配电",
 		"iconCls": "icon-devicetype1001",
 		"businessType": 1,
-		"parentNodeTypes": [
-			5
-		]
+		"parentNodeTypes": [5],
+		"parentDeviceTypes": []
 	},
 	{
 		"type": 1002,
 		"name": "低压交流配电",
 		"iconCls": "icon-devicetype1002",
 		"businessType": 1,
-		"parentNodeTypes": [
-			5
-		]
+		"parentNodeTypes": [5],
+		"parentDeviceTypes": []
 	},
 	{
 		"type": 1003,
 		"name": "变压器",
 		"iconCls": "icon-devicetype1003",
 		"businessType": 1,
-		"parentNodeTypes": [
-			5
-		]
+		"parentNodeTypes": [5],
+		"parentDeviceTypes": []
 	},
 	{
 		"type": 1005,
 		"name": "发电机组",
 		"iconCls": "icon-devicetype1005",
 		"businessType": 1,
-		"parentNodeTypes": [
-			5
-		]
+		"parentNodeTypes": [5],
+		"parentDeviceTypes": []
 	},
 	{
 		"type": 1006,
 		"name": "开关电源",
 		"iconCls": "icon-devicetype1006",
 		"businessType": 1,
-		"parentNodeTypes": [
-			5
-		]
+		"parentNodeTypes": [5],
+		"parentDeviceTypes": []
 	},
 	{
 		"type": 1007,
 		"name": "铅酸蓄电池组",
 		"iconCls": "icon-devicetype1007",
 		"businessType": 1,
-		"parentNodeTypes": [
-			5
-		]
+		"parentNodeTypes": [5],
+		"parentDeviceTypes": []
 	},
 	{
 		"type": 1008,
 		"name": "UPS设备",
 		"iconCls": "icon-UPS",
 		"businessType": 1,
-		"parentNodeTypes": [
-			5
-		]
+		"parentNodeTypes": [5],
+		"parentDeviceTypes": []
 	},
 	{
 		"type": 1009,
 		"name": "UPS配电屏",
 		"iconCls": "icon-devicetype1009",
 		"businessType": 1,
-		"parentNodeTypes": [
-			5
-		]
+		"parentNodeTypes": [5],
+		"parentDeviceTypes": []
 	},
 	{
 		"type": 1010,
 		"name": "高压直流电源",
 		"iconCls": "icon-devicetype1010",
 		"businessType": 1,
-		"parentNodeTypes": [
-			5
-		]
+		"parentNodeTypes": [5],
+		"parentDeviceTypes": []
 	},
 	{
 		"type": 1012,
 		"name": "机房专用空调",
 		"iconCls": "icon-devicetype1012",
 		"businessType": 1,
-		"parentNodeTypes": [
-			5
-		]
+		"parentNodeTypes": [5],
+		"parentDeviceTypes": []
 	},
 	{
 		"type": 1013,
 		"name": "中央空调末端",
 		"iconCls": "icon-devicetype1013",
 		"businessType": 1,
-		"parentNodeTypes": [
-			5
-		]
+		"parentNodeTypes": [5],
+		"parentDeviceTypes": []
 	},
 	{
 		"type": 1014,
 		"name": "中央空调主机",
 		"iconCls": "icon-devicetype1014",
 		"businessType": 1,
-		"parentNodeTypes": [
-			5
-		]
+		"parentNodeTypes": [5],
+		"parentDeviceTypes": []
 	},
 	{
 		"type": 1015,
 		"name": "普通空调",
 		"iconCls": "icon-devicetype1015",
 		"businessType": 1,
-		"parentNodeTypes": [
-			5
-		]
+		"parentNodeTypes": [5],
+		"parentDeviceTypes": []
 	},
 	{
 		"type": 1016,
 		"name": "智能电表",
 		"iconCls": "icon-devicetype1016",
 		"businessType": 1,
-		"parentNodeTypes": [
-			5
-		]
+		"parentNodeTypes": [5],
+		"parentDeviceTypes": []
 	},
 	{
 		"type": 1018,
 		"name": "机房环境",
 		"iconCls": "icon-environment",
 		"businessType": 1,
-		"parentNodeTypes": [
-			5
-		]
+		"parentNodeTypes": [5],
+		"parentDeviceTypes": []
 	},
 	{
 		"type": 2002,
 		"name": "机架式服务器",
 		"iconCls": "icon-rack_server",
 		"businessType": 2,
-		"parentNodeTypes": [
-			11
+		"parentNodeTypes": [5],
+		"parentDeviceTypes": [
+			2002
 		]
 	},
 	{
@@ -148,9 +134,7 @@
 		"name": "机柜",
 		"iconCls": "icon-devicetype2001",
 		"businessType": 2,
-		"parentNodeTypes": [
-			5,
-			6
-		]
+		"parentNodeTypes": [5,6],
+		"parentDeviceTypes": []
 	}
 ]

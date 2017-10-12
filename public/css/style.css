@@ -313,7 +313,11 @@ select {
 .icon-map {
 	background: url('../images/map_16.png') no-repeat center center;
 }
-
+.icon-down {
+	background: url('../images/down_arrow.png') no-repeat center center;
+}.icon-up {
+	background: url('../images/up_arrow.png') no-repeat center center;
+}
 
 .bread-separator {
  display: inline-block;

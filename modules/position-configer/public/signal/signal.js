@@ -162,7 +162,7 @@ $(function() {
 
 	function initConditionTable() {
 		var cfg = {
-			height : 150,
+			height : 130,
 			border : true,
 			singleSelect : true,
 			data : [],
@@ -211,7 +211,7 @@ $(function() {
 					}, {
 						field : 'params',
 						title : '告警条件描述',
-						width : 150,
+						width : 180,
 						formatter : function(value, row, index) {
 							return JSON.stringify(row.params);
 						}
@@ -336,9 +336,187 @@ $(function() {
 		};
 		dialogNode.dialog(cfg);
 	}
+
+	function initFuncTable() {
+		var cfg = {
+			height : 120,
+			border : true,
+			singleSelect : true,
+			data : [],
+			toolbar : [ {
+				iconCls : 'icon-add',
+				text : '添加转换函数',
+				handler : function() {
+					funcDialog(null, function(func) {
+						$("#funcs-table").datagrid("appendRow", func);
+					});
+				}
+			}, {
+				iconCls : 'icon-up',
+				text : '上移',
+				handler : function() {
+					var row = $("#funcs-table").datagrid("getSelected");
+					if(!row){
+						return;
+					}
+					var index = $("#funcs-table").datagrid("getRowIndex", row);
+					if (index === 0) {
+						return;
+					}
+					$("#funcs-table").datagrid("deleteRow", index);
+					$("#funcs-table").datagrid("insertRow", {
+						index : index - 1,
+						row : row
+					});
+					$("#funcs-table").datagrid("selectRow", index-1);
+				}
+			}, {
+				iconCls : 'icon-down',
+				text : '下移',
+				handler : function() {
+					var row = $("#funcs-table").datagrid("getSelected");
+					if(!row){
+						return;
+					}
+					var index = $("#funcs-table").datagrid("getRowIndex", row);
+					if ($("#funcs-table").datagrid("getRows").length === (index + 1)) {
+						return;
+					}
+					$("#funcs-table").datagrid("deleteRow", index);
+					$("#funcs-table").datagrid("insertRow", {
+						index : index + 1,
+						row : row
+					});
+					$("#funcs-table").datagrid("selectRow", index+1);
+				}
+			} ],
+			columns : [ [
+					{
+						field : 'action',
+						title : '操作',
+						width : 80,
+						align : 'center',
+						formatter : function(value, row, index) {
+							var e = '<div class="icon-edit operator-tool" title="修改" '
+									+ ' onclick="WUI.signal.editFunc(this)"></div> ';
+							var s = '<div class="separater"></div> ';
+							var d = '<div class="icon-remove operator-tool" title="删除" '
+									+ ' onclick="WUI.signal.deleteFunc(this)"></div>';
+							return e + s + d;
+						}
+					}, {
+						field : 'FUNC_NAME',
+						title : '函数名称'
+					}, {
+						field : 'params',
+						title : '参数描述',
+						width : 180,
+						formatter : function(value, row, index) {
+							return JSON.stringify(row.params);
+						}
+					} ] ]
+		};
+		$("#funcs-table").datagrid(cfg);
+	}
+
+	WUI.signal.editFunc = function(target) {
+		var func = WUI.getDatagridRow($("#funcs-table"), target);
+		if (func) {
+			funcDialog(func, function(newFunc) {
+				$("#funcs-table").datagrid("updateRow", {
+					index : WUI.getDatagridRowIndex(target),
+					row : newFunc
+				});
+			});
+		}
+	};
+	WUI.signal.deleteFunc = function(target) {
+		$("#funcs-table").datagrid("deleteRow", WUI.getDatagridRowIndex(target));
+	};
+
+	function funcDialog(func, callback) {
+		var dialogNode = $("#condition-dialog");
+		var properties = [];
+
+		var cfg = {
+			iconCls : func ? "icon-edit" : "icon-add",
+			title : (func ? "修改" : "添加") + "转换函数",
+			left : ($(window).width() - 400) * 0.5,
+			top : ($(window).height() - 400) * 0.5,
+			width : 400,
+			closed : false,
+			cache : false,
+			href : "position-configer/signal/func-dialog.html",
+			onLoadError : function() {
+				$.messager.alert('失败', "对话框加载失败，请刷新后重试！");
+			},
+			onLoad : function() {
+				$('#signal-trans-func-sel').combobox({
+					valueField : 'model',
+					textField : 'name',
+					editable : false,
+					url : funcsModelUrl,
+					method : 'get',
+					onSelect : function(rec) {
+						var $propTable = $("#signal-trans-func-params");
+						$propTable.empty();
+						properties = [];
+						WUI.ajax.get(funcsParamUrl + rec.model, {}, function(results) {
+							results.forEach(function(param, i) {
+								var $tr = $(document.createElement("tr"));
+								$propTable.append($tr);
+								properties.push(WUI.createProperty($tr, param, 80, 150));
+							});
+							if (func) {
+								WUI.setPropertiesValue(properties, func.params);
+							}
+						}, function() {
+							$.messager.alert('失败', "读取转换参数失败，请重试！");
+						});
+					},
+					onLoadSuccess : function() {
+						if (func) {
+							$('#signal-trans-func-sel').combobox("setValue", func.FUNC_NAME);
+						}
+					}
+				});
+				if (func) {
+					$('#signal-trans-func-sel').combobox("setValue", func.FUNC_NAME);
+					WUI.setPropertiesValue(properties, func.params);
+				}
+			},
+			modal : true,
+			onClose : function() {
+				dialogNode.empty();
+			},
+			buttons : [ {
+				text : '保存',
+				handler : function() {
+					var isValid = $('#signal-trans-func-sel').combobox("isValid");
+					isValid = isValid && WUI.isPropertiesValueValid(properties);
+					if (!isValid) {
+						return;
+					}
+
+					var newFunc = {
+						FUNC_NAME : $('#signal-trans-func-sel').combobox("getValue"),
+						params : WUI.getPropertiesValue(properties)
+					};
+					callback(newFunc);
+					dialogNode.dialog("close");
+				}
+			}, {
+				text : '取消',
+				handler : function() {
+					dialogNode.dialog("close");
+				}
+			} ]
+		};
+		dialogNode.dialog(cfg);
+	}
+
 	function signalDialog(signal, nodeObject) {
 		var dialogNode = $("#configer-dialog");
-		var transProperties = [];
 		var cfg = {
 			iconCls : signal ? "icon-edit" : "icon-add",
 			title : (signal ? "修改" : "添加") + "信号",
@@ -400,6 +578,11 @@ $(function() {
 							$("#condition-panel").show();
 						} else {
 							$("#condition-panel").hide();
+						}
+						if (type.enable_func) {
+							$("#funcs-panel").show();
+						} else {
+							$("#funcs-panel").hide();
 						}
 					}
 				});
@@ -534,7 +717,7 @@ $(function() {
 				$('#signal-name-of-driver-sel').combobox({
 					data : [],
 					valueField : 'key',
-					textField : 'name',//signalType
+					textField : 'name',// signalType
 					editable : false,
 					onLoadSuccess : function() {
 						if (signal) {
@@ -543,37 +726,6 @@ $(function() {
 					}
 				});
 
-				$('#signal-trans-func-sel').combobox({
-					valueField : 'model',
-					textField : 'name',
-					editable : false,
-					url : funcsModelUrl,
-					method : 'get',
-					onSelect : function(rec) {
-						var $propTable = $("#signal-trans-func-params");
-						$propTable.empty();
-						transProperties = [];
-						WUI.ajax.get(funcsParamUrl + rec.model, {}, function(results) {
-							results.forEach(function(param, i) {
-								if (i % 2 === 0) {
-									$tr = $(document.createElement("tr"));
-									$propTable.append($tr);
-								}
-								transProperties.push(WUI.createProperty($tr, param, 80, 150));
-							});
-							if (signal && signal.funcs) {
-								WUI.setPropertiesValue(transProperties, signal.funcs.params);
-							}
-						}, function() {
-							$.messager.alert('失败', "读取转换参数失败，请重试！");
-						});
-					},
-					onLoadSuccess : function() {
-						if (signal && signal.funcs) {
-							$('#signal-trans-func-sel').combobox("setValue", signal.funcs.FUNC_NAME);
-						}
-					}
-				});
 				$('#signal-id-txt').numberbox({
 					groupSeparator : ' ',
 					onChange : function(newValue) {
@@ -593,6 +745,7 @@ $(function() {
 					}
 				});
 
+				initFuncTable();
 				initConditionTable();
 				if (signal) {
 					$('#signal-type-sel').combobox("setValue", signal.SIGNAL_TYPE);
@@ -614,7 +767,7 @@ $(function() {
 						$('#signal-driver-sel').combobox("setValue", signal.DRIVER_ID);
 						$('#signal-name-of-driver-sel').combobox("setValue", signal.DRIVER_KEY);
 						if (signal.funcs) {
-							$('#signal-trans-func-sel').combobox("setValue", signal.funcs.FUNC_NAME);
+							$("#funcs-table").datagrid("loadData", signal.funcs ? signal.funcs : []);
 						}
 					}
 				}
@@ -636,8 +789,6 @@ $(function() {
 							if (parseInt($('#signal-src-type-sel').combobox("getValue"), 10) === 1) {
 								isValid = isValid && $('#signal-driver-sel').combobox("isValid");
 								isValid = isValid && $('#signal-name-of-driver-sel').combobox("isValid");
-								isValid = isValid && $('#signal-trans-func-sel').combobox("isValid");
-								isValid = isValid && WUI.isPropertiesValueValid(transProperties);
 							} else {
 								isValid = isValid && $('#signal-src-sel').combobox("isValid");
 							}
@@ -658,25 +809,22 @@ $(function() {
 								OBJECT_ID : nodeObject.ID,
 								conditions : $("#condition-table").datagrid("getData").rows
 							};
+							newSignal.conditions.forEach(function(condition, index) {
+								condition.CONDITION_NUM = index + 1;
+							});
+
 							newSignal.SIGNAL_TYPE = newSignal.SIGNAL_TYPE ? newSignal.SIGNAL_TYPE : 0;
 							if (parseInt($('#signal-src-type-sel').combobox("getValue"), 10) === 1) {
 								newSignal.DRIVER_ID = $('#signal-driver-sel').combobox("getValue");
 								newSignal.DRIVER_KEY = $('#signal-name-of-driver-sel').combobox("getValue");
-								var transName = $('#signal-trans-func-sel').combobox("getValue");
-								if (transName) {
-									newSignal.funcs = {
-										FUNC_NAME : transName,
-										params : WUI.getPropertiesValue(transProperties)
-									}
-								}
+								newSignal.funcs = $("#funcs-table").datagrid("getData").rows;
+								newSignal.funcs.forEach(function(func, index) {
+									func.SEQUENCE = index + 1;
+								});
 							} else {
 								newSignal.SRC_SIGNAL_ID = $('#signal-src-sel').combobox("getValue");
 							}
-							var i = 1;
-							newSignal.conditions.forEach(function(condition) {
-								condition.CONDITION_NUM = i;
-								i++;
-							});
+
 							if (signal) {
 								newSignal.SIGNAL_TYPE = signal.SIGNAL_TYPE;
 								newSignal.SIGNAL_ID = signal.SIGNAL_ID;

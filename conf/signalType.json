@@ -5,6 +5,7 @@
 		"iconCls": "icon-AI",
 		"enable_other_signal": false,
 		"enable_condition": true,
+		"enable_func":true,
 		"namespace": "AI"
 	},
 	{
@@ -13,6 +14,7 @@
 		"iconCls": "icon-DI",
 		"enable_other_signal": false,
 		"enable_condition": false,
+		"enable_func":true,
 		"namespace": "DI"
 	},
 	{

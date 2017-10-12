@@ -2,7 +2,9 @@
 <table class="configer">
 	<tr>
 		<td align="right" style="width: 80px;">告警条件:</td>
-		<td style="width: 150px;"><select id="signal-condition-sel" style="width: 100%" class="easyui-combobox" data-options="required:true"></select></td>
+		<td style="width: 150px;"><select id="signal-condition-sel" style="width: 100%" class="easyui-combobox"
+			data-options="required:true"></select></td>
+		<td style="width: 40px;"></td>
 	</tr>
 	<tr>
 		<td align="right">告警描述:</td>
@@ -18,5 +20,10 @@
 		<td><input id="signal-alarm-delay-txt" class="easyui-numberbox" type="text" style="width: 100%"
 			data-options="min:0,precision:0,required:true,value:0"></td>
 	</tr>
+	<tr>
+		<td colspan="3">
+			<table id="condition-prop-table">
+			</table>
+		</td>
+	</tr>
 </table>
-<table class="configer" id="condition-prop-table"></table>

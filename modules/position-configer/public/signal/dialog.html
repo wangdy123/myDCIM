@@ -58,7 +58,7 @@
 				<tr>
 					<td align="right" style="width: 80px;">驱动位置:</td>
 					<td style="width: 150px;"><select id="signal-driver-position" class="easyui-combotree" style="width: 100%"></select></td>
-					<td style="width: 40px;"></td>				
+					<td style="width: 40px;"></td>
 					<td align="right" style="width: 80px;">驱动:</td>
 					<td style="width: 150px;"><select id="signal-driver-sel" class="easyui-combobox" style="width: 100%"></select></td>
 					<td style="width: 40px;"></td>
@@ -67,13 +67,10 @@
 					<td align="right" style="width: 80px;">驱动信号:</td>
 					<td style="width: 150px;"><select id="signal-name-of-driver-sel" class="easyui-combobox" style="width: 100%"></select></td>
 					<td></td>
-					<td align="right" style="width: 80px;">变换函数:</td>
-					<td style="width: 150px;"><select id="signal-trans-func-sel" class="easyui-combobox" style="width: 100%"></select></td>
 				</tr>
 				<tr>
-					<td colspan="6">
-						<table id="signal-trans-func-params">
-						</table>
+					<td colspan="6" id="funcs-panel">
+						<div id="funcs-table"></div>
 					</td>
 				</tr>
 			</table></td>
@@ -86,5 +83,5 @@
 </table>
 
 <div id="condition-dialog"></div>
-
+<div id="func-dialog"></div>
 

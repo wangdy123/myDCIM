@@ -15,8 +15,8 @@
 		"LATITUDE": 23.146984,
 		"LONGITUDE": 113.30735
 	},
-	"scCluster":{
-		"host":"localhost",
+	"scCluster": {
+		"host": "localhost",
 		"httpPort": 8080,
 		"rootPath": ""
 	},
@@ -41,9 +41,17 @@
 		"record_keyspace": "history_record"
 	},
 	"redis": {
-		"host": "localhost",
-		"port": 6379,
-		"auth": "wincom"
+		"isCluster": false,
+		"master": {
+			"host": "localhost",
+			"port": 6379
+		},
+		"cluster": [
+			{
+				"host": "localhost",
+				"port": 6379
+			}
+		]
 	},
 	"modules": {
 		"account": "/account",

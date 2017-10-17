@@ -117,16 +117,19 @@ app.get('/signals', function(req, res) {
 			logger.error(error);
 			res.status(500).send(error);
 		} else{
+			if(objects.length<=0){
+				res.send([]);
+			}
 			var tasks = [];
-			tasks.push(function(callback){
-				objects.forEach(function(signal){
+			objects.forEach(function(signal){
+				tasks.push(function(callback){
 					common.getObjectPathName(0,signal.OBJECT_ID,function(err,name){
 						if(!err){
 							signal.OBJECT_NAME=name;
 						}
 						callback();
 					});
-			});
+				});
 			});
 			async.parallel(tasks, function(err, results) {
 				res.send(objects);

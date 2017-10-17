@@ -23,10 +23,10 @@
 {{/each}}
 </head>
 <body>
+<div class="easyui-panel" data-options="border:false,fit:true">
 	<div class="easyui-panel" data-options="border:false,footer:'#page-footer',header:'#page-header',fit:true">
 		<div class="easyui-panel" id="sys-workspace" data-options="border:{{border}},href:'{{url}}',fit:true"></div>
 	</div>
-
 	<div id="page-header" style="border-style: none; padding: 0; margin: 0 0 -5px; vertical-align: middle;">
 		<img class="panel" title="logo" src="{{logo}}" />
 		<!-- <h2 id="system-name" class="easyui-panel">{{systemName}}</h2> -->
@@ -60,12 +60,13 @@
 			</div> -->
 		</div>
 	</div>
-	<div id="page-footer" style="border-style: none; vertical-align: middle; text-align: center; padding: 5px;">
+	<div id="page-footer" style="border-style: none; vertical-align: middle; text-align: center; padding: 5px;" >
 		<div style="position: absolute; left: 5px; display: inline-block;">{{company}}</div>
 		<div style="display: inline-block;">{{copyRightText}}</div>
 		<div style="position: absolute; right: 20px; display: inline-block;">
 			<a style="cursor: pointer;" id="alarm-count-status" href="#">告警计数：0</a>
 		</div>
+	</div>
 	</div>
 	<div id="change-password-dialog" class="easyui-dialog" data-options="closed:true"></div>
 	<div id="alarm-tooltip" class="easyui-dialog" data-options="closed:true" style="width: 250px;" title="告警统计">

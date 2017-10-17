@@ -1,3 +1,193 @@
+/*块级元素*/
+html, div, map, dt, form {
+	display: block;
+}
+
+body {
+	display: block;
+	margin: 8px;
+	font-family: serif;
+	font-size: medium;
+}
+
+p, dl {
+	display: block;
+	margin-top: 1em;
+	margin-bottom: 1em;
+}
+
+dd {
+	display: block, margin-left:40px;
+}
+
+address {
+	display: block;
+	font-style: italic;
+}
+
+blockquote {
+	display: block;
+	margin: 1em 40px;
+}
+
+h1 {
+	display: block;
+	font-size: 2em;
+	font-weight: bold;
+	margin: 0.67em 0;
+}
+
+h2 {
+	display: block;
+	font-size: 1.5em;
+	font-weight: bold;
+	margin: 0.83em 0;
+}
+
+h3 {
+	display: block;
+	font-size: 1.25em;
+	font-weight: bold;
+	margin: 1em 0;
+}
+
+h4 {
+	display: block;
+	font-size: 1em;
+	font-weight: bold;
+	margin: 1.33em 0;
+}
+
+h5 {
+	display: block;
+	font-size: 0.75em;
+	font-weight: bold;
+	margin: 1.67em 0;
+}
+
+h6 {
+	display: block;
+	font-size: 0.5625em;
+	font-weight: bold;
+	margin: 2.33em 0;
+}
+
+pre {
+	display: block;
+	font-family: monospace;
+	white-space: pre;
+	margin: 1em 0;
+}
+
+hr {
+	display: block;
+	height: 2px;
+	border: 1px;
+	margin: 0.5em auto 0.5em auto;
+}
+
+/*表格元素*/
+table {
+	border-spacing: 2px;
+	border-collapse: separate;
+	margin-top: 0;
+	margin-bottom: 0;
+	text-indent: 0;
+}
+
+caption {
+	text-align: center;
+}
+
+td {
+	padding: 1px;
+}
+
+th {
+	font-weight: bold;
+	padding: 1px;
+}
+
+tbody, thead, tfoot {
+	vertical-align: middle;
+}
+
+/*行内标签*/
+strong {
+	font-weight: bold;
+}
+
+cite, em, var, dfn {
+	font-style: italic;
+}
+
+code, kbd, samp {
+	font-family: monospace;
+}
+
+ins {
+	text-decoration: underline;
+}
+
+del {
+	text-decoration: line-through;
+}
+
+sub {
+	vertical-align: -0.25em;
+	font-size: smaller;
+	line-height: normal;
+}
+
+sup {
+	vertical-align: 0.5em;
+	font-size: smaller;
+	line-height: normal;
+}
+
+abbr
+[
+title
+]
+,
+{
+border-bottom
+:dotted
+ 
+1
+px
+;
+}
+
+/*列表元素*/
+ul {
+	list-style-type: disc;
+	margin: 1em 0;
+	margin-left: 40px;
+	padding-left: 0;
+}
+
+ol {
+	list-style-type: decimal;
+	margin: 1em 0;
+	margin-left: 40px;
+	padding-left: 0;
+}
+
+/*删除嵌套列表的上下外边框*/
+ul ul, ul ol, ul dl, ol ul, ol ol, ol dl, dl ul, dl ol, dl dl {
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+/*2级ul使用圆点项目符号*/
+ol ul, ul ul {
+	list-style-type: circle;
+} /*3级ul使用正方形项目符号*/
+ol ol ul, ol ul ul, ul ol ul, ul ul ul {
+	list-style-type: square;
+}
+
 html, body {
 	height: 100%;
 	min-height: 100%;
@@ -11,11 +201,13 @@ html, body {
 a {
 	text-decoration: none;
 	cursor: pointer;
+	color:#729fff;
 }
 
-.header{
+.header {
 	
 }
+
 label {
 	font-weight: bold;
 }
@@ -24,9 +216,10 @@ label {
 	border: 1px solid #babdb6;
 }
 
-.grid-detail{
+.grid-detail {
 	margin: 10px 40px;
 }
+
 .grid-detail tr th {
 	border: 0;
 	padding: 3px 0;
@@ -117,12 +310,14 @@ select {
 	margin: 0 2px;
 	cursor: pointer;
 }
+
 .icon-tool {
 	display: inline-block;
 	width: 18px;
 	height: 16px;
 	padding: 0;
 }
+
 .configer {
 	margin: 20px 40px;
 }
@@ -225,18 +420,23 @@ select {
 .icon-AI {
 	background: url('../images/Ai.png') no-repeat center center;
 }
+
 .icon-AO {
 	background: url('../images/Ao.png') no-repeat center center;
 }
+
 .icon-DI {
 	background: url('../images/Di.png') no-repeat center center;
 }
+
 .icon-DO {
 	background: url('../images/Do.png') no-repeat center center;
 }
+
 .icon-ALARM {
 	background: url('../images/Alarm.gif') no-repeat center center;
 }
+
 .icon-use {
 	background: url('../images/use.png') no-repeat center center;
 }
@@ -313,18 +513,21 @@ select {
 .icon-map {
 	background: url('../images/map_16.png') no-repeat center center;
 }
+
 .icon-down {
 	background: url('../images/down_arrow.png') no-repeat center center;
-}.icon-up {
+}
+
+.icon-up {
 	background: url('../images/up_arrow.png') no-repeat center center;
 }
 
 .bread-separator {
- display: inline-block;
+	display: inline-block;
 }
 
 .bread-item {
- display: inline-block;
- cursor: pointer;
-  padding: 5px;
+	display: inline-block;
+	cursor: pointer;
+	padding: 5px;
 }

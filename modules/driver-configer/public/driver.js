@@ -153,7 +153,7 @@ $(function() {
 			columns : [ [ {
 				field : 'OBJECT_NAME',
 				title : '所属设备',
-				width : 200
+				width : 230
 			}, {
 				field : 'SIGNAL_ID',
 				title : '信号编码',
@@ -162,7 +162,7 @@ $(function() {
 			}, {
 				field : 'SIGNAL_NAME',
 				title : '名称',
-				width : 200
+				width : 150
 			}, {
 				field : 'SIGNAL_TYPE',
 				title : '信号类型',

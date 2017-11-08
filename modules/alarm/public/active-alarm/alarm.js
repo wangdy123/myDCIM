@@ -445,7 +445,7 @@ $(function() {
 					field : "reason"
 				} ] ],
 		view : detailview,
-		detailFormatter : function(rowIndex, row) {
+		onExpandRow:function(rowIndex, row){
 			var alarmLevel = "";
 			for (var i = 0; i < WUI.alarmLevels.levels.length; i++) {
 				var level = WUI.alarmLevels.levels[i];
@@ -455,7 +455,7 @@ $(function() {
 			}
 			var type = WUI.findFromArray(WUI.alarmTypes, "type", row.alarm_type);
 			type = type ? type.name : "";
-			return '<table class="grid-detail"><tr><th>告警类型:</th><td>' + type + '</td><th>告警级别:</th><td>' + alarmLevel
+			var html= '<table class="grid-detail"><tr><th>告警类型:</th><td>' + type + '</td><th>告警级别:</th><td>' + alarmLevel
 					+ '</td></tr><tr><th>告警节点:</th><td>' + row.object_name + '</td><th>告警名称:</th><td>' + row.alarm_name
 					+ '</td></tr><tr><th>开始时间:</th><td>' + WUI.timeformat(row.alarm_begin) + '</td><th>结束时间:</th><td>'
 					+ (row.is_finished ? WUI.timeformat(row.end_time) : "<活动告警>") + '</td></tr><tr><th>持续时间:</th><td>'
@@ -464,6 +464,11 @@ $(function() {
 					+ (row.is_acked ? WUI.timeformat(row.ack_time) : "<未确认>") + '</td></tr><tr><th>确认人:</th><td>'
 					+ (row.ack_user ? row.ack_user : "") + '</td><th>确认描述:</th><td>' + (row.reason ? row.reason : "")
 					+ '</td></tr></table>';
+			$node.datagrid("getRowDetail",rowIndex).html(html);
+			$node.datagrid("fixDetailRowHeight",rowIndex);
+		},
+		detailFormatter : function(rowIndex, row) {
+			return $node.datagrid("getRowDetail",rowIndex).html()
 		}
 	});
 	checkAlarmDiff();

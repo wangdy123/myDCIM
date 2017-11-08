@@ -1,4 +1,3 @@
-'use strict'
 require('dcim-logger');
 var express = require('express');
 
@@ -12,17 +11,18 @@ app.engine('.html', hbs.__express);
 var config = require('dcim-config');
 
 app.use(require('serve-favicon')(require('path').join(__dirname, 'public', 'favicon.ico')));
+
+app.use(express.static(__dirname + '/public', {
+	maxAge : config.fileMaxAge * 3600 * 24 * 1000
+}));
+
+
 var bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
 	extended : false
 }));
 app.use(require('cookie-parser')());
-
-app.use(express.static(__dirname + '/public', {
-	maxAge : config.fileMaxAge * 3600 * 24 * 1000
-}));
-
 app.get('/static.js', require('./static'));
 
 function getClientIp(req) {

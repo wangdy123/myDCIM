@@ -16,3 +16,7 @@
  cursor: pointer;
   padding: 5px;
 }
+
+.map-tooltip {
+	color: #2e3436;
+}

@@ -14,3 +14,6 @@ app.get('/screenData/:id', function(req, res) {
 	//var screenData = require(fileName);
 	res.send(JSON.parse(screenData));
 });
+
+var proxy = require('express-http-proxy');
+app.use('/tw', proxy('http://192.168.0.166:8081/'));

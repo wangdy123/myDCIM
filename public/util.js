@@ -74,9 +74,11 @@ WUI.getI18n=function(key,...args){
 };
 
 WUI.findFromArray = function(array, key, value) {
-    array.find(function(item) {
-        return item[key] === value;
-    });
+    for(let index=0;index<array.length;index++){
+        if(array[index][key] == value){
+            return array[index];
+        }
+    }
 };
 
 WUI.getPropertyValue = function(properties, name) {
@@ -735,10 +737,7 @@ WUI.initValidator=function() {
         },
         maxLength : {
             validator : function(value, param) {
-                if (value.length > param[1]) {
-                    $(param[0]).val(value.substring(0, param[1]));
-                }
-                return value.length <= param[1];
+                return value.length <= param[0];
             },
             message : WUI.getI18n('validate_maxLength_fail')
         },
@@ -785,13 +784,10 @@ WUI.initValidator=function() {
         },
         code : {// 验证编码
             validator : function(value, param) {
-                if (value.length > param[1]) {
-                    $(param[0]).val(value.substring(0, param[1]));
-                }
                 if (!/^\d*$/i.test(value)) {
                     return false;
                 }
-                return value.length === param[1];
+                return value.length === param[0];
             },
             message : WUI.getI18n('validate_code_fail')
         },

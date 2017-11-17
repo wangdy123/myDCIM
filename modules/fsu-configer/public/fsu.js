@@ -46,6 +46,7 @@ $(function() {
                 console.log(index);
                 console.log(row);
                 console.log(changes);
+                console.log($node.datagrid('getRows')[index]);
                },
             columns : [ [
                     {
@@ -219,8 +220,6 @@ $(function() {
                     $('#fsu-name-txt').textbox("setValue", fsu.NAME);
                     $('#fsu-code-txt').textbox("setValue", fsu.CODE);
                     $('#fsu-model-sel').combobox("setValue", fsu.MODEL);
-                    $('#fsu-name-txt').textbox("isValid");
-                    $('#fsu-code-txt').textbox("isValid");
                 }
             },
             modal : true,

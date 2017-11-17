@@ -85,6 +85,9 @@ $(document).ready(function() {
         $('#map-panel').panel('close');
         $('#detail-panel').panel('close');
         $('#screen-panel').panel('open');
+        if(WUI.open3D){
+            WUI.open3D(event.object);
+        }
     }, 'monitor');
 
     window.WUI.publishEvent('request_current_object', {
